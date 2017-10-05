@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
+
 import AccountsUIWrapper from "../ui/AccountsUIWrapper";
 
 class Header extends Component {
@@ -9,10 +12,25 @@ class Header extends Component {
         <p>
           <Link to="/">Home</Link>
         </p>
-        <AccountsUIWrapper />
+
+        {this.props.currentUser ? (
+          <button
+            onClick={() => {
+              Meteor.logout();
+            }}
+          >
+            Logout
+          </button>
+        ) : (
+          <AccountsUIWrapper />
+        )}
       </div>
     );
   }
 }
 
-export default Header;
+export default withTracker(props => {
+  return {
+    currentUser: Meteor.user()
+  };
+})(Header);
