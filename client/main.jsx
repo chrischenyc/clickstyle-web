@@ -3,6 +3,7 @@ import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import SecureRoute from "../imports/ui/SecureRoute";
 import Home from "../imports/ui/Home";
 import NewJob from "../imports/ui/NewJob";
 import EditJob from "../imports/ui/EditJob";
@@ -17,8 +18,8 @@ Meteor.startup(() => {
         <Header />
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/new-job" component={NewJob} /> // TODO: authenticate
-          <Route path="/edit-job" component={EditJob} /> // TODO: authenticate
+          <SecureRoute path="/new-job" component={NewJob} />
+          <SecureRoute path="/edit-job" component={EditJob} />
           <Route component={NotFound} />
         </Switch>
         <Footer />
