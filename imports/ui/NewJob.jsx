@@ -1,6 +1,8 @@
-import React, { Component } from "react";
-import { withTracker } from "meteor/react-meteor-data";
-import { Redirect } from "react-router-dom";
+import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
+
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 class NewJob extends Component {
   render() {
@@ -8,8 +10,6 @@ class NewJob extends Component {
   }
 }
 
-export default withTracker(props => {
-  return {
-    currentUser: Meteor.user()
-  };
-})(NewJob);
+export default withTracker(() => ({
+  currentUser: Meteor.user(),
+}))(NewJob);

@@ -1,15 +1,16 @@
-import { Meteor } from "meteor/meteor";
-import React from "react";
-import { render } from "react-dom";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Meteor } from 'meteor/meteor';
 
-import SecureRoute from "../imports/ui/SecureRoute";
-import Home from "../imports/ui/Home";
-import NewJob from "../imports/ui/NewJob";
-import EditJob from "../imports/ui/EditJob";
-import NotFound from "../imports/ui/NotFound";
-import Header from "../imports/ui/Header";
-import Footer from "../imports/ui/Footer";
+import React from 'react';
+import { render } from 'react-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import SecureRoute from '../imports/ui/SecureRoute';
+import Home from '../imports/ui/Home';
+import NewJob from '../imports/ui/NewJob';
+import EditJob from '../imports/ui/EditJob';
+import NotFound from '../imports/ui/NotFound';
+import Header from '../imports/ui/Header';
+import Footer from '../imports/ui/Footer';
 
 Meteor.startup(() => {
   render(
@@ -25,6 +26,6 @@ Meteor.startup(() => {
         <Footer />
       </div>
     </Router>,
-    document.getElementById("app")
+    document.getElementById('app'),
   );
 });
