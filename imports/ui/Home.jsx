@@ -51,6 +51,7 @@ class Home extends Component {
             </Link>
           </Container>
         </Segment>
+
         <JobsList />
       </div>
     );

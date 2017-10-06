@@ -21,3 +21,5 @@ accounts-password
 accounts-facebook
 accounts-ui
 react-meteor-data
+zimme:collection-timestampable
+aldeed:collection2

@@ -18,10 +18,13 @@ const JobsList = ({ jobs }) => (
         <Card link="#">
           <Image src="/images/makeup.jpg" />
           <Card.Content textAlign="left">
-            <Card.Header>Title</Card.Header>
-            <Card.Meta>Location</Card.Meta>
+            <Card.Header>inventore cupiditate voluptatem</Card.Header>
+            <Card.Meta>Location: qui ea in</Card.Meta>
+            <Card.Meta>Date: 15 Dec, 2017</Card.Meta>
             <Card.Description>
-              Steve wants to add you to the group <strong>best friends</strong>
+              Dolorem quis qui laudantium officia. Expedita et provident doloremque. Non at culpa
+              ipsum quia earum non est. Est dolores ex molestiae modi a. Et voluptas fugit dolorem
+              eligendi ea nostrum reiciendis recusandae ad.
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
