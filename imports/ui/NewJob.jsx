@@ -1,15 +1,19 @@
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
+import React from 'react';
+import { Segment, Container, Header } from 'semantic-ui-react';
 
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+const NewJob = () => (
+  <div className="full-page">
+    <Segment
+      style={{
+        padding: '8em 0em',
+      }}
+      vertical
+    >
+      <Container>
+        <Header>new job</Header>
+      </Container>
+    </Segment>
+  </div>
+);
 
-class NewJob extends Component {
-  render() {
-    return this.props.currentUser ? <div>New Job</div> : <Redirect to="/" />;
-  }
-}
-
-export default withTracker(() => ({
-  currentUser: Meteor.user(),
-}))(NewJob);
+export default NewJob;

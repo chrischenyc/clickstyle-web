@@ -12,16 +12,15 @@ const HowItWorksButton = () => (
 );
 
 const SignInButton = () => (
-  <Menu.Item link>
-    <Link to="/login">LOG IN | REGISTER</Link>
+  <Menu.Item as={Link} to="/login">
+    LOG IN | REGISTER
   </Menu.Item>
 );
 
 const AccountButton = () => (
-  <Dropdown item simple text="ACCOUNT">
+  <Dropdown text="ACCOUNT" className="link item">
     <Dropdown.Menu>
       <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />
-      <Dropdown.Item as={Link} to="/message" text="Message" />
       <Dropdown.Item as={Link} to="/profile" text="Profile" />
       <Dropdown.Item as={Link} to="/settings" text="Settings" />
     </Dropdown.Menu>
@@ -30,7 +29,6 @@ const AccountButton = () => (
 
 const LogOutButton = () => (
   <Menu.Item
-    link
     onClick={() => {
       Meteor.logout();
     }}
@@ -41,10 +39,8 @@ const LogOutButton = () => (
 
 const GuestButtons = () => (
   <Menu.Menu position="right">
-    <Menu.Item>
-      <HowItWorksButton />
-      <SignInButton />
-    </Menu.Item>
+    <HowItWorksButton />
+    <SignInButton />
   </Menu.Menu>
 );
 

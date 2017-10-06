@@ -1,9 +1,9 @@
 import React from 'react';
 import { Segment, Container, Header } from 'semantic-ui-react';
 
-import AuthComponent from './helpers/AuthComponent';
+import AuthComponent from '../helpers/AuthComponent';
 
-const EditJob = () => (
+const Profile = () => (
   <AuthComponent>
     <div className="full-page">
       <Segment
@@ -13,11 +13,11 @@ const EditJob = () => (
         vertical
       >
         <Container>
-          <Header>edit job</Header>
+          <Header>profile</Header>
         </Container>
       </Segment>
     </div>
   </AuthComponent>
 );
 
-export default EditJob;
+export default Profile;
