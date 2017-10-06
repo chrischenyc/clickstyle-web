@@ -3,7 +3,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Menu } from 'semantic-ui-react';
+import { Container, Menu, Dropdown } from 'semantic-ui-react';
 
 const HowItWorksButton = () => (
   <Menu.Item link>
@@ -15,6 +15,17 @@ const SignInButton = () => (
   <Menu.Item link>
     <Link to="/login">LOG IN | REGISTER</Link>
   </Menu.Item>
+);
+
+const AccountButton = () => (
+  <Dropdown item simple text="ACCOUNT">
+    <Dropdown.Menu>
+      <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />
+      <Dropdown.Item as={Link} to="/message" text="Message" />
+      <Dropdown.Item as={Link} to="/profile" text="Profile" />
+      <Dropdown.Item as={Link} to="/settings" text="Settings" />
+    </Dropdown.Menu>
+  </Dropdown>
 );
 
 const LogOutButton = () => (
@@ -40,6 +51,7 @@ const GuestButtons = () => (
 const UserButtons = () => (
   <Menu.Menu position="right">
     <HowItWorksButton />
+    <AccountButton />
     <LogOutButton />
   </Menu.Menu>
 );
