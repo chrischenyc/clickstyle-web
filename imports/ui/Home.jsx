@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 
 import JobsList from './JobsList';
 
+import Jobs from '../api/Jobs';
+
 class Home extends Component {
   render() {
     return (
@@ -14,8 +16,7 @@ class Home extends Component {
           inverted
           textAlign="center"
           style={{
-            minHeight: 500,
-            padding: '2em 0em',
+            padding: '8em 0em',
             backgroundImage: 'url(images/meteor.jpg)',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
@@ -25,39 +26,56 @@ class Home extends Component {
           <Container text>
             <Header
               as="h1"
-              content="Just a Playground"
+              content="Stylesquard"
               inverted
               style={{
                 fontSize: '4em',
-                fontWeight: 'normal',
-                marginBottom: 0,
-                marginTop: '3em',
+                fontWeight: 'thick',
+                fontStyle: 'italic',
+                marginTop: '1em',
               }}
             />
             <Header
               as="h2"
-              content="Meteor + React + Semantic.UI"
+              content="Professional Beauty Service"
               inverted
               style={{
                 fontSize: '1.7em',
                 fontWeight: 'normal',
+                marginBottom: 0,
+              }}
+            />
+            <Header
+              as="h2"
+              content="any where you want"
+              inverted
+              style={{
+                fontSize: '1.7em',
+                fontWeight: 'normal',
+                marginTop: 0,
               }}
             />
 
-            <Link to="/new-job">
-              <Button primary size="huge" disabled={!this.props.currentUser}>
-                Create Job <Icon name="right add" />
+            <Link to="/jobs">
+              <Button size="huge" color="teal">
+                Book Now
               </Button>
             </Link>
           </Container>
         </Segment>
 
-        <JobsList />
+        <JobsList loading={this.props.listLoading} jobs={this.props.jobs} />
       </div>
     );
   }
 }
 
-export default withTracker(() => ({
-  currentUser: Meteor.user(),
-}))(Home);
+export default withTracker(() => {
+  const handle = Meteor.subscribe('jobs');
+
+  return {
+    currentUser: Meteor.user(),
+    listLoading: !handle.ready(),
+    jobs: Jobs.find({}).fetch(),
+  };
+})(Home);

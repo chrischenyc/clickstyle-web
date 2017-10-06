@@ -3,7 +3,7 @@ import { Button, Container, Header, Segment, Card, Image, Icon } from 'semantic-
 
 import Jobs from '../api/Jobs.js';
 
-const JobsList = ({ jobs }) => (
+const JobsList = ({ jobs, loading }) => (
   <Segment
     textAlign="center"
     style={{
@@ -11,29 +11,22 @@ const JobsList = ({ jobs }) => (
     }}
     vertical
   >
-    <Container text>
-      <Header as="h2" content="Jobs" />
-
-      <Card.Group>
-        <Card link="#">
-          <Image src="/images/makeup.jpg" />
-          <Card.Content textAlign="left">
-            <Card.Header>inventore cupiditate voluptatem</Card.Header>
-            <Card.Meta>Location: qui ea in</Card.Meta>
-            <Card.Meta>Date: 15 Dec, 2017</Card.Meta>
-            <Card.Description>
-              Dolorem quis qui laudantium officia. Expedita et provident doloremque. Non at culpa
-              ipsum quia earum non est. Est dolores ex molestiae modi a. Et voluptas fugit dolorem
-              eligendi ea nostrum reiciendis recusandae ad.
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <a>
-              <Icon name="user" />
-              8 bidders
-            </a>
-          </Card.Content>
-        </Card>
+    <Container>
+      <Card.Group stackable>
+        {jobs.map(job => (
+          <Card key={job._id} link centered href={`/jobs/${job._id}`}>
+            <Image src="/images/makeup.jpg" />
+            <Card.Content textAlign="left">
+              <Card.Header>{job.title}</Card.Header>
+              <Card.Meta href={`/location/${job.location}`}>{job.location}</Card.Meta>
+              <Card.Meta>{job.createdAt.toLocaleDateString()}</Card.Meta>
+              <Card.Description>{job.summary}</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Icon name="user" />8 bidders
+            </Card.Content>
+          </Card>
+        ))}
       </Card.Group>
     </Container>
   </Segment>

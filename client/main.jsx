@@ -8,9 +8,9 @@ import SecureRoute from '../imports/ui/SecureRoute';
 import Home from '../imports/ui/Home';
 import NewJob from '../imports/ui/NewJob';
 import EditJob from '../imports/ui/EditJob';
-import NotFound from '../imports/ui/NotFound';
 import Header from '../imports/ui/Header';
 import Footer from '../imports/ui/Footer';
+import NotFound from '../imports/ui/NotFound';
 
 Meteor.startup(() => {
   render(
