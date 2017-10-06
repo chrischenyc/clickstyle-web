@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
-import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react';
+import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-import JobsList from './JobsList';
+import JobsList from './job/JobsList';
 
-import Jobs from '../api/Jobs';
+import Jobs from '../../api/Jobs';
 
 class Home extends Component {
   render() {

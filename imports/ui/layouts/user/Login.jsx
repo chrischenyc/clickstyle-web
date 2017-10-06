@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
 
-import AccountsUIWrapper from '../ui/AccountsUIWrapper';
+import AccountsUIWrapper from '../../components/AccountsUIWrapper';
 
 const Login = () => (
   <div className="full-page">

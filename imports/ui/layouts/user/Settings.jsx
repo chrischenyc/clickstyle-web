@@ -1,9 +1,9 @@
 import React from 'react';
 import { Segment, Container, Header } from 'semantic-ui-react';
 
-import AuthComponent from '../helpers/AuthComponent';
+import AuthComponent from '../../helpers/AuthComponent';
 
-const Dashboard = () => (
+const Settings = () => (
   <AuthComponent>
     <div className="full-page">
       <Segment
@@ -13,11 +13,11 @@ const Dashboard = () => (
         vertical
       >
         <Container>
-          <Header>dashboard</Header>
+          <Header>settings</Header>
         </Container>
       </Segment>
     </div>
   </AuthComponent>
 );
 
-export default Dashboard;
+export default Settings;

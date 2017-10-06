@@ -5,8 +5,8 @@ import React from 'react';
 import { Segment, Container, Header } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 
-import Jobs from '../api/Jobs';
-import Loading from './Loading';
+import Jobs from '../../../api/Jobs';
+import Loading from '../../components/Loading';
 
 const JobPage = ({ loading, job }) => {
   if (loading) {
