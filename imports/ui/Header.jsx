@@ -32,9 +32,9 @@ const UserButtons = () => (
 );
 
 const Header = props => (
-  <Menu fixed="top" size="large" inverted>
+  <Menu fixed="top" size="large" inverted borderless>
     <Container>
-      <Menu.Item as="a" inverted>
+      <Menu.Item>
         <Link to="/">Home</Link>
       </Menu.Item>
 
