@@ -17,7 +17,8 @@ class Home extends Component {
           textAlign="center"
           style={{
             padding: '8em 0em',
-            backgroundImage: 'url(images/meteor.jpg)',
+            backgroundImage:
+              'url("https://images.unsplash.com/photo-1500840216050-6ffa99d75160?dpr=1&auto=compress,format&fit=crop&w=1080&h=&q=50&cs=tinysrgb&crop=")',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
           }}

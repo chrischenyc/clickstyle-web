@@ -12,6 +12,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "lodash": "^4.17.4",
     "meteor-node-stubs": "~0.2.4",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
