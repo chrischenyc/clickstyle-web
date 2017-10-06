@@ -10,6 +10,7 @@ import Header from '../imports/ui/Header';
 import Footer from '../imports/ui/Footer';
 import NotFound from '../imports/ui/NotFound';
 import Login from '../imports/ui/Login';
+import JobPage from '../imports/ui/JobPage';
 import NewJob from '../imports/ui/NewJob';
 import EditJob from '../imports/ui/EditJob';
 
@@ -21,6 +22,7 @@ Meteor.startup(() => {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />
+          <Route path="/jobs/:id" component={JobPage} />
           <SecureRoute path="/new-job" component={NewJob} />
           <SecureRoute path="/edit-job" component={EditJob} />
           <Route component={NotFound} />
