@@ -34,9 +34,7 @@ const UserButtons = () => (
 const Header = props => (
   <Menu fixed="top" size="large" inverted borderless>
     <Container>
-      <Menu.Item>
-        <Link to="/">Home</Link>
-      </Menu.Item>
+      <Menu.Item link="/">Home</Menu.Item>
 
       {props.currentUser ? <UserButtons /> : <GuestButtons />}
     </Container>
