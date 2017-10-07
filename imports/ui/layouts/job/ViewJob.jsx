@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 import Jobs from '../../../api/Jobs';
 import Loading from '../../components/Loading';
 
-const JobPage = ({ loading, job }) => {
+const ViewJob = ({ loading, job }) => {
   if (loading) {
     return <Loading />;
   } else if (job) {
@@ -39,4 +39,4 @@ export default withTracker((props) => {
     loading: !handle.ready(),
     job: Jobs.findOne({ _id: props.match.params.id }),
   };
-})(JobPage);
+})(ViewJob);
