@@ -53,7 +53,7 @@ const UserButtons = () => (
 );
 
 const Header = ({ authenticated }) => (
-  <Menu fixed="top" size="big" inverted borderless>
+  <Menu fixed="top" size="huge" inverted borderless>
     <Container>
       <Menu.Item as={Link} to="/">
         STYLESQUARD

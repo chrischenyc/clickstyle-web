@@ -11,17 +11,20 @@ import Loading from '../../components/Loading';
 import Jobs from '../../../api/Jobs';
 
 // TODO: add search filters
-const JobsPage = props =>
-  (props.jobsLoading ? (
-    <Loading />
-  ) : (
-    <Segment vertical>
-      <JobsList loading={props.jobsLoading} jobs={props.jobs} />
-    </Segment>
-  ));
+const JobsPage = ({ loading, jobs }) => (
+  <div className="below-fixed-menu">
+    {loading ? (
+      <Loading />
+    ) : (
+      <Segment vertical>
+        <JobsList jobs={jobs} />
+      </Segment>
+    )}
+  </div>
+);
 
 JobsPage.propTypes = {
-  jobsLoading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   jobs: PropTypes.array.isRequired,
 };
 
@@ -29,7 +32,7 @@ export default withTracker(() => {
   const handle = Meteor.subscribe('jobs');
 
   return {
-    jobsLoading: !handle.ready(),
+    loading: !handle.ready(),
     jobs: Jobs.find({}).fetch(),
   };
 })(JobsPage);

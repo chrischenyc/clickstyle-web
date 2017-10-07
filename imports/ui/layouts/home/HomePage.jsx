@@ -13,7 +13,7 @@ import JobsList from '../job/JobsList';
 import Jobs from '../../../api/Jobs';
 
 const HomePage = props => (
-  <div>
+  <div className="below-fixed-menu">
     <TopBanner />
 
     {/* TODO: anchor doesn't work */}
@@ -30,7 +30,7 @@ const HomePage = props => (
       }}
       vertical
     >
-      <JobsList loading={props.jobsLoading} jobs={props.jobs} />
+      <JobsList jobs={props.jobs} />
     </Segment>
   </div>
 );

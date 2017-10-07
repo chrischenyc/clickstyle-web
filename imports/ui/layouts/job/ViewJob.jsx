@@ -10,25 +10,22 @@ import Jobs from '../../../api/Jobs';
 import Loading from '../../components/Loading';
 
 const ViewJob = ({ loading, job }) => {
+  let content;
   if (loading) {
-    return <Loading />;
+    content = <Loading />;
   } else if (job) {
-    return (
-      <div className="full-page">
-        <Segment
-          style={{
-            padding: '8em 0em',
-          }}
-          vertical
-        >
-          <Container>
-            <Header>{job.title}</Header>
-          </Container>
-        </Segment>
-      </div>
+    content = (
+      <Segment vertical>
+        <Container>
+          <Header>{job.title}</Header>
+        </Container>
+      </Segment>
     );
+  } else {
+    content = <Redirect to="/" />;
   }
-  return <Redirect to="/" />;
+
+  return <div className="below-fixed-menu full-page">{content}</div>;
 };
 
 ViewJob.propTypes = {

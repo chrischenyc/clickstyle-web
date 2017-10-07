@@ -4,7 +4,7 @@ import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui
 import AccountsUIWrapper from '../../components/AccountsUIWrapper';
 
 const Login = () => (
-  <div className="full-page">
+  <div className="full-page below-fixed-menu">
     <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="teal" textAlign="center">

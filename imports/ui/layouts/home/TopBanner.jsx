@@ -9,7 +9,7 @@ const TopBanner = () => (
     style={{
       padding: '8em 0em',
       backgroundImage:
-          'url("https://images.unsplash.com/photo-1500840216050-6ffa99d75160?dpr=1&auto=compress,format&fit=crop&w=1080&h=&q=50&cs=tinysrgb&crop=")',
+        'url("https://images.unsplash.com/photo-1500840216050-6ffa99d75160?dpr=1&auto=compress,format&fit=crop&w=1080&h=&q=50&cs=tinysrgb&crop=")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
     }}
@@ -24,7 +24,6 @@ const TopBanner = () => (
           fontSize: '4em',
           fontWeight: 'thick',
           fontStyle: 'italic',
-          marginTop: '1em',
         }}
       />
       <Header
@@ -50,7 +49,7 @@ const TopBanner = () => (
 
       <Link to="/jobs/new">
         <Button size="huge" color="teal">
-            Book Now
+          Book Now
         </Button>
       </Link>
     </Container>

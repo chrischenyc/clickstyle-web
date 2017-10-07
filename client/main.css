@@ -12,6 +12,12 @@ body > div > div > div.full-page {
   height: 100%;
 }
 
+/* fix semantic-ui fixed menu hides following content
+----------------------------- */
+.ui.fixed.menu + .below-fixed-menu {
+  margin-top: 46px;
+}
+
 /* facebook-like loading
 ----------------------------- */
 .timeline-item {
