@@ -30,9 +30,9 @@ const App = props => (
       <div />
     ) : (
       <div>
-        <Header />
+        <Header {...props} />
         <Switch>
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={Home} {...props} />
 
           <PublicRoute path="/login" component={Login} {...props} />
 

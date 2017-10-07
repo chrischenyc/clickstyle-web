@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-import JobsList from './job/JobsList';
+import JobsList from '../components/JobsList';
 
 import Jobs from '../../api/Jobs';
 
@@ -75,7 +75,6 @@ export default withTracker(() => {
   const handle = Meteor.subscribe('jobs');
 
   return {
-    currentUser: Meteor.user(),
     listLoading: !handle.ready(),
     jobs: Jobs.find({}).fetch(),
   };

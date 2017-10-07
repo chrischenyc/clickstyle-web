@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -52,18 +51,15 @@ const UserButtons = () => (
   </Menu.Menu>
 );
 
-const Header = props => (
+const Header = ({ loggingIn, authenticated }) => (
   <Menu fixed="top" size="large" inverted borderless>
     <Container>
       <Menu.Item link>
         <Link to="/">STYLESQUARD</Link>
       </Menu.Item>
-
-      {props.currentUser ? <UserButtons /> : <GuestButtons />}
+      {loggingIn ? '' : [authenticated ? <UserButtons /> : <GuestButtons />]}
     </Container>
   </Menu>
 );
 
-export default withTracker(() => ({
-  currentUser: Meteor.user(),
-}))(Header);
+export default Header;

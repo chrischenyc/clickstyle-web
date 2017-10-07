@@ -35,7 +35,6 @@ export default withTracker((props) => {
   const handle = Meteor.subscribe('jobs');
 
   return {
-    currentUser: Meteor.user(),
     loading: !handle.ready(),
     job: Jobs.findOne({ _id: props.match.params.id }),
   };
