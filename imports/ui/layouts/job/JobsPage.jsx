@@ -15,7 +15,7 @@ const JobsPage = props =>
 
 JobsPage.propTypes = {
   jobsLoading: PropTypes.bool.isRequired,
-  jobs: PropTypes.arrayOf(Jobs).isRequired,
+  jobs: PropTypes.object.isRequired,
 };
 
 export default withTracker(() => {
