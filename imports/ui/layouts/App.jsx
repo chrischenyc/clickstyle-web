@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import AuthRoute from '../helpers/AuthRoute';
 import PublicRoute from '../helpers/PublicRoute';
 
-import Home from '../layouts/Home';
+import Home from '../layouts/home/Home';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import NotFound from '../layouts/NotFound';
