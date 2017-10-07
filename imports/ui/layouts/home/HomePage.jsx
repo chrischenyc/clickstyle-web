@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TopBanner from './TopBanner';
+import HowItWorks from './HowItWorks';
 import JobsList from '../job/JobsList';
 
 import Jobs from '../../../api/Jobs';
@@ -12,6 +13,10 @@ import Jobs from '../../../api/Jobs';
 const HomePage = props => (
   <div>
     <TopBanner />
+    {/* TODO: anchor doesn't work */}
+    <div id="how-it-works">
+      <HowItWorks />
+    </div>
     <JobsList loading={props.jobsLoading} jobs={props.jobs} />
   </div>
 );
