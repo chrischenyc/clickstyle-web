@@ -1,5 +1,6 @@
 {
-  "extends": "airbnb",
+  "extends": ["airbnb", "plugin:meteor/recommended"],
+  "plugins": ["meteor"],
   "env": {
     "browser": true,
     "commonjs": true,
@@ -11,6 +12,14 @@
       "jsx": true
     },
     "sourceType": "module"
+  },
+  "settings": {
+    "import/core-modules": [
+      "meteor/meteor",
+      "meteor/blaze",
+      "meteor/templating",
+      "meteor/react-meteor-data"
+    ]
   },
   "rules": {
     "no-const-assign": "warn",
