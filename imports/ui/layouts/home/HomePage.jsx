@@ -3,6 +3,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Segment } from 'semantic-ui-react';
 
 import TopBanner from './TopBanner';
 import HowItWorks from './HowItWorks';
@@ -14,12 +15,23 @@ import Jobs from '../../../api/Jobs';
 const HomePage = props => (
   <div>
     <TopBanner />
+
     {/* TODO: anchor doesn't work */}
     <div id="how-it-works">
       <HowItWorks />
     </div>
+
     <Articles />
-    <JobsList loading={props.jobsLoading} jobs={props.jobs} />
+
+    <Segment
+      textAlign="center"
+      style={{
+        padding: '2em 0em',
+      }}
+      vertical
+    >
+      <JobsList loading={props.jobsLoading} jobs={props.jobs} />
+    </Segment>
   </div>
 );
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Segment, Card, Image, Icon } from 'semantic-ui-react';
+import { Container, Card, Image, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -13,32 +13,24 @@ const jobImages = [
 ];
 
 const JobsList = ({ jobs }) => (
-  <Segment
-    textAlign="center"
-    style={{
-      padding: '2em 0em',
-    }}
-    vertical
-  >
-    <Container>
-      <Card.Group stackable>
-        {jobs.map(job => (
-          <Card key={job._id} link centered href={`/jobs/${job._id}`}>
-            <Image src={_.sample(jobImages)} />
-            <Card.Content textAlign="left">
-              <Card.Header>{job.title}</Card.Header>
-              <Card.Meta>{job.location}</Card.Meta>
-              <Card.Meta>{job.createdAt.toLocaleDateString()}</Card.Meta>
-              <Card.Description>{job.summary}</Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <Icon name="user" />8 bidders
-            </Card.Content>
-          </Card>
-        ))}
-      </Card.Group>
-    </Container>
-  </Segment>
+  <Container>
+    <Card.Group stackable>
+      {jobs.map(job => (
+        <Card key={job._id} link centered href={`/jobs/${job._id}`}>
+          <Image src={_.sample(jobImages)} />
+          <Card.Content textAlign="left">
+            <Card.Header>{job.title}</Card.Header>
+            <Card.Meta>{job.location}</Card.Meta>
+            <Card.Meta>{job.createdAt.toLocaleDateString()}</Card.Meta>
+            <Card.Description>{job.summary}</Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            <Icon name="user" />8 bidders
+          </Card.Content>
+        </Card>
+      ))}
+    </Card.Group>
+  </Container>
 );
 
 JobsList.propTypes = {
