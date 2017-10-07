@@ -5,23 +5,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
 
-import TopBanner from './TopBanner';
-import HowItWorks from './HowItWorks';
-import Articles from './Articles';
+import BannerSegment from './BannerSegment';
+import HowItWorksSegment from './HowItWorksSegment';
+import ArticlesSegment from './ArticlesSegment';
 import JobsList from '../job/JobsList';
 
 import Jobs from '../../../api/Jobs';
 
 const HomePage = props => (
   <div className="below-fixed-menu">
-    <TopBanner />
+    <BannerSegment />
 
     {/* TODO: anchor doesn't work */}
     <div id="how-it-works">
-      <HowItWorks />
+      <HowItWorksSegment />
     </div>
 
-    <Articles />
+    <ArticlesSegment />
 
     <Segment
       textAlign="center"

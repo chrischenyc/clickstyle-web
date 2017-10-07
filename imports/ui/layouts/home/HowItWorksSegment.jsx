@@ -1,7 +1,7 @@
 import React from 'react';
-import { Divider, Grid, Header, Icon, Image, Segment } from 'semantic-ui-react';
+import { Grid, Header, Icon, Segment } from 'semantic-ui-react';
 
-const HowItWorks = () => (
+const HowItWorksSegment = () => (
   <Segment style={{ padding: '4em' }} vertical textAlign="center">
     <Header as="h2" style={{ fontSize: '2em' }}>
       HOW IT WORKS
@@ -47,4 +47,4 @@ const HowItWorks = () => (
   </Segment>
 );
 
-export default HowItWorks;
+export default HowItWorksSegment;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-const TopBanner = () => (
+const BannerSegment = () => (
   <Segment
     inverted
     textAlign="center"
@@ -56,4 +56,4 @@ const TopBanner = () => (
   </Segment>
 );
 
-export default TopBanner;
+export default BannerSegment;

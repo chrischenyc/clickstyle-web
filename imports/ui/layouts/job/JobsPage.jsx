@@ -1,16 +1,15 @@
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from "meteor/meteor";
+import { withTracker } from "meteor/react-meteor-data";
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Segment } from 'semantic-ui-react';
+import React from "react";
+import PropTypes from "prop-types";
+import { Segment } from "semantic-ui-react";
 
-import JobsList from './JobsList';
-import Loading from '../../components/Loading';
+import JobsList from "./JobsList";
+import Loading from "../../components/Loading";
 
-import Jobs from '../../../api/Jobs';
+import Jobs from "../../../api/Jobs";
 
-// TODO: add search filters
 const JobsPage = ({ loading, jobs }) => (
   <div className="below-fixed-menu">
     {loading ? (
@@ -25,14 +24,14 @@ const JobsPage = ({ loading, jobs }) => (
 
 JobsPage.propTypes = {
   loading: PropTypes.bool.isRequired,
-  jobs: PropTypes.array.isRequired,
+  jobs: PropTypes.array.isRequired
 };
 
 export default withTracker(() => {
-  const handle = Meteor.subscribe('jobs');
+  const handle = Meteor.subscribe("jobs");
 
   return {
     loading: !handle.ready(),
-    jobs: Jobs.find({}).fetch(),
+    jobs: Jobs.find({}).fetch()
   };
 })(JobsPage);
