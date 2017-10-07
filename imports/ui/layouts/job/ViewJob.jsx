@@ -33,7 +33,7 @@ const ViewJob = ({ loading, job }) => {
 
 ViewJob.propTypes = {
   loading: PropTypes.bool.isRequired,
-  job: PropTypes.instanceOf(Jobs),
+  job: PropTypes.object,
 };
 
 export default withTracker((props) => {

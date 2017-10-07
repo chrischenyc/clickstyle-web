@@ -1,12 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Container, Menu, Dropdown } from 'semantic-ui-react';
 
 const HowItWorksButton = () => (
-  <Menu.Item link>
-    <Link to="/#how-it-works">HOW IT WORKS</Link>
+  <Menu.Item as={Link} to="/#how-it-works">
+    HOW IT WORKS
   </Menu.Item>
 );
 
@@ -17,7 +18,7 @@ const SignInButton = () => (
 );
 
 const AccountButton = () => (
-  <Dropdown text="ACCOUNT" className="link item">
+  <Dropdown text="ACCOUNT" className="item">
     <Dropdown.Menu>
       <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />
       <Dropdown.Item as={Link} to="/profile" text="Profile" />
@@ -51,15 +52,19 @@ const UserButtons = () => (
   </Menu.Menu>
 );
 
-const Header = ({ loggingIn, authenticated }) => (
+const Header = ({ authenticated }) => (
   <Menu fixed="top" size="large" inverted borderless>
     <Container>
-      <Menu.Item link>
-        <Link to="/">STYLESQUARD</Link>
+      <Menu.Item as={Link} to="/">
+        STYLESQUARD
       </Menu.Item>
-      {loggingIn ? '' : [authenticated ? <UserButtons /> : <GuestButtons />]}
+      {authenticated ? <UserButtons /> : <GuestButtons />}
     </Container>
   </Menu>
 );
+
+Header.propTypes = {
+  authenticated: PropTypes.bool.isRequired,
+};
 
 export default Header;
