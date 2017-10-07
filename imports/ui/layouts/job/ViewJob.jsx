@@ -2,8 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
 import React from 'react';
-import { Segment, Container, Header } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Segment, Container, Header } from 'semantic-ui-react';
 
 import Jobs from '../../../api/Jobs';
 import Loading from '../../components/Loading';
@@ -30,12 +31,16 @@ const ViewJob = ({ loading, job }) => {
   return <Redirect to="/" />;
 };
 
+ViewJob.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  job: PropTypes.instanceOf(Jobs),
+};
+
 export default withTracker((props) => {
-  // TODO: maybe we shouldn't subscribe to jobs, can we have a 'job' publication from server?
-  const handle = Meteor.subscribe('jobs');
+  const handle = Meteor.subscribe('job', props.match.params.id);
 
   return {
     loading: !handle.ready(),
-    job: Jobs.findOne({ _id: props.match.params.id }),
+    job: Jobs.findOne(),
   };
 })(ViewJob);

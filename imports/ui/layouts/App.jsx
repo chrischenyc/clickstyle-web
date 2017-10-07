@@ -41,9 +41,9 @@ const App = props => (
           <AuthRoute path="/settings" exact component={Settings} {...props} />
 
           <Route path="/jobs" exact component={Jobs} {...props} />
-          <Route path="/jobs/:_id" exact component={ViewJob} {...props} />
+          <Route path="/jobs/:id" component={ViewJob} {...props} />
           <Route path="/jobs/new" exact component={NewJob} {...props} />
-          <AuthRoute path="/edit-job/:_id" exact component={EditJob} {...props} />
+          <AuthRoute path="/edit-job/:id" exact component={EditJob} {...props} />
 
           <Route component={NotFound} />
         </Switch>

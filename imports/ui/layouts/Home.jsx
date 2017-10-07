@@ -57,7 +57,7 @@ class Home extends Component {
               }}
             />
 
-            <Link to="/jobs">
+            <Link to="/jobs/new">
               <Button size="huge" color="teal">
                 Book Now
               </Button>
