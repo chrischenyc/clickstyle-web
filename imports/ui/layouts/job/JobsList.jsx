@@ -13,11 +13,11 @@ const jobImages = [
 ];
 
 const JobsList = ({ jobs }) => (
-  <Container>
+  <Container fluid>
     <Card.Group stackable>
       {jobs.map(job => (
         <Card key={job._id} link centered href={`/jobs/${job._id}`}>
-          <Image src={_.sample(jobImages)} />
+          <Image src={_.sample(jobImages)} fluid />
           <Card.Content textAlign="left">
             <Card.Header>{job.title}</Card.Header>
             <Card.Meta>{job.location}</Card.Meta>
