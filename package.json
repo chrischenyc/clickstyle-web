@@ -1,6 +1,6 @@
 {
   "name": "stylesquard-web",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "Stylesquard.com web/server app using meteor + react + semantic ",
   "private": true,
   "author": "Chris Chen",
@@ -11,7 +11,7 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "babel-runtime": "^6.20.0",
+    "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.3",
     "lodash": "^4.17.4",
     "meteor-node-stubs": "~0.2.4",
