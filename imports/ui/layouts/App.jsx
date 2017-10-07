@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import AuthRoute from '../helpers/AuthRoute';
 import PublicRoute from '../helpers/PublicRoute';
 
-import Home from '../layouts/home/Home';
+import HomePage from '../layouts/home/HomePage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import NotFound from '../layouts/NotFound';
@@ -19,7 +19,7 @@ import Dashboard from '../layouts/user/Dashboard';
 import Profile from '../layouts/user/Profile';
 import Settings from '../layouts/user/Settings';
 
-import Jobs from '../layouts/job/Jobs';
+import JobsPage from '../layouts/job/JobsPage';
 import ViewJob from '../layouts/job/ViewJob';
 import NewJob from '../layouts/job/NewJob';
 import EditJob from '../layouts/job/EditJob';
@@ -32,7 +32,7 @@ const App = props => (
       <div>
         <Header {...props} />
         <Switch>
-          <Route path="/" exact component={Home} {...props} />
+          <Route path="/" exact component={HomePage} {...props} />
 
           <PublicRoute path="/login" component={Login} {...props} />
 
@@ -40,7 +40,7 @@ const App = props => (
           <AuthRoute path="/profile" exact component={Profile} {...props} />
           <AuthRoute path="/settings" exact component={Settings} {...props} />
 
-          <Route path="/jobs" exact component={Jobs} {...props} />
+          <Route path="/jobs" exact component={JobsPage} {...props} />
           <Route path="/jobs/:id" component={ViewJob} {...props} />
           <Route path="/jobs/new" exact component={NewJob} {...props} />
           <AuthRoute path="/edit-job/:id" exact component={EditJob} {...props} />

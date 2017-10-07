@@ -5,18 +5,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TopBanner from './TopBanner';
-import JobsList from '../../components/JobsList';
+import JobsList from '../job/JobsList';
 
 import Jobs from '../../../api/Jobs';
 
-const Home = props => (
+const HomePage = props => (
   <div>
     <TopBanner />
     <JobsList loading={props.jobsLoading} jobs={props.jobs} />
   </div>
 );
 
-Home.propTypes = {
+HomePage.propTypes = {
   jobsLoading: PropTypes.bool.isRequired,
   jobs: PropTypes.arrayOf(Jobs).isRequired,
 };
@@ -28,4 +28,4 @@ export default withTracker(() => {
     jobsLoading: !handle.ready(),
     jobs: Jobs.find({}).fetch(),
   };
-})(Home);
+})(HomePage);
