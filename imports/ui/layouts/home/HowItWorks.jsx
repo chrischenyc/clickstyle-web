@@ -3,13 +3,17 @@ import { Divider, Grid, Header, Icon, Image, Segment } from 'semantic-ui-react';
 
 const HowItWorks = () => (
   <Segment style={{ padding: '4em' }} vertical textAlign="center">
-    <Header as="h2" style={{ fontSize: '2em' }>HOW IT WORKS</Header>
+    <Header as="h2" style={{ fontSize: '2em' }}>
+      HOW IT WORKS
+    </Header>
 
     <Grid columns="equal" stackable>
       <Grid.Row textAlign="center">
         <Grid.Column style={{ padding: '2em 2em' }}>
           <Icon name="search" size="big" color="teal" />
-          <Header as="h3" style={{ fontSize: '2em' }>View and select our services</Header>
+          <Header as="h3" style={{ fontSize: '1.2em' }}>
+            View and select our services
+          </Header>
           <p style={{ fontSize: '1.2em' }}>
             Non dignissimos quidem quae assumenda enim quasi et. Officiis rem ut qui voluptatem
             laboriosam commodi quibusdam hic. Odio quia sunt sed quod totam sequi reiciendis quia.
@@ -19,7 +23,9 @@ const HowItWorks = () => (
         </Grid.Column>
         <Grid.Column style={{ padding: '2em 2em' }}>
           <Icon name="checked calendar" size="big" color="teal" />
-          <Header as="h3" style={{ fontSize: '2em' }>Book your appointment</Header>
+          <Header as="h3" style={{ fontSize: '1.2em' }}>
+            Book your appointment
+          </Header>
           <p style={{ fontSize: '1.2em' }}>
             Est maiores explicabo neque amet. Culpa quia qui est magnam adipisci neque quae
             consectetur aliquam. Velit suscipit et ex eum voluptatem.
@@ -27,7 +33,9 @@ const HowItWorks = () => (
         </Grid.Column>
         <Grid.Column style={{ padding: '2em 2em' }}>
           <Icon name="smile" size="big" color="teal" />
-          <Header as="h3" style={{ fontSize: '2em' }>Prepare to get pampered</Header>
+          <Header as="h3" style={{ fontSize: '1.2em' }}>
+            Prepare to get pampered
+          </Header>
           <p style={{ fontSize: '1.2em' }}>
             Consequatur similique sunt est iure est accusantium sunt et. Necessitatibus autem
             explicabo. Porro temporibus nostrum. Repellendus vel nostrum sapiente non autem hic
