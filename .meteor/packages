@@ -23,3 +23,4 @@ accounts-ui
 react-meteor-data
 zimme:collection-timestampable
 aldeed:collection2
+alanning:roles
