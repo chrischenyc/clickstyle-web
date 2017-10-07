@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
+import '../imports/startup/server/fixtures';
 import Jobs from '../imports/api/Jobs';
 
 Meteor.startup(() => {
