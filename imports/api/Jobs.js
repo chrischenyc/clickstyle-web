@@ -1,4 +1,4 @@
-const Jobs = new Mongo.Collection('jobs');
+export default (Jobs = new Mongo.Collection('jobs'));
 
 Jobs.attachBehaviour('timestampable', {
   createdBy: false,
@@ -47,5 +47,3 @@ Jobs.deny({
     return true;
   },
 });
-
-export default Jobs;
