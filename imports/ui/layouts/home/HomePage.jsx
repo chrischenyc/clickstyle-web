@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import TopBanner from './TopBanner';
 import HowItWorks from './HowItWorks';
+import Articles from './Articles';
 import JobsList from '../job/JobsList';
 
 import Jobs from '../../../api/Jobs';
@@ -17,6 +18,7 @@ const HomePage = props => (
     <div id="how-it-works">
       <HowItWorks />
     </div>
+    <Articles />
     <JobsList loading={props.jobsLoading} jobs={props.jobs} />
   </div>
 );
