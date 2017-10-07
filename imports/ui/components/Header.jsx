@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Container, Menu, Dropdown } from 'semantic-ui-react';
 
 const HowItWorksButton = () => (
@@ -55,7 +55,7 @@ const UserButtons = () => (
 const Header = ({ authenticated }) => (
   <Menu fixed="top" size="large" inverted borderless>
     <Container>
-      <Menu.Item as={NavLink} to="/">
+      <Menu.Item as={Link} to="/">
         STYLESQUARD
       </Menu.Item>
       {authenticated ? <UserButtons /> : <GuestButtons />}
