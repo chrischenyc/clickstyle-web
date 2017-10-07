@@ -32,18 +32,18 @@ const App = props => (
       <div>
         <Header {...props} />
         <Switch>
-          <Route path="/" exact component={HomePage} {...props} />
+          <Route exact path="/" component={HomePage} {...props} />
 
           <PublicRoute path="/login" component={Login} {...props} />
 
-          <AuthRoute path="/dashboard" exact component={Dashboard} {...props} />
-          <AuthRoute path="/profile" exact component={Profile} {...props} />
-          <AuthRoute path="/settings" exact component={Settings} {...props} />
+          <AuthRoute exact path="/dashboard" component={Dashboard} {...props} />
+          <AuthRoute exact path="/profile" component={Profile} {...props} />
+          <AuthRoute exact path="/settings" component={Settings} {...props} />
 
-          <Route path="/jobs" exact component={JobsPage} {...props} />
-          <Route path="/jobs/:id" component={ViewJob} {...props} />
-          <Route path="/jobs/new" exact component={NewJob} {...props} />
-          <AuthRoute path="/edit-job/:id" exact component={EditJob} {...props} />
+          <Route exact path="/jobs" component={JobsPage} {...props} />
+          <Route exact path="/jobs/new" component={NewJob} {...props} />
+          <Route exact path="/jobs/:id" component={ViewJob} {...props} />
+          <AuthRoute exact path="/jobs/:id/edit" component={EditJob} {...props} />
 
           <Route component={NotFound} />
         </Switch>
@@ -75,6 +75,7 @@ export default withTracker(() => {
     loading,
     loggingIn,
     authenticated: !loggingIn && !!userId,
+    userId,
     name: name || emailAddress,
     roles: !loading && Roles.getRolesForUser(userId),
   };
