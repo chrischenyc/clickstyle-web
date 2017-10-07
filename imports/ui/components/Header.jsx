@@ -2,17 +2,17 @@ import { Meteor } from 'meteor/meteor';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Container, Menu, Dropdown } from 'semantic-ui-react';
 
 const HowItWorksButton = () => (
-  <Menu.Item as={Link} to="/#how-it-works">
+  <Menu.Item as={NavLink} to="/#how-it-works">
     HOW IT WORKS
   </Menu.Item>
 );
 
 const SignInButton = () => (
-  <Menu.Item as={Link} to="/login">
+  <Menu.Item as={NavLink} to="/login">
     LOG IN | REGISTER
   </Menu.Item>
 );
@@ -20,9 +20,9 @@ const SignInButton = () => (
 const AccountButton = () => (
   <Dropdown text="ACCOUNT" className="item">
     <Dropdown.Menu>
-      <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />
-      <Dropdown.Item as={Link} to="/profile" text="Profile" />
-      <Dropdown.Item as={Link} to="/settings" text="Settings" />
+      <Dropdown.Item as={NavLink} to="/dashboard" text="Dashboard" />
+      <Dropdown.Item as={NavLink} to="/profile" text="Profile" />
+      <Dropdown.Item as={NavLink} to="/settings" text="Settings" />
     </Dropdown.Menu>
   </Dropdown>
 );
@@ -55,7 +55,7 @@ const UserButtons = () => (
 const Header = ({ authenticated }) => (
   <Menu fixed="top" size="large" inverted borderless>
     <Container>
-      <Menu.Item as={Link} to="/">
+      <Menu.Item as={NavLink} to="/">
         STYLESQUARD
       </Menu.Item>
       {authenticated ? <UserButtons /> : <GuestButtons />}
