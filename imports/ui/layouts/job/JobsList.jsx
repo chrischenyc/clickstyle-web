@@ -3,6 +3,8 @@ import { Container, Card, Image, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { dateString } from '../../../helpers/date';
+
 // TODO: remove placeholder images
 const jobImages = [
   'https://images.unsplash.com/photo-1503236823255-94609f598e71?dpr=1&auto=compress,format&fit=crop&w=400&h=300&q=50&cs=tinysrgb&crop=',
@@ -21,7 +23,7 @@ const JobsList = ({ jobs }) => (
           <Card.Content textAlign="left">
             <Card.Header>{job.title}</Card.Header>
             <Card.Meta>{job.location}</Card.Meta>
-            <Card.Meta>{job.createdAt.toLocaleDateString()}</Card.Meta>
+            <Card.Meta>{dateString(job.createdAt)}</Card.Meta>
             <Card.Description>{job.summary}</Card.Description>
           </Card.Content>
           <Card.Content extra>
