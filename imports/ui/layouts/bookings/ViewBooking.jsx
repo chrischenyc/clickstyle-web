@@ -34,7 +34,7 @@ ViewBooking.propTypes = {
 };
 
 export default withTracker((props) => {
-  const handle = Meteor.subscribe('booking', props.match.params.id);
+  const handle = Meteor.subscribe('bookings.view', props.match.params._id);
 
   return {
     loading: !handle.ready(),

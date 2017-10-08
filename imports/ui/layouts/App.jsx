@@ -48,8 +48,8 @@ const App = props => (
 
           <Route exact path="/bookings" component={BookingsPage} {...props} />
           <Route exact path="/bookings/new" component={NewBooking} {...props} />
-          <Route exact path="/bookings/:id" component={ViewBooking} {...props} />
-          <AuthRoute exact path="/bookings/:id/edit" component={EditBooking} {...props} />
+          <Route exact path="/bookings/:_id" component={ViewBooking} {...props} />
+          <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} {...props} />
 
           <Route component={NotFound} />
         </Switch>

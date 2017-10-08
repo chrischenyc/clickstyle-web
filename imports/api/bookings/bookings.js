@@ -1,31 +1,7 @@
 // definition of the Bookings collection
+import { Mongo } from 'meteor/mongo';
 
-export default (Bookings = new Mongo.Collection('bookings'));
-
-Bookings.attachBehaviour('timestampable', {
-  createdBy: false,
-  updatedBy: false,
-});
-
-const BookingsSchema = new SimpleSchema({
-  title: {
-    type: String,
-    label: 'Title',
-    max: 200,
-  },
-  location: {
-    type: String,
-    label: 'Location',
-  },
-  summary: {
-    type: String,
-    label: 'Brief summary',
-    optional: true,
-    max: 1000,
-  },
-});
-
-Bookings.attachSchema(BookingsSchema);
+const Bookings = new Mongo.Collection('bookings');
 
 Bookings.allow({
   insert() {
@@ -49,3 +25,31 @@ Bookings.deny({
     return true;
   },
 });
+
+Bookings.attachBehaviour('timestampable', {
+  createdBy: false,
+  updatedBy: false,
+});
+
+// TODO: complete Bookings schema
+const BookingsSchema = new SimpleSchema({
+  title: {
+    type: String,
+    label: 'Title',
+    max: 200,
+  },
+  location: {
+    type: String,
+    label: 'Location',
+  },
+  summary: {
+    type: String,
+    label: 'Brief summary',
+    optional: true,
+    max: 1000,
+  },
+});
+
+Bookings.attachSchema(BookingsSchema);
+
+export default Bookings;
