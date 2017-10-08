@@ -27,7 +27,9 @@ import EditBooking from '../layouts/booking/EditBooking';
 const App = props => (
   <Router>
     {props.loading ? (
-      <div />
+      <div>
+        <Header {...props} />
+      </div>
     ) : (
       <div>
         <Header {...props} />
