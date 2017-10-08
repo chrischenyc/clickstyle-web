@@ -1,11 +1,11 @@
-export default (Jobs = new Mongo.Collection('jobs'));
+export default (Bookings = new Mongo.Collection('bookings'));
 
-Jobs.attachBehaviour('timestampable', {
+Bookings.attachBehaviour('timestampable', {
   createdBy: false,
   updatedBy: false,
 });
 
-const JobsSchema = new SimpleSchema({
+const BookingsSchema = new SimpleSchema({
   title: {
     type: String,
     label: 'Title',
@@ -23,9 +23,9 @@ const JobsSchema = new SimpleSchema({
   },
 });
 
-Jobs.attachSchema(JobsSchema);
+Bookings.attachSchema(BookingsSchema);
 
-Jobs.allow({
+Bookings.allow({
   insert() {
     return false;
   },
@@ -36,7 +36,7 @@ Jobs.allow({
     return false;
   },
 });
-Jobs.deny({
+Bookings.deny({
   insert() {
     return true;
   },

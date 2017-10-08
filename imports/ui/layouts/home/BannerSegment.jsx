@@ -47,7 +47,7 @@ const BannerSegment = () => (
         }}
       />
 
-      <Link to="/jobs/new">
+      <Link to="/bookings/new">
         <Button size="huge" color="teal">
           Book Now
         </Button>

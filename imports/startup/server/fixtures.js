@@ -1,34 +1,34 @@
-import Jobs from '../../api/Jobs';
+import Bookings from '../../api/Bookings';
 
-if (Jobs.find().count() === 0) {
-  Jobs.insert({
+if (Bookings.find().count() === 0) {
+  Bookings.insert({
     title: 'wedding makeup artist needed',
     location: 'South Yarra, VIC',
     summary:
       'Exercitationem quos repudiandae. Voluptatem sit sed minus quia non aut hic. Consequuntur commodi et voluptatem ratione cum sunt iusto ut. Architecto quidem facilis voluptatum.',
   });
 
-  Jobs.insert({
+  Bookings.insert({
     title: 'hair stylist needed - URGENT!',
     location: 'Gold Coast, QLD',
     summary:
       'Officia sunt perferendis sunt doloremque non. Totam enim nemo vitae nisi exercitationem nihil fugit ratione. Similique aut voluptas qui rerum mollitia asperiores. Eius maiores quia beatae earum blanditiis libero dolores minus.',
   });
 
-  Jobs.insert({
+  Bookings.insert({
     title: 'makeup artist needed',
     location: 'Doncaster, VIC',
     summary: 'Distinctio nemo facere voluptatem. Qui architecto non qui molestias. Id impedit at.',
   });
 
-  Jobs.insert({
+  Bookings.insert({
     title: 'I need my hair done ASAP',
     location: 'Perth, WA',
     summary:
       'Eligendi et dignissimos perspiciatis doloremque asperiores iste exercitationem et amet. Aliquid consequatur sed numquam temporibus libero quas. Ut dolore nostrum adipisci rerum temporibus rerum.',
   });
 
-  Jobs.insert({
+  Bookings.insert({
     title: 'makeup needed',
     location: 'Chatswood, NSW',
     summary:

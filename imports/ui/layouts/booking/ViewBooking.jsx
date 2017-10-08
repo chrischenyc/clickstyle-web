@@ -6,18 +6,18 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Segment, Container, Header } from 'semantic-ui-react';
 
-import Jobs from '../../../api/Jobs';
+import Bookings from '../../../api/Bookings';
 import Loading from '../../components/Loading';
 
-const ViewJob = ({ loading, job }) => {
+const ViewBooking = ({ loading, booking }) => {
   let content;
   if (loading) {
     content = <Loading />;
-  } else if (job) {
+  } else if (booking) {
     content = (
       <Segment vertical>
         <Container>
-          <Header>{job.title}</Header>
+          <Header>{booking.title}</Header>
         </Container>
       </Segment>
     );
@@ -28,16 +28,16 @@ const ViewJob = ({ loading, job }) => {
   return <div className="below-fixed-menu full-page">{content}</div>;
 };
 
-ViewJob.propTypes = {
+ViewBooking.propTypes = {
   loading: PropTypes.bool.isRequired,
-  job: PropTypes.object,
+  booking: PropTypes.object,
 };
 
 export default withTracker((props) => {
-  const handle = Meteor.subscribe('job', props.match.params.id);
+  const handle = Meteor.subscribe('booking', props.match.params.id);
 
   return {
     loading: !handle.ready(),
-    job: Jobs.findOne(),
+    booking: Bookings.findOne(),
   };
-})(ViewJob);
+})(ViewBooking);

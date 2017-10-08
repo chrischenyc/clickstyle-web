@@ -8,9 +8,9 @@ import { Segment } from 'semantic-ui-react';
 import BannerSegment from './BannerSegment';
 import HowItWorksSegment from './HowItWorksSegment';
 import ArticlesSegment from './ArticlesSegment';
-import JobsList from '../job/JobsList';
+import BookingsList from '../booking/BookingsList';
 
-import Jobs from '../../../api/Jobs';
+import Bookings from '../../../api/Bookings';
 
 const HomePage = props => (
   <div className="below-fixed-menu">
@@ -30,21 +30,21 @@ const HomePage = props => (
       }}
       vertical
     >
-      <JobsList jobs={props.jobs} />
+      <BookingsList bookings={props.bookings} />
     </Segment>
   </div>
 );
 
 HomePage.propTypes = {
-  jobsLoading: PropTypes.bool.isRequired,
-  jobs: PropTypes.array.isRequired,
+  bookingsLoading: PropTypes.bool.isRequired,
+  bookings: PropTypes.array.isRequired,
 };
 
 export default withTracker(() => {
-  const handle = Meteor.subscribe('jobs');
+  const handle = Meteor.subscribe('bookings');
 
   return {
-    jobsLoading: !handle.ready(),
-    jobs: Jobs.find({}).fetch(),
+    bookingsLoading: !handle.ready(),
+    bookings: Bookings.find({}).fetch(),
   };
 })(HomePage);

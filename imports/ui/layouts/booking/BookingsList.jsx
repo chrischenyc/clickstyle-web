@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { dateString } from '../../../helpers/date';
 
 // TODO: remove placeholder images
-const jobImages = [
+const bookingImages = [
   'https://images.unsplash.com/photo-1503236823255-94609f598e71?dpr=1&auto=compress,format&fit=crop&w=400&h=300&q=50&cs=tinysrgb&crop=',
   'https://images.unsplash.com/photo-1496019392116-5342906878cc?dpr=1&auto=compress,format&fit=crop&w=400&h=300&q=50&cs=tinysrgb&crop=',
   'https://images.unsplash.com/photo-1457972729786-0411a3b2b626?dpr=1&auto=compress,format&fit=crop&w=400&h=300&q=50&cs=tinysrgb&crop=',
@@ -14,17 +14,17 @@ const jobImages = [
   'https://images.unsplash.com/photo-1500350124139-04a90e4ce9f6?dpr=1&auto=compress,format&fit=crop&w=400&h=300&q=50&cs=tinysrgb&crop=',
 ];
 
-const JobsList = ({ jobs }) => (
+const BookingsList = ({ bookings }) => (
   <Container fluid>
     <Card.Group stackable>
-      {jobs.map(job => (
-        <Card key={job._id} link centered href={`/jobs/${job._id}`}>
-          <Image src={_.sample(jobImages)} fluid />
+      {bookings.map(booking => (
+        <Card key={booking._id} link centered href={`/bookings/${booking._id}`}>
+          <Image src={_.sample(bookingImages)} fluid />
           <Card.Content textAlign="left">
-            <Card.Header>{job.title}</Card.Header>
-            <Card.Meta>{job.location}</Card.Meta>
-            <Card.Meta>{dateString(job.createdAt)}</Card.Meta>
-            <Card.Description>{job.summary}</Card.Description>
+            <Card.Header>{booking.title}</Card.Header>
+            <Card.Meta>{booking.location}</Card.Meta>
+            <Card.Meta>{dateString(booking.createdAt)}</Card.Meta>
+            <Card.Description>{booking.summary}</Card.Description>
           </Card.Content>
           <Card.Content extra>
             <Icon name="user" />8 bidders
@@ -35,8 +35,8 @@ const JobsList = ({ jobs }) => (
   </Container>
 );
 
-JobsList.propTypes = {
-  jobs: PropTypes.array.isRequired,
+BookingsList.propTypes = {
+  bookings: PropTypes.array.isRequired,
 };
 
-export default JobsList;
+export default BookingsList;

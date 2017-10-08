@@ -19,10 +19,10 @@ import Dashboard from '../layouts/user/Dashboard';
 import Profile from '../layouts/user/Profile';
 import Settings from '../layouts/user/Settings';
 
-import JobsPage from '../layouts/job/JobsPage';
-import ViewJob from '../layouts/job/ViewJob';
-import NewJob from '../layouts/job/NewJob';
-import EditJob from '../layouts/job/EditJob';
+import BookingsPage from '../layouts/booking/BookingsPage';
+import ViewBooking from '../layouts/booking/ViewBooking';
+import NewBooking from '../layouts/booking/NewBooking';
+import EditBooking from '../layouts/booking/EditBooking';
 
 const App = props => (
   <Router>
@@ -40,10 +40,10 @@ const App = props => (
           <AuthRoute exact path="/profile" component={Profile} {...props} />
           <AuthRoute exact path="/settings" component={Settings} {...props} />
 
-          <Route exact path="/jobs" component={JobsPage} {...props} />
-          <Route exact path="/jobs/new" component={NewJob} {...props} />
-          <Route exact path="/jobs/:id" component={ViewJob} {...props} />
-          <AuthRoute exact path="/jobs/:id/edit" component={EditJob} {...props} />
+          <Route exact path="/bookings" component={BookingsPage} {...props} />
+          <Route exact path="/bookings/new" component={NewBooking} {...props} />
+          <Route exact path="/bookings/:id" component={ViewBooking} {...props} />
+          <AuthRoute exact path="/bookings/:id/edit" component={EditBooking} {...props} />
 
           <Route component={NotFound} />
         </Switch>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Segment, Container, Header } from 'semantic-ui-react';
 
-const NewJob = () => (
-  <div className="below-fixed-menu full-page">
+const EditBooking = () => (
+  <div className="full-page below-fixed-menu">
     <Segment vertical>
       <Container>
-        <Header>new job</Header>
+        <Header>edit booking</Header>
       </Container>
     </Segment>
   </div>
 );
 
-export default NewJob;
+export default EditBooking;
