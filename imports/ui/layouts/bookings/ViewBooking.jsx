@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Segment, Container, Header } from 'semantic-ui-react';
 
-import Bookings from '../../../api/Bookings';
+import Bookings from '../../../api/bookings/bookings';
 import Loading from '../../components/Loading';
 
 const ViewBooking = ({ loading, booking }) => {

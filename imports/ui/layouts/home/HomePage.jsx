@@ -8,9 +8,9 @@ import { Segment } from 'semantic-ui-react';
 import BannerSegment from './BannerSegment';
 import HowItWorksSegment from './HowItWorksSegment';
 import ArticlesSegment from './ArticlesSegment';
-import BookingsList from '../booking/BookingsList';
+import BookingsList from '../bookings/BookingsList';
 
-import Bookings from '../../../api/Bookings';
+import Bookings from '../../../api/bookings/bookings';
 
 const HomePage = props => (
   <div className="below-fixed-menu">

@@ -1,3 +1,5 @@
+// definition of the Bookings collection
+
 export default (Bookings = new Mongo.Collection('bookings'));
 
 Bookings.attachBehaviour('timestampable', {

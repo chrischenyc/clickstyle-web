@@ -1,4 +1,4 @@
-import Bookings from '../../api/Bookings';
+import Bookings from '../../api/bookings/bookings';
 
 if (Bookings.find().count() === 0) {
   Bookings.insert({

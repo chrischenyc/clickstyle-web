@@ -8,7 +8,7 @@ import { Segment } from 'semantic-ui-react';
 import BookingsList from './BookingsList';
 import Loading from '../../components/Loading';
 
-import Bookings from '../../../api/Bookings';
+import Bookings from '../../../api/bookings/bookings';
 
 const BookingsPage = ({ loading, bookings }) => (
   <div className="below-fixed-menu">

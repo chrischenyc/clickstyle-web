@@ -6,24 +6,24 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import AuthRoute from '../helpers/AuthRoute';
-import PublicRoute from '../helpers/PublicRoute';
-
-import HomePage from '../layouts/home/HomePage';
+import AuthRoute from '../components/AuthRoute';
+import PublicRoute from '../components/PublicRoute';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import NotFound from '../layouts/NotFound';
 import Loading from '../components/Loading';
+
+import HomePage from '../layouts/home/HomePage';
+import NotFound from '../layouts/NotFound';
 
 import Login from '../layouts/user/Login';
 import Dashboard from '../layouts/user/Dashboard';
 import Profile from '../layouts/user/Profile';
 import Settings from '../layouts/user/Settings';
 
-import BookingsPage from '../layouts/booking/BookingsPage';
-import ViewBooking from '../layouts/booking/ViewBooking';
-import NewBooking from '../layouts/booking/NewBooking';
-import EditBooking from '../layouts/booking/EditBooking';
+import BookingsPage from '../layouts/bookings/BookingsPage';
+import ViewBooking from '../layouts/bookings/ViewBooking';
+import NewBooking from '../layouts/bookings/NewBooking';
+import EditBooking from '../layouts/bookings/EditBooking';
 
 const App = props => (
   <Router>
