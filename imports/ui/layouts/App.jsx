@@ -30,7 +30,9 @@ const App = props => (
     {props.loading ? (
       <div>
         <Header {...props} />
-        <Loading />
+        <div className="below-fixed-menu full-page">
+          <Loading />
+        </div>
       </div>
     ) : (
       <div>
