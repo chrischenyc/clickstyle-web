@@ -13,6 +13,7 @@ import HomePage from '../layouts/home/HomePage';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import NotFound from '../layouts/NotFound';
+import Loading from '../components/Loading';
 
 import Login from '../layouts/user/Login';
 import Dashboard from '../layouts/user/Dashboard';
@@ -29,6 +30,7 @@ const App = props => (
     {props.loading ? (
       <div>
         <Header {...props} />
+        <Loading />
       </div>
     ) : (
       <div>
