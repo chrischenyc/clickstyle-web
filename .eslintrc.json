@@ -19,7 +19,8 @@
       "meteor/blaze",
       "meteor/templating",
       "meteor/react-meteor-data",
-      "meteor/alanning:roles"
+      "meteor/alanning:roles",
+      "meteor/service-configuration"
     ]
   },
   "rules": {
