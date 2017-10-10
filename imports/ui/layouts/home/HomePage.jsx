@@ -16,10 +16,7 @@ const HomePage = props => (
   <div className="below-fixed-menu">
     <BannerSegment />
 
-    {/* TODO: anchor doesn't work */}
-    <div id="how-it-works">
-      <HowItWorksSegment />
-    </div>
+    <HowItWorksSegment />
 
     <ArticlesSegment />
 
