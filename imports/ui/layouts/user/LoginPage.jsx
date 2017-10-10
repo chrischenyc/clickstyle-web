@@ -33,7 +33,9 @@ class LoginPage extends Component {
         if (error) {
           this.setState({
             loading: false,
-            errors: { message: error.reason },
+            errors: {
+              message: error.error === 403 ? 'email and password do not match' : error.reason,
+            },
           });
         } else {
           this.setState({
