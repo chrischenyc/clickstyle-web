@@ -15,7 +15,7 @@ import Loading from '../components/Loading';
 import HomePage from '../layouts/home/HomePage';
 import NotFound from '../layouts/NotFound';
 
-import Login from '../layouts/user/Login';
+import LoginPage from '../layouts/user/LoginPage';
 import Dashboard from '../layouts/user/Dashboard';
 import Profile from '../layouts/user/Profile';
 import Settings from '../layouts/user/Settings';
@@ -40,7 +40,7 @@ const App = props => (
         <Switch>
           <Route exact path="/" component={HomePage} {...props} />
 
-          <PublicRoute path="/login" component={Login} {...props} />
+          <PublicRoute path="/login" component={LoginPage} {...props} />
 
           <AuthRoute exact path="/dashboard" component={Dashboard} {...props} />
           <AuthRoute exact path="/profile" component={Profile} {...props} />
