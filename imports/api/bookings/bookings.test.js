@@ -1,1 +1,1 @@
-// TODO: tests for the behavior of Bookings collection
+// tests for the behavior of Bookings collection
