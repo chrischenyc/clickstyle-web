@@ -1,16 +1,13 @@
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
-import { Roles } from 'meteor/alanning:roles';
-
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+
+import store from '../../redux/store';
 
 import AuthRoute from '../components/AuthRoute';
 import PublicRoute from '../components/PublicRoute';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Loading from '../components/Loading';
 
 import HomePage from '../layouts/home/HomePage';
 import NotFound from '../layouts/NotFound';
@@ -25,64 +22,33 @@ import ViewBooking from '../layouts/bookings/ViewBooking';
 import NewBooking from '../layouts/bookings/NewBooking';
 import EditBooking from '../layouts/bookings/EditBooking';
 
-const App = props => (
+const App = () => (
   <Router>
-    {props.loading ? (
+    <Provider store={store}>
       <div>
-        <Header {...props} />
-        <div className="below-fixed-menu full-page">
-          <Loading />
-        </div>
-      </div>
-    ) : (
-      <div>
-        <Header {...props} />
+        <Header />
+
         <Switch>
-          <Route exact path="/" component={HomePage} {...props} />
+          <Route exact path="/" component={HomePage} />
 
-          <PublicRoute path="/login" component={LoginPage} {...props} />
+          <PublicRoute path="/login" component={LoginPage} />
 
-          <AuthRoute exact path="/dashboard" component={Dashboard} {...props} />
-          <AuthRoute exact path="/profile" component={Profile} {...props} />
-          <AuthRoute exact path="/settings" component={Settings} {...props} />
+          <AuthRoute exact path="/dashboard" component={Dashboard} />
+          <AuthRoute exact path="/profile" component={Profile} />
+          <AuthRoute exact path="/settings" component={Settings} />
 
-          <Route exact path="/bookings" component={BookingsPage} {...props} />
-          <Route exact path="/bookings/new" component={NewBooking} {...props} />
-          <Route exact path="/bookings/:_id" component={ViewBooking} {...props} />
-          <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} {...props} />
+          <Route exact path="/bookings" component={BookingsPage} />
+          <Route exact path="/bookings/new" component={NewBooking} />
+          <Route exact path="/bookings/:_id" component={ViewBooking} />
+          <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
           <Route component={NotFound} />
         </Switch>
+
         <Footer />
       </div>
-    )}
+    </Provider>
   </Router>
 );
 
-App.propTypes = {
-  loading: PropTypes.bool.isRequired,
-};
-
-const getUserName = name =>
-  ({
-    string: name,
-    object: `${name.first} ${name.last}`,
-  }[typeof name]);
-
-export default withTracker(() => {
-  const loggingIn = Meteor.loggingIn();
-  const user = Meteor.user();
-  const userId = Meteor.userId();
-  const loading = !Roles.subscription.ready();
-  const name = user && user.profile && user.profile.name && getUserName(user.profile.name);
-  const emailAddress = user && user.emails && user.emails[0].address;
-
-  return {
-    loading,
-    loggingIn,
-    authenticated: !loggingIn && !!userId,
-    userId,
-    name: name || emailAddress,
-    roles: !loading && Roles.getRolesForUser(userId),
-  };
-})(App);
+export default App;

@@ -1,5 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { userSignedIn } from '../../../redux/user';
 import { validateUserLogin } from '../../../validators/user';
 import LoginForm from './LoginForm';
 
@@ -42,7 +45,8 @@ class LoginPage extends Component {
             loading: false,
             errors: {},
           });
-          // will be redirect to /dashboard
+
+          this.props.userSignedIn(Meteor.user());
         }
       });
     }
@@ -66,4 +70,13 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+LoginPage.propTypes = {
+  userSignedIn: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = dispatch => ({
+  userSignedIn: (user) => {
+    dispatch(userSignedIn(user));
+  },
+});
+export default connect(null, mapDispatchToProps)(LoginPage);

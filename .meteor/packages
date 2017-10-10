@@ -19,7 +19,6 @@ shell-server@0.2.4            # Server-side component of the `meteor shell` comm
 
 accounts-password
 accounts-facebook
-accounts-ui
 react-meteor-data
 zimme:collection-timestampable
 aldeed:collection2
