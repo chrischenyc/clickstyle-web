@@ -5,7 +5,7 @@ import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react';
 
 // web version of the login form, stateless component
 
-const LoginForm = ({ onSubmit, onChange, loading, errors }) => (
+const SignUpForm = ({ onSubmit, onChange, loading, errors }) => (
   <div className="full-page below-fixed-menu">
     <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
@@ -40,26 +40,38 @@ const LoginForm = ({ onSubmit, onChange, loading, errors }) => (
             />
             <Message error content={errors.password} />
 
+            <Form.Input
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Password confirm"
+              type="password"
+              name="confirm"
+              onChange={onChange}
+              error={errors.confirm !== undefined && errors.confirm.length > 0}
+            />
+            <Message error content={errors.confirm} />
+
             <Button color="teal" fluid size="large" type="submit">
-              Login
+              Sign Up
             </Button>
 
             <Message error content={errors.message} />
           </Segment>
         </Form>
         <Message attached="bottom">
-          {"Don't have an account?"} <Link to="/signup">Sign Up here</Link>
+          {'Already have an account?'} <Link to="/login">Login here</Link>
         </Message>
       </Grid.Column>
     </Grid>
   </div>
 );
 
-LoginForm.propTypes = {
+SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
 };
 
-export default LoginForm;
+export default SignUpForm;

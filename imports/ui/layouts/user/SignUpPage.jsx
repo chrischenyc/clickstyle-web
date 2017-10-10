@@ -3,18 +3,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userSignedIn } from '../../../redux/user';
-import { validateUserLogin } from '../../../validators/user';
-import LoginForm from './LoginForm';
+import { validateUserSignUp } from '../../../validators/user';
+import SignUpForm from './SignUpForm';
 
 // platform-independent stateful container component
-// to handle Login logic
-class LoginPage extends Component {
+// to handle SignUp logic
+class SignUpPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: '',
       password: '',
+      confirm: '',
       errors: {},
       loading: false,
     };
@@ -27,11 +28,14 @@ class LoginPage extends Component {
     this.setState({ errors: {} });
     event.preventDefault();
 
-    const errors = validateUserLogin(this.state.email, this.state.password);
+    const errors = validateUserSignUp(this.state.email, this.state.password, this.state.confirm);
+
     if (Object.keys(errors).length > 0) {
       this.setState({ errors });
     } else {
       this.setState({ loading: true });
+
+      // TODO: change to sign up
       Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
         if (error) {
           this.setState({
@@ -58,7 +62,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <LoginForm
+      <SignUpForm
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         loading={this.state.loading}
@@ -68,7 +72,7 @@ class LoginPage extends Component {
   }
 }
 
-LoginPage.propTypes = {
+SignUpPage.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
 };
 
@@ -77,4 +81,4 @@ const mapDispatchToProps = dispatch => ({
     dispatch(userSignedIn(user));
   },
 });
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default connect(null, mapDispatchToProps)(SignUpPage);

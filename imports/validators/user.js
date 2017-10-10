@@ -7,9 +7,7 @@ export const validateUserLogin = (email, password) => {
     errors.email = 'email is required';
   } else if (!validator.isEmail(email)) {
     errors.email = 'invalid email';
-  }
-
-  if (validator.isEmpty(password)) {
+  } else if (validator.isEmpty(password)) {
     errors.password = 'password is required';
   } else if (password.length < 6) {
     errors.password = 'password needs to have at least 6 characters';
@@ -18,4 +16,20 @@ export const validateUserLogin = (email, password) => {
   return errors;
 };
 
-export const validateUserSignUp = () => {};
+export const validateUserSignUp = (email, password, confirm) => {
+  const errors = {};
+
+  if (validator.isEmpty(email)) {
+    errors.email = 'email is required';
+  } else if (!validator.isEmail(email)) {
+    errors.email = 'invalid email';
+  } else if (validator.isEmpty(password)) {
+    errors.password = 'password is required';
+  } else if (password.length < 6) {
+    errors.password = 'password needs to have at least 6 characters';
+  } else if (password !== confirm) {
+    errors.confirm = 'password does not match the confirm password';
+  }
+
+  return errors;
+};

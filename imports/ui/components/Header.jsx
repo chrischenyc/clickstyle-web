@@ -33,7 +33,10 @@ const Header = props => (
       ) : (
         <Menu.Menu position="right">
           <Menu.Item as={NavLink} to="/login">
-            LOG IN | REGISTER
+            LOG IN
+          </Menu.Item>
+          <Menu.Item as={NavLink} to="/signup">
+            SIGN UP
           </Menu.Item>
         </Menu.Menu>
       )}

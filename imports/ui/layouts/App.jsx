@@ -13,6 +13,7 @@ import HomePage from '../layouts/home/HomePage';
 import NotFound from '../layouts/NotFound';
 
 import LoginPage from '../layouts/user/LoginPage';
+import SignUpPage from '../layouts/user/SignUpPage';
 import Dashboard from '../layouts/user/Dashboard';
 import Profile from '../layouts/user/Profile';
 import Settings from '../layouts/user/Settings';
@@ -32,6 +33,7 @@ const App = () => (
           <Route exact path="/" component={HomePage} />
 
           <PublicRoute path="/login" component={LoginPage} />
+          <PublicRoute path="/signup" component={SignUpPage} />
 
           <AuthRoute exact path="/dashboard" component={Dashboard} />
           <AuthRoute exact path="/profile" component={Profile} />
