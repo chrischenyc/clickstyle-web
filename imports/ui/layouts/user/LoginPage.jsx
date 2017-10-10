@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import { validateUserLogin } from '../../../validators/user';
 import LoginForm from './LoginForm';
 
 // platform-independent stateful container component
@@ -11,7 +12,7 @@ class LoginPage extends Component {
     this.state = {
       email: '',
       password: '',
-      error: '',
+      errors: {},
       loading: false,
     };
 
@@ -20,23 +21,29 @@ class LoginPage extends Component {
   }
 
   handleSubmit(event) {
-    this.setState({ loading: true, errors: {} });
+    this.setState({ errors: {} });
     event.preventDefault();
 
-    Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
-      if (error) {
-        this.setState({
-          loading: false,
-          error: error.reason,
-        });
-      } else {
-        this.setState({
-          loading: false,
-          error: '',
-        });
-        // will be redirect to /dashboard
-      }
-    });
+    const errors = validateUserLogin(this.state.email, this.state.password);
+    if (Object.keys(errors).length > 0) {
+      this.setState({ errors });
+    } else {
+      this.setState({ loading: true });
+      Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
+        if (error) {
+          this.setState({
+            loading: false,
+            errors: { message: error.reason },
+          });
+        } else {
+          this.setState({
+            loading: false,
+            errors: {},
+          });
+          // will be redirect to /dashboard
+        }
+      });
+    }
   }
 
   handleChange(event) {
@@ -51,7 +58,7 @@ class LoginPage extends Component {
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         loading={this.state.loading}
-        error={this.state.error}
+        errors={this.state.errors}
       />
     );
   }
