@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react';
 
@@ -53,5 +54,12 @@ const LoginForm = ({ onSubmit, onChange, loading, errors }) => (
     </Grid>
   </div>
 );
+
+LoginForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  errors: PropTypes.object.isRequired,
+};
 
 export default LoginForm;
