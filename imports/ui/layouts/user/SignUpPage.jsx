@@ -22,8 +22,14 @@ class SignUpPage extends Component {
       loading: false,
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFacebook = this.handleFacebook.bind(this);
+    this.handleGoogle = this.handleGoogle.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
@@ -75,8 +81,12 @@ class SignUpPage extends Component {
     }
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+  handleFacebook() {
+    console.log('todo: facebook sign up');
+  }
+
+  handleGoogle() {
+    console.log('todo: google sign up');
   }
 
   render() {
@@ -84,6 +94,8 @@ class SignUpPage extends Component {
       <SignUpForm
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
+        onFacebook={this.handleFacebook}
+        onGoogle={this.handleGoogle}
         loading={this.state.loading}
         errors={this.state.errors}
       />

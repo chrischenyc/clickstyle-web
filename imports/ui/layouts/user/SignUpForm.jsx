@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Grid, Message, Segment, Divider } from 'semantic-ui-react';
 
-// web version of the login form, stateless component
+import SocialLoginButtons from './SocialLoginButtons';
 
-const SignUpForm = ({ onSubmit, onChange, loading, errors }) => (
+// web version of the sign up form, stateless component
+const SignUpForm = ({ onSubmit, onChange, onFacebook, onGoogle, loading, errors }) => (
   <div className="full-page below-fixed-menu">
     <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Form
-          className="attached segment"
-          onSubmit={onSubmit}
-          loading={loading}
-          error={errors.message !== ''}
-        >
-          <Segment>
+        <Segment attached>
+          <SocialLoginButtons isSignUp onFacebook={onFacebook} onGoogle={onGoogle} />
+
+          <Divider horizontal>or</Divider>
+
+          <Form onSubmit={onSubmit} loading={loading} error={errors.message !== ''}>
             <Form.Input
               fluid
               icon="mail"
@@ -71,8 +71,9 @@ const SignUpForm = ({ onSubmit, onChange, loading, errors }) => (
             </Button>
 
             <Message error content={errors.message} />
-          </Segment>
-        </Form>
+          </Form>
+        </Segment>
+
         <Message attached="bottom" size="large">
           {'Already have a Stylesquard account?'} <Link to="/login">Log in</Link>
         </Message>
@@ -84,6 +85,8 @@ const SignUpForm = ({ onSubmit, onChange, loading, errors }) => (
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onFacebook: PropTypes.func.isRequired,
+  onGoogle: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
 };

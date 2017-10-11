@@ -19,8 +19,14 @@ class LoginPage extends Component {
       loading: false,
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFacebook = this.handleFacebook.bind(this);
+    this.handleGoogle = this.handleGoogle.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
@@ -28,6 +34,7 @@ class LoginPage extends Component {
     event.preventDefault();
 
     const errors = validateUserLogin(this.state.email, this.state.password);
+
     if (Object.keys(errors).length > 0) {
       this.setState({ errors });
     } else {
@@ -54,8 +61,12 @@ class LoginPage extends Component {
     }
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+  handleFacebook() {
+    console.log('todo: facebook sign in');
+  }
+
+  handleGoogle() {
+    console.log('todo: google sign in');
   }
 
   render() {
@@ -63,6 +74,8 @@ class LoginPage extends Component {
       <LoginForm
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
+        onFacebook={this.handleFacebook}
+        onGoogle={this.handleGoogle}
         loading={this.state.loading}
         errors={this.state.errors}
       />
