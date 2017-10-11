@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -35,13 +36,13 @@ class SignUpPage extends Component {
     } else {
       this.setState({ loading: true });
 
-      // TODO: change to sign up
-      Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
+      // http://docs.meteor.com/api/passwords.html#Accounts-createUser
+      Accounts.createUser({ email: this.state.email, password: this.state.password }, (error) => {
         if (error) {
           this.setState({
             loading: false,
             errors: {
-              message: error.error === 403 ? 'email and password do not match' : error.reason,
+              message: error.reason,
             },
           });
         } else {

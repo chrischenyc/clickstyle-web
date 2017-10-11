@@ -32,6 +32,8 @@ class LoginPage extends Component {
       this.setState({ errors });
     } else {
       this.setState({ loading: true });
+
+      // http://docs.meteor.com/api/accounts.html#Meteor-loginWithPassword
       Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
         if (error) {
           this.setState({

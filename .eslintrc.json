@@ -20,7 +20,8 @@
       "meteor/templating",
       "meteor/react-meteor-data",
       "meteor/alanning:roles",
-      "meteor/service-configuration"
+      "meteor/service-configuration",
+      "meteor/accounts-base"
     ]
   },
   "rules": {
