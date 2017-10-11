@@ -21,8 +21,6 @@ class LoginPage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleFacebook = this.handleFacebook.bind(this);
-    this.handleGoogle = this.handleGoogle.bind(this);
   }
 
   handleChange(event) {
@@ -61,21 +59,11 @@ class LoginPage extends Component {
     }
   }
 
-  handleFacebook() {
-    console.log('todo: facebook sign in');
-  }
-
-  handleGoogle() {
-    console.log('todo: google sign in');
-  }
-
   render() {
     return (
       <LoginForm
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        onFacebook={this.handleFacebook}
-        onGoogle={this.handleGoogle}
         loading={this.state.loading}
         errors={this.state.errors}
       />

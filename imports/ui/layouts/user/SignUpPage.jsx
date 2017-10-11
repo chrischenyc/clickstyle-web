@@ -24,8 +24,6 @@ class SignUpPage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleFacebook = this.handleFacebook.bind(this);
-    this.handleGoogle = this.handleGoogle.bind(this);
   }
 
   handleChange(event) {
@@ -81,21 +79,11 @@ class SignUpPage extends Component {
     }
   }
 
-  handleFacebook() {
-    console.log('todo: facebook sign up');
-  }
-
-  handleGoogle() {
-    console.log('todo: google sign up');
-  }
-
   render() {
     return (
       <SignUpForm
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        onFacebook={this.handleFacebook}
-        onGoogle={this.handleGoogle}
         loading={this.state.loading}
         errors={this.state.errors}
       />
