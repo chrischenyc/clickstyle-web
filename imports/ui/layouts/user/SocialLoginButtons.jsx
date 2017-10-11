@@ -3,47 +3,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 
-const facebookLogin = () => {
+const facebookLogin = (callback) => {
   Meteor.loginWithFacebook(
     {
       requestPermissions: ['email'],
       loginStyle: 'popup',
     },
-    (error) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('facebook signed in');
-      }
-    },
+    callback,
   );
 };
 
-const googleLogin = () => {
+const googleLogin = (callback) => {
   Meteor.loginWithGoogle(
     {
       requestPermissions: ['email', 'profile'],
       requestOfflineToken: true,
       loginStyle: 'popup',
     },
-    (error) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('google signed in');
-      }
-    },
+    callback,
   );
 };
 
-const SocialLoginButtons = ({ isSignUp }) => (
+const SocialLoginButtons = ({ isSignUp, callback }) => (
   <div>
     <Button
       fluid
       color="facebook"
       size="huge"
       style={{ marginBottom: '1em' }}
-      onClick={facebookLogin}
+      onClick={() => {
+        facebookLogin(callback);
+      }}
     >
       <Icon name="facebook f" />
       {isSignUp ? 'Sign up with Facebook' : 'Log in with Facebook'}
@@ -54,8 +44,10 @@ const SocialLoginButtons = ({ isSignUp }) => (
       color="grey"
       basic
       size="huge"
-      style={{ marginBottom: '1em' }}
-      onClick={googleLogin}
+      style={{ marginBottom: '0.5em' }}
+      onClick={() => {
+        googleLogin(callback);
+      }}
     >
       <Icon name="google" color="red" />
       {isSignUp ? 'Sign up with Google' : 'Log in with Google'}
@@ -65,6 +57,7 @@ const SocialLoginButtons = ({ isSignUp }) => (
 
 SocialLoginButtons.propTypes = {
   isSignUp: PropTypes.bool.isRequired,
+  callback: PropTypes.func.isRequired,
 };
 
 SocialLoginButtons.defaultProps = {

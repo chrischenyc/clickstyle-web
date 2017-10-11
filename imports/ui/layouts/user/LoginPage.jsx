@@ -21,6 +21,7 @@ class LoginPage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSocialSignIn = this.handleSocialSignIn.bind(this);
   }
 
   handleChange(event) {
@@ -59,11 +60,18 @@ class LoginPage extends Component {
     }
   }
 
+  handleSocialSignIn(error) {
+    if (!error) {
+      this.props.userSignedIn(Meteor.user());
+    }
+  }
+
   render() {
     return (
       <LoginForm
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
+        onSocialSignIn={this.handleSocialSignIn}
         loading={this.state.loading}
         errors={this.state.errors}
       />

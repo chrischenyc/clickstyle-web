@@ -6,12 +6,12 @@ import { Button, Form, Grid, Message, Segment, Divider } from 'semantic-ui-react
 import SocialLoginButtons from './SocialLoginButtons';
 
 // web version of the sign up form, stateless component
-const SignUpForm = ({ onSubmit, onChange, loading, errors }) => (
+const SignUpForm = ({ onSubmit, onChange, onSocialSignIn, loading, errors }) => (
   <div className="full-page below-fixed-menu">
     <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Segment attached>
-          <SocialLoginButtons isSignUp />
+          <SocialLoginButtons isSignUp callback={onSocialSignIn} />
 
           <Divider horizontal>or</Divider>
 
@@ -85,6 +85,7 @@ const SignUpForm = ({ onSubmit, onChange, loading, errors }) => (
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onSocialSignIn: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
 };
