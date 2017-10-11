@@ -21,7 +21,8 @@
       "meteor/react-meteor-data",
       "meteor/alanning:roles",
       "meteor/service-configuration",
-      "meteor/accounts-base"
+      "meteor/accounts-base",
+      "meteor/splendido:accounts-meld"
     ]
   },
   "rules": {
