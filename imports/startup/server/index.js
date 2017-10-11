@@ -3,6 +3,6 @@
 import './fixtures';
 import './oauth';
 import './email';
+import './accounts';
 
-import '../../api/bookings/publications';
-import '../../api/bookings/methods';
+import '../../api';
