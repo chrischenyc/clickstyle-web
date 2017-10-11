@@ -23,6 +23,7 @@ const LoginForm = ({ onSubmit, onChange, loading, errors }) => (
               placeholder="Email"
               type="email"
               name="email"
+              size="huge"
               onChange={onChange}
               error={errors.email !== undefined && errors.email.length > 0}
             />
@@ -35,20 +36,21 @@ const LoginForm = ({ onSubmit, onChange, loading, errors }) => (
               placeholder="Password"
               type="password"
               name="password"
+              size="huge"
               onChange={onChange}
               error={errors.password !== undefined && errors.password.length > 0}
             />
             <Message error content={errors.password} />
 
-            <Button color="teal" fluid size="large" type="submit">
+            <Button color="teal" fluid size="huge" type="submit">
               Login
             </Button>
 
             <Message error content={errors.message} />
           </Segment>
         </Form>
-        <Message attached="bottom">
-          {"Don't have an account?"} <Link to="/signup">Sign Up here</Link>
+        <Message attached="bottom" size="large">
+          {"Don't have an account?"} <Link to="/signup">Sign up</Link>
         </Message>
       </Grid.Column>
     </Grid>

@@ -15,8 +15,9 @@ class SignUpPage extends Component {
 
     this.state = {
       email: '',
+      firstName: '',
+      lastName: '',
       password: '',
-      confirm: '',
       errors: {},
       loading: false,
     };
@@ -29,7 +30,12 @@ class SignUpPage extends Component {
     this.setState({ errors: {} });
     event.preventDefault();
 
-    const errors = validateUserSignUp(this.state.email, this.state.password, this.state.confirm);
+    const errors = validateUserSignUp(
+      this.state.email,
+      this.state.firstName,
+      this.state.lastName,
+      this.state.password,
+    );
 
     if (Object.keys(errors).length > 0) {
       this.setState({ errors });
@@ -37,23 +43,35 @@ class SignUpPage extends Component {
       this.setState({ loading: true });
 
       // http://docs.meteor.com/api/passwords.html#Accounts-createUser
-      Accounts.createUser({ email: this.state.email, password: this.state.password }, (error) => {
-        if (error) {
-          this.setState({
-            loading: false,
-            errors: {
-              message: error.reason,
+      Accounts.createUser(
+        {
+          email: this.state.email,
+          password: this.state.password,
+          profile: {
+            name: {
+              first: this.state.firstName,
+              last: this.state.lastName,
             },
-          });
-        } else {
-          this.setState({
-            loading: false,
-            errors: {},
-          });
+          },
+        },
+        (error) => {
+          if (error) {
+            this.setState({
+              loading: false,
+              errors: {
+                message: error.reason,
+              },
+            });
+          } else {
+            this.setState({
+              loading: false,
+              errors: {},
+            });
 
-          this.props.userSignedIn(Meteor.user());
-        }
-      });
+            this.props.userSignedIn(Meteor.user());
+          }
+        },
+      );
     }
   }
 

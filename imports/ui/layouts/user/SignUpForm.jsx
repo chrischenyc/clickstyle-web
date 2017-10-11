@@ -20,9 +20,10 @@ const SignUpForm = ({ onSubmit, onChange, loading, errors }) => (
               fluid
               icon="mail"
               iconPosition="left"
-              placeholder="Email"
+              placeholder="Email address"
               type="email"
               name="email"
+              size="huge"
               onChange={onChange}
               error={errors.email !== undefined && errors.email.length > 0}
             />
@@ -30,37 +31,50 @@ const SignUpForm = ({ onSubmit, onChange, loading, errors }) => (
 
             <Form.Input
               fluid
-              icon="lock"
+              icon="user"
               iconPosition="left"
-              placeholder="Password"
-              type="password"
-              name="password"
+              placeholder="First name"
+              name="firstName"
+              size="huge"
               onChange={onChange}
-              error={errors.password !== undefined && errors.password.length > 0}
+              error={errors.firstName !== undefined && errors.firstName.length > 0}
             />
-            <Message error content={errors.password} />
+            <Message error content={errors.firstName} />
+
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="Last name"
+              name="lastName"
+              size="huge"
+              onChange={onChange}
+              error={errors.lastName !== undefined && errors.lastName.length > 0}
+            />
+            <Message error content={errors.lastName} />
 
             <Form.Input
               fluid
               icon="lock"
               iconPosition="left"
-              placeholder="Password confirm"
+              placeholder="Create a Password"
               type="password"
-              name="confirm"
+              name="password"
+              size="huge"
               onChange={onChange}
-              error={errors.confirm !== undefined && errors.confirm.length > 0}
+              error={errors.password !== undefined && errors.password.length > 0}
             />
-            <Message error content={errors.confirm} />
+            <Message error content={errors.password} />
 
-            <Button color="teal" fluid size="large" type="submit">
+            <Button color="teal" fluid size="huge" type="submit">
               Sign Up
             </Button>
 
             <Message error content={errors.message} />
           </Segment>
         </Form>
-        <Message attached="bottom">
-          {'Already have an account?'} <Link to="/login">Login here</Link>
+        <Message attached="bottom" size="large">
+          {'Already have a Stylesquard account?'} <Link to="/login">Log in</Link>
         </Message>
       </Grid.Column>
     </Grid>
