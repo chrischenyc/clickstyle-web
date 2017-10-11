@@ -17,6 +17,7 @@ es5-shim@4.6.15                 # ECMAScript 5 compatibility for older browsers
 ecmascript@0.8.3                # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.4              # Server-side component of the `meteor shell` command
 
+email                           # meteor email package
 service-configuration           # configure third-party oAuth
 accounts-password               # email sign up / sign in
 accounts-facebook               # facebook sign in

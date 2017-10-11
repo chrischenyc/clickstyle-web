@@ -2,6 +2,7 @@
 
 import './fixtures';
 import './oauth';
+import './email';
 
 import '../../api/bookings/publications';
 import '../../api/bookings/methods';
