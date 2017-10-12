@@ -22,7 +22,9 @@
       "meteor/alanning:roles",
       "meteor/service-configuration",
       "meteor/accounts-base",
-      "meteor/splendido:accounts-meld"
+      "meteor/splendido:accounts-meld",
+      "meteor/ddp-rate-limiter",
+      "meteor/check"
     ]
   },
   "rules": {

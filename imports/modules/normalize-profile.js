@@ -1,11 +1,11 @@
 const parsePasswordData = (options, user) => ({
-  userId: user._id,
+  owner: user._id,
   email: user.emails && user.emails[0].address,
   name: options.profile.name,
 });
 
 const parseGoogleData = (options, user) => ({
-  userId: user._id,
+  owner: user._id,
   email: user.services.google.email,
   name: {
     first: user.services.google.given_name,
@@ -18,7 +18,7 @@ const parseGoogleData = (options, user) => ({
 });
 
 const parseFacebookData = (options, user) => ({
-  userId: user._id,
+  owner: user._id,
   email: user.services.facebook.email,
   name: {
     first: user.services.facebook.first_name,

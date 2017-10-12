@@ -93,7 +93,7 @@ const AddressSchema = new SimpleSchema({
 
 const ProfilesSchema = new SimpleSchema({
   // required fields
-  userId: {
+  owner: {
     type: String,
   },
   email: {

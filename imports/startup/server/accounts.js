@@ -15,7 +15,7 @@ Accounts.onCreateUser((options, user) => {
   const normalizedProfile = normalizeProfile(options, user);
   if (normalizedProfile) {
     // TODO: conditionally update existing user profile data fields
-    Profiles.upsert({ userId: normalizedProfile.userId }, { $set: normalizedProfile });
+    Profiles.upsert({ owner: normalizedProfile.owner }, { $set: normalizedProfile });
   }
 
   // run tasks post creation

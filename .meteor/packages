@@ -18,12 +18,18 @@ ecmascript@0.8.3                # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.4              # Server-side component of the `meteor shell` command
 
 email                           # meteor email package
+check                           # meteor check package
+audit-argument-checks           # require that all arguments passed to methods and publish functions are checked
+ddp-rate-limiter                # client call throttle
 service-configuration           # configure third-party oAuth
 accounts-password               # email sign up / sign in
 accounts-facebook               # facebook sign in
 accounts-google                 # google sign in
+
 alanning:roles                  # user roles
 aldeed:collection2              # attache SimpleSchema to Meteor Collection
 zimme:collection-timestampable  # attache createdAt/updatedAt fields to Meteor Collection
 react-meteor-data               # Meteor reactive data -> React props
 splendido:accounts-meld         # merge social sign in accounts with password accounts
+themeteorchef:bert              # client-side, Growl-style alerts
+
