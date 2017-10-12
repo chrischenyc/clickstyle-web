@@ -9,51 +9,53 @@ import SocialLoginButtons from './SocialLoginButtons';
 const LoginForm = ({ onSubmit, onChange, onSocialSignIn, loading, errors }) => (
   <div className="full-page below-fixed-menu">
     <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Segment attached>
-          <SocialLoginButtons callback={onSocialSignIn} />
+      <Grid.Row style={{ maxWidth: 450 }}>
+        <Grid.Column>
+          <Segment attached>
+            <SocialLoginButtons callback={onSocialSignIn} />
 
-          <Divider horizontal>or</Divider>
+            <Divider horizontal>or</Divider>
 
-          <Form onSubmit={onSubmit} loading={loading} error={errors.message !== ''}>
-            <Form.Input
-              fluid
-              icon="mail"
-              iconPosition="left"
-              placeholder="Email"
-              type="email"
-              name="email"
-              size="huge"
-              onChange={onChange}
-              error={errors.email !== undefined && errors.email.length > 0}
-            />
-            <Message error content={errors.email} />
+            <Form onSubmit={onSubmit} loading={loading} error={errors.message !== ''}>
+              <Form.Input
+                fluid
+                icon="mail"
+                iconPosition="left"
+                placeholder="Email"
+                type="email"
+                name="email"
+                size="huge"
+                onChange={onChange}
+                error={errors.email !== undefined && errors.email.length > 0}
+              />
+              <Message error content={errors.email} />
 
-            <Form.Input
-              fluid
-              icon="lock"
-              iconPosition="left"
-              placeholder="Password"
-              type="password"
-              name="password"
-              size="huge"
-              onChange={onChange}
-              error={errors.password !== undefined && errors.password.length > 0}
-            />
-            <Message error content={errors.password} />
+              <Form.Input
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="Password"
+                type="password"
+                name="password"
+                size="huge"
+                onChange={onChange}
+                error={errors.password !== undefined && errors.password.length > 0}
+              />
+              <Message error content={errors.password} />
 
-            <Button color="teal" fluid size="huge" type="submit">
-              Login
-            </Button>
+              <Button color="teal" fluid size="huge" type="submit">
+                Login
+              </Button>
 
-            <Message error content={errors.message} />
-          </Form>
-        </Segment>
+              <Message error content={errors.message} />
+            </Form>
+          </Segment>
 
-        <Message attached="bottom" size="large">
-          {"Don't have an account?"} <Link to="/signup">Sign up</Link>
-        </Message>
-      </Grid.Column>
+          <Message attached="bottom" size="large">
+            {"Don't have an account?"} <Link to="/signup">Sign up</Link>
+          </Message>
+        </Grid.Column>
+      </Grid.Row>
     </Grid>
   </div>
 );

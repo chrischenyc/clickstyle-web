@@ -24,12 +24,13 @@ const googleLogin = (callback) => {
   );
 };
 
-const SocialLoginButtons = ({ isSignUp, callback }) => (
+const SocialLoginButtons = ({ isSignUp, callback, disabled }) => (
   <div>
     <Button
       fluid
       color="facebook"
       size="huge"
+      disabled={disabled}
       style={{ marginBottom: '1em' }}
       onClick={() => {
         facebookLogin(callback);
@@ -44,6 +45,7 @@ const SocialLoginButtons = ({ isSignUp, callback }) => (
       color="grey"
       basic
       size="huge"
+      disabled={disabled}
       style={{ marginBottom: '0.5em' }}
       onClick={() => {
         googleLogin(callback);
@@ -58,10 +60,12 @@ const SocialLoginButtons = ({ isSignUp, callback }) => (
 SocialLoginButtons.propTypes = {
   isSignUp: PropTypes.bool.isRequired,
   callback: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 SocialLoginButtons.defaultProps = {
   isSignUp: false,
+  disabled: false,
 };
 
 export default SocialLoginButtons;

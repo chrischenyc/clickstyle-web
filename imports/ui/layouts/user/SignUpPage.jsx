@@ -20,11 +20,13 @@ class SignUpPage extends Component {
       password: '',
       errors: {},
       loading: false,
+      disabled: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSocialSignIn = this.handleSocialSignIn.bind(this);
+    this.handleAgreement = this.handleAgreement.bind(this);
   }
 
   handleChange(event) {
@@ -86,14 +88,20 @@ class SignUpPage extends Component {
     }
   }
 
+  handleAgreement(event, data) {
+    this.setState({ disabled: !data.checked });
+  }
+
   render() {
     return (
       <SignUpForm
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onSocialSignIn={this.handleSocialSignIn}
+        onAgreement={this.handleAgreement}
         loading={this.state.loading}
         errors={this.state.errors}
+        disabled={this.state.disabled}
       />
     );
   }
