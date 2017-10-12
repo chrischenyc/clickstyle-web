@@ -25,7 +25,7 @@ const ViewBooking = ({ loading, booking }) => {
     content = <Redirect to="/" />;
   }
 
-  return <div className="below-fixed-menu full-page">{content}</div>;
+  return <div className="below-fixed-menu">{content}</div>;
 };
 
 ViewBooking.propTypes = {

@@ -2,13 +2,11 @@ import React from 'react';
 import { Segment, Container, Header } from 'semantic-ui-react';
 
 const Settings = () => (
-  <div className="below-fixed-menu full-page">
-    <Segment vertical>
-      <Container>
-        <Header>settings</Header>
-      </Container>
-    </Segment>
-  </div>
+  <Segment vertical className="below-fixed-menu">
+    <Container>
+      <Header>settings</Header>
+    </Container>
+  </Segment>
 );
 
 export default Settings;
