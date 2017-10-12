@@ -2,12 +2,14 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import Profiles from '../../api/profiles/profiles';
-import normalizeProfile from '../../helpers/normalize-profile';
+import normalizeProfile from '../../modules/normalize-profile';
 
 // customize user account creation
 // email registration and social sign-in will all come to here
 Accounts.onCreateUser((options, user) => {
   const userToCreate = user;
+
+  // TODO: server-side params validation
 
   // keep a normalized user profile in a separate collection
   const normalizedProfile = normalizeProfile(options, user);
