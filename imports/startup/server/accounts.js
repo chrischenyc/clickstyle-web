@@ -16,15 +16,20 @@ Accounts.onCreateUser((options, user) => {
     Profiles.upsert({ userId: normalizedProfile.userId }, { $set: normalizedProfile });
   }
 
-  // TODO: set default user role as Customer
+  // run tasks post creation
   // https://stackoverflow.com/questions/22649600/unable-to-add-roles-to-user-with-meteor-using-roles-package/22650399#22650399s
+
   Meteor.defer(() => {
+    // set default user role as Customer
     Roles.addUsersToRoles(user._id, ['customer']);
+
+    // send email verification for email/password registration
+    if (user.services.password) {
+      Accounts.sendVerificationEmail(user._id);
+    }
+
+    // TODO: sendWelcomeEmail(options, user);
   });
-
-  // TODO: send email verification for email/password registration
-
-  // TODO: sendWelcomeEmail(options, user);
 
   return userToCreate;
 });
