@@ -1,7 +1,11 @@
-## run in development env
-`meteor --setings settings-development.json`
+# Stylesquard meteor + react + semantic ui app
 
-## heroku deploy
-run following command to push the latest credentials to heroku ENV
+## Running on local machine
+
+`meteor -s settings-development.json`
+
+## Heroku deployment
+
+### push credentials to heroku ENV
 
 `heroku config:add METEOR_SETTINGS="$(cat settings-production.json)"`
