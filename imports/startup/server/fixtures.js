@@ -1,5 +1,6 @@
 import Bookings from '../../api/bookings/bookings';
 
+// TODO: remove sample data
 if (Bookings.find().count() === 0) {
   Bookings.insert({
     title: 'wedding makeup artist needed',

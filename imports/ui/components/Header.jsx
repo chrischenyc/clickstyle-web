@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { NavLink, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Container, Menu, Dropdown, Responsive } from 'semantic-ui-react';
-import { userSignedOut } from '../../redux/user';
+import { userSignedOut } from '../../modules/client/redux/user';
 
 const Header = props => (
   <Responsive as={Menu} minWidth={568} fixed="top" size="huge" inverted borderless>

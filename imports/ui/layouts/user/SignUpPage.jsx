@@ -3,8 +3,8 @@ import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { userSignedIn } from '../../../redux/user';
-import { validateUserSignUp } from '../../../validators/user';
+import { userSignedIn } from '../../../modules/client/redux/user';
+import { validateUserSignUp } from '../../../modules/validate';
 import SignUpForm from './SignUpForm';
 
 // platform-independent stateful container component
