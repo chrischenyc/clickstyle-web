@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import Bookings from '../bookings';
-import rateLimit from '../../../modules/rate-limit';
+import rateLimit from '../../../modules/server/rate-limit';
 
 Meteor.methods({
   'bookings.insert': function bookingsInsert(booking) {

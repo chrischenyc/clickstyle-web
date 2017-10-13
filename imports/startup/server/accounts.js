@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import Profiles from '../../api/profiles/profiles';
-import normalizeProfile from '../../modules/normalize-profile';
+import normalizeProfile from '../../modules/server/normalize-profile';
 
 // customize user account creation
 // email registration and social sign-in will all come to here
@@ -24,14 +24,14 @@ Accounts.onCreateUser((options, user) => {
   Meteor.defer(() => {
     // set default user role as Customer
     Roles.addUsersToRoles(user._id, ['customer']);
-
-    // send email verification for email/password registration
-    if (user.services.password) {
-      Accounts.sendVerificationEmail(user._id);
-    }
-
-    // TODO: sendWelcomeEmail(options, user);
   });
+
+  // send email verification for email/password registration
+  if (user.services.password) {
+    Accounts.sendVerificationEmail(user._id);
+  }
+
+  // TODO: sendWelcomeEmail(options, user);
 
   return userToCreate;
 });

@@ -24,7 +24,8 @@
       "meteor/accounts-base",
       "meteor/splendido:accounts-meld",
       "meteor/ddp-rate-limiter",
-      "meteor/check"
+      "meteor/check",
+      "meteor/email"
     ]
   },
   "rules": {

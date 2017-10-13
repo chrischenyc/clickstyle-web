@@ -3,7 +3,7 @@ import { Container, Card, Image, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { dateString } from '../../../modules/date';
+import formatDate from '../../../modules/format-date';
 
 // TODO: remove placeholder images
 const bookingImages = [
@@ -23,7 +23,7 @@ const BookingsList = ({ bookings }) => (
           <Card.Content textAlign="left">
             <Card.Header>{booking.title}</Card.Header>
             <Card.Meta>{booking.location}</Card.Meta>
-            <Card.Meta>{dateString(booking.createdAt)}</Card.Meta>
+            <Card.Meta>{formatDate(booking.createdAt)}</Card.Meta>
             <Card.Description>{booking.summary}</Card.Description>
           </Card.Content>
           <Card.Content extra>
