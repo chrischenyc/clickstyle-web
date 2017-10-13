@@ -31,9 +31,11 @@ Accounts.onCreateUser((options, user) => {
         Accounts.sendVerificationEmail(user._id);
       }
 
-      // TODO: send welcome email if never sent to the address
       sendWelcomeEmail(normalizedProfile.email, normalizedProfile.name.first);
     });
+
+    // keep name in User.profile for email-templates.js
+    userToCreate.profile = { name: normalizedProfile.name };
 
     return userToCreate;
   }

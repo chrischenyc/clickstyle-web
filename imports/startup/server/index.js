@@ -5,3 +5,4 @@ import './fixtures';
 import './oauth';
 import './email';
 import './accounts';
+import './email-templates';

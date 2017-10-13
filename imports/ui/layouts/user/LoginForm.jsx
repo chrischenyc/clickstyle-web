@@ -6,7 +6,9 @@ import { Button, Form, Grid, Message, Segment, Divider } from 'semantic-ui-react
 import SocialLoginButtons from './SocialLoginButtons';
 
 // web version of the login form, stateless component
-const LoginForm = ({ onSubmit, onChange, onSocialSignIn, loading, errors }) => (
+const LoginForm = ({
+  onSubmit, onChange, onSocialSignIn, loading, errors,
+}) => (
   <Grid textAlign="center" verticalAlign="middle" className="below-fixed-menu">
     <Grid.Row style={{ maxWidth: 450 }}>
       <Grid.Column>

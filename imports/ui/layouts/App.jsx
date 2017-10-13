@@ -14,6 +14,7 @@ import NotFound from '../layouts/NotFound';
 
 import LoginPage from '../layouts/user/LoginPage';
 import SignUpPage from '../layouts/user/SignUpPage';
+import VerifyEmail from '../layouts/user/VerifyEmail';
 import Dashboard from '../layouts/user/Dashboard';
 import Profile from '../layouts/user/Profile';
 import Settings from '../layouts/user/Settings';
@@ -34,6 +35,7 @@ const App = () => (
 
           <PublicRoute path="/login" component={LoginPage} />
           <PublicRoute path="/signup" component={SignUpPage} />
+          <Route name="verify-email" path="/verify-email/:token" component={VerifyEmail} />
 
           <AuthRoute exact path="/dashboard" component={Dashboard} />
           <AuthRoute exact path="/profile" component={Profile} />

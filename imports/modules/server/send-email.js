@@ -58,4 +58,19 @@ export const sendWelcomeEmail = (email, firstName) => {
   });
 };
 
-export const sendVerificationEmail = () => {};
+export const sendVerificationEmail = (email, firstName) => {
+  sendEmail({
+    to: email,
+    from: fromAddress,
+    subject: `[${applicationName}] Welcome, ${firstName}!`,
+    template: 'verify-email',
+    templateVars: {
+      applicationName,
+      firstName,
+      supportEmail,
+      welcomeUrl: Meteor.absoluteUrl('dashboard'),
+    },
+  }).catch((error) => {
+    throw new Meteor.Error('500', `${error}`);
+  });
+};
