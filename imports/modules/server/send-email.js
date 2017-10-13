@@ -4,35 +4,58 @@ import getPrivateFile from './get-private-file';
 import templateToText from './handlebars-email-to-text';
 import templateToHTML from './handlebars-email-to-html';
 
-const sendEmail = (options, { resolve, reject }) => {
-  try {
-    Meteor.defer(() => {
-      Email.send(options);
-      resolve();
-    });
-  } catch (exception) {
-    reject(exception);
-  }
-};
-
-export default ({
+// core function to send email
+const sendEmail = ({
   text, html, template, templateVars, ...rest
 }) => {
   if (text || html || template) {
     return new Promise((resolve, reject) => {
-      sendEmail(
-        {
-          ...rest,
-          text: template
-            ? templateToText(getPrivateFile(`email-templates/${template}.txt`), templateVars || {})
-            : text,
-          html: template
-            ? templateToHTML(getPrivateFile(`email-templates/${template}.html`), templateVars || {})
-            : html,
-        },
-        { resolve, reject },
-      );
+      try {
+        Meteor.defer(() => {
+          Email.send({
+            ...rest,
+            text: template
+              ? templateToText(
+                getPrivateFile(`email-templates/${template}.txt`),
+                templateVars || {},
+              )
+              : text,
+            html: template
+              ? templateToHTML(
+                getPrivateFile(`email-templates/${template}.html`),
+                templateVars || {},
+              )
+              : html,
+          });
+          resolve();
+        });
+      } catch (exception) {
+        reject(exception);
+      }
     });
   }
   throw new Error("Please pass an HTML string, text, or template name to compile for your message's body.");
 };
+
+// helpers
+const { applicationName, supportEmail } = Meteor.settings.public.company;
+const fromAddress = `${applicationName} <${supportEmail}>`;
+
+export const sendWelcomeEmail = (email, firstName) => {
+  sendEmail({
+    to: email,
+    from: fromAddress,
+    subject: `[${applicationName}] Welcome, ${firstName}!`,
+    template: 'welcome',
+    templateVars: {
+      applicationName,
+      firstName,
+      supportEmail,
+      welcomeUrl: Meteor.absoluteUrl('dashboard'),
+    },
+  }).catch((error) => {
+    throw new Meteor.Error('500', `${error}`);
+  });
+};
+
+export const sendVerificationEmail = () => {};
