@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { userSignedIn } from '../../../modules/client/redux/user';
-import { validateUserLogin } from '../../../modules/validate';
+import { userSignedIn } from '../../../../modules/client/redux/user';
+import { validateUserLogin } from '../../../../modules/validate';
 import LoginForm from './LoginForm';
 
 // platform-independent stateful container component

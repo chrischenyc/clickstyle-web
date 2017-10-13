@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Message, Segment, Divider, Checkbox } from 'semantic-ui-react';
 
-import SocialLoginButtons from './SocialLoginButtons';
+import SocialLoginButtons from '../SocialLoginButtons';
 
 // web version of the sign up form, stateless component
 const SignUpForm = ({

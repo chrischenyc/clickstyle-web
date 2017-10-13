@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Message, Segment, Divider } from 'semantic-ui-react';
 
-import SocialLoginButtons from './SocialLoginButtons';
+import SocialLoginButtons from '../SocialLoginButtons';
 
 // web version of the login form, stateless component
 const LoginForm = ({
@@ -22,7 +22,7 @@ const LoginForm = ({
               fluid
               icon="mail"
               iconPosition="left"
-              placeholder="Email"
+              placeholder="Email address"
               type="email"
               name="email"
               size="huge"
@@ -50,6 +50,10 @@ const LoginForm = ({
 
             <Message error content={errors.message} />
           </Form>
+
+          <Link to="/forgot-password">
+            <p style={{ margin: '0.5em 0' }}>Forgot password?</p>
+          </Link>
         </Segment>
 
         <Message attached="bottom" size="large">

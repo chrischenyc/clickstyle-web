@@ -35,3 +35,15 @@ export const validateUserSignUp = (email, firstName, lastName, password) => {
 
   return errors;
 };
+
+export const validateEmail = (email) => {
+  const errors = {};
+
+  if (validator.isEmpty(email)) {
+    errors.email = 'email is required';
+  } else if (!validator.isEmail(email)) {
+    errors.email = 'invalid email';
+  }
+
+  return errors;
+};

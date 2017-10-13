@@ -12,9 +12,10 @@ import Footer from '../components/Footer';
 import HomePage from '../layouts/home/HomePage';
 import NotFound from '../layouts/NotFound';
 
-import LoginPage from '../layouts/user/LoginPage';
-import SignUpPage from '../layouts/user/SignUpPage';
+import LoginPage from '../layouts/user/Login/LoginPage';
+import SignUpPage from '../layouts/user/SignUp/SignUpPage';
 import VerifyEmail from '../layouts/user/VerifyEmail';
+import ForgotPassword from '../layouts/user/ForgotPassword/ForgotPassword';
 import Dashboard from '../layouts/user/Dashboard';
 import Profile from '../layouts/user/Profile';
 import Settings from '../layouts/user/Settings';
@@ -35,7 +36,8 @@ const App = () => (
 
           <PublicRoute path="/login" component={LoginPage} />
           <PublicRoute path="/signup" component={SignUpPage} />
-          <Route name="verify-email" path="/verify-email/:token" component={VerifyEmail} />
+          <Route path="/verify-email/:token" component={VerifyEmail} />
+          <Route path="/forgot-password" component={ForgotPassword} />
 
           <AuthRoute exact path="/dashboard" component={Dashboard} />
           <AuthRoute exact path="/profile" component={Profile} />
