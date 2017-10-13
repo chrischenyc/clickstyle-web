@@ -21,7 +21,10 @@ class VerifyEmail extends React.Component {
         this.setState({ loading: false, error: null });
 
         this.props.userSignedIn(Meteor.user());
-        this.props.history.push('/dashboard');
+
+        setTimeout(() => {
+          this.props.history.push('/dashboard');
+        }, 1500);
       }
     });
   }
@@ -49,7 +52,7 @@ class VerifyEmail extends React.Component {
       <Message icon success>
         <Icon name="checkmark" />
 
-        <Message.Content>All set, thank!</Message.Content>
+        <Message.Content>All set, thank! Sending you to Dashboard...</Message.Content>
       </Message>
     );
   }

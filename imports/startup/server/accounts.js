@@ -10,8 +10,6 @@ import { sendWelcomeEmail } from '../../modules/server/send-email';
 Accounts.onCreateUser((options, user) => {
   const userToCreate = user;
 
-  // TODO: server-side params validation
-
   // keep a normalized user profile in a separate collection
   const normalizedProfile = normalizeProfile(options, user);
   if (normalizedProfile) {
@@ -34,7 +32,7 @@ Accounts.onCreateUser((options, user) => {
       sendWelcomeEmail(normalizedProfile.email, normalizedProfile.name.first);
     });
 
-    // keep name in User.profile for email-templates.js
+    // keep name in User.profile for email-templates.js to use
     userToCreate.profile = { name: normalizedProfile.name };
 
     return userToCreate;
