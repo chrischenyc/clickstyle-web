@@ -47,3 +47,17 @@ export const validateEmail = (email) => {
 
   return errors;
 };
+
+export const validateResetPassword = (password, confirm) => {
+  const errors = {};
+
+  if (validator.isEmpty(password)) {
+    errors.password = 'password is required';
+  } else if (password.length < 6) {
+    errors.password = 'password needs to have at least 6 characters';
+  } else if (password !== confirm) {
+    errors.confirm = 'New passwords did not match. Please try again.';
+  }
+
+  return errors;
+};

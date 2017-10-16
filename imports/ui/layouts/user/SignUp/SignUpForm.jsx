@@ -91,8 +91,7 @@ const SignUpForm = ({
           onChange={onAgreement}
           label={
             <label htmlFor="agreement">
-              By signing up with Stylesquard you confirm that you are 18 or older, and agree to
-              our&nbsp;
+              Check here to confirm that you are 18 or older, and agree to our&nbsp;
               <Link to="/terms">Terms of Use</Link>,&nbsp;
               <Link to="/privacy">Privacy</Link> and to receiving marketing and policy
               communications (you may opt out of receiving these at any time).
