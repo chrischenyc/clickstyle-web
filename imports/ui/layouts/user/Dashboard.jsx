@@ -1,12 +1,13 @@
 import React from 'react';
-import { Segment, Container, Header } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
+
+import EmailVerificationAlert from './EmailVerificationAlert/EmailVerificationAlert';
 
 const Dashboard = () => (
-  <Segment vertical className="below-fixed-menu">
-    <Container>
-      <Header>dashboard</Header>
-    </Container>
-  </Segment>
+  <Container text className="below-fixed-menu" style={{ padding: '4em 0' }}>
+    <EmailVerificationAlert />
+    <Header>dashboard</Header>
+  </Container>
 );
 
 export default Dashboard;
