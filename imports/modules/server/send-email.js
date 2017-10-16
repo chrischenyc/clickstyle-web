@@ -3,7 +3,7 @@ import { Email } from 'meteor/email';
 import getPrivateFile from './get-private-file';
 import templateToText from './handlebars-email-to-text';
 import templateToHTML from './handlebars-email-to-html';
-import formatDate from '../../modules/format-date';
+import { formatDateTime } from '../../modules/format-date';
 
 // core function to send email
 const sendEmail = ({
@@ -70,7 +70,7 @@ export const sendPasswordChangedEmail = (email, firstName) => {
       firstName,
       supportEmail,
       accountEmail: email,
-      changedOn: formatDate(Date.now(0)),
+      changedOn: formatDateTime(Date.now(0)),
     },
   }).catch((error) => {
     throw new Meteor.Error('500', `${error}`);

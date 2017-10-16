@@ -3,7 +3,7 @@ import { Container, Card, Image, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import formatDate from '../../../modules/format-date';
+import { formatDate } from '../../../modules/format-date';
 
 // TODO: remove placeholder images
 const bookingImages = [

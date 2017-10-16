@@ -65,6 +65,8 @@ class ResetPassword extends Component {
 
           this.props.userSignedIn(Meteor.user());
 
+          Meteor.call('users.sendPasswordChangedEmail');
+
           setTimeout(() => {
             this.setState({ redirect: true });
           }, 1500);

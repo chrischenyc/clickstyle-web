@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
 import _ from 'lodash';
@@ -63,6 +64,8 @@ class ChangePassword extends Component {
             errors: {},
             success: true,
           });
+
+          Meteor.call('users.sendPasswordChangedEmail');
 
           setTimeout(() => {
             this.setState({ redirect: true });
