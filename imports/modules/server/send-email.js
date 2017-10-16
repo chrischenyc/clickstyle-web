@@ -3,6 +3,7 @@ import { Email } from 'meteor/email';
 import getPrivateFile from './get-private-file';
 import templateToText from './handlebars-email-to-text';
 import templateToHTML from './handlebars-email-to-html';
+import formatDate from '../../modules/format-date';
 
 // core function to send email
 const sendEmail = ({
@@ -45,7 +46,7 @@ export const sendWelcomeEmail = (email, firstName) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `[${applicationName}] Welcome, ${firstName}!`,
+    subject: `Welcome to ${applicationName}!`,
     template: 'welcome',
     templateVars: {
       applicationName,
@@ -58,17 +59,18 @@ export const sendWelcomeEmail = (email, firstName) => {
   });
 };
 
-export const sendVerificationEmail = (email, firstName) => {
+export const sendPasswordChangedEmail = (email, firstName) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `[${applicationName}] Welcome, ${firstName}!`,
-    template: 'verify-email',
+    subject: `Account alert: ${applicationName} password updated`,
+    template: 'password-changed',
     templateVars: {
       applicationName,
       firstName,
       supportEmail,
-      welcomeUrl: Meteor.absoluteUrl('dashboard'),
+      accountEmail: email,
+      changedOn: formatDate(Date.now(0)),
     },
   }).catch((error) => {
     throw new Meteor.Error('500', `${error}`);

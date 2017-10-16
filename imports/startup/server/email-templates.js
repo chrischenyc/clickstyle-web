@@ -15,7 +15,7 @@ emailTemplates.from = fromAddress;
 
 emailTemplates.verifyEmail = {
   subject() {
-    return `[${applicationName}] Verify Your Email Address`;
+    return 'Verify Your Email Address';
   },
   html(user, url) {
     const urlWithoutHash = url.replace('#/', '');
@@ -40,7 +40,7 @@ emailTemplates.verifyEmail = {
 
 emailTemplates.resetPassword = {
   subject() {
-    return `[${applicationName}] Reset Your Password`;
+    return 'Reset Your Password';
   },
   html(user, url) {
     const urlWithoutHash = url.replace('#/', '');
