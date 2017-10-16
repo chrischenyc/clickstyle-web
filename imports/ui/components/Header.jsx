@@ -9,7 +9,7 @@ import { userSignedOut } from '../../modules/client/redux/user';
 const Header = props => (
   <Responsive as={Menu} minWidth={568} fixed="top" size="huge" inverted borderless>
     <Container>
-      <Menu.Item as={Link} exact to="/">
+      <Menu.Item as={Link} to="/">
         STYLESQUARD
       </Menu.Item>
       {props.authenticated ? (

@@ -8,6 +8,8 @@ import AuthRoute from '../components/AuthRoute';
 import PublicRoute from '../components/PublicRoute';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SideMenu from '../components/SideMenu';
+import SideMenuContainer from '../components/SideMenuContainer';
 
 import HomePage from '../layouts/home/HomePage';
 import NotFound from '../layouts/NotFound';
@@ -42,14 +44,45 @@ const App = () => (
           <Route path="/verify-email/:token" component={VerifyEmail} />
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/reset-password/:token" component={ResetPassword} />
-          <AuthRoute path="/change-password/" component={ChangePassword} />
 
-          <AuthRoute exact path="/dashboard" component={Dashboard} />
-          <AuthRoute exact path="/profile" component={Profile} />
-          <AuthRoute exact path="/settings" component={Settings} />
+          <AuthRoute
+            exact
+            path="/dashboard"
+            component={() => (
+              <SideMenuContainer>
+                <Dashboard />
+              </SideMenuContainer>
+            )}
+          />
+          <AuthRoute
+            exact
+            path="/profile"
+            component={() => (
+              <SideMenuContainer>
+                <Profile />
+              </SideMenuContainer>
+            )}
+          />
+          <AuthRoute
+            exact
+            path="/settings"
+            component={() => (
+              <SideMenuContainer>
+                <Settings />
+              </SideMenuContainer>
+            )}
+          />
+          <AuthRoute
+            path="/change-password/"
+            component={() => (
+              <SideMenuContainer>
+                <ChangePassword />
+              </SideMenuContainer>
+            )}
+          />
 
           <Route exact path="/bookings" component={BookingsPage} />
-          <Route exact path="/bookings/new" component={NewBooking} />
+          <AuthRoute exact path="/bookings/new" component={NewBooking} />
           <Route exact path="/bookings/:_id" component={ViewBooking} />
           <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
