@@ -23,15 +23,10 @@ const userReducer = (state = defaultState, action) => {
       const { meteorUser } = action;
 
       const _id = meteorUser && meteorUser._id;
-      let verified = true;
-      if (meteorUser && meteorUser.emails && meteorUser.emails.length > 0) {
-        verified = meteorUser.emails[0].verified;
-      }
 
       return {
         ...state,
         authenticated: _id && true,
-        verified,
       };
     }
 

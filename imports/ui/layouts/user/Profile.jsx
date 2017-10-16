@@ -1,12 +1,12 @@
 import React from 'react';
-import { Segment, Container, Header } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
+import EmailVerificationAlert from './EmailVerificationAlert/EmailVerificationAlert';
 
 const Profile = () => (
-  <Segment vertical className="below-fixed-menu">
-    <Container>
-      <Header>profile</Header>
-    </Container>
-  </Segment>
+  <Container className="below-fixed-menu" style={{ padding: '4em 0' }}>
+    <EmailVerificationAlert />
+    <Header>profile</Header>
+  </Container>
 );
 
 export default Profile;

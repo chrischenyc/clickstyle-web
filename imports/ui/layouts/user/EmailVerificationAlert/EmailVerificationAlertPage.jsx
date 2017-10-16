@@ -7,7 +7,7 @@ import _ from 'lodash';
 const EmailVerificationAlertPage = ({
   onSubmit, error, success, loading,
 }) => (
-  <Message warning>
+  <Message warning compact>
     <p>
       <b>You account email has not been verified.</b>
     </p>
