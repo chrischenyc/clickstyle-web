@@ -3,6 +3,7 @@ import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserSignUp } from '../../../../modules/validate';
 import SignUpForm from './SignUpForm';
@@ -44,7 +45,7 @@ class SignUpPage extends Component {
       this.state.password,
     );
 
-    if (Object.keys(errors).length > 0) {
+    if (!_.isEmpty(errors)) {
       this.setState({ errors });
     } else {
       this.setState({ loading: true });

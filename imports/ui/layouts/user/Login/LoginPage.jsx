@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserLogin } from '../../../../modules/validate';
 import LoginForm from './LoginForm';
@@ -34,7 +35,7 @@ class LoginPage extends Component {
 
     const errors = validateUserLogin(this.state.email, this.state.password);
 
-    if (Object.keys(errors).length > 0) {
+    if (!_.isEmpty(errors)) {
       this.setState({ errors });
     } else {
       this.setState({ loading: true });

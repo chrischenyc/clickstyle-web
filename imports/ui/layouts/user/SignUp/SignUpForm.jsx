@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Message, Segment, Divider, Checkbox } from 'semantic-ui-react';
+import _ from 'lodash';
 
 import SocialLoginButtons from '../SocialLoginButtons';
 
@@ -23,7 +24,7 @@ const SignUpForm = ({
 
           <Divider horizontal>or</Divider>
 
-          <Form onSubmit={onSubmit} loading={loading} error={errors.message !== ''}>
+          <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
             <Form.Input
               fluid
               icon="mail"
@@ -33,9 +34,9 @@ const SignUpForm = ({
               name="email"
               size="huge"
               onChange={onChange}
-              error={errors.email !== undefined && errors.email.length > 0}
+              error={!_.isEmpty(errors.email)}
             />
-            <Message error content={errors.email} />
+            {!_.isEmpty(errors.email) && <Message error content={errors.email} />}
 
             <Form.Input
               fluid
@@ -45,9 +46,9 @@ const SignUpForm = ({
               name="firstName"
               size="huge"
               onChange={onChange}
-              error={errors.firstName !== undefined && errors.firstName.length > 0}
+              error={!_.isEmpty(errors.firstName)}
             />
-            <Message error content={errors.firstName} />
+            {!_.isEmpty(errors.firstName) && <Message error content={errors.firstName} />}
 
             <Form.Input
               fluid
@@ -57,9 +58,9 @@ const SignUpForm = ({
               name="lastName"
               size="huge"
               onChange={onChange}
-              error={errors.lastName !== undefined && errors.lastName.length > 0}
+              error={!_.isEmpty(errors.lastName)}
             />
-            <Message error content={errors.lastName} />
+            {!_.isEmpty(errors.lastName) && <Message error content={errors.lastName} />}
 
             <Form.Input
               fluid
@@ -70,15 +71,15 @@ const SignUpForm = ({
               name="password"
               size="huge"
               onChange={onChange}
-              error={errors.password !== undefined && errors.password.length > 0}
+              error={!_.isEmpty(errors.password)}
             />
-            <Message error content={errors.password} />
+            {!_.isEmpty(errors.password) && <Message error content={errors.password} />}
 
             <Button color="teal" fluid size="huge" type="submit" disabled={disabled}>
               Sign up
             </Button>
 
-            <Message error content={errors.message} />
+            {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
           </Form>
         </Segment>
 
