@@ -61,3 +61,23 @@ export const validateResetPassword = (password, confirm) => {
 
   return errors;
 };
+
+export const validateChangePassword = (oldPassword, password, confirm) => {
+  const errors = {};
+
+  if (validator.isEmpty(oldPassword)) {
+    errors.oldPassword = 'old password is required';
+  } else if (oldPassword.length < 6) {
+    errors.oldPassword = 'old password needs to have at least 6 characters';
+  } else if (validator.isEmpty(password)) {
+    errors.password = 'new password is required';
+  } else if (password.length < 6) {
+    errors.password = 'new password needs to have at least 6 characters';
+  } else if (password === oldPassword) {
+    errors.password = 'new password cannot be same as old password';
+  } else if (password !== confirm) {
+    errors.confirm = 'New passwords did not match. Please try again.';
+  }
+
+  return errors;
+};

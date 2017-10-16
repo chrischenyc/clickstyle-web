@@ -17,6 +17,7 @@ import SignUpPage from '../layouts/user/SignUp/SignUpPage';
 import VerifyEmail from '../layouts/user/VerifyEmail';
 import ForgotPassword from '../layouts/user/ForgotPassword/ForgotPassword';
 import ResetPassword from '../layouts/user/ResetPassword/ResetPassword';
+import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
 
 import Dashboard from '../layouts/user/Dashboard';
 import Profile from '../layouts/user/Profile';
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/verify-email/:token" component={VerifyEmail} />
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/reset-password/:token" component={ResetPassword} />
+          <AuthRoute path="/change-password/" component={ChangePassword} />
 
           <AuthRoute exact path="/dashboard" component={Dashboard} />
           <AuthRoute exact path="/profile" component={Profile} />

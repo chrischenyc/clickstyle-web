@@ -1,21 +1,18 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { userSignedIn } from '../../../../modules/client/redux/user';
-import { validateResetPassword } from '../../../../modules/validate';
-import ResetPasswordPage from './ResetPasswordPage';
+import { validateChangePassword } from '../../../../modules/validate';
+import ChangePasswordPage from './ChangePasswordPage';
 
 // platform-independent stateful container component
 // to handle Login logic
-class ResetPassword extends Component {
+class ChangePassword extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      oldPassword: '',
       password: '',
       confirm: '',
       errors: {},
@@ -41,14 +38,18 @@ class ResetPassword extends Component {
     });
     event.preventDefault();
 
-    const errors = validateResetPassword(this.state.password, this.state.confirm);
+    const errors = validateChangePassword(
+      this.state.oldPassword,
+      this.state.password,
+      this.state.confirm,
+    );
 
     if (!_.isEmpty(errors)) {
       this.setState({ errors });
     } else {
       this.setState({ loading: true });
 
-      Accounts.resetPassword(this.props.match.params.token, this.state.password, (error) => {
+      Accounts.changePassword(this.state.oldPassword, this.state.password, (error) => {
         if (error) {
           this.setState({
             loading: false,
@@ -63,8 +64,6 @@ class ResetPassword extends Component {
             success: true,
           });
 
-          this.props.userSignedIn(Meteor.user());
-
           setTimeout(() => {
             this.setState({ redirect: true });
           }, 1500);
@@ -75,7 +74,7 @@ class ResetPassword extends Component {
 
   render() {
     return (
-      <ResetPasswordPage
+      <ChangePasswordPage
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         loading={this.state.loading}
@@ -87,13 +86,4 @@ class ResetPassword extends Component {
   }
 }
 
-ResetPassword.propTypes = {
-  userSignedIn: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = dispatch => ({
-  userSignedIn: (user) => {
-    dispatch(userSignedIn(user));
-  },
-});
-export default connect(null, mapDispatchToProps)(ResetPassword);
+export default ChangePassword;
