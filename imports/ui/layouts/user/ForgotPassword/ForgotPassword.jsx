@@ -2,6 +2,7 @@ import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
 import { validateEmail } from '../../../../modules/validate';
 import ForgotPasswordPage from './ForgotPasswordPage';
+import _ from 'lodash';
 
 // platform-independent stateful container component
 // to handle Login logic
@@ -36,7 +37,7 @@ class ForgotPassword extends Component {
 
     const errors = validateEmail(this.state.email);
 
-    if (Object.keys(errors).length > 0) {
+    if (!_.isEmpty(errors)) {
       this.setState({ errors });
     } else {
       this.setState({ loading: true });
