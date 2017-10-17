@@ -32,6 +32,7 @@ const userReducer = (state = defaultState, action) => {
           meteorUser.emails &&
           meteorUser.emails.length > 0 &&
           meteorUser.emails[0].verified,
+        roles: meteorUser && meteorUser.roles,
       };
     }
 
@@ -41,7 +42,7 @@ const userReducer = (state = defaultState, action) => {
           ...state,
           authenticated: false,
         },
-        ['verified'],
+        ['verified', 'roles'],
       );
     }
 
