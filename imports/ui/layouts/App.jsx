@@ -23,6 +23,7 @@ import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
 import Dashboard from '../layouts/user/Dashboard';
 import Profile from '../layouts/user/Profile';
 import Settings from '../layouts/user/Settings';
+import Inbox from '../layouts/user/Inbox';
 
 import BookingsPage from '../layouts/bookings/BookingsPage';
 import ViewBooking from '../layouts/bookings/ViewBooking';
@@ -72,16 +73,33 @@ const App = () => (
             )}
           />
           <AuthRoute
-            path="/change-password/"
+            path="/change-password"
             component={() => (
               <SideMenuContainer>
                 <ChangePassword />
               </SideMenuContainer>
             )}
           />
+          <AuthRoute
+            path="/inbox"
+            component={() => (
+              <SideMenuContainer>
+                <Inbox />
+              </SideMenuContainer>
+            )}
+          />
+          <AuthRoute
+            exact
+            path="/bookings/new"
+            component={() => (
+              <SideMenuContainer>
+                <NewBooking />
+              </SideMenuContainer>
+            )}
+          />
 
           <Route exact path="/bookings" component={BookingsPage} />
-          <AuthRoute exact path="/bookings/new" component={NewBooking} />
+
           <Route exact path="/bookings/:_id" component={ViewBooking} />
           <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
