@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 // --------- actions ----------
 export function userSignedIn(meteorUser) {
   return {
@@ -34,10 +36,13 @@ const userReducer = (state = defaultState, action) => {
     }
 
     case 'USER_SIGNED_OUT': {
-      return {
-        ...state,
-        authenticated: false,
-      };
+      return _.omit(
+        {
+          ...state,
+          authenticated: false,
+        },
+        ['verified'],
+      );
     }
 
     default:
