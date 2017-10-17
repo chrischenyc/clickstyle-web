@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import EmailVerificationAlertPage from './EmailVerificationAlertPage';
 
@@ -53,14 +53,8 @@ EmailVerificationAlert.propTypes = {
   verified: PropTypes.bool,
 };
 
-export default withTracker(() => {
-  const loggingIn = Meteor.loggingIn();
-  const user = Meteor.user();
+const mapStateToProps = state => ({
+  verified: state.user.verified,
+});
 
-  return {
-    loggingIn,
-    user,
-    verified:
-      !loggingIn && user && user.emails && user.emails.length > 0 && user.emails[0].verified,
-  };
-})(EmailVerificationAlert);
+export default connect(mapStateToProps)(EmailVerificationAlert);

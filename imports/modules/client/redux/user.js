@@ -22,11 +22,14 @@ const userReducer = (state = defaultState, action) => {
     case 'USER_SIGNED_IN': {
       const { meteorUser } = action;
 
-      const _id = meteorUser && meteorUser._id;
-
       return {
         ...state,
-        authenticated: _id && true,
+        authenticated: meteorUser && true,
+        verified:
+          meteorUser &&
+          meteorUser.emails &&
+          meteorUser.emails.length > 0 &&
+          meteorUser.emails[0].verified,
       };
     }
 
