@@ -22,7 +22,7 @@ class Header extends Component {
 
   render() {
     return (
-      <Responsive as={Menu} fixed="top" size="huge" inverted borderless>
+      <Responsive as={Menu} fixed="top" size="huge" inverted borderless stackable>
         <Container>
           <Menu.Item as={Link} to="/">
             STYLESQUARD
