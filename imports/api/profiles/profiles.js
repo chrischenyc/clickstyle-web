@@ -89,6 +89,11 @@ const AddressSchema = new SimpleSchema({
     optional: true,
     max: 100,
   },
+  raw: {
+    type: String,
+    optional: true,
+    max: 200,
+  },
 });
 
 const ProfilesSchema = new SimpleSchema({
