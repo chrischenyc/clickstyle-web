@@ -19,6 +19,7 @@ class EditProfile extends Component {
       profile: {},
       errors: {},
       saving: false,
+      pristine: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,15 +28,17 @@ class EditProfile extends Component {
 
   componentWillReceiveProps(nextProps) {
     // after Profile object is fetched, set it in state
-    if (_.isEmpty(this.state.profile) && !_.isEmpty(nextProps.profile)) {
-      this.setState({ profile: nextProps.profile });
-    }
+    this.setState({ profile: _.cloneDeep(nextProps.profile), pristine: true });
   }
 
   handleChange(event) {
-    const updatedProfile = this.state.profile;
-    _.set(updatedProfile, event.target.name, event.target.value);
-    this.setState({ profile: updatedProfile });
+    let newProfile = _.cloneDeep(this.state.profile);
+    newProfile = _.set(newProfile, event.target.name, event.target.value);
+
+    this.setState({
+      profile: newProfile,
+      pristine: _.isEqual(newProfile, this.props.profile),
+    });
   }
 
   handleSubmit(event) {
@@ -49,8 +52,8 @@ class EditProfile extends Component {
     } else {
       this.setState({ saving: true });
 
-      Meteor.call('profiles.save', {}, (error) => {
-        this.setState({ saving: false });
+      Meteor.call('profiles.update', this.state.profile, (error) => {
+        this.setState({ saving: false, errors: {}, pristine: true });
 
         if (error) {
           this.setState({ errors: { message: error.reason } });
@@ -66,6 +69,7 @@ class EditProfile extends Component {
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         loading={this.state.saving || this.props.fetching}
+        pristine={this.state.pristine}
         errors={this.state.errors}
       />
     );

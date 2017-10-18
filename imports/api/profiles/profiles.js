@@ -32,7 +32,6 @@ Profiles.attachBehaviour('timestampable', {
   updatedBy: false,
 });
 
-// TODO: complete Profiles schema
 const NameSchema = new SimpleSchema({
   first: {
     type: String,
@@ -92,18 +91,18 @@ const ProfilesSchema = new SimpleSchema({
   owner: {
     type: String,
   },
-  email: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Email,
-  },
   name: { type: NameSchema },
 
   // optional fields
-  // TODO: do we need gender
-  gender: {
+  mobile: {
     type: String,
+    regEx: SimpleSchema.RegEx.Phone, // TODO: enhance regex to aussie mobile regex
+    max: 20,
     optional: true,
-    regEx: /^male$|^female$|^other$/,
+  },
+  address: {
+    type: AddressSchema,
+    optional: true,
   },
   about: {
     type: String,
@@ -112,16 +111,6 @@ const ProfilesSchema = new SimpleSchema({
   },
   photo: {
     type: PhotoSchema,
-    optional: true,
-  },
-  mobile: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Phone, // TODO: enhance regex
-    max: 20,
-    optional: true,
-  },
-  address: {
-    type: AddressSchema,
     optional: true,
   },
 });
