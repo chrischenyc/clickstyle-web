@@ -6,7 +6,8 @@ import EmailVerificationAlert from './EmailVerificationAlert/EmailVerificationAl
 const Dashboard = () => (
   <Container style={{ padding: '4em 0' }}>
     <EmailVerificationAlert />
-    <Header>dashboard</Header>
+    <Header as="h2">Dashboard</Header>
+    <p>TODO: implement Dashboard</p>
   </Container>
 );
 

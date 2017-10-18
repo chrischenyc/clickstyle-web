@@ -21,7 +21,7 @@ import ResetPassword from '../layouts/user/ResetPassword/ResetPassword';
 import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
 
 import Dashboard from '../layouts/user/Dashboard';
-import Profile from '../layouts/user/Profile';
+import Profile from '../layouts/user/Profile/Profile';
 import Settings from '../layouts/user/Settings';
 import Inbox from '../layouts/user/Inbox';
 
