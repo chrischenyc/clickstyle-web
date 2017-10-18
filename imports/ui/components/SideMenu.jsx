@@ -7,26 +7,42 @@ const SideMenu = () => (
     <Menu.Item>
       <Menu.Header>Account</Menu.Header>
       <Menu.Menu>
-        <Menu.Item name="Dashboard" as={NavLink} to="/dashboard" />
+        <Menu.Item as={NavLink} to="/dashboard">
+          Dashboard
+        </Menu.Item>
 
-        <Menu.Item name="Inbox" as={NavLink} to="/inbox" />
+        <Menu.Item as={NavLink} to="/inbox">
+          Inbox
+        </Menu.Item>
 
-        <Menu.Item name="Profile" as={NavLink} to="/profile" />
+        <Menu.Item as={NavLink} to="/profile">
+          Profile
+        </Menu.Item>
 
-        <Menu.Item name="Settings" as={NavLink} to="/settings" />
+        <Menu.Item as={NavLink} to="/settings">
+          Settings
+        </Menu.Item>
       </Menu.Menu>
     </Menu.Item>
 
     <Menu.Item>
       <Menu.Header>Bookings</Menu.Header>
       <Menu.Menu>
-        <Menu.Item name="Make a booking" as={NavLink} to="/bookings/new" />
+        <Menu.Item as={NavLink} to="/bookings/new">
+          Make a booking
+        </Menu.Item>
 
-        <Menu.Item name="Bookings" as={NavLink} to="/upcoming-bookings" />
+        <Menu.Item as={NavLink} to="/upcoming-bookings">
+          Bookings
+        </Menu.Item>
 
-        <Menu.Item name="Past Bookings" as={NavLink} to="/past-bookings" />
+        <Menu.Item as={NavLink} to="/past-bookings">
+          Past Bookings
+        </Menu.Item>
 
-        <Menu.Item name="My Favourites" as={NavLink} to="/favourites" />
+        <Menu.Item as={NavLink} to="/favourites">
+          My Favourites
+        </Menu.Item>
       </Menu.Menu>
     </Menu.Item>
 
