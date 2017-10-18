@@ -119,14 +119,12 @@ const ProfilesSchema = new SimpleSchema({
     optional: true,
   },
   phone: {
-    type: [PhoneSchema],
+    type: PhoneSchema,
     optional: true,
-    minCount: 0,
   },
   address: {
-    type: [AddressSchema],
+    type: AddressSchema,
     optional: true,
-    minCount: 0,
   },
 });
 
