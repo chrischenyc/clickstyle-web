@@ -55,7 +55,7 @@ const PhotoSchema = new SimpleSchema({
 });
 
 const PhoneSchema = new SimpleSchema({
-  mobile: {
+  number: {
     type: String,
     optional: true,
     regEx: SimpleSchema.RegEx.Phone, // TODO: enhance regex
@@ -103,6 +103,7 @@ const ProfilesSchema = new SimpleSchema({
   name: { type: NameSchema },
 
   // optional fields
+  // TODO: do we need gender
   gender: {
     type: String,
     optional: true,
@@ -118,12 +119,14 @@ const ProfilesSchema = new SimpleSchema({
     optional: true,
   },
   phone: {
-    type: PhoneSchema,
+    type: [PhoneSchema],
     optional: true,
+    minCount: 0,
   },
   address: {
-    type: AddressSchema,
+    type: [AddressSchema],
     optional: true,
+    minCount: 0,
   },
 });
 
