@@ -5,7 +5,7 @@ import Profiles from '../profiles';
 
 Meteor.methods({
   'profiles.update': function profilesUpdate(profile) {
-    console.log(profile);
+    check(profile, Object);
 
     try {
       Profiles.update({ owner: this.userId }, { $set: profile });
