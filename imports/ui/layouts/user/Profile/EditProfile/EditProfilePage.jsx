@@ -7,7 +7,7 @@ import FormInputField from '../../../../components/FormInputField';
 
 // web version of the login form, stateless component
 const EditProfilePage = ({
-  onSubmit, onChange, loading, errors,
+  profile, onSubmit, onChange, loading, errors,
 }) => (
   <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
     <FormInputField
@@ -16,6 +16,7 @@ const EditProfilePage = ({
       name="firstName"
       onChange={onChange}
       errors={errors}
+      defaultValue={profile.name === undefined ? '' : profile.name.first}
     />
 
     <FormInputField
@@ -65,7 +66,12 @@ const EditProfilePage = ({
   </Form>
 );
 
+EditProfilePage.defaultProps = {
+  profile: {},
+};
+
 EditProfilePage.propTypes = {
+  profile: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,

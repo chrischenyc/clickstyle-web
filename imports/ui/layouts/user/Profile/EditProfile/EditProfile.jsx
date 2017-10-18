@@ -1,9 +1,11 @@
 import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import _ from 'lodash';
-import { userSignedIn } from '../../../../../modules/client/redux/user';
+
+import Profiles from '../../../../../api/profiles/profiles';
+
 import { validateUserLogin } from '../../../../../modules/validate';
 import EditProfilePage from './EditProfilePage';
 
@@ -17,7 +19,7 @@ class EditProfile extends Component {
       email: '',
       password: '',
       errors: {},
-      loading: false,
+      saving: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -37,24 +39,13 @@ class EditProfile extends Component {
     if (!_.isEmpty(errors)) {
       this.setState({ errors });
     } else {
-      this.setState({ loading: true });
+      this.setState({ saving: true });
 
-      // http://docs.meteor.com/api/accounts.html#Meteor-loginWithPassword
-      Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
+      Meteor.call('profiles.save', {}, (error) => {
+        this.setState({ saving: false });
+
         if (error) {
-          this.setState({
-            loading: false,
-            errors: {
-              message: error.error === 403 ? 'email and password do not match' : error.reason,
-            },
-          });
-        } else {
-          this.setState({
-            loading: false,
-            errors: {},
-          });
-
-          this.props.userSignedIn(Meteor.user());
+          this.setState({ errors: { message: error.reason } });
         }
       });
     }
@@ -63,22 +54,30 @@ class EditProfile extends Component {
   render() {
     return (
       <EditProfilePage
+        profile={this.props.profile}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        loading={this.state.loading}
+        loading={this.state.saving || this.props.fetching}
         errors={this.state.errors}
       />
     );
   }
 }
 
-EditProfile.propTypes = {
-  userSignedIn: PropTypes.func.isRequired,
+EditProfile.defaultProps = {
+  profile: {},
 };
 
-const mapDispatchToProps = dispatch => ({
-  userSignedIn: (user) => {
-    dispatch(userSignedIn(user));
-  },
-});
-export default connect(null, mapDispatchToProps)(EditProfile);
+EditProfile.propTypes = {
+  fetching: PropTypes.bool.isRequired,
+  profile: PropTypes.object,
+};
+
+export default withTracker(() => {
+  const handle = Meteor.subscribe('profiles.owner');
+
+  return {
+    fetching: !handle.ready(),
+    profile: Profiles.findOne({}),
+  };
+})(EditProfile);
