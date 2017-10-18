@@ -16,7 +16,7 @@ const EditProfilePage = ({
       name="firstName"
       onChange={onChange}
       errors={errors}
-      defaultValue={profile.name === undefined ? '' : profile.name.first}
+      value={_.has(profile, 'name.first') ? profile.name.first : ''}
     />
 
     <FormInputField
@@ -25,6 +25,7 @@ const EditProfilePage = ({
       name="lastName"
       onChange={onChange}
       errors={errors}
+      value={_.has(profile, 'name.last') ? profile.name.last : ''}
       note={`This is not on your public profile. This is only shared with another ${Meteor.settings
         .public.company.applicationName} user once you two have a confirmed booking .`}
     />
@@ -35,6 +36,7 @@ const EditProfilePage = ({
       name="phone"
       onChange={onChange}
       errors={errors}
+      value={_.has(profile, 'phone') ? profile.phone : ''}
       note={`This is not on your public profile. This is only shared with another ${Meteor.settings
         .public.company.applicationName} user once you two have a confirmed booking .`}
     />
@@ -45,6 +47,7 @@ const EditProfilePage = ({
       name="addressSearch"
       onChange={onChange}
       errors={errors}
+      value={_.has(profile, 'address.raw') ? profile.address.raw : ''}
       note={`This is not on your public profile. This is only shared with another ${Meteor.settings
         .public.company.applicationName} user once you two have a confirmed booking .`}
     />
@@ -55,6 +58,7 @@ const EditProfilePage = ({
       control={TextArea}
       onChange={onChange}
       errors={errors}
+      value={_.has(profile, 'about') ? profile.about : ''}
       note="Help other people get to know you. Tell them about the things you like..."
     />
 

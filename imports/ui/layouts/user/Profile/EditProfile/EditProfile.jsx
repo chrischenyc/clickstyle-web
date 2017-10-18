@@ -16,14 +16,20 @@ class EditProfile extends Component {
     super(props);
 
     this.state = {
-      email: '',
-      password: '',
+      profile: {},
       errors: {},
       saving: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // after Profile object is fetched, set it in state
+    if (_.isEmpty(this.state.profile) && !_.isEmpty(nextProps.profile)) {
+      this.setState({ profile: nextProps.profile });
+    }
   }
 
   handleChange(event) {
@@ -54,7 +60,7 @@ class EditProfile extends Component {
   render() {
     return (
       <EditProfilePage
-        profile={this.props.profile}
+        profile={this.state.profile}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         loading={this.state.saving || this.props.fetching}
