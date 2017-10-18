@@ -54,15 +54,6 @@ const PhotoSchema = new SimpleSchema({
   },
 });
 
-const PhoneSchema = new SimpleSchema({
-  number: {
-    type: String,
-    optional: true,
-    regEx: SimpleSchema.RegEx.Phone, // TODO: enhance regex
-    max: 20,
-  },
-});
-
 const AddressSchema = new SimpleSchema({
   state: {
     type: String,
@@ -123,8 +114,10 @@ const ProfilesSchema = new SimpleSchema({
     type: PhotoSchema,
     optional: true,
   },
-  phone: {
-    type: PhoneSchema,
+  mobile: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Phone, // TODO: enhance regex
+    max: 20,
     optional: true,
   },
   address: {

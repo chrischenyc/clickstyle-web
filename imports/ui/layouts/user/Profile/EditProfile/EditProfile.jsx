@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import Profiles from '../../../../../api/profiles/profiles';
 
-import { validateUserLogin } from '../../../../../modules/validate';
+import { validateEditProfile } from '../../../../../modules/validate';
 import EditProfilePage from './EditProfilePage';
 
 // platform-independent stateful container component
@@ -33,14 +33,16 @@ class EditProfile extends Component {
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    const updatedProfile = this.state.profile;
+    _.set(updatedProfile, event.target.name, event.target.value);
+    this.setState({ profile: updatedProfile });
   }
 
   handleSubmit(event) {
     this.setState({ errors: {} });
     event.preventDefault();
 
-    const errors = validateUserLogin(this.state.email, this.state.password);
+    const errors = validateEditProfile(this.state.profile);
 
     if (!_.isEmpty(errors)) {
       this.setState({ errors });

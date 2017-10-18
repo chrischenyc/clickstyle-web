@@ -13,7 +13,7 @@ const EditProfilePage = ({
     <FormInputField
       label="First name"
       placeholder="First name"
-      name="firstName"
+      name="name.first"
       onChange={onChange}
       errors={errors}
       value={_.has(profile, 'name.first') ? profile.name.first : ''}
@@ -22,7 +22,7 @@ const EditProfilePage = ({
     <FormInputField
       label="Last name"
       placeholder="Last name"
-      name="lastName"
+      name="name.last"
       onChange={onChange}
       errors={errors}
       value={_.has(profile, 'name.last') ? profile.name.last : ''}
@@ -31,12 +31,12 @@ const EditProfilePage = ({
     />
 
     <FormInputField
-      label="Phone number"
-      placeholder="Phone number"
-      name="phone"
+      label="Mobile number"
+      placeholder="Mobile number"
+      name="mobile"
       onChange={onChange}
       errors={errors}
-      value={_.has(profile, 'phone') ? profile.phone : ''}
+      value={_.has(profile, 'mobile') ? profile.mobile : ''}
       note={`This is not on your public profile. This is only shared with another ${Meteor.settings
         .public.company.applicationName} user once you two have a confirmed booking .`}
     />
@@ -44,7 +44,7 @@ const EditProfilePage = ({
     <FormInputField
       label="Where about you"
       placeholder="type to search ..."
-      name="addressSearch"
+      name="address.raw"
       onChange={onChange}
       errors={errors}
       value={_.has(profile, 'address.raw') ? profile.address.raw : ''}
