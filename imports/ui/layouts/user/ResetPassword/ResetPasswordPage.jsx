@@ -4,6 +4,8 @@ import { Container, Button, Form, Grid, Message, Header, Icon } from 'semantic-u
 import { Redirect, Link } from 'react-router-dom';
 import _ from 'lodash';
 
+import FormInputField from '../../../components/FormInputField';
+
 const ResetPasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
 }) => {
@@ -31,7 +33,7 @@ const ResetPasswordPage = ({
             <Header as="h1">Reset Password</Header>
 
             <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-              <Form.Input
+              <FormInputField
                 fluid
                 icon="lock"
                 iconPosition="left"
@@ -40,11 +42,10 @@ const ResetPasswordPage = ({
                 name="password"
                 size="huge"
                 onChange={onChange}
-                error={!_.isEmpty(errors.password)}
+                errors={errors}
               />
-              {!_.isEmpty(errors.password) && <Message error content={errors.password} />}
 
-              <Form.Input
+              <FormInputField
                 fluid
                 icon="lock"
                 iconPosition="left"
@@ -53,9 +54,8 @@ const ResetPasswordPage = ({
                 name="confirm"
                 size="huge"
                 onChange={onChange}
-                error={!_.isEmpty(errors.password)}
+                errors={errors}
               />
-              {!_.isEmpty(errors.confirm) && <Message error content={errors.confirm} />}
 
               {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
 

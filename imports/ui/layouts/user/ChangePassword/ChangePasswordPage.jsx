@@ -4,6 +4,8 @@ import { Container, Button, Form, Grid, Message, Header, Icon } from 'semantic-u
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
+import FormInputField from '../../../components/FormInputField';
+
 const ChangePasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
 }) => {
@@ -31,7 +33,7 @@ const ChangePasswordPage = ({
             <Header as="h1">Change Your Password</Header>
 
             <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-              <Form.Input
+              <FormInputField
                 fluid
                 icon="lock"
                 iconPosition="left"
@@ -40,11 +42,10 @@ const ChangePasswordPage = ({
                 name="oldPassword"
                 size="huge"
                 onChange={onChange}
-                error={!_.isEmpty(errors.oldPassword)}
+                errors={errors}
               />
-              {!_.isEmpty(errors.oldPassword) && <Message error content={errors.oldPassword} />}
 
-              <Form.Input
+              <FormInputField
                 fluid
                 icon="lock"
                 iconPosition="left"
@@ -53,11 +54,10 @@ const ChangePasswordPage = ({
                 name="password"
                 size="huge"
                 onChange={onChange}
-                error={!_.isEmpty(errors.password)}
+                errors={errors}
               />
-              {!_.isEmpty(errors.password) && <Message error content={errors.password} />}
 
-              <Form.Input
+              <FormInputField
                 fluid
                 icon="lock"
                 iconPosition="left"
@@ -66,9 +66,8 @@ const ChangePasswordPage = ({
                 name="confirm"
                 size="huge"
                 onChange={onChange}
-                error={!_.isEmpty(errors.confirm)}
+                errors={errors}
               />
-              {!_.isEmpty(errors.confirm) && <Message error content={errors.confirm} />}
 
               {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
 

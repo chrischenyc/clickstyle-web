@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Message, Segment, Divider, Checkbox } from 'semantic-ui-react';
 import _ from 'lodash';
 
+import FormInputField from '../../../components/FormInputField';
 import SocialLoginButtons from '../SocialLoginButtons';
 
 // web version of the sign up form, stateless component
@@ -25,7 +26,7 @@ const SignUpForm = ({
           <Divider horizontal>or</Divider>
 
           <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-            <Form.Input
+            <FormInputField
               fluid
               icon="mail"
               iconPosition="left"
@@ -34,11 +35,10 @@ const SignUpForm = ({
               name="email"
               size="huge"
               onChange={onChange}
-              error={!_.isEmpty(errors.email)}
+              errors={errors}
             />
-            {!_.isEmpty(errors.email) && <Message error content={errors.email} />}
 
-            <Form.Input
+            <FormInputField
               fluid
               icon="user"
               iconPosition="left"
@@ -46,11 +46,10 @@ const SignUpForm = ({
               name="firstName"
               size="huge"
               onChange={onChange}
-              error={!_.isEmpty(errors.firstName)}
+              errors={errors}
             />
-            {!_.isEmpty(errors.firstName) && <Message error content={errors.firstName} />}
 
-            <Form.Input
+            <FormInputField
               fluid
               icon="user"
               iconPosition="left"
@@ -58,11 +57,10 @@ const SignUpForm = ({
               name="lastName"
               size="huge"
               onChange={onChange}
-              error={!_.isEmpty(errors.lastName)}
+              errors={errors}
             />
-            {!_.isEmpty(errors.lastName) && <Message error content={errors.lastName} />}
 
-            <Form.Input
+            <FormInputField
               fluid
               icon="lock"
               iconPosition="left"
@@ -71,9 +69,8 @@ const SignUpForm = ({
               name="password"
               size="huge"
               onChange={onChange}
-              error={!_.isEmpty(errors.password)}
+              errors={errors}
             />
-            {!_.isEmpty(errors.password) && <Message error content={errors.password} />}
 
             <Button color="teal" fluid size="huge" type="submit" disabled={disabled}>
               Sign up

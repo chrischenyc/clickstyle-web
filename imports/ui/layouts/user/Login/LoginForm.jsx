@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Message, Segment, Divider } from 'semantic-ui-react';
 import _ from 'lodash';
 
+import FormInputField from '../../../components/FormInputField';
 import SocialLoginButtons from '../SocialLoginButtons';
 
 // web version of the login form, stateless component
@@ -19,7 +20,7 @@ const LoginForm = ({
           <Divider horizontal>or</Divider>
 
           <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-            <Form.Input
+            <FormInputField
               fluid
               icon="mail"
               iconPosition="left"
@@ -28,11 +29,10 @@ const LoginForm = ({
               name="email"
               size="huge"
               onChange={onChange}
-              error={!_.isEmpty(errors.email)}
+              errors={errors}
             />
-            {!_.isEmpty(errors.email) && <Message error content={errors.email} />}
 
-            <Form.Input
+            <FormInputField
               fluid
               icon="lock"
               iconPosition="left"
@@ -41,9 +41,8 @@ const LoginForm = ({
               name="password"
               size="huge"
               onChange={onChange}
-              error={!_.isEmpty(errors.password)}
+              errors={errors}
             />
-            {!_.isEmpty(errors.password) && <Message error content={errors.password} />}
 
             <Button color="teal" fluid size="huge" type="submit">
               Login
