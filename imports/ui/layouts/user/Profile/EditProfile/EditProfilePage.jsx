@@ -54,7 +54,7 @@ const EditProfilePage = ({
       <label>Where about you</label>
 
       <GeoSuggest
-        placeholder="type to search ..."
+        placeholder="type to search address, suburb, or postcode"
         country="au"
         name="address.raw"
         initialValue={_.has(profile, 'address.raw') ? profile.address.raw : ''}
