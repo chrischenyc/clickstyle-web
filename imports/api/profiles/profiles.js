@@ -91,9 +91,18 @@ const ProfilesSchema = new SimpleSchema({
   owner: {
     type: String,
   },
+  email: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email,
+  },
   name: { type: NameSchema },
 
   // optional fields
+  gender: {
+    type: String,
+    optional: true,
+    regEx: /^male$|^female$|^other$/,
+  },
   mobile: {
     type: String,
     regEx: SimpleSchema.RegEx.Phone, // TODO: enhance regex to aussie mobile regex
