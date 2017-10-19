@@ -37,6 +37,10 @@ class EditProfile extends Component {
     let newProfile = _.cloneDeep(this.state.profile);
     newProfile = _.set(newProfile, event.target.name, event.target.value);
 
+    if (event.target.name === 'address.raw' && _.isEmpty(event.target.value)) {
+      newProfile.address = {};
+    }
+
     this.setState({
       profile: newProfile,
       pristine: _.isEqual(newProfile, this.props.profile),
