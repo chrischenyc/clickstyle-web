@@ -7,9 +7,9 @@ import FormInputField from '../../../../components/FormInputField';
 
 // web version of the login form, stateless component
 const EditProfilePage = ({
-  profile, onSubmit, onChange, loading, pristine, errors,
+  profile, onSubmit, onChange, loading, saving, pristine, errors,
 }) => (
-  <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+  <Form onSubmit={onSubmit} loading={loading || saving} error={!_.isEmpty(errors)}>
     <FormInputField
       label="First name"
       placeholder="First name"
@@ -63,7 +63,7 @@ const EditProfilePage = ({
       note="Help other people get to know you. Tell them about the things you like..."
     />
 
-    <Button color="teal" size="large" type="submit" disabled={pristine}>
+    <Button color="teal" size="large" type="submit" disabled={pristine} loading={saving}>
       Save
     </Button>
 
@@ -80,6 +80,7 @@ EditProfilePage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
 };

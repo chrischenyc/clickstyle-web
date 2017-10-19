@@ -68,7 +68,8 @@ class EditProfile extends Component {
         profile={this.state.profile}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        loading={this.state.saving || this.props.fetching}
+        loading={this.props.fetching}
+        saving={this.state.saving}
         pristine={this.state.pristine}
         errors={this.state.errors}
       />
