@@ -24,6 +24,7 @@ class EditProfile extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAddressSuggest = this.handleAddressSuggest.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,12 +63,17 @@ class EditProfile extends Component {
     }
   }
 
+  handleAddressSuggest(suggest) {
+    console.log(suggest);
+  }
+
   render() {
     return (
       <EditProfilePage
         profile={this.state.profile}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
+        onAddressSuggest={this.handleAddressSuggest}
         loading={this.props.fetching}
         saving={this.state.saving}
         pristine={this.state.pristine}

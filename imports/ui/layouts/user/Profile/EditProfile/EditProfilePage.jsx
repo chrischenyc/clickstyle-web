@@ -2,12 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Message, TextArea } from 'semantic-ui-react';
 import _ from 'lodash';
+import Geosuggest from 'react-geosuggest';
 
 import FormInputField from '../../../../components/FormInputField';
 
 // web version of the login form, stateless component
 const EditProfilePage = ({
-  profile, onSubmit, onChange, loading, saving, pristine, errors,
+  profile,
+  onSubmit,
+  onChange,
+  onAddressSuggest,
+  loading,
+  saving,
+  pristine,
+  errors,
 }) => (
   <Form onSubmit={onSubmit} loading={loading || saving} error={!_.isEmpty(errors)}>
     <FormInputField
@@ -41,16 +49,28 @@ const EditProfilePage = ({
         .public.company.applicationName} user once you two have a confirmed booking .`}
     />
 
-    <FormInputField
-      label="Where about you"
-      placeholder="type to search ..."
-      name="address.raw"
-      onChange={onChange}
-      errors={errors}
-      value={_.has(profile, 'address.raw') ? profile.address.raw : ''}
-      note={`This is not on your public profile. This is only shared with another ${Meteor.settings
-        .public.company.applicationName} user once you two have a confirmed booking .`}
-    />
+    <Form.Field>
+      <label>Where about you</label>
+      <p>
+        {`This is not on your public profile. This is only shared with another ${Meteor.settings
+          .public.company.applicationName} user once you two have a confirmed booking .`}
+      </p>
+      <Geosuggest
+        placeholder="type to search ..."
+        country="au"
+        name="address.raw"
+        initialValue={_.has(profile, 'address.raw') ? profile.address.raw : ''}
+        onChange={(value) => {
+          // convert to generic onChange param
+          onChange({ target: { name: 'address.raw', value } });
+        }}
+        onSuggestSelect={(suggest) => {
+          // force onChange as well
+          onChange({ target: { name: 'address.raw', value: suggest.label } });
+          onAddressSuggest(suggest);
+        }}
+      />
+    </Form.Field>
 
     <FormInputField
       label="About you"
@@ -79,6 +99,7 @@ EditProfilePage.propTypes = {
   profile: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onAddressSuggest: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
