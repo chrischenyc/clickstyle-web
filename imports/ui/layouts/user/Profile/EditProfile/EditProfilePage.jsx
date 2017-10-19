@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Message, TextArea } from 'semantic-ui-react';
 import _ from 'lodash';
-import Geosuggest from 'react-geosuggest';
+import GeoSuggest from 'react-geosuggest';
 
+import '../../../../components/GeoSuggest.css';
 import FormInputField from '../../../../components/FormInputField';
 
 // web version of the login form, stateless component
@@ -51,11 +52,8 @@ const EditProfilePage = ({
 
     <Form.Field>
       <label>Where about you</label>
-      <p>
-        {`This is not on your public profile. This is only shared with another ${Meteor.settings
-          .public.company.applicationName} user once you two have a confirmed booking .`}
-      </p>
-      <Geosuggest
+
+      <GeoSuggest
         placeholder="type to search ..."
         country="au"
         name="address.raw"
@@ -70,6 +68,11 @@ const EditProfilePage = ({
           onAddressSuggest(suggest);
         }}
       />
+
+      <p style={{ marginTop: '0.25rem', marginBottom: '1rem', color: '#aaa' }}>
+        {`This is not on your public profile. This is only shared with another ${Meteor.settings
+          .public.company.applicationName} user once you two have a confirmed booking .`}
+      </p>
     </Form.Field>
 
     <FormInputField
