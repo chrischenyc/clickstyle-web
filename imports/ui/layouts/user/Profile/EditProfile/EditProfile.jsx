@@ -7,6 +7,7 @@ import _ from 'lodash';
 import Profiles from '../../../../../api/profiles/profiles';
 
 import { validateEditProfile } from '../../../../../modules/validate';
+import GeoSuggestToAddress from '../../../../../modules/geo-suggest-to-address';
 import EditProfilePage from './EditProfilePage';
 
 // platform-independent stateful container component
@@ -64,7 +65,11 @@ class EditProfile extends Component {
   }
 
   handleAddressSuggest(suggest) {
-    console.log(suggest);
+    const address = GeoSuggestToAddress(suggest);
+
+    this.setState({
+      profile: { ...this.state.profile, address },
+    });
   }
 
   render() {

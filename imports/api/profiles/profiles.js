@@ -54,6 +54,11 @@ const PhotoSchema = new SimpleSchema({
 });
 
 const AddressSchema = new SimpleSchema({
+  raw: {
+    type: String,
+    optional: true,
+    max: 200,
+  },
   state: {
     type: String,
     optional: true,
@@ -78,11 +83,6 @@ const AddressSchema = new SimpleSchema({
     type: String,
     optional: true,
     max: 100,
-  },
-  raw: {
-    type: String,
-    optional: true,
-    max: 200,
   },
 });
 
