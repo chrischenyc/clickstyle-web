@@ -17,7 +17,7 @@
     "handlebars": "^4.0.10",
     "juice": "^4.2.0",
     "lodash": "^4.17.4",
-    "meteor-node-stubs": "~0.2.4",
+    "meteor-node-stubs": "^0.3.2",
     "moment": "^2.18.1",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",

@@ -1815,9 +1815,9 @@ mensch@^0.3.3:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/mensch/-/mensch-0.3.3.tgz#e200ff4dd823717f8e0563b32e3f5481fca262b2"
 
-meteor-node-stubs@~0.2.4:
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/meteor-node-stubs/-/meteor-node-stubs-0.2.11.tgz#715e4ec1ce888248b29604e16d092256b0cb7e34"
+meteor-node-stubs@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/meteor-node-stubs/-/meteor-node-stubs-0.3.2.tgz#2c9224a911b1e66c141c6a17b1a3dc92dc387795"
   dependencies:
     assert "^1.4.1"
     browserify-zlib "^0.1.4"
