@@ -13,13 +13,14 @@ Accounts.onCreateUser((options, user) => {
   // keep a normalized user profile in a separate collection
   const normalizedProfile = normalizeProfile(options, user);
   if (normalizedProfile) {
-    // TODO: conditionally update existing user profile data fields
+    // TODO: conditionally update existing user profile data fields when accounts merge
     Profiles.upsert({ owner: normalizedProfile.owner }, { $set: normalizedProfile });
 
-    // run tasks post creation
-    // https://stackoverflow.com/questions/22649600/unable-to-add-roles-to-user-with-meteor-using-roles-package/22650399#22650399s
+    // keep name in User.profile for email-templates.js to use
+    userToCreate.profile = { name: normalizedProfile.name };
 
     // follow up actions after User record is saved
+    // https://stackoverflow.com/questions/22649600/unable-to-add-roles-to-user-with-meteor-using-roles-package/22650399#22650399s
     Meteor.defer(() => {
       // set default user role as Customer
       Roles.addUsersToRoles(user._id, [Meteor.settings.private.roles.customer]);
@@ -31,9 +32,6 @@ Accounts.onCreateUser((options, user) => {
 
       sendWelcomeEmail(normalizedProfile.email, normalizedProfile.name.first);
     });
-
-    // keep name in User.profile for email-templates.js to use
-    userToCreate.profile = { name: normalizedProfile.name };
 
     return userToCreate;
   }
