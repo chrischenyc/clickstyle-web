@@ -7,7 +7,7 @@ const BannerSegment = () => (
     inverted
     textAlign="center"
     style={{
-      padding: '8em 0em',
+      padding: '8rem 0',
       backgroundImage:
         'url("https://images.unsplash.com/photo-1500840216050-6ffa99d75160?dpr=1&auto=compress,format&fit=crop&w=1080&h=&q=50&cs=tinysrgb&crop=")',
       backgroundRepeat: 'no-repeat',
@@ -21,7 +21,7 @@ const BannerSegment = () => (
         content="Stylesquard"
         inverted
         style={{
-          fontSize: '4em',
+          fontSize: '4rem',
           fontWeight: 'thick',
           fontStyle: 'italic',
         }}
@@ -31,7 +31,7 @@ const BannerSegment = () => (
         content="Professional Beauty Service"
         inverted
         style={{
-          fontSize: '1.7em',
+          fontSize: '1.7rem',
           fontWeight: 'normal',
           marginBottom: 0,
         }}
@@ -41,7 +41,7 @@ const BannerSegment = () => (
         content="any where you want"
         inverted
         style={{
-          fontSize: '1.7em',
+          fontSize: '1.7rem',
           fontWeight: 'normal',
           marginTop: 0,
         }}

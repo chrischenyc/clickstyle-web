@@ -23,7 +23,7 @@ const HomePage = props => (
     <Segment
       textAlign="center"
       style={{
-        padding: '2em 0em',
+        padding: '2rem 0',
       }}
       vertical
     >

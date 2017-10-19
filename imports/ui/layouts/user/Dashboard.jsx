@@ -4,7 +4,7 @@ import { Container, Header } from 'semantic-ui-react';
 import EmailVerificationAlert from './EmailVerificationAlert/EmailVerificationAlert';
 
 const Dashboard = () => (
-  <Container style={{ padding: '4em 0' }}>
+  <Container style={{ padding: '4rem 0' }}>
     <EmailVerificationAlert />
     <Header as="h2">Dashboard</Header>
     <p>TODO: implement Dashboard</p>

@@ -59,7 +59,7 @@ class VerifyEmail extends React.Component {
 
   render() {
     return (
-      <Container text textAlign="center" className="below-fixed-menu" style={{ padding: '8em 0' }}>
+      <Container text textAlign="center" className="below-fixed-menu" style={{ padding: '8rem 0' }}>
         {this.renderMessage()}
       </Container>
     );

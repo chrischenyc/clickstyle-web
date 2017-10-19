@@ -11,7 +11,7 @@ const ForgotPasswordPage = ({
     return <Redirect to="/" />;
   } else if (success) {
     return (
-      <Container text className="below-fixed-menu" style={{ padding: '4em 0' }}>
+      <Container text className="below-fixed-menu" style={{ padding: '4rem 0' }}>
         <Grid textAlign="left" verticalAlign="middle">
           <Message icon success>
             <Icon name="checkmark" />
@@ -24,7 +24,7 @@ const ForgotPasswordPage = ({
   }
 
   return (
-    <Container text className="below-fixed-menu" style={{ padding: '4em 0' }}>
+    <Container text className="below-fixed-menu" style={{ padding: '4rem 0' }}>
       <Grid textAlign="left" verticalAlign="middle">
         <Grid.Row style={{ maxWidth: 450 }}>
           <Grid.Column>

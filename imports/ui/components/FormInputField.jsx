@@ -9,10 +9,14 @@ const FormInputField = ({
   <Form.Field>
     <Form.Input name={name} onChange={onChange} error={!_.isEmpty(errors[name])} {...rest} />
     {!_.isEmpty(errors[name]) && (
-      <Message error content={errors[name]} style={{ marginTop: '-0.75em', marginBottom: '1em' }} />
+      <Message
+        error
+        content={errors[name]}
+        style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
+      />
     )}
     {!_.isEmpty(note) && (
-      <p style={{ marginTop: '-0.75em', marginBottom: '1em', color: '#aaa' }}>{note}</p>
+      <p style={{ marginTop: '-0.75rem', marginBottom: '1rem', color: '#aaa' }}>{note}</p>
     )}
   </Form.Field>
 );

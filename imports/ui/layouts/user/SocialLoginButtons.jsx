@@ -31,7 +31,7 @@ const SocialLoginButtons = ({ isSignUp, callback, disabled }) => (
       color="facebook"
       size="huge"
       disabled={disabled}
-      style={{ marginBottom: '1em' }}
+      style={{ marginBottom: '1rem' }}
       onClick={() => {
         facebookLogin(callback);
       }}
@@ -46,7 +46,7 @@ const SocialLoginButtons = ({ isSignUp, callback, disabled }) => (
       basic
       size="huge"
       disabled={disabled}
-      style={{ marginBottom: '0.5em' }}
+      style={{ marginBottom: '0.5rem' }}
       onClick={() => {
         googleLogin(callback);
       }}

@@ -52,7 +52,7 @@ const LoginForm = ({
           </Form>
 
           <Link to="/forgot-password">
-            <p style={{ margin: '0.5em 0' }}>Forgot password?</p>
+            <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
           </Link>
         </Segment>
 
