@@ -1671,8 +1671,8 @@ jsx-ast-utils@^2.0.0:
     array-includes "^3.0.3"
 
 juice@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/juice/-/juice-4.2.0.tgz#97c4aade1f9ef43e387ba15d17ac5e2a7ab3c1af"
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/juice/-/juice-4.2.1.tgz#32f58ea4d7e9d2329ba5e26708b4c854a8c1c2f1"
   dependencies:
     cheerio "^0.22.0"
     commander "2.9.0"
