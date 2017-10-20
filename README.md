@@ -9,3 +9,9 @@
 ### push credentials to heroku ENV
 
 `heroku config:add METEOR_SETTINGS="$(cat settings-production.json)"`
+
+## Accounts and managers
+
+- Deploy@Heroku: chrischen79@gmail.com
+- Domain@Godaddy: viz.patel7@gmail.com, chrischen79@gmail.com
+- Mailing@Mailgun: chrischen79@gmail.com
