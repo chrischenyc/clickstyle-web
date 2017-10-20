@@ -9,13 +9,13 @@ import SocialLoginButtons from '../SocialLoginButtons';
 
 // web version of the login form, stateless component
 const LoginForm = ({
-  onSubmit, onChange, onSocialSignIn, loading, errors,
+  onSubmit, onChange, loading, errors,
 }) => (
   <Grid textAlign="center" verticalAlign="middle" className="below-fixed-menu">
     <Grid.Row style={{ maxWidth: 450 }}>
       <Grid.Column>
         <Segment attached>
-          <SocialLoginButtons callback={onSocialSignIn} />
+          <SocialLoginButtons />
 
           <Divider horizontal>or</Divider>
 
@@ -67,7 +67,6 @@ const LoginForm = ({
 LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onSocialSignIn: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
 };

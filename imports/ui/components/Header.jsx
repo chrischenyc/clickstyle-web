@@ -9,7 +9,7 @@ import { userSignedIn, userSignedOut } from '../../modules/client/redux/user';
 
 class Header extends Component {
   // after web App is refreshed, try to fetch Meteor logged-in user object
-  // Meteor.user() has a bit latency, so we wait for 1 sec
+  // then update redux states
   componentDidMount() {
     Tracker.autorun(() => {
       const user = Meteor.user();

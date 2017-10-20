@@ -1,9 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import _ from 'lodash';
-import { userSignedIn } from '../../../../modules/client/redux/user';
+
 import { validateUserLogin } from '../../../../modules/validate';
 import LoginForm from './LoginForm';
 
@@ -22,7 +20,6 @@ class LoginPage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSocialSignIn = this.handleSocialSignIn.bind(this);
   }
 
   handleChange(event) {
@@ -54,16 +51,8 @@ class LoginPage extends Component {
             loading: false,
             errors: {},
           });
-
-          // this.props.userSignedIn(Meteor.user());
         }
       });
-    }
-  }
-
-  handleSocialSignIn(error) {
-    if (!error) {
-      // this.props.userSignedIn(Meteor.user());
     }
   }
 
@@ -72,7 +61,6 @@ class LoginPage extends Component {
       <LoginForm
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        onSocialSignIn={this.handleSocialSignIn}
         loading={this.state.loading}
         errors={this.state.errors}
       />
@@ -80,13 +68,4 @@ class LoginPage extends Component {
   }
 }
 
-LoginPage.propTypes = {
-  userSignedIn: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = dispatch => ({
-  userSignedIn: (user) => {
-    dispatch(userSignedIn(user));
-  },
-});
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default LoginPage;

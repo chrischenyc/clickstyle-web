@@ -1,11 +1,7 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Container, Message, Icon } from 'semantic-ui-react';
-
-import { userSignedIn } from '../../../modules/client/redux/user';
 
 class VerifyEmail extends React.Component {
   constructor(props) {
@@ -20,9 +16,8 @@ class VerifyEmail extends React.Component {
       } else {
         this.setState({ loading: false, error: null });
 
-        // this.props.userSignedIn(Meteor.user());
-
         setTimeout(() => {
+          // TODO: update child's props to do the redirect, this component is platform independent
           this.props.history.push('/dashboard');
         }, 1500);
       }
@@ -69,12 +64,6 @@ class VerifyEmail extends React.Component {
 VerifyEmail.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  userSignedIn: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  userSignedIn: (user) => {
-    dispatch(userSignedIn(user));
-  },
-});
-export default connect(null, mapDispatchToProps)(VerifyEmail);
+export default VerifyEmail;

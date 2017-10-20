@@ -1,10 +1,7 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import _ from 'lodash';
-import { userSignedIn } from '../../../../modules/client/redux/user';
+
 import { validateUserSignUp } from '../../../../modules/validate';
 import SignUpForm from './SignUpForm';
 
@@ -26,7 +23,6 @@ class SignUpPage extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSocialSignIn = this.handleSocialSignIn.bind(this);
     this.handleAgreement = this.handleAgreement.bind(this);
   }
 
@@ -75,17 +71,9 @@ class SignUpPage extends Component {
               loading: false,
               errors: {},
             });
-
-            this.props.userSignedIn(Meteor.user());
           }
         },
       );
-    }
-  }
-
-  handleSocialSignIn(error) {
-    if (!error) {
-      this.props.userSignedIn(Meteor.user());
     }
   }
 
@@ -98,7 +86,6 @@ class SignUpPage extends Component {
       <SignUpForm
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        onSocialSignIn={this.handleSocialSignIn}
         onAgreement={this.handleAgreement}
         loading={this.state.loading}
         errors={this.state.errors}
@@ -108,13 +95,4 @@ class SignUpPage extends Component {
   }
 }
 
-SignUpPage.propTypes = {
-  userSignedIn: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = dispatch => ({
-  userSignedIn: (user) => {
-    dispatch(userSignedIn(user));
-  },
-});
-export default connect(null, mapDispatchToProps)(SignUpPage);
+export default SignUpPage;

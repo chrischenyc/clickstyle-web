@@ -9,19 +9,13 @@ import SocialLoginButtons from '../SocialLoginButtons';
 
 // web version of the sign up form, stateless component
 const SignUpForm = ({
-  onSubmit,
-  onChange,
-  onSocialSignIn,
-  onAgreement,
-  disabled,
-  loading,
-  errors,
+  onSubmit, onChange, onAgreement, disabled, loading, errors,
 }) => (
   <Grid textAlign="center" className="below-fixed-menu" verticalAlign="middle">
     <Grid.Row style={{ maxWidth: 450 }}>
       <Grid.Column>
         <Segment attached>
-          <SocialLoginButtons isSignUp callback={onSocialSignIn} disabled={disabled} />
+          <SocialLoginButtons isSignUp disabled={disabled} />
 
           <Divider horizontal>or</Divider>
 
@@ -103,15 +97,10 @@ const SignUpForm = ({
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onSocialSignIn: PropTypes.func.isRequired,
   onAgreement: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
-};
-
-SignUpForm.defaultProps = {
-  disabled: false,
 };
 
 export default SignUpForm;

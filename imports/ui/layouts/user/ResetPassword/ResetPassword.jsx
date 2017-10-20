@@ -1,11 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateResetPassword } from '../../../../modules/validate';
 import ResetPasswordPage from './ResetPasswordPage';
 
@@ -63,8 +60,6 @@ class ResetPassword extends Component {
             success: true,
           });
 
-          // this.props.userSignedIn(Meteor.user());
-
           Meteor.call('users.sendPasswordChangedEmail');
 
           setTimeout(() => {
@@ -89,13 +84,4 @@ class ResetPassword extends Component {
   }
 }
 
-ResetPassword.propTypes = {
-  userSignedIn: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = dispatch => ({
-  userSignedIn: (user) => {
-    dispatch(userSignedIn(user));
-  },
-});
-export default connect(null, mapDispatchToProps)(ResetPassword);
+export default ResetPassword;
