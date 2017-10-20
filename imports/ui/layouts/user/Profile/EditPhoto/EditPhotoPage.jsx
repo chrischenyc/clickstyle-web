@@ -12,7 +12,7 @@ const EditPhotoPage = ({
     <Grid>
       <Grid.Row>
         <Grid.Column width="6">
-          <Image src={photo && photo.origin} size="medium" shape="circular" />
+          <Image src={photo && photo.origin} size="medium" />
         </Grid.Column>
 
         <Grid.Column width="10">

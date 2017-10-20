@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Slingshot } from 'meteor/edgee:slingshot';
 
 Slingshot.createDirective(Meteor.settings.public.SlingshotClientDirective, Slingshot.S3Storage, {
-  bucket: Meteor.settings.AWSBucket,
   acl: 'public-read',
   authorize() {
     // Deny uploads if user is not logged in.

@@ -39,7 +39,6 @@ class EditPhoto extends Component {
 
       upload.send(file, (uploadError, downloadUrl) => {
         if (uploadError) {
-          console.log(uploadError);
           this.setState({ saving: false, errors: { message: uploadError.reason } });
         } else {
           console.log(downloadUrl);
