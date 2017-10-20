@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@navjobs/upload@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@navjobs/upload/-/upload-3.0.10.tgz#be88dd2fa23b60f3a02844ddaf8d59a87fe7ebca"
+
 Base64@~0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/Base64/-/Base64-0.2.1.tgz#ba3a4230708e186705065e66babdd4c35cf60028"

@@ -3,3 +3,8 @@
 .ui.fixed.menu + .below-fixed-menu {
   margin-top: 46px;
 }
+
+/* https://github.com/navjobs/upload#uploadfield */
+::-webkit-file-upload-button {
+  cursor: pointer;
+}

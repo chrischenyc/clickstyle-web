@@ -6,3 +6,5 @@ import './oauth';
 import './email';
 import './accounts';
 import './email-templates';
+import '../slingshot-restrictions';
+import './slingshot-directives';

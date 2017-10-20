@@ -32,3 +32,4 @@ zimme:collection-timestampable  # attache createdAt/updatedAt fields to Meteor C
 react-meteor-data               # Meteor reactive data -> React props
 splendido:accounts-meld         # merge social sign in accounts with password accounts
 
+edgee:slingshot

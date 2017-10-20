@@ -24,7 +24,8 @@
       "meteor/ddp-rate-limiter",
       "meteor/react-meteor-data",
       "meteor/alanning:roles",
-      "meteor/splendido:accounts-meld"
+      "meteor/splendido:accounts-meld",
+      "meteor/edgee:slingshot"
     ]
   },
   "rules": {
