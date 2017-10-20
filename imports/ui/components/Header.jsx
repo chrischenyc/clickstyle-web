@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Tracker } from 'meteor/tracker';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -10,14 +11,16 @@ class Header extends Component {
   // after web App is refreshed, try to fetch Meteor logged-in user object
   // Meteor.user() has a bit latency, so we wait for 1 sec
   componentDidMount() {
-    setTimeout(() => {
+    Tracker.autorun(() => {
       const user = Meteor.user();
-      if (user) {
-        this.props.userSignedIn(user);
-      } else {
-        this.props.userSignedOut();
+      if (user !== undefined) {
+        if (user) {
+          this.props.userSignedIn(user);
+        } else {
+          this.props.userSignedOut();
+        }
       }
-    }, 1000);
+    });
   }
 
   render() {
@@ -38,9 +41,7 @@ class Header extends Component {
                   <Dropdown.Item
                     text="Logout"
                     onClick={() => {
-                      Meteor.logout(() => {
-                        this.props.userSignedOut();
-                      });
+                      Meteor.logout();
                     }}
                   />
                 </Dropdown.Menu>

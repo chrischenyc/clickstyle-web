@@ -55,7 +55,7 @@ class LoginPage extends Component {
             errors: {},
           });
 
-          this.props.userSignedIn(Meteor.user());
+          // this.props.userSignedIn(Meteor.user());
         }
       });
     }
@@ -63,7 +63,7 @@ class LoginPage extends Component {
 
   handleSocialSignIn(error) {
     if (!error) {
-      this.props.userSignedIn(Meteor.user());
+      // this.props.userSignedIn(Meteor.user());
     }
   }
 

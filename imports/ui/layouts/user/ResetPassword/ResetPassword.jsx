@@ -63,7 +63,7 @@ class ResetPassword extends Component {
             success: true,
           });
 
-          this.props.userSignedIn(Meteor.user());
+          // this.props.userSignedIn(Meteor.user());
 
           Meteor.call('users.sendPasswordChangedEmail');
 

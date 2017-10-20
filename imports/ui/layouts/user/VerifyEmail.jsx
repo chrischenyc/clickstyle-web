@@ -20,7 +20,7 @@ class VerifyEmail extends React.Component {
       } else {
         this.setState({ loading: false, error: null });
 
-        this.props.userSignedIn(Meteor.user());
+        // this.props.userSignedIn(Meteor.user());
 
         setTimeout(() => {
           this.props.history.push('/dashboard');

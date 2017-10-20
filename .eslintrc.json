@@ -16,17 +16,15 @@
   "settings": {
     "import/core-modules": [
       "meteor/meteor",
-      "meteor/blaze",
-      "meteor/templating",
-      "meteor/react-meteor-data",
-      "meteor/alanning:roles",
-      "meteor/service-configuration",
-      "meteor/accounts-base",
-      "meteor/splendido:accounts-meld",
-      "meteor/ddp-rate-limiter",
+      "meteor/tracker",
       "meteor/check",
       "meteor/email",
-      "meteor/themeteorchef:bert"
+      "meteor/service-configuration",
+      "meteor/accounts-base",
+      "meteor/ddp-rate-limiter",
+      "meteor/react-meteor-data",
+      "meteor/alanning:roles",
+      "meteor/splendido:accounts-meld"
     ]
   },
   "rules": {
