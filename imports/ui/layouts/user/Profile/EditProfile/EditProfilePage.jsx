@@ -51,7 +51,7 @@ const EditProfilePage = ({
     />
 
     <Form.Field>
-      <label>Where about you</label>
+      <label>Your address</label>
 
       <GeoSuggest
         placeholder="type to search address, suburb, or postcode"
