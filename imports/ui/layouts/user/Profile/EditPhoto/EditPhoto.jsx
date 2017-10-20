@@ -41,10 +41,8 @@ class EditPhoto extends Component {
         if (uploadError) {
           this.setState({ saving: false, errors: { message: uploadError.reason } });
         } else {
-          console.log(downloadUrl);
-          // TODO: update user profile.photo.original
-
-          Meteor.call('profiles.update.photo', downloadUrl, (callError) => {
+          // update user profile.photo.original
+          Meteor.call('profiles.update', { photo: { origin: downloadUrl } }, (callError) => {
             this.setState({ saving: false, errors: {} });
 
             if (callError) {
