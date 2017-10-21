@@ -18,11 +18,8 @@ class EditPhoto extends Component {
       saving: false,
     };
 
-    this.handleFile = this.handleFile.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
-
-  handleFile(file) {}
 
   handleSave(file) {
     this.setState({ errors: {} });
@@ -50,6 +47,9 @@ class EditPhoto extends Component {
 
             if (callError) {
               this.setState({ errors: { message: callError.reason } });
+            } else {
+              // TODO: notify success
+              // this.setState({ file: null });
             }
           });
         }
@@ -61,7 +61,6 @@ class EditPhoto extends Component {
     return (
       <EditPhotoPage
         photo={this.props.photo}
-        onFile={this.handleFile}
         onSave={this.handleSave}
         saving={this.state.saving}
         errors={this.state.errors}
