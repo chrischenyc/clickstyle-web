@@ -21,14 +21,15 @@ class EditPhotoPage extends Component {
 
   render() {
     const {
-      photo, onSave, saving, errors,
+      photo, onFile, onSave, saving, pristine, errors,
     } = this.props;
 
     const { file, scale } = this.state;
 
+    // if file selected, show photo editor UI
     return (
       <div>
-        {file ? (
+        {file && !pristine ? (
           <div>
             <AvatarEditor
               image={file}
@@ -91,8 +92,8 @@ class EditPhotoPage extends Component {
             <p>Your photo will appear on your public profile</p>
             <FileField
               onFiles={(files) => {
-                const file = files[0];
-                this.setState({ file });
+                this.setState({ file: files[0] });
+                onFile();
               }}
               uploadProps={{
                 accept: '.jpg,.jpeg,.png,.bmp,.gif',
@@ -118,8 +119,10 @@ EditPhotoPage.defaultProps = {
 
 EditPhotoPage.propTypes = {
   photo: PropTypes.object,
+  onFile: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
+  pristine: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
 };
 
