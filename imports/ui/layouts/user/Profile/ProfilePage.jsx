@@ -23,14 +23,6 @@ const ProfilePage = () => (
           </Tab.Pane>
         ),
       },
-      {
-        menuItem: 'Products I Use',
-        render: () => (
-          <Tab.Pane>
-            <p>TODO: implement products I use page</p>
-          </Tab.Pane>
-        ),
-      },
       // TODO: stylist profile needs more tabs
     ]}
   />

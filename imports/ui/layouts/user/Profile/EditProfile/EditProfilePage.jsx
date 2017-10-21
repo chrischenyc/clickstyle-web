@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Message, TextArea } from 'semantic-ui-react';
+import { Button, Form, Message, TextArea, Label, Icon } from 'semantic-ui-react';
 import _ from 'lodash';
 import GeoSuggest from 'react-geosuggest';
 
@@ -85,6 +85,25 @@ const EditProfilePage = ({
       value={_.has(profile, 'about') ? profile.about : ''}
       note="Help other people get to know you. Tell them about the things you like..."
     />
+
+    <Form.Field>
+      <label>Products you used</label>
+      <input
+        placeholder="start searching by typing e.g.: l'oreal..."
+        name="productsSearch"
+        style={{ marginBottom: '0.5rem' }}
+      />
+      {/* TODO: write a tags component */}
+      <Label>
+        Maybelline<Icon name="delete" />
+      </Label>
+      <Label>
+        NARS<Icon name="delete" />
+      </Label>
+      <Label>
+        wet n wild<Icon name="delete" />
+      </Label>
+    </Form.Field>
 
     <Button color="teal" size="large" type="submit" disabled={pristine} loading={saving}>
       Save
