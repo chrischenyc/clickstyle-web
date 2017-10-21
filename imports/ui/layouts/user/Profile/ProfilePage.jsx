@@ -35,20 +35,20 @@ const ProfilePage = ({
   errors,
 }) => (
   <Container className="below-fixed-menu">
-    <Divider horizontal>Photo</Divider>
-
-    <EditPhotoPage
-      photo={photo}
-      onPhotoSelected={onPhotoSelected}
-      onPhotoUpload={onPhotoUpload}
-      photoUploading={photoUploading}
-      photoPristine={photoPristine}
-      photoError={photoError}
-    />
-
-    <Divider horizontal>Basic info</Divider>
-
     <Form onSubmit={onSubmit} loading={loading || saving} error={!_.isEmpty(errors)}>
+      <Divider horizontal>Photo</Divider>
+
+      <EditPhotoPage
+        photo={photo}
+        onPhotoSelected={onPhotoSelected}
+        onPhotoUpload={onPhotoUpload}
+        photoUploading={photoUploading}
+        photoPristine={photoPristine}
+        photoError={photoError}
+      />
+
+      <Divider horizontal>Basic info</Divider>
+
       <FormInputField
         label="First name"
         placeholder="First name"
