@@ -21,7 +21,12 @@ class EditPhotoPage extends Component {
 
   render() {
     const {
-      photo, onFile, onSave, saving, pristine, errors,
+      photo,
+      onPhotoSelected,
+      onPhotoUpload,
+      photoUploading,
+      photoPristine,
+      photoError,
     } = this.props;
 
     const { file, scale } = this.state;
@@ -29,7 +34,7 @@ class EditPhotoPage extends Component {
     // if file selected, show photo editor UI
     return (
       <div>
-        {file && !pristine ? (
+        {file && !photoPristine ? (
           <div>
             <AvatarEditor
               image={file}
@@ -50,7 +55,7 @@ class EditPhotoPage extends Component {
               min="100"
               max="300"
               defaultValue="100"
-              disabled={saving}
+              disabled={photoUploading}
               onChange={(event) => {
                 this.setState({ scale: event.target.value / 100.0 });
               }}
@@ -65,7 +70,7 @@ class EditPhotoPage extends Component {
                       scale: 1.0,
                     });
                   }}
-                  disabled={saving}
+                  disabled={photoUploading}
                 >
                   Cancel
                 </Button>
@@ -80,13 +85,13 @@ class EditPhotoPage extends Component {
                     canvas.toBlob(
                       (blob) => {
                         blob.name = 'photo.jpeg';
-                        onSave(blob);
+                        onPhotoUpload(blob);
                       },
                       'image/jpeg',
                       1,
                     );
                   }}
-                  loading={saving}
+                  loading={photoUploading}
                 >
                   Save
                 </Button>
@@ -100,13 +105,13 @@ class EditPhotoPage extends Component {
             <FileField
               onFiles={(files) => {
                 this.setState({ file: files[0] });
-                onFile();
+                onPhotoSelected();
               }}
               uploadProps={{
                 accept: '.jpg,.jpeg,.png,.bmp',
               }}
             >
-              <Button color="teal" loading={saving}>
+              <Button color="teal" loading={photoUploading}>
                 Select photo
               </Button>
               <span>&nbsp;image file max size: 2MB</span>
@@ -114,7 +119,7 @@ class EditPhotoPage extends Component {
           </div>
         )}
 
-        {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+        {!_.isEmpty(photoError) && <Message error content={photoError} />}
       </div>
     );
   }
@@ -126,11 +131,11 @@ EditPhotoPage.defaultProps = {
 
 EditPhotoPage.propTypes = {
   photo: PropTypes.object,
-  onFile: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  saving: PropTypes.bool.isRequired,
-  pristine: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
+  onPhotoSelected: PropTypes.func.isRequired,
+  onPhotoUpload: PropTypes.func.isRequired,
+  photoUploading: PropTypes.bool.isRequired,
+  photoPristine: PropTypes.bool.isRequired,
+  photoError: PropTypes.string.isRequired,
 };
 
 export default EditPhotoPage;
