@@ -6,7 +6,7 @@ import { UploadField } from '@navjobs/upload';
 
 // web version of the login form, stateless component
 const EditPhotoPage = ({
-  photo, onFile, saving, errors,
+  photo, onFile, onSave, saving, errors,
 }) => (
   <div>
     <Image src={photo && photo.origin} size="medium" />
@@ -39,6 +39,7 @@ EditPhotoPage.defaultProps = {
 EditPhotoPage.propTypes = {
   photo: PropTypes.object,
   onFile: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
 };

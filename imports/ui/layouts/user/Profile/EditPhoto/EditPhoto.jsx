@@ -19,9 +19,12 @@ class EditPhoto extends Component {
     };
 
     this.handleFile = this.handleFile.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
-  handleFile(file) {
+  handleFile(file) {}
+
+  handleSave(file) {
     this.setState({ errors: {} });
 
     const metaContext = { path: 'profile/photo' };
@@ -59,7 +62,7 @@ class EditPhoto extends Component {
       <EditPhotoPage
         photo={this.props.photo}
         onFile={this.handleFile}
-        loading={this.props.fetching}
+        onSave={this.handleSave}
         saving={this.state.saving}
         errors={this.state.errors}
       />
@@ -72,7 +75,6 @@ EditPhoto.defaultProps = {
 };
 
 EditPhoto.propTypes = {
-  fetching: PropTypes.bool.isRequired,
   photo: PropTypes.object,
 };
 
