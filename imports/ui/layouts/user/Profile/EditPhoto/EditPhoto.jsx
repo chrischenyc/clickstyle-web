@@ -30,7 +30,8 @@ class EditPhoto extends Component {
   handleSave(file) {
     this.setState({ errors: {} });
 
-    const metaContext = { path: 'profile/photo' };
+    // define S3 saving path
+    const metaContext = { path: 'photos/profile' };
     const upload = new Slingshot.Upload(
       Meteor.settings.public.SlingshotClientDirective,
       metaContext,

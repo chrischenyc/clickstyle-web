@@ -74,8 +74,9 @@ class EditPhotoPage extends Component {
                   positive
                   onClick={() => {
                     this.editor.getImage().toBlob((blob) => {
+                      // rename file name to profile.jpg/png/...
                       const ext = blob.type.split(/\//).pop();
-                      blob.name = `photo${ext}`;
+                      blob.name = `photo.${ext}`;
                       onSave(blob);
                     });
                   }}

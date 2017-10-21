@@ -14,6 +14,7 @@ Slingshot.createDirective(Meteor.settings.public.SlingshotClientDirective, Sling
   },
   key(file, metaContext) {
     // Store file into a directory by the user's id.
+    // add timestamp prefix in case CDN caches old file with same filename
     return `${this.userId}/${metaContext.path}/${Date.now()}_${file.name}`;
   },
 });
