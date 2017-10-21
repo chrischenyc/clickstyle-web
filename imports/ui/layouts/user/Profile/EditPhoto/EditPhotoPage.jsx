@@ -73,12 +73,18 @@ class EditPhotoPage extends Component {
                 <Button
                   positive
                   onClick={() => {
-                    this.editor.getImage().toBlob((blob) => {
-                      // rename file name to profile.jpg/png/...
-                      const ext = blob.type.split(/\//).pop();
-                      blob.name = `photo.${ext}`;
-                      onSave(blob);
-                    });
+                    const canvas = this.editor.getImage();
+
+                    // convert to jpeg format
+                    // rename file name to photo.jpeg
+                    canvas.toBlob(
+                      (blob) => {
+                        blob.name = 'photo.jpeg';
+                        onSave(blob);
+                      },
+                      'image/jpeg',
+                      1,
+                    );
                   }}
                   loading={saving}
                 >
@@ -97,7 +103,7 @@ class EditPhotoPage extends Component {
                 onFile();
               }}
               uploadProps={{
-                accept: '.jpg,.jpeg,.png,.bmp,.gif',
+                accept: '.jpg,.jpeg,.png,.bmp',
               }}
             >
               <Button color="teal" loading={saving}>
