@@ -1,9 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Image } from 'semantic-ui-react';
 
-const SideMenu = () => (
+const SideMenu = ({ profile }) => (
   <Menu secondary vertical color="teal" size="massive" stackable>
+    <Menu.Item>
+      <Image src={profile.photoURL} size="tiny" shape="circular" />
+    </Menu.Item>
+
     <Menu.Item>
       <Menu.Header>Account</Menu.Header>
       <Menu.Menu>
@@ -50,4 +56,12 @@ const SideMenu = () => (
   </Menu>
 );
 
-export default SideMenu;
+SideMenu.propTypes = {
+  profile: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => ({
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps)(SideMenu);

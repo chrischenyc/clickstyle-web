@@ -147,10 +147,6 @@ const EditProfilePage = ({
   </Container>
 );
 
-EditProfilePage.defaultProps = {
-  profile: {},
-};
-
 EditProfilePage.propTypes = {
   photo: PropTypes.object,
   onPhotoSelected: PropTypes.func.isRequired,
@@ -159,7 +155,7 @@ EditProfilePage.propTypes = {
   photoUploading: PropTypes.bool.isRequired,
   photoPristine: PropTypes.bool.isRequired,
   photoError: PropTypes.string.isRequired,
-  profile: PropTypes.object,
+  profile: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onAddressSuggest: PropTypes.func.isRequired,

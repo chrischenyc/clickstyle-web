@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import Profiles from '../../../../api/profiles/profiles';
-
 import { validateEditProfile } from '../../../../modules/validate';
 import GeoSuggestToAddress from '../../../../modules/geo-suggest-to-address';
 import EditProfilePage from './EditProfilePage';
@@ -154,12 +152,8 @@ class EditProfile extends Component {
   }
 }
 
-EditProfile.defaultProps = {
-  profile: { fetching: false },
-};
-
 EditProfile.propTypes = {
-  profile: PropTypes.object,
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
