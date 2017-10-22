@@ -19,10 +19,12 @@
       "meteor/tracker",
       "meteor/check",
       "meteor/email",
+      "meteor/mongo",
       "meteor/service-configuration",
       "meteor/accounts-base",
       "meteor/ddp-rate-limiter",
       "meteor/react-meteor-data",
+      "meteor/aldeed:simple-schema",
       "meteor/alanning:roles",
       "meteor/splendido:accounts-meld",
       "meteor/edgee:slingshot"
