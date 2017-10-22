@@ -1,6 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Message, Image, Button } from 'semantic-ui-react';
+import { Message, Image, Button, Confirm } from 'semantic-ui-react';
 import _ from 'lodash';
 import { UploadField as FileField } from '@navjobs/upload';
 import AvatarEditor from 'react-avatar-editor';
@@ -16,6 +17,7 @@ class EditPhotoPage extends Component {
     this.state = {
       file: null,
       scale: 1.0,
+      openRemoveConfirm: false,
     };
   }
 
@@ -24,12 +26,16 @@ class EditPhotoPage extends Component {
       photo,
       onPhotoSelected,
       onPhotoUpload,
+      onPhotoRemove,
       photoUploading,
       photoPristine,
       photoError,
     } = this.props;
 
-    const { file, scale } = this.state;
+    const { file, scale, openRemoveConfirm } = this.state;
+
+    const photoOriginURL = photo !== undefined && photo && photo.origin ? photo.origin : null;
+    const photoURL = photoOriginURL || Meteor.settings.public.images.defaultProfilePhoto;
 
     // if file selected, show photo editor UI
     return (
@@ -100,8 +106,22 @@ class EditPhotoPage extends Component {
           </div>
         ) : (
           <div>
-            <Image src={photo && photo.origin} width={ImageSize} height={ImageSize} />
+            <Image src={photoURL} width={ImageSize} height={ImageSize} />
+
             <p>Your photo will appear on your public profile</p>
+
+            {photoOriginURL && (
+              <Button
+                negative
+                onClick={() => {
+                  this.setState({ openRemoveConfirm: true });
+                }}
+                style={{ marginBottom: '0.5rem' }}
+              >
+                Remove photo
+              </Button>
+            )}
+
             <FileField
               onFiles={(files) => {
                 this.setState({ file: files[0] });
@@ -112,10 +132,21 @@ class EditPhotoPage extends Component {
               }}
             >
               <Button color="teal" loading={photoUploading}>
-                Select photo
+                Upload photo
               </Button>
-              <span>&nbsp;image file max size: 2MB</span>
+              <span>&nbsp;maximum image file size: 2MB</span>
             </FileField>
+
+            <Confirm
+              open={openRemoveConfirm}
+              onCancel={() => {
+                this.setState({ openRemoveConfirm: false });
+              }}
+              onConfirm={() => {
+                this.setState({ openRemoveConfirm: false });
+                onPhotoRemove();
+              }}
+            />
           </div>
         )}
 
@@ -133,6 +164,7 @@ EditPhotoPage.propTypes = {
   photo: PropTypes.object,
   onPhotoSelected: PropTypes.func.isRequired,
   onPhotoUpload: PropTypes.func.isRequired,
+  onPhotoRemove: PropTypes.func.isRequired,
   photoUploading: PropTypes.bool.isRequired,
   photoPristine: PropTypes.bool.isRequired,
   photoError: PropTypes.string.isRequired,

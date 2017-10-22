@@ -22,6 +22,7 @@ const ProfilePage = ({
   photo,
   onPhotoSelected,
   onPhotoUpload,
+  onPhotoRemove,
   photoUploading,
   photoPristine,
   photoError,
@@ -42,6 +43,7 @@ const ProfilePage = ({
         photo={photo}
         onPhotoSelected={onPhotoSelected}
         onPhotoUpload={onPhotoUpload}
+        onPhotoRemove={onPhotoRemove}
         photoUploading={photoUploading}
         photoPristine={photoPristine}
         photoError={photoError}
@@ -154,6 +156,7 @@ ProfilePage.propTypes = {
   photo: PropTypes.object,
   onPhotoSelected: PropTypes.func.isRequired,
   onPhotoUpload: PropTypes.func.isRequired,
+  onPhotoRemove: PropTypes.func.isRequired,
   photoUploading: PropTypes.bool.isRequired,
   photoPristine: PropTypes.bool.isRequired,
   photoError: PropTypes.string.isRequired,

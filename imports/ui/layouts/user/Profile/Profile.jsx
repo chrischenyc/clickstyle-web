@@ -29,6 +29,7 @@ class Profile extends Component {
 
     this.handlePhotoSelected = this.handlePhotoSelected.bind(this);
     this.handlePhotoUpload = this.handlePhotoUpload.bind(this);
+    this.handlePhotoRemove = this.handlePhotoRemove.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAddressSuggest = this.handleAddressSuggest.bind(this);
@@ -41,6 +42,14 @@ class Profile extends Component {
 
   handlePhotoSelected() {
     this.setState({ photoPristine: false });
+  }
+
+  handlePhotoRemove() {
+    Meteor.call('profiles.photo.remove', (callError) => {
+      if (callError) {
+        this.setState({ photoError: callError.reason });
+      }
+    });
   }
 
   handlePhotoUpload(file) {
@@ -129,6 +138,7 @@ class Profile extends Component {
         photo={this.props.profile.photo}
         onPhotoSelected={this.handlePhotoSelected}
         onPhotoUpload={this.handlePhotoUpload}
+        onPhotoRemove={this.handlePhotoRemove}
         photoUploading={this.state.photoUploading}
         photoPristine={this.state.photoPristine}
         photoError={this.state.photoError}
