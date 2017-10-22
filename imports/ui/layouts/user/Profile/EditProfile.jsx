@@ -9,11 +9,11 @@ import Profiles from '../../../../api/profiles/profiles';
 
 import { validateEditProfile } from '../../../../modules/validate';
 import GeoSuggestToAddress from '../../../../modules/geo-suggest-to-address';
-import ProfilePage from './ProfilePage';
+import EditProfilePage from './EditProfilePage';
 
 // platform-independent stateful container component
 // to handle edit user profile logic
-class Profile extends Component {
+class EditProfile extends Component {
   constructor(props) {
     super(props);
 
@@ -134,7 +134,7 @@ class Profile extends Component {
 
   render() {
     return (
-      <ProfilePage
+      <EditProfilePage
         photo={this.props.profile.photo}
         onPhotoSelected={this.handlePhotoSelected}
         onPhotoUpload={this.handlePhotoUpload}
@@ -155,11 +155,11 @@ class Profile extends Component {
   }
 }
 
-Profile.defaultProps = {
+EditProfile.defaultProps = {
   profile: {},
 };
 
-Profile.propTypes = {
+EditProfile.propTypes = {
   fetching: PropTypes.bool.isRequired,
   profile: PropTypes.object,
 };
@@ -171,4 +171,4 @@ export default withTracker(() => {
     fetching: !handle.ready(),
     profile: Profiles.findOne({}),
   };
-})(Profile);
+})(EditProfile);

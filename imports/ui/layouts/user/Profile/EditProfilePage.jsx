@@ -18,7 +18,7 @@ import FormInputField from '../../../components/FormInputField';
 import EditPhotoPage from './EditPhotoPage';
 
 // web version of the login form, stateless component
-const ProfilePage = ({
+const EditProfilePage = ({
   photo,
   onPhotoSelected,
   onPhotoUpload,
@@ -148,11 +148,11 @@ const ProfilePage = ({
   </Container>
 );
 
-ProfilePage.defaultProps = {
+EditProfilePage.defaultProps = {
   profile: {},
 };
 
-ProfilePage.propTypes = {
+EditProfilePage.propTypes = {
   photo: PropTypes.object,
   onPhotoSelected: PropTypes.func.isRequired,
   onPhotoUpload: PropTypes.func.isRequired,
@@ -170,4 +170,4 @@ ProfilePage.propTypes = {
   errors: PropTypes.object.isRequired,
 };
 
-export default ProfilePage;
+export default EditProfilePage;
