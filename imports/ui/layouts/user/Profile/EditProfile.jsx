@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
 import { Slingshot } from 'meteor/edgee:slingshot';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import Profiles from '../../../../api/profiles/profiles';
@@ -146,7 +146,6 @@ class EditProfile extends Component {
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onAddressSuggest={this.handleAddressSuggest}
-        loading={this.props.fetching}
         saving={this.state.saving}
         pristine={this.state.pristine}
         errors={this.state.errors}
@@ -156,19 +155,15 @@ class EditProfile extends Component {
 }
 
 EditProfile.defaultProps = {
-  profile: {},
+  profile: { fetching: false },
 };
 
 EditProfile.propTypes = {
-  fetching: PropTypes.bool.isRequired,
   profile: PropTypes.object,
 };
 
-export default withTracker(() => {
-  const handle = Meteor.subscribe('profiles.owner');
+const mapStateToProps = state => ({
+  profile: state.profile,
+});
 
-  return {
-    fetching: !handle.ready(),
-    profile: Profiles.findOne({}),
-  };
-})(EditProfile);
+export default connect(mapStateToProps)(EditProfile);

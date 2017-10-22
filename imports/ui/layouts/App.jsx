@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Profiles from '../../api/profiles/profiles';
 import { userSignedIn, userSignedOut } from '../../modules/client/redux/user';
+import { fetchProfile } from '../../modules/client/redux/profile';
 
 import AuthRoute from '../components/AuthRoute';
 import PublicRoute from '../components/PublicRoute';
@@ -34,10 +36,10 @@ import NewBooking from '../layouts/bookings/NewBooking';
 import EditBooking from '../layouts/bookings/EditBooking';
 
 class App extends Component {
-  // after web App is refreshed, try to fetch Meteor logged-in user object
-  // then update redux states
+  // after web App is refreshed, try to fetch Meteor user data then update redux states
   componentDidMount() {
     Tracker.autorun(() => {
+      // get user login
       const user = Meteor.user();
       if (user !== undefined) {
         if (user) {
@@ -46,6 +48,12 @@ class App extends Component {
           this.props.userSignedOut();
         }
       }
+
+      // get user profile
+      const handle = Meteor.subscribe('profiles.owner');
+      const fetching = !handle.ready();
+      const profile = Profiles.findOne({});
+      this.props.fetchProfile(fetching, profile);
     });
   }
 
@@ -135,6 +143,11 @@ class App extends Component {
 App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
+  fetchProfile: PropTypes.func.isRequired,
 };
 
-export default connect(null, { userSignedIn, userSignedOut })(App);
+export default connect(null, {
+  userSignedIn,
+  userSignedOut,
+  fetchProfile,
+})(App);

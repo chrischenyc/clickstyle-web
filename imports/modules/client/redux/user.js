@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 // --------- actions ----------
 export function userSignedIn(meteorUser) {
   return {
@@ -19,7 +17,7 @@ const defaultState = {
   authenticated: localStorage.getItem('Meteor.userId') !== null,
 };
 
-const userReducer = (state = defaultState, action) => {
+const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'USER_SIGNED_IN': {
       const { meteorUser } = action;
@@ -37,13 +35,9 @@ const userReducer = (state = defaultState, action) => {
     }
 
     case 'USER_SIGNED_OUT': {
-      return _.omit(
-        {
-          ...state,
-          authenticated: false,
-        },
-        ['verified', 'roles'],
-      );
+      return {
+        authenticated: false,
+      };
     }
 
     default:
@@ -51,4 +45,4 @@ const userReducer = (state = defaultState, action) => {
   }
 };
 
-export default userReducer;
+export default reducer;

@@ -30,13 +30,12 @@ const EditProfilePage = ({
   onSubmit,
   onChange,
   onAddressSuggest,
-  loading,
   saving,
   pristine,
   errors,
 }) => (
   <Container className="below-fixed-menu">
-    <Form onSubmit={onSubmit} loading={loading || saving} error={!_.isEmpty(errors)}>
+    <Form onSubmit={onSubmit} loading={profile.fetching || saving} error={!_.isEmpty(errors)}>
       <Divider horizontal>Photo</Divider>
 
       <EditPhotoPage
@@ -164,7 +163,6 @@ EditProfilePage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onAddressSuggest: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
   saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
