@@ -19,7 +19,7 @@ class EditProfile extends Component {
       photoError: '',
       photoUploading: false,
       photoPristine: true,
-      profile: {},
+      profile: _.cloneDeep(props.profile),
       errors: {},
       saving: false,
       pristine: true,
