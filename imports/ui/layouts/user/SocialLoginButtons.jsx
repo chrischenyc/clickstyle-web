@@ -51,9 +51,14 @@ const SocialLoginButtons = ({ isSignUp, disabled }) => (
   </div>
 );
 
+SocialLoginButtons.defaultProps = {
+  isSignUp: false,
+  disabled: false,
+};
+
 SocialLoginButtons.propTypes = {
-  isSignUp: PropTypes.bool.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  isSignUp: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default SocialLoginButtons;
