@@ -17,6 +17,7 @@ class EditPhotoPage extends Component {
     this.state = {
       file: null,
       scale: 1.0,
+      rotate: 0,
       openRemoveConfirm: false,
     };
   }
@@ -32,7 +33,9 @@ class EditPhotoPage extends Component {
       photoError,
     } = this.props;
 
-    const { file, scale, openRemoveConfirm } = this.state;
+    const {
+      file, scale, rotate, openRemoveConfirm,
+    } = this.state;
 
     const photoOriginURL = photo !== undefined && photo && photo.origin ? photo.origin : null;
     const photoURL = photoOriginURL || Meteor.settings.public.images.defaultProfilePhoto;
@@ -47,6 +50,7 @@ class EditPhotoPage extends Component {
               width={ImageSize}
               height={ImageSize}
               scale={scale}
+              rotate={rotate}
               border={0}
               ref={(editor) => {
                 this.editor = editor;
@@ -55,7 +59,7 @@ class EditPhotoPage extends Component {
 
             <p>Your photo will appear on your public profile</p>
 
-            <span>Zoom:&nbsp;</span>
+            <span>Zoom&nbsp;</span>
             <input
               type="range"
               min="100"
@@ -67,10 +71,22 @@ class EditPhotoPage extends Component {
               }}
             />
 
+            <span>&nbsp;&nbsp;Rotate&nbsp;</span>
+
+            <Button
+              icon="repeat"
+              onClick={(event) => {
+                event.preventDefault();
+                this.setState({ rotate: rotate + 90 });
+              }}
+            />
+
             <div>
               <Button.Group>
                 <Button
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.preventDefault();
+
                     this.setState({
                       file: null,
                       scale: 1.0,
@@ -83,7 +99,9 @@ class EditPhotoPage extends Component {
                 <Button.Or />
                 <Button
                   positive
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.preventDefault();
+
                     const canvas = this.editor.getImage();
 
                     // convert to jpeg format
