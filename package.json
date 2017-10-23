@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@navjobs/upload": "^3.0.10",
+    "aws-sdk": "^2.138.0",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.3",
     "commonmark": "^0.28.1",
