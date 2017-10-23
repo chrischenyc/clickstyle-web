@@ -14,16 +14,41 @@ Meteor.methods({
       throw new Meteor.Error('500');
     }
   },
+
+  'profiles.photo.add': function profilesPhotoAdd(URL) {
+    check(URL, String);
+
+    try {
+      const profile = Profiles.findOne({ owner: this.userId });
+
+      // remove current S3 file
+      if (profile.photo && profile.photo.origin) {
+        deleteS3File(profile.photo.origin, (error) => {
+          if (error) {
+            console.log(`Unable to delete S3 file: ${profile.photo.origin}`);
+          }
+        });
+      }
+
+      // update Profile.photo data
+      Profiles.update({ owner: this.userId }, { $set: { photo: { origin: URL } } });
+    } catch (exception) {
+      throw new Meteor.Error('500');
+    }
+  },
+
   'profiles.photo.remove': function profilesPhotoRemove() {
     try {
       const profile = Profiles.findOne({ owner: this.userId });
 
-      // remove S3 files
-      deleteS3File(profile.photo.origin, (error) => {
-        if (error) {
-          console.log(`Unable to delete S3 file: ${profile.photo.origin}`);
-        }
-      });
+      // remove S3 file
+      if (profile.photo.origin) {
+        deleteS3File(profile.photo.origin, (error) => {
+          if (error) {
+            console.log(`Unable to delete S3 file: ${profile.photo.origin}`);
+          }
+        });
+      }
 
       // update Profile.photo data
       Profiles.update({ owner: this.userId }, { $unset: { photo: '' } });
@@ -34,7 +59,7 @@ Meteor.methods({
 });
 
 rateLimit({
-  methods: ['profiles.update', 'profiles.photo.remove'],
+  methods: ['profiles.update', 'profiles.photo.add', 'profiles.photo.remove'],
   limit: 5,
   timeRange: 1000,
 });

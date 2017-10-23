@@ -72,7 +72,7 @@ class EditProfile extends Component {
           this.setState({ photoUploading: false, photoError: uploadError.reason });
         } else {
           // update user profile.photo.original
-          Meteor.call('profiles.update', { photo: { origin: downloadUrl } }, (callError) => {
+          Meteor.call('profiles.photo.add', downloadUrl, (callError) => {
             this.setState({ photoUploading: false, photoError: '' });
 
             if (callError) {
