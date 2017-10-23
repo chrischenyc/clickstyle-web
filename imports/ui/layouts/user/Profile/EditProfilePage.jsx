@@ -35,7 +35,11 @@ const EditProfilePage = ({
   errors,
 }) => (
   <Container className="below-fixed-menu">
-    <Form onSubmit={onSubmit} loading={profile.fetching || saving} error={!_.isEmpty(errors)}>
+    <Form
+      onSubmit={onSubmit}
+      loading={profile.fetching || saving}
+      error={!_.isEmpty(errors) || !_.isEmpty(photoError)}
+    >
       <Divider horizontal>Photo</Divider>
 
       <EditPhotoPage

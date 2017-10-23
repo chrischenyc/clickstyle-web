@@ -152,7 +152,7 @@ class EditPhotoPage extends Component {
               <Button color="teal" loading={photoUploading}>
                 Upload photo
               </Button>
-              <span>&nbsp;maximum image file size: 2MB</span>
+              <span>&nbsp;maximum image file size: 4MB</span>
             </FileField>
 
             <Confirm
