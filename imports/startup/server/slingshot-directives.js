@@ -3,7 +3,7 @@ import { Slingshot } from 'meteor/edgee:slingshot';
 
 Slingshot.createDirective(Meteor.settings.public.SlingshotClientDirective, Slingshot.S3Storage, {
   acl: 'public-read',
-  cdn: Meteor.settings.private.CDN,
+  cdn: Meteor.settings.CDN,
   authorize() {
     // Deny uploads if user is not logged in.
     if (!this.userId) {
