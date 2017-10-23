@@ -142,7 +142,7 @@ class EditPhotoPage extends Component {
 
             <FileField
               onFiles={(files) => {
-                this.setState({ file: files[0] });
+                this.setState({ file: files[0], scale: 1.0, rotate: 0 });
                 onPhotoSelected();
               }}
               uploadProps={{
