@@ -6,6 +6,8 @@ import _ from 'lodash';
 import { UploadField as FileField } from '@navjobs/upload';
 import AvatarEditor from 'react-avatar-editor';
 
+import ScaledImageURL from '../../../../modules/scaled-image-url';
+
 // web version of the login form, stateless component
 
 const ImageSize = 280;
@@ -108,7 +110,6 @@ class EditPhotoPage extends Component {
                     // rename file name to photo.jpeg
                     canvas.toBlob(
                       (blob) => {
-                        blob.name = 'photo.jpeg';
                         onPhotoUpload(blob);
                       },
                       'image/jpeg',
@@ -124,7 +125,7 @@ class EditPhotoPage extends Component {
           </div>
         ) : (
           <div>
-            <Image src={photoURL} width={ImageSize} height={ImageSize} />
+            <Image src={ScaledImageURL(photoURL, 'small')} width={ImageSize} height={ImageSize} />
 
             <p>Your photo will appear on your public profile</p>
 

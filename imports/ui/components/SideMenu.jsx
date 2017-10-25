@@ -4,11 +4,15 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Menu, Image } from 'semantic-ui-react';
 
+import ScaledImageURL from '../../modules/scaled-image-url';
+
 const SideMenu = ({ profile }) => (
   <Menu secondary vertical color="teal" size="massive" stackable>
-    <Menu.Item>
-      <Image src={profile.photoURL} size="tiny" shape="circular" />
-    </Menu.Item>
+    {profile.photoURL && (
+      <Menu.Item>
+        <Image src={ScaledImageURL(profile.photoURL, 'tiny')} size="tiny" shape="circular" />
+      </Menu.Item>
+    )}
 
     <Menu.Item>
       <Menu.Header>Account</Menu.Header>
