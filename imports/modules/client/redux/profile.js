@@ -22,7 +22,7 @@ const reducer = (state = defaultState, action) => {
         ...profile,
         photoURL:
           (profile && profile.photo && profile.photo.origin) ||
-          Meteor.settings.public.images.defaultProfilePhoto,
+          Meteor.settings.public.image.defaultProfilePhoto,
       };
     }
 
