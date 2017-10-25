@@ -17,7 +17,6 @@ class VerifyEmail extends React.Component {
         this.setState({ loading: false, error: null });
 
         setTimeout(() => {
-          // TODO: update child's props to do the redirect, this component is platform independent
           this.props.history.push('/dashboard');
         }, 1500);
       }

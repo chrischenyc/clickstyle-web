@@ -36,6 +36,5 @@ Accounts.onCreateUser((options, user) => {
     return userToCreate;
   }
 
-  // TODO: test error handling in front-end
   throw new Error('something went wrong');
 });
