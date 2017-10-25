@@ -3,8 +3,8 @@
 
 
 "@navjobs/upload@^3.0.10":
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/@navjobs/upload/-/upload-3.0.10.tgz#be88dd2fa23b60f3a02844ddaf8d59a87fe7ebca"
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/@navjobs/upload/-/upload-3.0.11.tgz#51044234081d8b659554c9faa145148c185dfbbf"
 
 Base64@~0.2.0:
   version "0.2.1"
@@ -32,7 +32,16 @@ ajv-keywords@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-2.1.0.tgz#a296e17f7bfae7c1ce4f7e0de53d29cb32162df0"
 
-ajv@^5.1.0, ajv@^5.2.0, ajv@^5.2.3:
+ajv@^5.1.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.3.0.tgz#4414ff74a50879c208ee5fdc826e32c303549eda"
+  dependencies:
+    co "^4.6.0"
+    fast-deep-equal "^1.0.0"
+    fast-json-stable-stringify "^2.0.0"
+    json-schema-traverse "^0.3.0"
+
+ajv@^5.2.0, ajv@^5.2.3:
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.2.3.tgz#c06f598778c44c6b161abafe3466b81ad1814ed2"
   dependencies:
@@ -1162,6 +1171,10 @@ fast-deep-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
 
+fast-json-stable-stringify@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/fast-json-stable-stringify/-/fast-json-stable-stringify-2.0.0.tgz#d5142c0caee6b1189f87d3a76111064f86c8bbf2"
+
 fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
@@ -1694,8 +1707,8 @@ jsx-ast-utils@^2.0.0:
     array-includes "^3.0.3"
 
 juice@^4.2.0:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/juice/-/juice-4.2.1.tgz#32f58ea4d7e9d2329ba5e26708b4c854a8c1c2f1"
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/juice/-/juice-4.2.2.tgz#da4b7ffee11ffa5fde97b973edb39e99085307a8"
   dependencies:
     cheerio "^0.22.0"
     commander "2.9.0"
