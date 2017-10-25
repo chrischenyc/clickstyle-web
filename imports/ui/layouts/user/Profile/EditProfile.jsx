@@ -54,12 +54,7 @@ class EditProfile extends Component {
     this.setState({ photoError: '' });
 
     // define S3 saving path
-    const metaContext = { path: 'photos/profile' };
-    const upload = new Slingshot.Upload(
-      Meteor.settings.public.SlingshotClientDirective,
-      metaContext,
-    );
-
+    const upload = new Slingshot.Upload(Meteor.settings.public.SlingshotCloudinaryImage);
     const validateError = upload.validate(file);
 
     if (validateError) {
@@ -78,7 +73,6 @@ class EditProfile extends Component {
             if (callError) {
               this.setState({ photoError: callError.reason });
             } else {
-              // TODO: notify success
               this.setState({ photoPristine: true });
             }
           });
