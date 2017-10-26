@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import rateLimit from '../../../modules/server/rate-limit';
 import Profiles from '../profiles';
-import deleteS3File from '../../../modules/server/delete-S3-file';
+import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
 
 Meteor.methods({
   'profiles.update': function profilesUpdate(profile) {
@@ -21,11 +21,14 @@ Meteor.methods({
     try {
       const profile = Profiles.findOne({ owner: this.userId });
 
-      // remove current S3 file
+      // remove current profile photo from cloud
       if (profile.photo && profile.photo.origin) {
-        deleteS3File(profile.photo.origin, (error) => {
+        deleteCloudinaryFile(profile.photo.origin, (error) => {
           if (error) {
-            console.log(`Unable to delete S3 file: ${profile.photo.origin}`);
+            /* eslint-disable no-console */
+            console.log(`Unable to delete cloudinary file: ${profile.photo.origin}`);
+            console.log(error);
+            /* eslint-enable no-console */
           }
         });
       }
@@ -41,11 +44,14 @@ Meteor.methods({
     try {
       const profile = Profiles.findOne({ owner: this.userId });
 
-      // remove S3 file
-      if (profile.photo.origin) {
-        deleteS3File(profile.photo.origin, (error) => {
+      // remove profile photo from cloud
+      if (profile.photo && profile.photo.origin) {
+        deleteCloudinaryFile(profile.photo.origin, (error) => {
           if (error) {
-            console.log(`Unable to delete S3 file: ${profile.photo.origin}`);
+            /* eslint-disable no-console */
+            console.log(`Unable to delete cloudinary file: ${profile.photo.origin}`);
+            console.log(error);
+            /* eslint-enable no-console */
           }
         });
       }

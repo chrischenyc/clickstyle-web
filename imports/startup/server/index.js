@@ -9,3 +9,4 @@ import './email-templates';
 import '../slingshot-restrictions';
 import './slingshot-directives';
 import './aws';
+import './cloudinary';
