@@ -53,7 +53,6 @@ class EditProfile extends Component {
   handlePhotoUpload(file) {
     this.setState({ photoError: '' });
 
-    // define S3 saving path
     const upload = new Slingshot.Upload(Meteor.settings.public.SlingshotCloudinaryImage);
     const validateError = upload.validate(file);
 
