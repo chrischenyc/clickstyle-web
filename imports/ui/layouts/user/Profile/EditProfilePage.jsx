@@ -28,9 +28,12 @@ const EditProfilePage = ({
   photoError,
   profile,
   brands,
+  productsSearch,
   onSubmit,
   onChange,
   onAddressSuggest,
+  onSelectBrand,
+  onDeselectBrand,
   saving,
   pristine,
   errors,
@@ -130,17 +133,28 @@ const EditProfilePage = ({
           placeholder="start searching by typing e.g.: l'oreal..."
           name="productsSearch"
           style={{ marginBottom: '0.5rem' }}
+          value={productsSearch}
+          onChange={onChange}
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              onSelectBrand({ name: event.target.value });
+            }
+          }}
         />
-        {/* TODO: write a tags component */}
-        <Label>
-          Maybelline<Icon name="delete" />
-        </Label>
-        <Label>
-          NARS<Icon name="delete" />
-        </Label>
-        <Label>
-          wet n wild<Icon name="delete" />
-        </Label>
+
+        {profile.products &&
+          profile.products.map(product => (
+            <Label key={product.name}>
+              {product.name}
+              <Icon
+                name="delete"
+                onClick={() => {
+                  onDeselectBrand(product);
+                }}
+              />
+            </Label>
+          ))}
       </Form.Field>
 
       <Button color="teal" size="large" type="submit" disabled={pristine} loading={saving}>
@@ -162,9 +176,12 @@ EditProfilePage.propTypes = {
   photoError: PropTypes.string.isRequired,
   profile: PropTypes.object.isRequired,
   brands: PropTypes.array.isRequired,
+  productsSearch: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onAddressSuggest: PropTypes.func.isRequired,
+  onSelectBrand: PropTypes.func.isRequired,
+  onDeselectBrand: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,

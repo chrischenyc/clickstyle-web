@@ -34,6 +34,7 @@ class EditProfile extends Component {
       photoPristine: true,
       profile: _.cloneDeep(props.profile),
       availableBrands: availableBrands(props.brands, props.profile.products),
+      productsSearch: '',
       errors: {},
       saving: false,
       pristine: true,
@@ -45,6 +46,8 @@ class EditProfile extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAddressSuggest = this.handleAddressSuggest.bind(this);
+    this.handleSelectBrand = this.handleSelectBrand.bind(this);
+    this.handleDeselectBrand = this.handleDeselectBrand.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -99,17 +102,21 @@ class EditProfile extends Component {
   }
 
   handleChange(event) {
-    let newProfile = _.cloneDeep(this.state.profile);
-    newProfile = _.set(newProfile, event.target.name, event.target.value);
+    if (event.target.name === 'productsSearch') {
+      this.setState({ productsSearch: event.target.value });
+    } else {
+      let newProfile = _.cloneDeep(this.state.profile);
+      newProfile = _.set(newProfile, event.target.name, event.target.value);
 
-    if (event.target.name === 'address.raw' && _.isEmpty(event.target.value)) {
-      newProfile.address = {};
+      if (event.target.name === 'address.raw' && _.isEmpty(event.target.value)) {
+        newProfile.address = {};
+      }
+
+      this.setState({
+        profile: newProfile,
+        pristine: _.isEqual(newProfile, this.props.profile),
+      });
     }
-
-    this.setState({
-      profile: newProfile,
-      pristine: _.isEqual(newProfile, this.props.profile),
-    });
   }
 
   handleSubmit(event) {
@@ -141,6 +148,45 @@ class EditProfile extends Component {
     });
   }
 
+  handleSelectBrand(brand) {
+    if (brand.name === undefined || brand.name.length === 0) {
+      return;
+    }
+
+    const { products: currentProducts } = this.state.profile;
+    let pristine = false;
+
+    let updatedProducts = [brand];
+
+    if (currentProducts) {
+      const matchedProducts = currentProducts.filter(product => product.name.toLowerCase() === brand.name.toLowerCase());
+      if (matchedProducts.length === 0) {
+        updatedProducts = [...currentProducts, brand];
+      } else {
+        updatedProducts = currentProducts;
+        pristine = true;
+      }
+    }
+
+    this.setState({
+      profile: {
+        ...this.state.profile,
+        products: updatedProducts,
+      },
+      productsSearch: '',
+      pristine: this.state.pristine && pristine,
+    });
+  }
+
+  handleDeselectBrand(brand) {
+    this.setState({
+      profile: {
+        ...this.state.profile,
+        products: this.state.profile.products.filter(product => product.name.toLowerCase() !== brand.name.toLowerCase()),
+      },
+    });
+  }
+
   render() {
     return (
       <EditProfilePage
@@ -153,9 +199,12 @@ class EditProfile extends Component {
         photoError={this.state.photoError}
         profile={this.state.profile}
         brands={this.state.availableBrands}
+        productsSearch={this.state.productsSearch}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onAddressSuggest={this.handleAddressSuggest}
+        onSelectBrand={this.handleSelectBrand}
+        onDeselectBrand={this.handleDeselectBrand}
         saving={this.state.saving}
         pristine={this.state.pristine}
         errors={this.state.errors}
