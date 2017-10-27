@@ -22,6 +22,18 @@ const availableBrands = (brands, selectedBrands) => {
   return brands.filter(brand => selectedNames.indexOf(brand.name.toLowerCase()) === -1);
 };
 
+const searchProducts = (products, keyword) => {
+  if (!keyword || !products) {
+    return [];
+  }
+
+  if (keyword === '') {
+    return products;
+  }
+
+  return products.filter(product => product.name.toLowerCase().includes(keyword));
+};
+
 // platform-independent stateful container component
 // to handle edit user profile logic
 class EditProfile extends Component {
@@ -35,6 +47,7 @@ class EditProfile extends Component {
       profile: _.cloneDeep(props.profile),
       availableBrands: availableBrands(props.brands, props.profile.products),
       productsSearch: '',
+      productsMatched: availableBrands(props.brands, props.profile.products),
       errors: {},
       saving: false,
       pristine: true,
@@ -56,6 +69,7 @@ class EditProfile extends Component {
       pristine: true,
       profile: _.cloneDeep(nextProps.profile),
       availableBrands: availableBrands(nextProps.brands, nextProps.profile.products),
+      productsMatched: availableBrands(nextProps.brands, nextProps.profile.products),
     });
   }
 
@@ -103,7 +117,10 @@ class EditProfile extends Component {
 
   handleChange(event) {
     if (event.target.name === 'productsSearch') {
-      this.setState({ productsSearch: event.target.value });
+      this.setState({
+        productsSearch: event.target.value,
+        productsMatched: searchProducts(this.state.availableBrands, event.target.value),
+      });
     } else {
       let newProfile = _.cloneDeep(this.state.profile);
       newProfile = _.set(newProfile, event.target.name, event.target.value);
@@ -174,6 +191,7 @@ class EditProfile extends Component {
     this.setState({
       profile: newProfile,
       productsSearch: '',
+      productsMatched: [],
       pristine: _.isEqual(newProfile, this.props.profile),
       availableBrands: availableBrands(this.props.brands, newProfile.products),
     });
@@ -202,7 +220,7 @@ class EditProfile extends Component {
         photoPristine={this.state.photoPristine}
         photoError={this.state.photoError}
         profile={this.state.profile}
-        brands={this.state.availableBrands}
+        productsMatched={this.state.productsMatched}
         productsSearch={this.state.productsSearch}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}

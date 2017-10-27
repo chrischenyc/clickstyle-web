@@ -27,7 +27,7 @@ const EditProfilePage = ({
   photoPristine,
   photoError,
   profile,
-  brands,
+  productsMatched,
   productsSearch,
   onSubmit,
   onChange,
@@ -129,6 +129,7 @@ const EditProfilePage = ({
 
       <Form.Field>
         <label>Products you used</label>
+
         <input
           placeholder="start searching by typing e.g.: l'oreal..."
           name="productsSearch"
@@ -143,6 +144,7 @@ const EditProfilePage = ({
           }}
         />
 
+        {/* selected tags */}
         {profile.products &&
           profile.products.map(product => (
             <Label key={product.name} color="teal" basic>
@@ -175,7 +177,7 @@ EditProfilePage.propTypes = {
   photoPristine: PropTypes.bool.isRequired,
   photoError: PropTypes.string.isRequired,
   profile: PropTypes.object.isRequired,
-  brands: PropTypes.array.isRequired,
+  productsMatched: PropTypes.array.isRequired,
   productsSearch: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
