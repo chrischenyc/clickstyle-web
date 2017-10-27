@@ -23,15 +23,14 @@ Meteor.methods({
               return product;
             }
 
-            // new brand to insert, we still to verify
-            const insert = Brands.upsert(
-              { name: /^product.name$/i },
-              {
-                $set: { ...product, system: false },
-              },
-            );
+            // insert new Brand if it doesn't exist
+            const existingBrand = Brands.findOne({ name: product.name });
+            if (existingBrand) {
+              return { brand: existingBrand._id, name: product.name };
+            }
 
-            return { brand: insert.insertedId, name: product.name };
+            const brand = Brands.insert({ name: product.name, system: false });
+            return { brand, name: product.name };
           });
       }
 
@@ -65,6 +64,9 @@ Meteor.methods({
       // update Profile.photo data
       Profiles.update({ owner: this.userId }, { $set: { photo: { origin: URL } } });
     } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
       throw new Meteor.Error('500');
     }
   },
@@ -88,6 +90,9 @@ Meteor.methods({
       // update Profile.photo data
       Profiles.update({ owner: this.userId }, { $unset: { photo: '' } });
     } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
       throw new Meteor.Error('500');
     }
   },

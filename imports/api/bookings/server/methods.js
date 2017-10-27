@@ -13,6 +13,9 @@ Meteor.methods({
     try {
       return Bookings.insert({ owner: this.userId, ...booking });
     } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
       throw new Meteor.Error('500', exception);
     }
   },
@@ -29,6 +32,9 @@ Meteor.methods({
       Bookings.update(bookingId, { $set: booking });
       return bookingId; // Return _id so we can redirect to booking after update.
     } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
       throw new Meteor.Error('500', exception);
     }
   },
@@ -39,6 +45,9 @@ Meteor.methods({
     try {
       return Bookings.remove(bookingId);
     } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
       throw new Meteor.Error('500', exception);
     }
   },

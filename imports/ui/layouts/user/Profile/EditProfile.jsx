@@ -154,7 +154,6 @@ class EditProfile extends Component {
     }
 
     const { products: currentProducts } = this.state.profile;
-    let pristine = false;
 
     let updatedProducts = [brand];
 
@@ -164,26 +163,29 @@ class EditProfile extends Component {
         updatedProducts = [...currentProducts, brand];
       } else {
         updatedProducts = currentProducts;
-        pristine = true;
       }
     }
 
+    const newProfile = {
+      ...this.state.profile,
+      products: updatedProducts,
+    };
+
     this.setState({
-      profile: {
-        ...this.state.profile,
-        products: updatedProducts,
-      },
+      profile: newProfile,
       productsSearch: '',
-      pristine: this.state.pristine && pristine,
+      pristine: _.isEqual(newProfile, this.props.profile),
     });
   }
 
   handleDeselectBrand(brand) {
+    const newProfile = {
+      ...this.state.profile,
+      products: this.state.profile.products.filter(product => product.name.toLowerCase() !== brand.name.toLowerCase()),
+    };
     this.setState({
-      profile: {
-        ...this.state.profile,
-        products: this.state.profile.products.filter(product => product.name.toLowerCase() !== brand.name.toLowerCase()),
-      },
+      profile: newProfile,
+      pristine: _.isEqual(newProfile, this.props.profile),
     });
   }
 
