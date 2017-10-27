@@ -145,7 +145,7 @@ const EditProfilePage = ({
 
         {profile.products &&
           profile.products.map(product => (
-            <Label key={product.name}>
+            <Label key={product.name} color="teal" basic>
               {product.name}
               <Icon
                 name="delete"
