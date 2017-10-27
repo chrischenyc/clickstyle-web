@@ -12,6 +12,16 @@ import { validateEditProfile } from '../../../../modules/validate';
 import GeoSuggestToAddress from '../../../../modules/geo-suggest-to-address';
 import EditProfilePage from './EditProfilePage';
 
+const availableBrands = (brands, selectedBrands) => {
+  if (!selectedBrands || selectedBrands.length === 0) {
+    return brands;
+  }
+
+  const selectedNames = selectedBrands.map(selectedBrand => selectedBrand.name.toLowerCase());
+
+  return brands.filter(brand => selectedNames.indexOf(brand.name.toLowerCase()) === -1);
+};
+
 // platform-independent stateful container component
 // to handle edit user profile logic
 class EditProfile extends Component {
@@ -23,6 +33,7 @@ class EditProfile extends Component {
       photoUploading: false,
       photoPristine: true,
       profile: _.cloneDeep(props.profile),
+      availableBrands: availableBrands(props.brands, props.profile.products),
       errors: {},
       saving: false,
       pristine: true,
@@ -38,7 +49,11 @@ class EditProfile extends Component {
 
   componentWillReceiveProps(nextProps) {
     // after Profile object is fetched, set it in state
-    this.setState({ profile: _.cloneDeep(nextProps.profile), pristine: true });
+    this.setState({
+      pristine: true,
+      profile: _.cloneDeep(nextProps.profile),
+      availableBrands: availableBrands(nextProps.brands, nextProps.profile.products),
+    });
   }
 
   handlePhotoSelected() {
@@ -137,7 +152,7 @@ class EditProfile extends Component {
         photoPristine={this.state.photoPristine}
         photoError={this.state.photoError}
         profile={this.state.profile}
-        brands={this.props.brands}
+        brands={this.state.availableBrands}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onAddressSuggest={this.handleAddressSuggest}
