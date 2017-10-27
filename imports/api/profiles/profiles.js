@@ -86,6 +86,15 @@ const AddressSchema = new SimpleSchema({
   },
 });
 
+const ProductSchema = new SimpleSchema({
+  id: {
+    type: String,
+  },
+  name: {
+    type: String,
+  },
+});
+
 const ProfilesSchema = new SimpleSchema({
   // required fields
   owner: {
@@ -120,6 +129,10 @@ const ProfilesSchema = new SimpleSchema({
   },
   photo: {
     type: PhotoSchema,
+    optional: true,
+  },
+  products: {
+    type: [ProductSchema],
     optional: true,
   },
 });
