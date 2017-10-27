@@ -95,6 +95,7 @@ if (Brands.find().count() === 0) {
   brands.forEach((brand) => {
     Brands.insert({
       name: brand,
+      system: true,
     });
   });
 }

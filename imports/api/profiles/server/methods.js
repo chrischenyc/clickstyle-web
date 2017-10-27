@@ -27,7 +27,7 @@ Meteor.methods({
             const insert = Brands.upsert(
               { name: /^product.name$/i },
               {
-                $set: product,
+                $set: { ...product, system: false },
               },
             );
 

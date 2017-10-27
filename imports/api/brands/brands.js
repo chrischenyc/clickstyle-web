@@ -38,6 +38,9 @@ const BrandsSchema = new SimpleSchema({
     type: String,
     unique: true,
   },
+  system: {
+    type: Boolean,
+  },
 });
 
 Brands.attachSchema(BrandsSchema);
