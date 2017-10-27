@@ -134,6 +134,7 @@ const EditProfilePage = ({
           placeholder="start searching by typing e.g.: l'oreal..."
           name="productsSearch"
           style={{ marginBottom: '0.5rem' }}
+          autoComplete="off"
           value={productsSearch}
           onChange={onChange}
           onKeyPress={(event) => {
@@ -144,22 +145,52 @@ const EditProfilePage = ({
           }}
         />
 
-        {/* selected tags */}
-        {profile.products &&
-          profile.products.map(product => (
-            <Label key={product.name} color="teal" basic>
-              {product.name}
-              <Icon
-                name="delete"
+        {/* matched tags for selection */}
+        {productsMatched && (
+          <div style={{ marginBottom: '0.5rem' }}>
+            {productsMatched.map(product => (
+              <Label
+                size="large"
+                as="a"
+                key={product.name}
+                color="teal"
+                basic
+                style={{ marginBottom: '0.25rem' }}
                 onClick={() => {
-                  onDeselectBrand(product);
+                  onSelectBrand(product);
                 }}
-              />
-            </Label>
-          ))}
+              >
+                <Icon name="add" />
+                {product.name}
+              </Label>
+            ))}
+          </div>
+        )}
+
+        {/* selected tags */}
+        {profile.products && (
+          <div style={{ marginBottom: '0.5rem' }}>
+            {profile.products.map(product => (
+              <Label
+                size="large"
+                key={product.name}
+                color="teal"
+                style={{ marginBottom: '0.25rem' }}
+              >
+                {product.name}
+                <Icon
+                  name="delete"
+                  onClick={() => {
+                    onDeselectBrand(product);
+                  }}
+                />
+              </Label>
+            ))}
+          </div>
+        )}
       </Form.Field>
 
-      <Button color="teal" size="large" type="submit" disabled={pristine} loading={saving}>
+      <Button color="teal" size="massive" type="submit" disabled={pristine} loading={saving}>
         Save
       </Button>
 

@@ -43,7 +43,7 @@ class EditProfile extends Component {
       profile: _.cloneDeep(props.profile),
       availableBrands: availableBrands(props.brands, props.profile.products),
       productsSearch: '',
-      productsMatched: availableBrands(props.brands, props.profile.products),
+      productsMatched: [],
       errors: {},
       saving: false,
       pristine: true,
@@ -65,7 +65,6 @@ class EditProfile extends Component {
       pristine: true,
       profile: _.cloneDeep(nextProps.profile),
       availableBrands: availableBrands(nextProps.brands, nextProps.profile.products),
-      productsMatched: availableBrands(nextProps.brands, nextProps.profile.products),
     });
   }
 
