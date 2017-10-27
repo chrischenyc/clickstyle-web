@@ -1,17 +1,17 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import rateLimit from '../../../modules/server/rate-limit';
-import Products from '../products';
+import Brands from '../brands';
 
 Meteor.methods({
-  'products.add': function productsAdd(name) {
+  'brands.add': function productsAdd(name) {
     check(name, String);
 
     try {
-      let product = Products.findOne({ name_lower: name.toLowerCase() });
+      let product = Brands.findOne({ name_lower: name.toLowerCase() });
 
       if (!product) {
-        product = Products.insert({ name });
+        product = Brands.insert({ name });
       }
 
       return product;

@@ -2,9 +2,9 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Products = new Mongo.Collection('products');
+const Brands = new Mongo.Collection('brands');
 
-Products.allow({
+Brands.allow({
   insert() {
     return false;
   },
@@ -15,7 +15,7 @@ Products.allow({
     return false;
   },
 });
-Products.deny({
+Brands.deny({
   insert() {
     return true;
   },
@@ -27,12 +27,12 @@ Products.deny({
   },
 });
 
-Products.attachBehaviour('timestampable', {
+Brands.attachBehaviour('timestampable', {
   createdBy: false,
   updatedBy: false,
 });
 
-const ProductsSchema = new SimpleSchema({
+const BrandsSchema = new SimpleSchema({
   // required fields
   name: {
     type: String,
@@ -40,6 +40,6 @@ const ProductsSchema = new SimpleSchema({
   },
 });
 
-Products.attachSchema(ProductsSchema);
+Brands.attachSchema(BrandsSchema);
 
-export default Products;
+export default Brands;

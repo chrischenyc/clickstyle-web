@@ -87,7 +87,7 @@ const AddressSchema = new SimpleSchema({
 });
 
 const ProductSchema = new SimpleSchema({
-  id: {
+  brandId: {
     type: String,
   },
   name: {
