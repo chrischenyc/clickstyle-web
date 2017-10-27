@@ -23,12 +23,8 @@ const availableBrands = (brands, selectedBrands) => {
 };
 
 const searchProducts = (products, keyword) => {
-  if (!keyword || !products) {
+  if (!keyword || keyword === '' || !products) {
     return [];
-  }
-
-  if (keyword === '') {
-    return products;
   }
 
   return products.filter(product => product.name.toLowerCase().includes(keyword));
