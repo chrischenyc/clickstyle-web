@@ -175,6 +175,7 @@ class EditProfile extends Component {
       profile: newProfile,
       productsSearch: '',
       pristine: _.isEqual(newProfile, this.props.profile),
+      availableBrands: availableBrands(this.props.brands, newProfile.products),
     });
   }
 
@@ -186,6 +187,7 @@ class EditProfile extends Component {
     this.setState({
       profile: newProfile,
       pristine: _.isEqual(newProfile, this.props.profile),
+      availableBrands: availableBrands(this.props.brands, newProfile.products),
     });
   }
 
