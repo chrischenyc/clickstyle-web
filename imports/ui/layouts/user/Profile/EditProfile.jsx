@@ -1,10 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Slingshot } from 'meteor/edgee:slingshot';
+import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import _ from 'lodash';
 
+import Brands from '../../../../api/brands/brands';
 import { validateEditProfile } from '../../../../modules/validate';
 import GeoSuggestToAddress from '../../../../modules/geo-suggest-to-address';
 import EditProfilePage from './EditProfilePage';
@@ -134,6 +137,7 @@ class EditProfile extends Component {
         photoPristine={this.state.photoPristine}
         photoError={this.state.photoError}
         profile={this.state.profile}
+        brands={this.props.brands}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onAddressSuggest={this.handleAddressSuggest}
@@ -145,12 +149,24 @@ class EditProfile extends Component {
   }
 }
 
-EditProfile.propTypes = {
-  profile: PropTypes.object.isRequired,
+EditProfile.defaultProps = {
+  brands: [],
 };
 
-const mapStateToProps = state => ({
-  profile: state.profile,
-});
+EditProfile.propTypes = {
+  profile: PropTypes.object.isRequired,
+  brands: PropTypes.array,
+};
 
-export default connect(mapStateToProps)(EditProfile);
+export default compose(
+  connect(state => ({
+    profile: state.profile,
+  })),
+  withTracker(() => {
+    Meteor.subscribe('brands');
+
+    return {
+      brands: Brands.find().fetch(),
+    };
+  }),
+)(EditProfile);
