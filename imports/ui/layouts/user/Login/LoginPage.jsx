@@ -1,71 +1,74 @@
-import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Button, Form, Grid, Message, Segment, Divider } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import { validateUserLogin } from '../../../../modules/validate';
-import LoginForm from './LoginForm';
+import FormInputField from '../../../components/FormInputField';
+import SocialLoginButtons from '../SocialLoginButtons';
 
-// platform-independent stateful container component
-// to handle Login logic
-class LoginPage extends Component {
-  constructor(props) {
-    super(props);
+// web version of the login form, stateless component
+const LoginPage = ({
+  onSubmit, onChange, loading, errors,
+}) => (
+  <Grid textAlign="center" verticalAlign="middle" className="below-fixed-menu">
+    <Grid.Row style={{ maxWidth: 450 }}>
+      <Grid.Column>
+        <Segment attached>
+          <SocialLoginButtons />
 
-    this.state = {
-      email: '',
-      password: '',
-      errors: {},
-      loading: false,
-    };
+          <Divider horizontal>or</Divider>
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+          <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+            <FormInputField
+              fluid
+              icon="mail"
+              iconPosition="left"
+              placeholder="Email address"
+              type="email"
+              name="email"
+              size="huge"
+              onChange={onChange}
+              errors={errors}
+            />
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+            <FormInputField
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Password"
+              type="password"
+              name="password"
+              size="huge"
+              onChange={onChange}
+              errors={errors}
+            />
 
-  handleSubmit(event) {
-    this.setState({ errors: {} });
-    event.preventDefault();
+            <Button color="teal" fluid size="huge" type="submit">
+              Login
+            </Button>
 
-    const errors = validateUserLogin(this.state.email, this.state.password);
+            {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+          </Form>
 
-    if (!_.isEmpty(errors)) {
-      this.setState({ errors });
-    } else {
-      this.setState({ loading: true });
+          <Link to="/forgot-password">
+            <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
+          </Link>
+        </Segment>
 
-      // http://docs.meteor.com/api/accounts.html#Meteor-loginWithPassword
-      Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
-        if (error) {
-          this.setState({
-            loading: false,
-            errors: {
-              message: error.error === 403 ? 'email and password do not match' : error.reason,
-            },
-          });
-        } else {
-          this.setState({
-            loading: false,
-            errors: {},
-          });
-        }
-      });
-    }
-  }
+        <Message attached="bottom" size="large">
+          {"Don't have an account?"} <Link to="/signup">Sign up</Link>
+        </Message>
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
+);
 
-  render() {
-    return (
-      <LoginForm
-        onSubmit={this.handleSubmit}
-        onChange={this.handleChange}
-        loading={this.state.loading}
-        errors={this.state.errors}
-      />
-    );
-  }
-}
+LoginPage.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  errors: PropTypes.object.isRequired,
+};
 
 export default LoginPage;

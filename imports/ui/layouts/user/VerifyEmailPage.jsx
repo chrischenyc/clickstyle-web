@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Message, Icon } from 'semantic-ui-react';
 
-class VerifyEmail extends React.Component {
+class VerifyEmailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { loading: true, error: null };
@@ -60,9 +60,9 @@ class VerifyEmail extends React.Component {
   }
 }
 
-VerifyEmail.propTypes = {
+VerifyEmailPage.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
 
-export default VerifyEmail;
+export default VerifyEmailPage;

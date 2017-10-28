@@ -16,19 +16,19 @@ import Footer from '../components/Footer';
 import SideMenuContainer from '../components/SideMenuContainer';
 
 import HomePage from '../layouts/home/HomePage';
-import NotFound from '../layouts/NotFound';
+import NotFoundPage from '../layouts/NotFoundPage';
 
-import LoginPage from '../layouts/user/Login/LoginPage';
-import SignUpPage from '../layouts/user/SignUp/SignUpPage';
-import VerifyEmail from '../layouts/user/VerifyEmail';
+import Login from '../layouts/user/Login/Login';
+import SignUp from '../layouts/user/SignUp/SignUp';
+import VerifyEmailPage from '../layouts/user/VerifyEmailPage';
 import ForgotPassword from '../layouts/user/ForgotPassword/ForgotPassword';
 import ResetPassword from '../layouts/user/ResetPassword/ResetPassword';
 import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
 
-import Dashboard from '../layouts/user/Dashboard';
+import DashboardPage from '../layouts/user/DashboardPage';
 import EditProfile from '../layouts/user/Profile/EditProfile';
-import Settings from '../layouts/user/Settings';
-import Inbox from '../layouts/user/Inbox';
+import SettingsPage from '../layouts/user/SettingsPage';
+import InboxPage from '../layouts/user/InboxPage';
 
 import BookingsPage from '../layouts/bookings/BookingsPage';
 import ViewBooking from '../layouts/bookings/ViewBooking';
@@ -68,9 +68,9 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={HomePage} />
 
-            <PublicRoute path="/login" component={LoginPage} />
-            <PublicRoute path="/signup" component={SignUpPage} />
-            <Route path="/verify-email/:token" component={VerifyEmail} />
+            <PublicRoute path="/login" component={Login} />
+            <PublicRoute path="/signup" component={SignUp} />
+            <Route path="/verify-email/:token" component={VerifyEmailPage} />
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password/:token" component={ResetPassword} />
 
@@ -79,7 +79,7 @@ class App extends Component {
               path="/dashboard"
               component={() => (
                 <SideMenuContainer>
-                  <Dashboard />
+                  <DashboardPage />
                 </SideMenuContainer>
               )}
             />
@@ -97,7 +97,7 @@ class App extends Component {
               path="/settings"
               component={() => (
                 <SideMenuContainer>
-                  <Settings />
+                  <SettingsPage />
                 </SideMenuContainer>
               )}
             />
@@ -113,7 +113,7 @@ class App extends Component {
               path="/inbox"
               component={() => (
                 <SideMenuContainer>
-                  <Inbox />
+                  <InboxPage />
                 </SideMenuContainer>
               )}
             />
@@ -133,7 +133,7 @@ class App extends Component {
 
             <Route path="/stylists/join" component={StylesJoin} />
 
-            <Route component={NotFound} />
+            <Route component={NotFoundPage} />
           </Switch>
 
           <Footer />

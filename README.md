@@ -1,4 +1,4 @@
-# Stylesquard meteor + react + semantic ui app
+# Stylesquard meteor + react app
 
 ## Running on local machine
 
@@ -10,9 +10,13 @@
 
 `heroku config:add METEOR_SETTINGS="$(cat settings-production.json)"`
 
-## Accounts and managers
+## Accounts
 
 - Deploy@Heroku: chrischen79@gmail.com
 - Domain@Godaddy: viz.patel7@gmail.com, chrischen79@gmail.com
 - Mailing@Mailgun: chrischen79@gmail.com
 - Upload & CDN@cloudinary: chrischen79@gmail.com
+
+## Coding guideline
+
+- Separate React logic from view component. Take login for example, we should have a stateful (smart) React component `Login.jsx` to manage user input states, form validation, API invoking, and post-submit screen flow. While another stateless (dumb) React component `LoginPage.jsx` to render the actual web page version of login interface, to display loadings status and errors, and to redirect to another web url. When we start developing React Native app, we should be able to reuse `Login.jsx` while only need to develop a `LoginView.jsx` to render login interface for the native apps.

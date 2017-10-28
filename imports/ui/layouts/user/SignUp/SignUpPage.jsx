@@ -1,98 +1,106 @@
-import { Accounts } from 'meteor/accounts-base';
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Button, Form, Grid, Message, Segment, Divider, Checkbox } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import { validateUserSignUp } from '../../../../modules/validate';
-import SignUpForm from './SignUpForm';
+import FormInputField from '../../../components/FormInputField';
+import SocialLoginButtons from '../SocialLoginButtons';
 
-// platform-independent stateful container component
-// to handle SignUp logic
-class SignUpPage extends Component {
-  constructor(props) {
-    super(props);
+// web version of the sign up form, stateless component
+const SignUpPage = ({
+  onSubmit, onChange, onAgreement, disabled, loading, errors,
+}) => (
+  <Grid textAlign="center" className="below-fixed-menu" verticalAlign="middle">
+    <Grid.Row style={{ maxWidth: 450 }}>
+      <Grid.Column>
+        <Segment attached>
+          <SocialLoginButtons isSignUp disabled={disabled} />
 
-    this.state = {
-      email: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      errors: {},
-      loading: false,
-      disabled: false,
-    };
+          <Divider horizontal>or</Divider>
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleAgreement = this.handleAgreement.bind(this);
-  }
+          <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+            <FormInputField
+              fluid
+              icon="mail"
+              iconPosition="left"
+              placeholder="Email address"
+              type="email"
+              name="email"
+              size="huge"
+              onChange={onChange}
+              errors={errors}
+            />
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+            <FormInputField
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="First name"
+              name="firstName"
+              size="huge"
+              onChange={onChange}
+              errors={errors}
+            />
 
-  handleSubmit(event) {
-    this.setState({ errors: {} });
-    event.preventDefault();
+            <FormInputField
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="Last name"
+              name="lastName"
+              size="huge"
+              onChange={onChange}
+              errors={errors}
+            />
 
-    const errors = validateUserSignUp(
-      this.state.email,
-      this.state.firstName,
-      this.state.lastName,
-      this.state.password,
-    );
+            <FormInputField
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Create a Password"
+              type="password"
+              name="password"
+              size="huge"
+              onChange={onChange}
+              errors={errors}
+            />
 
-    if (!_.isEmpty(errors)) {
-      this.setState({ errors });
-    } else {
-      this.setState({ loading: true });
+            <Button color="teal" fluid size="huge" type="submit" disabled={disabled}>
+              Sign up
+            </Button>
 
-      // http://docs.meteor.com/api/passwords.html#Accounts-createUser
-      Accounts.createUser(
-        {
-          email: this.state.email,
-          password: this.state.password,
-          profile: {
-            name: {
-              first: this.state.firstName,
-              last: this.state.lastName,
-            },
-          },
-        },
-        (error) => {
-          if (error) {
-            this.setState({
-              loading: false,
-              errors: {
-                message: error.reason,
-              },
-            });
-          } else {
-            this.setState({
-              loading: false,
-              errors: {},
-            });
+            {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+          </Form>
+        </Segment>
+
+        <Message attached="bottom" size="large">
+          {'Already have a Stylesquard account?'} <Link to="/login">Log in</Link>
+        </Message>
+        <Checkbox
+          defaultChecked
+          onChange={onAgreement}
+          label={
+            <label htmlFor="agreement">
+              Check here to confirm that you are 18 or older, and agree to our&nbsp;
+              <Link to="/terms">Terms of Use</Link>,&nbsp;
+              <Link to="/privacy">Privacy</Link> and to receiving marketing and policy
+              communications (you may opt out of receiving these at any time).
+            </label>
           }
-        },
-      );
-    }
-  }
+        />
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
+);
 
-  handleAgreement(event, data) {
-    this.setState({ disabled: !data.checked });
-  }
-
-  render() {
-    return (
-      <SignUpForm
-        onSubmit={this.handleSubmit}
-        onChange={this.handleChange}
-        onAgreement={this.handleAgreement}
-        loading={this.state.loading}
-        errors={this.state.errors}
-        disabled={this.state.disabled}
-      />
-    );
-  }
-}
+SignUpPage.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onAgreement: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  errors: PropTypes.object.isRequired,
+};
 
 export default SignUpPage;

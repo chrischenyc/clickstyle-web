@@ -3,7 +3,7 @@ import { Container, Header } from 'semantic-ui-react';
 
 import EmailVerificationAlert from './EmailVerificationAlert/EmailVerificationAlert';
 
-const Dashboard = () => (
+const DashboardPage = () => (
   <Container style={{ padding: '4rem 0' }}>
     <EmailVerificationAlert />
     <Header as="h2">Dashboard</Header>
@@ -11,4 +11,4 @@ const Dashboard = () => (
   </Container>
 );
 
-export default Dashboard;
+export default DashboardPage;
