@@ -35,7 +35,6 @@ import ViewBooking from '../layouts/bookings/ViewBooking';
 import NewBooking from '../layouts/bookings/NewBooking';
 import EditBooking from '../layouts/bookings/EditBooking';
 
-import StylesHomePage from '../layouts/stylists/StylistsHomePage';
 import StylesOnboard from '../layouts/stylists/StylistsOnboard';
 
 class App extends Component {
@@ -132,7 +131,6 @@ class App extends Component {
             <Route exact path="/bookings/:_id" component={ViewBooking} />
             <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
-            <Route path="/stylists/home" component={StylesHomePage} />
             <Route path="/stylists/onboard" component={StylesOnboard} />
 
             <Route component={NotFound} />
