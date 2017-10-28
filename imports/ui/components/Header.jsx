@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Container, Menu, Dropdown, Responsive } from 'semantic-ui-react';
 
 const StylistLandingPageLink = () => (
-  <Menu.Item as={Link} to="/stylists/join">
+  <Menu.Item as={Link} to="/stylists">
     Are you a stylist?
   </Menu.Item>
 );
