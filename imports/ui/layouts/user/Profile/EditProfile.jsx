@@ -7,19 +7,19 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import _ from 'lodash';
 
-import Brands from '../../../../api/brands/brands';
+import Products from '../../../../api/products/products';
 import { validateEditProfile } from '../../../../modules/validate';
 import GeoSuggestToAddress from '../../../../modules/geo-suggest-to-address';
 import EditProfilePage from './EditProfilePage';
 
-const availableBrands = (brands, selectedBrands) => {
-  if (!selectedBrands || selectedBrands.length === 0) {
-    return brands;
+const availableProducts = (products, selectedProducts) => {
+  if (!selectedProducts || selectedProducts.length === 0) {
+    return products;
   }
 
-  const selectedNames = selectedBrands.map(selectedBrand => selectedBrand.name.toLowerCase());
+  const selectedNames = selectedProducts.map(selectedProduct => selectedProduct.name.toLowerCase());
 
-  return brands.filter(brand => selectedNames.indexOf(brand.name.toLowerCase()) === -1);
+  return products.filter(product => selectedNames.indexOf(product.name.toLowerCase()) === -1);
 };
 
 const searchProducts = (products, keyword) => {
@@ -41,9 +41,9 @@ class EditProfile extends Component {
       photoUploading: false,
       photoPristine: true,
       profile: _.cloneDeep(props.profile),
-      availableBrands: availableBrands(props.brands, props.profile.products),
-      productsSearch: '',
+      productsAvailable: availableProducts(props.products, props.profile.products),
       productsMatched: [],
+      productsSearch: '',
       errors: {},
       saving: false,
       pristine: true,
@@ -55,8 +55,8 @@ class EditProfile extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAddressSuggest = this.handleAddressSuggest.bind(this);
-    this.handleSelectBrand = this.handleSelectBrand.bind(this);
-    this.handleDeselectBrand = this.handleDeselectBrand.bind(this);
+    this.handleSelectProduct = this.handleSelectProduct.bind(this);
+    this.handleDeselectProduct = this.handleDeselectProduct.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,7 +64,7 @@ class EditProfile extends Component {
     this.setState({
       pristine: true,
       profile: _.cloneDeep(nextProps.profile),
-      availableBrands: availableBrands(nextProps.brands, nextProps.profile.products),
+      productsAvailable: availableProducts(nextProps.products, nextProps.profile.products),
     });
   }
 
@@ -114,7 +114,7 @@ class EditProfile extends Component {
     if (event.target.name === 'productsSearch') {
       this.setState({
         productsSearch: event.target.value,
-        productsMatched: searchProducts(this.state.availableBrands, event.target.value),
+        productsMatched: searchProducts(this.state.productsAvailable, event.target.value),
       });
     } else {
       let newProfile = _.cloneDeep(this.state.profile);
@@ -160,19 +160,19 @@ class EditProfile extends Component {
     });
   }
 
-  handleSelectBrand(brand) {
-    if (brand.name === undefined || brand.name.length === 0) {
+  handleSelectProduct(selectedProduct) {
+    if (selectedProduct.name === undefined || selectedProduct.name.length === 0) {
       return;
     }
 
     const { products: currentProducts } = this.state.profile;
 
-    let updatedProducts = [brand];
+    let updatedProducts = [selectedProduct];
 
     if (currentProducts) {
-      const matchedProducts = currentProducts.filter(product => product.name.toLowerCase() === brand.name.toLowerCase());
+      const matchedProducts = currentProducts.filter(product => product.name.toLowerCase() === selectedProduct.name.toLowerCase());
       if (matchedProducts.length === 0) {
-        updatedProducts = [...currentProducts, brand];
+        updatedProducts = [...currentProducts, selectedProduct];
       } else {
         updatedProducts = currentProducts;
       }
@@ -188,19 +188,19 @@ class EditProfile extends Component {
       productsSearch: '',
       productsMatched: [],
       pristine: _.isEqual(newProfile, this.props.profile),
-      availableBrands: availableBrands(this.props.brands, newProfile.products),
+      productsAvailable: availableProducts(this.props.products, newProfile.products),
     });
   }
 
-  handleDeselectBrand(brand) {
+  handleDeselectProduct(deselectedProduct) {
     const newProfile = {
       ...this.state.profile,
-      products: this.state.profile.products.filter(product => product.name.toLowerCase() !== brand.name.toLowerCase()),
+      products: this.state.profile.products.filter(product => product.name.toLowerCase() !== deselectedProduct.name.toLowerCase()),
     };
     this.setState({
       profile: newProfile,
       pristine: _.isEqual(newProfile, this.props.profile),
-      availableBrands: availableBrands(this.props.brands, newProfile.products),
+      productsAvailable: availableProducts(this.props.products, newProfile.products),
     });
   }
 
@@ -220,8 +220,8 @@ class EditProfile extends Component {
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onAddressSuggest={this.handleAddressSuggest}
-        onSelectBrand={this.handleSelectBrand}
-        onDeselectBrand={this.handleDeselectBrand}
+        onSelectProduct={this.handleSelectProduct}
+        onDeselectProduct={this.handleDeselectProduct}
         saving={this.state.saving}
         pristine={this.state.pristine}
         errors={this.state.errors}
@@ -231,12 +231,12 @@ class EditProfile extends Component {
 }
 
 EditProfile.defaultProps = {
-  brands: [],
+  products: [],
 };
 
 EditProfile.propTypes = {
   profile: PropTypes.object.isRequired,
-  brands: PropTypes.array,
+  products: PropTypes.array,
 };
 
 export default compose(
@@ -244,10 +244,10 @@ export default compose(
     profile: state.profile,
   })),
   withTracker(() => {
-    Meteor.subscribe('brands');
+    Meteor.subscribe('products');
 
     return {
-      brands: Brands.find().fetch(),
+      products: Products.find().fetch(),
     };
   }),
 )(EditProfile);

@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import Brands from '../brands';
+import Products from '../products';
 
-Meteor.publish('brands', () =>
-  Brands.find(
+Meteor.publish('products', () =>
+  Products.find(
     {},
     {
       // hide fields in the return

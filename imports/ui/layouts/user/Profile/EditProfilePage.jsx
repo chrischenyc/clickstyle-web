@@ -32,8 +32,8 @@ const EditProfilePage = ({
   onSubmit,
   onChange,
   onAddressSuggest,
-  onSelectBrand,
-  onDeselectBrand,
+  onSelectProduct,
+  onDeselectProduct,
   saving,
   pristine,
   errors,
@@ -140,7 +140,7 @@ const EditProfilePage = ({
           onKeyPress={(event) => {
             if (event.key === 'Enter') {
               event.preventDefault();
-              onSelectBrand({ name: event.target.value });
+              onSelectProduct({ name: event.target.value });
             }
           }}
         />
@@ -157,7 +157,7 @@ const EditProfilePage = ({
                 basic
                 style={{ marginBottom: '0.25rem' }}
                 onClick={() => {
-                  onSelectBrand(product);
+                  onSelectProduct(product);
                 }}
               >
                 <Icon name="add" />
@@ -181,7 +181,7 @@ const EditProfilePage = ({
                 <Icon
                   name="delete"
                   onClick={() => {
-                    onDeselectBrand(product);
+                    onDeselectProduct(product);
                   }}
                 />
               </Label>
@@ -213,8 +213,8 @@ EditProfilePage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onAddressSuggest: PropTypes.func.isRequired,
-  onSelectBrand: PropTypes.func.isRequired,
-  onDeselectBrand: PropTypes.func.isRequired,
+  onSelectProduct: PropTypes.func.isRequired,
+  onDeselectProduct: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,

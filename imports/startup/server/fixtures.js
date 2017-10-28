@@ -1,5 +1,5 @@
 import Bookings from '../../api/bookings/bookings';
-import Brands from '../../api/brands/brands';
+import Products from '../../api/products/products';
 
 // TODO: remove sample data
 if (Bookings.find().count() === 0) {
@@ -38,8 +38,8 @@ if (Bookings.find().count() === 0) {
   });
 }
 
-// seed Brands data
-if (Brands.find().count() === 0) {
+// seed Products data
+if (Products.find().count() === 0) {
   const brands = [
     "L'Oréal",
     'Pantene',
@@ -93,7 +93,7 @@ if (Brands.find().count() === 0) {
     'Speed Stick',
   ];
   brands.forEach((brand) => {
-    Brands.insert({
+    Products.insert({
       name: brand,
       system: true,
     });

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import rateLimit from '../../../modules/server/rate-limit';
 import Profiles from '../profiles';
-import Brands from '../../brands/brands';
+import Products from '../../products/products';
 import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
 
 Meteor.methods({
@@ -11,29 +11,29 @@ Meteor.methods({
 
     try {
       // screen invalid products input
-      // create new Brands object if profile.products contains object(s) without brand id
+      // create new Products object if profile.products contains object(s) without .productId
       const profileToUpdate = profile;
 
       if (profileToUpdate.products) {
         profileToUpdate.products = profileToUpdate.products
           .filter(product => product.name && product.name.length > 0)
           .map((product) => {
-            if (product.brand) {
+            if (product.productId) {
               // existing product
               return product;
             }
 
-            // insert new Brand if it doesn't exist
+            // insert new Product if it doesn't exist
             // case insensitive search: https://stackoverflow.com/questions/7101703/how-do-i-make-case-insensitive-queries-on-mongodb
-            const existingBrand = Brands.findOne({
+            const existingProduct = Products.findOne({
               name: { $regex: new RegExp(product.name, 'i') },
             });
-            if (existingBrand) {
-              return { brand: existingBrand._id, name: product.name };
+            if (existingProduct) {
+              return { productId: existingProduct._id, name: product.name };
             }
 
-            const brand = Brands.insert({ name: product.name, system: false });
-            return { brand, name: product.name };
+            const productId = Products.insert({ name: product.name, system: false });
+            return { productId, name: product.name };
           });
       }
 
