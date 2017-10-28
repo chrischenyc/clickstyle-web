@@ -133,7 +133,7 @@ class App extends Component {
             <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
             <Route exact path="/stylists" component={StylistsHomePage} />
-            <Route path="/stylists/join" component={StylistsJoin} />
+            <AuthRoute path="/stylists/join" component={StylistsJoin} />
 
             <Route component={NotFoundPage} />
           </Switch>
