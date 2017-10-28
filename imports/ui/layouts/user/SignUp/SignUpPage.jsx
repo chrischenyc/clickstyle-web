@@ -5,7 +5,7 @@ import { Button, Form, Grid, Message, Segment, Divider, Checkbox } from 'semanti
 import _ from 'lodash';
 
 import FormInputField from '../../../components/FormInputField';
-import SocialLoginButtons from '../SocialLoginButtons';
+import SocialLoginButtons from '../../../components/SocialLoginButtons';
 
 // web version of the sign up form, stateless component
 const SignUpPage = ({

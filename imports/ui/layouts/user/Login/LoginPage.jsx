@@ -5,7 +5,7 @@ import { Button, Form, Grid, Message, Segment, Divider } from 'semantic-ui-react
 import _ from 'lodash';
 
 import FormInputField from '../../../components/FormInputField';
-import SocialLoginButtons from '../SocialLoginButtons';
+import SocialLoginButtons from '../../../components/SocialLoginButtons';
 
 // web version of the login form, stateless component
 const LoginPage = ({
