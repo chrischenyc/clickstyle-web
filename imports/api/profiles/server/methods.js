@@ -24,7 +24,10 @@ Meteor.methods({
             }
 
             // insert new Brand if it doesn't exist
-            const existingBrand = Brands.findOne({ name: product.name });
+            // case insensitive search: https://stackoverflow.com/questions/7101703/how-do-i-make-case-insensitive-queries-on-mongodb
+            const existingBrand = Brands.findOne({
+              name: { $regex: new RegExp(product.name, 'i') },
+            });
             if (existingBrand) {
               return { brand: existingBrand._id, name: product.name };
             }
