@@ -35,6 +35,9 @@ import ViewBooking from '../layouts/bookings/ViewBooking';
 import NewBooking from '../layouts/bookings/NewBooking';
 import EditBooking from '../layouts/bookings/EditBooking';
 
+import StylesHomePage from '../layouts/stylists/StylistsHomePage';
+import StylesOnboard from '../layouts/stylists/StylistsOnboard';
+
 class App extends Component {
   // after web App is refreshed, try to fetch Meteor user data then update redux states
   componentDidMount() {
@@ -115,6 +118,8 @@ class App extends Component {
                 </SideMenuContainer>
               )}
             />
+
+            <Route exact path="/bookings" component={BookingsPage} />
             <AuthRoute
               exact
               path="/bookings/new"
@@ -124,11 +129,11 @@ class App extends Component {
                 </SideMenuContainer>
               )}
             />
-
-            <Route exact path="/bookings" component={BookingsPage} />
-
             <Route exact path="/bookings/:_id" component={ViewBooking} />
             <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} />
+
+            <Route path="/stylists/home" component={StylesHomePage} />
+            <Route path="/stylists/onboard" component={StylesOnboard} />
 
             <Route component={NotFound} />
           </Switch>
