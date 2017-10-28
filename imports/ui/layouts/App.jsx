@@ -35,7 +35,7 @@ import ViewBooking from '../layouts/bookings/ViewBooking';
 import NewBooking from '../layouts/bookings/NewBooking';
 import EditBooking from '../layouts/bookings/EditBooking';
 
-import StylesOnboard from '../layouts/stylists/StylistsOnboard';
+import StylesJoin from '../layouts/stylists/StylistsJoin';
 
 class App extends Component {
   // after web App is refreshed, try to fetch Meteor user data then update redux states
@@ -131,7 +131,7 @@ class App extends Component {
             <Route exact path="/bookings/:_id" component={ViewBooking} />
             <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
-            <Route path="/stylists/onboard" component={StylesOnboard} />
+            <Route path="/stylists/join" component={StylesJoin} />
 
             <Route component={NotFound} />
           </Switch>
