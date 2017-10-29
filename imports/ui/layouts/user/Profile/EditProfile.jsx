@@ -27,7 +27,7 @@ const searchProducts = (products, keyword) => {
     return [];
   }
 
-  return products.filter(product => product.name.toLowerCase().includes(keyword));
+  return products.filter(product => product.name.toLowerCase().includes(keyword.toLowerCase()));
 };
 
 // platform-independent stateful container component
