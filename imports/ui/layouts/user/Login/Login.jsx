@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { validateUserLogin } from '../../../../modules/validate';
@@ -63,9 +64,18 @@ class Login extends Component {
         onChange={this.handleChange}
         loading={this.state.loading}
         errors={this.state.errors}
+        modal={this.props.modal}
       />
     );
   }
 }
+
+Login.defaultProps = {
+  modal: false,
+};
+
+Login.propTypes = {
+  modal: PropTypes.bool,
+};
 
 export default Login;

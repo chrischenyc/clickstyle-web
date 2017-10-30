@@ -13,7 +13,7 @@ import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 // web version of the login form, stateless component
 const LoginPage = ({
-  onSubmit, onChange, loading, errors,
+  onSubmit, onChange, loading, errors, modal,
 }) => (
   <Grid textAlign="center" verticalAlign="middle" className="below-fixed-menu">
     <Grid.Row style={{ maxWidth: 450 }}>
@@ -55,16 +55,27 @@ const LoginPage = ({
             {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
           </Form>
 
-          <ModalLink to="/forgot-password" component={<ForgotPassword />}>
-            <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
-          </ModalLink>
+          {modal ? (
+            <ModalLink to="/forgot-password" component={<ForgotPassword modal />}>
+              <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
+            </ModalLink>
+          ) : (
+            <Link to="/forgot-password">
+              {' '}
+              <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
+            </Link>
+          )}
         </Segment>
 
         <Message attached="bottom" size="large">
           {"Don't have an account? "}
-          <ModalLink to="/signup" component={<SignUp />} title="Join us">
-            Sign up
-          </ModalLink>
+          {modal ? (
+            <ModalLink to="/signup" component={<SignUp modal />} title="Join us">
+              Sign up
+            </ModalLink>
+          ) : (
+            <Link to="/signup">Sign up</Link>
+          )}
         </Message>
       </Grid.Column>
     </Grid.Row>
@@ -76,6 +87,7 @@ LoginPage.propTypes = {
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
+  modal: PropTypes.bool.isRequired,
 };
 
 export default LoginPage;

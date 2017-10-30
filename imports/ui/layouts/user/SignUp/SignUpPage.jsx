@@ -12,7 +12,7 @@ import Login from '../Login/Login';
 
 // web version of the sign up form, stateless component
 const SignUpPage = ({
-  onSubmit, onChange, onAgreement, disabled, loading, errors,
+  onSubmit, onChange, onAgreement, disabled, loading, errors, modal,
 }) => (
   <Grid textAlign="center" className="below-fixed-menu" verticalAlign="middle">
     <Grid.Row style={{ maxWidth: 450 }}>
@@ -85,9 +85,14 @@ const SignUpPage = ({
 
         <Message attached="bottom" size="large">
           {`Already have a ${Meteor.settings.public.applicationName} account? `}
-          <ModalLink to="/login" component={<Login />} title="Log in to continue">
-            Log in
-          </ModalLink>
+
+          {modal ? (
+            <ModalLink to="/login" component={<Login modal />} title="Log in to continue">
+              Log in
+            </ModalLink>
+          ) : (
+            <Link to="/login">Log in</Link>
+          )}
         </Message>
         <Checkbox
           defaultChecked
@@ -113,6 +118,7 @@ SignUpPage.propTypes = {
   disabled: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
+  modal: PropTypes.bool.isRequired,
 };
 
 export default SignUpPage;

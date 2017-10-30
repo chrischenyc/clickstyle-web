@@ -1,5 +1,6 @@
 import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { validateUserSignUp } from '../../../../modules/validate';
@@ -90,9 +91,18 @@ class SignUp extends Component {
         loading={this.state.loading}
         errors={this.state.errors}
         disabled={this.state.disabled}
+        modal={this.props.modal}
       />
     );
   }
 }
+
+SignUp.defaultProps = {
+  modal: false,
+};
+
+SignUp.propTypes = {
+  modal: PropTypes.bool,
+};
 
 export default SignUp;
