@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Header, Button } from 'semantic-ui-react';
@@ -20,7 +21,7 @@ const StylistsHomepage = () => (
     <Button
       content="Join the squad!"
       size="massive"
-      color="teal"
+      color={Meteor.settings.public.semantic.color}
       icon="right arrow"
       labelPosition="right"
       as={Link}

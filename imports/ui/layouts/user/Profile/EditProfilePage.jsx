@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -153,7 +154,7 @@ const EditProfilePage = ({
                 size="large"
                 as="a"
                 key={product.name}
-                color="teal"
+                color={Meteor.settings.public.semantic.color}
                 basic
                 style={{ marginBottom: '0.25rem' }}
                 onClick={() => {
@@ -174,7 +175,7 @@ const EditProfilePage = ({
               <Label
                 size="large"
                 key={product.name}
-                color="teal"
+                color={Meteor.settings.public.semantic.color}
                 style={{ marginBottom: '0.25rem' }}
               >
                 {product.name}
@@ -190,7 +191,13 @@ const EditProfilePage = ({
         )}
       </Form.Field>
 
-      <Button color="teal" size="massive" type="submit" disabled={pristine} loading={saving}>
+      <Button
+        color={Meteor.settings.public.semantic.color}
+        size="massive"
+        type="submit"
+        disabled={pristine}
+        loading={saving}
+      >
         Save
       </Button>
 

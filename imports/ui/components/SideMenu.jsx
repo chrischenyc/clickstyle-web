@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,7 +8,7 @@ import { Menu, Image } from 'semantic-ui-react';
 import ScaledImageURL from '../../modules/scaled-image-url';
 
 const SideMenu = ({ profile }) => (
-  <Menu secondary vertical color="teal" size="massive" stackable>
+  <Menu secondary vertical color={Meteor.settings.public.semantic.color} size="massive" stackable>
     {profile.photoURL && (
       <Menu.Item>
         <Image src={ScaledImageURL(profile.photoURL, 'tiny')} size="tiny" shape="circular" />

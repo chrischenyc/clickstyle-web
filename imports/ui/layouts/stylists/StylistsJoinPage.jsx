@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Container, Header, Button, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
@@ -41,7 +42,13 @@ const StylistsJoinPage = ({
         errors={errors}
       />
 
-      <Button color="teal" fluid size="huge" type="submit" disabled={disabled}>
+      <Button
+        color={Meteor.settings.public.semantic.color}
+        fluid
+        size="huge"
+        type="submit"
+        disabled={disabled}
+      >
         Join
       </Button>
     </Form>

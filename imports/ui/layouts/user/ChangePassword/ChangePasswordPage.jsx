@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Button, Form, Grid, Message, Header, Icon } from 'semantic-ui-react';
@@ -71,7 +72,7 @@ const ChangePasswordPage = ({
 
               {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
 
-              <Button color="teal" size="huge" type="submit">
+              <Button color={Meteor.settings.public.semantic.color} size="huge" type="submit">
                 Change password
               </Button>
             </Form>

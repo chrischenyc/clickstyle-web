@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -44,7 +45,7 @@ const LoginPage = ({
               errors={errors}
             />
 
-            <Button color="teal" fluid size="huge" type="submit">
+            <Button color={Meteor.settings.public.semantic.color} fluid size="huge" type="submit">
               Login
             </Button>
 

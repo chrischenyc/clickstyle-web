@@ -150,7 +150,7 @@ class EditPhotoPage extends Component {
                 accept: '.jpg,.jpeg,.png,.bmp',
               }}
             >
-              <Button color="teal" loading={photoUploading}>
+              <Button color={Meteor.settings.public.semantic.color} loading={photoUploading}>
                 Upload photo
               </Button>
               <span>

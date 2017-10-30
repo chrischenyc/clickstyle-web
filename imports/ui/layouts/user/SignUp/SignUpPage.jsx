@@ -67,7 +67,13 @@ const SignUpPage = ({
               errors={errors}
             />
 
-            <Button color="teal" fluid size="huge" type="submit" disabled={disabled}>
+            <Button
+              color={Meteor.settings.public.semantic.color}
+              fluid
+              size="huge"
+              type="submit"
+              disabled={disabled}
+            >
               Sign up
             </Button>
 
