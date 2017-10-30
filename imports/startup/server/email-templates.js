@@ -6,7 +6,7 @@ import templateToText from '../../modules/server/handlebars-email-to-text';
 
 // override Meteor default Accounts email template
 
-const { applicationName, supportEmail } = Meteor.settings.public.company;
+const { applicationName, supportEmail } = Meteor.settings.public;
 const fromAddress = `${applicationName} <${supportEmail}>`;
 const { emailTemplates } = Accounts;
 

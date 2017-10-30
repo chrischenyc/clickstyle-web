@@ -13,7 +13,7 @@ const EmailVerificationAlertPage = ({
     </p>
     <p>
       Please check your email inbox for a verification email sent from&nbsp;
-      {Meteor.settings.public.company.supportEmail}.
+      {Meteor.settings.public.supportEmail}.
     </p>
     <p>
       You can request to&nbsp;

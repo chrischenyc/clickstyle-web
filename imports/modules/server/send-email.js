@@ -39,7 +39,7 @@ const sendEmail = ({
 };
 
 // helpers
-const { applicationName, supportEmail } = Meteor.settings.public.company;
+const { applicationName, supportEmail } = Meteor.settings.public;
 const fromAddress = `${applicationName} <${supportEmail}>`;
 
 export const sendWelcomeEmail = (email, firstName) => {

@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -75,7 +76,8 @@ const SignUpPage = ({
         </Segment>
 
         <Message attached="bottom" size="large">
-          {'Already have a Stylesquard account?'} <Link to="/login">Log in</Link>
+          {`Already have a ${Meteor.settings.public.applicationName} account?`}
+          <Link to="/login">Log in</Link>
         </Message>
         <Checkbox
           defaultChecked

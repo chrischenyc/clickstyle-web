@@ -15,7 +15,7 @@ const Header = ({ authenticated, isStylist }) => (
   <Responsive as={Menu} fixed="top" size="massive" inverted borderless stackable>
     <Container fluid style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
       <Menu.Item as={Link} to="/">
-        STYLESQUARD
+        {Meteor.settings.public.applicationName}
       </Menu.Item>
       {authenticated ? (
         <Menu.Menu position="right">

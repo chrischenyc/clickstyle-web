@@ -75,7 +75,7 @@ const EditProfilePage = ({
         errors={errors}
         value={_.has(profile, 'name.last') ? profile.name.last : ''}
         note={`This is not on your public profile. This is only shared with another ${Meteor
-          .settings.public.company.applicationName} user once you two have a confirmed booking .`}
+          .settings.public.applicationName} user once you two have a confirmed booking .`}
       />
 
       <FormInputField
@@ -86,7 +86,7 @@ const EditProfilePage = ({
         errors={errors}
         value={_.has(profile, 'mobile') ? profile.mobile : ''}
         note={`This is not on your public profile. This is only shared with another ${Meteor
-          .settings.public.company.applicationName} user once you two have a confirmed booking .`}
+          .settings.public.applicationName} user once you two have a confirmed booking .`}
       />
 
       <Form.Field>
@@ -110,7 +110,7 @@ const EditProfilePage = ({
 
         <p style={{ marginTop: '0.25rem', marginBottom: '1rem', color: '#aaa' }}>
           {`This is not on your public profile. This is only shared with another ${Meteor.settings
-            .public.company.applicationName} user once you two have a confirmed booking .`}
+            .public.applicationName} user once you two have a confirmed booking .`}
         </p>
       </Form.Field>
 

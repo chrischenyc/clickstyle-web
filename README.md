@@ -1,4 +1,4 @@
-# Stylesquard meteor + react app
+# Stylesquad meteor + react app
 
 ## Running on local machine
 

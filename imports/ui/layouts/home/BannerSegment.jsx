@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
@@ -18,7 +19,7 @@ const BannerSegment = () => (
     <Container text>
       <Header
         as="h1"
-        content="Stylesquard"
+        content={Meteor.settings.public.applicationName}
         inverted
         style={{
           fontSize: '4rem',

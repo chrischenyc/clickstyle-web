@@ -1,12 +1,11 @@
 {
-  "name": "stylesquard-web",
+  "name": "stylesquad-web",
   "version": "0.1.0",
-  "description": "Stylesquard.com web/server app using meteor + react + semantic ",
+  "description":
+    "Stylesquad.com web/server app using meteor + react + semantic ",
   "private": true,
   "author": "Chris Chen",
-  "contributors": [
-    "Chris Chen <chrischen79@gmail.com>"
-  ],
+  "contributors": ["Chris Chen <chrischen79@gmail.com>"],
   "scripts": {
     "start": "meteor run"
   },
