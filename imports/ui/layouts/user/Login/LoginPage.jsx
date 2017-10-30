@@ -8,6 +8,8 @@ import _ from 'lodash';
 import ModalLink from '../../../components/ModalLink';
 import FormInputField from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
+import SignUp from '../SignUp/SignUp';
+import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 // web version of the login form, stateless component
 const LoginPage = ({
@@ -53,13 +55,16 @@ const LoginPage = ({
             {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
           </Form>
 
-          <Link to="/forgot-password">
+          <ModalLink to="/forgot-password" component={<ForgotPassword />}>
             <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
-          </Link>
+          </ModalLink>
         </Segment>
 
         <Message attached="bottom" size="large">
-          {"Don't have an account?"} <Link to="/signup">Sign up</Link>
+          {"Don't have an account? "}
+          <ModalLink to="/signup" component={<SignUp />} title="Join us">
+            Sign up
+          </ModalLink>
         </Message>
       </Grid.Column>
     </Grid.Row>

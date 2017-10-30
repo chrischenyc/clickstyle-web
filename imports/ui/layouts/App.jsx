@@ -14,6 +14,7 @@ import PublicRoute from '../components/PublicRoute';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SideMenuContainer from '../components/SideMenuContainer';
+import ModalContainer from '../components/ModalContainer';
 
 import HomePage from '../layouts/home/HomePage';
 import NotFoundPage from '../layouts/NotFoundPage';
@@ -138,6 +139,8 @@ class App extends Component {
             <Route component={NotFoundPage} />
           </Switch>
 
+          {this.props.modal.open && <Route to={this.props.modal.to} component={ModalContainer} />}
+
           <Footer />
         </div>
       </Router>
@@ -149,9 +152,14 @@ App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
   fetchProfile: PropTypes.func.isRequired,
+  modal: PropTypes.object.isRequired,
 };
 
-export default connect(null, {
+const mapStateToProps = state => ({
+  modal: state.modal,
+});
+
+export default connect(mapStateToProps, {
   userSignedIn,
   userSignedOut,
   fetchProfile,
