@@ -15,10 +15,14 @@ const ModalLink = props => (
   />
 );
 
+ModalLink.defaultProps = {
+  title: null,
+};
+
 ModalLink.propTypes = {
   to: PropTypes.string.isRequired,
   component: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   openModal: PropTypes.func.isRequired,
 };
 

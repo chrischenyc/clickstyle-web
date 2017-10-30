@@ -28,9 +28,13 @@ class ModalContainer extends Component {
   }
 }
 
+ModalContainer.defaultProps = {
+  title: null,
+};
+
 ModalContainer.propTypes = {
   component: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
 };
 
