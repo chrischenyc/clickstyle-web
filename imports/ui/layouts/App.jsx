@@ -9,7 +9,7 @@ import Profiles from '../../api/profiles/profiles';
 import { userSignedIn, userSignedOut } from '../../modules/client/redux/user';
 import { fetchProfile } from '../../modules/client/redux/profile';
 
-import AuthRoute from '../components/AuthRoute';
+import SecureRoute from '../components/SecureRoute';
 import PublicRoute from '../components/PublicRoute';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -75,7 +75,7 @@ class App extends Component {
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password/:token" component={ResetPassword} />
 
-            <AuthRoute
+            <SecureRoute
               exact
               path="/dashboard"
               component={() => (
@@ -84,7 +84,7 @@ class App extends Component {
                 </SideMenuContainer>
               )}
             />
-            <AuthRoute
+            <SecureRoute
               exact
               path="/profile"
               component={() => (
@@ -93,7 +93,7 @@ class App extends Component {
                 </SideMenuContainer>
               )}
             />
-            <AuthRoute
+            <SecureRoute
               exact
               path="/settings"
               component={() => (
@@ -102,7 +102,7 @@ class App extends Component {
                 </SideMenuContainer>
               )}
             />
-            <AuthRoute
+            <SecureRoute
               path="/change-password"
               component={() => (
                 <SideMenuContainer>
@@ -110,7 +110,7 @@ class App extends Component {
                 </SideMenuContainer>
               )}
             />
-            <AuthRoute
+            <SecureRoute
               path="/inbox"
               component={() => (
                 <SideMenuContainer>
@@ -120,7 +120,7 @@ class App extends Component {
             />
 
             <Route exact path="/bookings" component={BookingsPage} />
-            <AuthRoute
+            <SecureRoute
               exact
               path="/bookings/new"
               component={() => (
@@ -130,10 +130,10 @@ class App extends Component {
               )}
             />
             <Route exact path="/bookings/:_id" component={ViewBooking} />
-            <AuthRoute exact path="/bookings/:_id/edit" component={EditBooking} />
+            <SecureRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
             <Route exact path="/stylists" component={StylistsHomePage} />
-            <AuthRoute path="/stylists/join" component={StylistsJoin} />
+            <SecureRoute path="/stylists/join" component={StylistsJoin} />
 
             <Route component={NotFoundPage} />
           </Switch>

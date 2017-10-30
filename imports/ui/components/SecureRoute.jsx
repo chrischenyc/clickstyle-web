@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 // the component takes in two special props 'loggingIn' and 'authenticated' which are
 // passed to the component via <App /> component.
 
-const AuthRoute = ({ authenticated, component, ...rest }) => {
+const SecureRoute = ({ authenticated, component, ...rest }) => {
   if (authenticated) {
     return <Route component={component} {...rest} />;
   }
@@ -17,7 +17,7 @@ const AuthRoute = ({ authenticated, component, ...rest }) => {
   return <Redirect to="/" />;
 };
 
-AuthRoute.propTypes = {
+SecureRoute.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   component: PropTypes.func.isRequired,
 };
@@ -25,4 +25,4 @@ AuthRoute.propTypes = {
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
 });
-export default connect(mapStateToProps)(AuthRoute);
+export default connect(mapStateToProps)(SecureRoute);
