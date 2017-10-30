@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Message, Segment, Divider } from 'semantic-ui-react';
 import _ from 'lodash';
 
+import ModalLink from '../../../components/ModalLink';
 import FormInputField from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
 

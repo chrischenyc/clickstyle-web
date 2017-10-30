@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Message, Segment, Divider, Checkbox } from 'semantic-ui-react';
 import _ from 'lodash';
 
+import ModalLink from '../../../components/ModalLink';
 import FormInputField from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
+import Login from '../Login/Login';
 
 // web version of the sign up form, stateless component
 const SignUpPage = ({
@@ -82,8 +84,10 @@ const SignUpPage = ({
         </Segment>
 
         <Message attached="bottom" size="large">
-          {`Already have a ${Meteor.settings.public.applicationName} account?`}
-          <Link to="/login">Log in</Link>
+          {`Already have a ${Meteor.settings.public.applicationName} account? `}
+          <ModalLink to="/login" component={<Login />}>
+            Log in
+          </ModalLink>
         </Message>
         <Checkbox
           defaultChecked

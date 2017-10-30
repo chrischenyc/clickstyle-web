@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SecureLink from '../../components/SecureLink';
 import { Container, Header, Button } from 'semantic-ui-react';
 
 const StylistsHomepage = () => (
@@ -24,7 +25,7 @@ const StylistsHomepage = () => (
       color={Meteor.settings.public.semantic.color}
       icon="right arrow"
       labelPosition="right"
-      as={Link}
+      as={SecureLink}
       to="/stylists/join"
     />
   </Container>

@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Container, Menu, Dropdown, Responsive } from 'semantic-ui-react';
 
+import ModalLink from '../components/ModalLink';
+import Login from '../layouts/user/Login/Login';
+import SignUp from '../layouts/user/SignUp/SignUp';
+
 const StylistLandingPageLink = () => (
   <Menu.Item as={Link} to="/stylists">
     Are you a stylist?
@@ -40,11 +44,11 @@ const Header = ({ authenticated, isStylist }) => (
         <Menu.Menu position="right">
           {!isStylist && <StylistLandingPageLink />}
 
-          <Menu.Item as={Link} to="/signup">
+          <Menu.Item as={ModalLink} to="/signup" component={<SignUp />}>
             Sign Up
           </Menu.Item>
 
-          <Menu.Item as={Link} to="/login">
+          <Menu.Item as={ModalLink} to="/login" component={<Login />}>
             Log In
           </Menu.Item>
         </Menu.Menu>
