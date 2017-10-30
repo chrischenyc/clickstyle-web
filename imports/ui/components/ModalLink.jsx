@@ -24,13 +24,14 @@ class ModalLink extends Component {
         />
 
         <Modal
-          size="large"
+          size="small"
           open={this.state.openModal}
           closeIcon
           onClose={() => {
             this.setState({ openModal: false });
           }}
         >
+          {this.props.title && <Modal.Header>{this.props.title}</Modal.Header>}
           <Modal.Content>{this.props.component}</Modal.Content>
         </Modal>
       </div>
@@ -38,9 +39,14 @@ class ModalLink extends Component {
   }
 }
 
+ModalLink.defaultProps = {
+  title: null,
+};
+
 ModalLink.propTypes = {
   to: PropTypes.string.isRequired,
   component: PropTypes.node.isRequired,
+  title: PropTypes.string,
 };
 
 export default ModalLink;

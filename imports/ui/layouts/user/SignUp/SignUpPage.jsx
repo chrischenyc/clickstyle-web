@@ -85,7 +85,7 @@ const SignUpPage = ({
 
         <Message attached="bottom" size="large">
           {`Already have a ${Meteor.settings.public.applicationName} account? `}
-          <ModalLink to="/login" component={<Login />}>
+          <ModalLink to="/login" component={<Login />} title="Log in to continue">
             Log in
           </ModalLink>
         </Message>

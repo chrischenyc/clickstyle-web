@@ -44,11 +44,11 @@ const Header = ({ authenticated, isStylist }) => (
         <Menu.Menu position="right">
           {!isStylist && <StylistLandingPageLink />}
 
-          <Menu.Item as={ModalLink} to="/signup" component={<SignUp />}>
+          <Menu.Item as={ModalLink} to="/signup" component={<SignUp />} title="Join us">
             Sign Up
           </Menu.Item>
 
-          <Menu.Item as={ModalLink} to="/login" component={<Login />}>
+          <Menu.Item as={ModalLink} to="/login" component={<Login />} title="Log in to continue">
             Log In
           </Menu.Item>
         </Menu.Menu>

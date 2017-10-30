@@ -32,7 +32,7 @@ class SecureLink extends Component {
 
         {!this.props.authenticated && (
           <Modal
-            size="large"
+            size="small"
             open={this.state.openModal}
             closeIcon
             onClose={() => {
