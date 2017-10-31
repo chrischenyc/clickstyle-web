@@ -1,8 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserLogin } from '../../../../modules/validate';
 import LoginPage from './LoginPage';
 
@@ -52,6 +54,13 @@ class Login extends Component {
             loading: false,
             errors: {},
           });
+
+          this.props.userSignedIn(Meteor.user());
+
+          // call back if in modal mode
+          if (this.props.modal && this.props.onLoggedIn) {
+            this.props.onLoggedIn();
+          }
         }
       });
     }
@@ -65,6 +74,7 @@ class Login extends Component {
         loading={this.state.loading}
         errors={this.state.errors}
         modal={this.props.modal}
+        onLoggedIn={this.props.onLoggedIn}
       />
     );
   }
@@ -72,10 +82,13 @@ class Login extends Component {
 
 Login.defaultProps = {
   modal: false,
+  onLoggedIn: null,
 };
 
 Login.propTypes = {
   modal: PropTypes.bool,
+  onLoggedIn: PropTypes.func,
+  userSignedIn: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default connect(null, { userSignedIn })(Login);

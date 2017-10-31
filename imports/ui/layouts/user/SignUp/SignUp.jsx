@@ -1,8 +1,11 @@
+import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserSignUp } from '../../../../modules/validate';
 import SignUpPage from './SignUpPage';
 
@@ -72,6 +75,13 @@ class SignUp extends Component {
               loading: false,
               errors: {},
             });
+
+            this.props.userSignedIn(Meteor.user());
+
+            // call back if in modal mode
+            if (this.props.modal && this.props.onLoggedIn) {
+              this.props.onLoggedIn();
+            }
           }
         },
       );
@@ -92,6 +102,7 @@ class SignUp extends Component {
         errors={this.state.errors}
         disabled={this.state.disabled}
         modal={this.props.modal}
+        onLoggedIn={this.props.onLoggedIn}
       />
     );
   }
@@ -103,6 +114,8 @@ SignUp.defaultProps = {
 
 SignUp.propTypes = {
   modal: PropTypes.bool,
+  onLoggedIn: PropTypes.func,
+  userSignedIn: PropTypes.func.isRequired,
 };
 
-export default SignUp;
+export default connect(null, { userSignedIn })(SignUp);

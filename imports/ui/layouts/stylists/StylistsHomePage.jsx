@@ -1,10 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import SecureLink from '../../components/SecureLink';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Container, Header, Button } from 'semantic-ui-react';
 
-const StylistsHomepage = () => (
+import { closeModal } from '../../../modules/client/redux/modal';
+import SecureLink from '../../components/SecureLink';
+
+const StylistsHomepage = props => (
   <Container style={{ padding: '8rem 0' }}>
     <Header as="h1">Are you a stylist? Join the squad!</Header>
 
@@ -27,8 +30,17 @@ const StylistsHomepage = () => (
       labelPosition="right"
       as={SecureLink}
       to="/stylists/join"
+      onLoggedIn={() => {
+        props.closeModal();
+        props.history.push('/stylists/join');
+      }}
     />
   </Container>
 );
 
-export default StylistsHomepage;
+StylistsHomepage.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+};
+
+export default connect(null, { closeModal })(StylistsHomepage);

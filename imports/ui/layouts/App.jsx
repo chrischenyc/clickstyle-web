@@ -139,7 +139,7 @@ class App extends Component {
             <Route component={NotFoundPage} />
           </Switch>
 
-          {this.props.modal.open && <Route to={this.props.modal.to} component={ModalContainer} />}
+          {this.props.modalOpen && <Route to="/modal" component={ModalContainer} />}
 
           <Footer />
         </div>
@@ -152,11 +152,11 @@ App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
   fetchProfile: PropTypes.func.isRequired,
-  modal: PropTypes.object.isRequired,
+  modalOpen: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  modal: state.modal,
+  modalOpen: state.modal.open,
 });
 
 export default connect(mapStateToProps, {

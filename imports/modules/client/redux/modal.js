@@ -28,6 +28,7 @@ const reducer = (state = defaultState, action) => {
       const { to, component, title } = action;
 
       return {
+        ...state,
         open: true,
         to,
         component,
@@ -37,6 +38,7 @@ const reducer = (state = defaultState, action) => {
 
     case 'CLOSE_MODAL': {
       return {
+        ...state,
         open: false,
         to: null,
         component: null,

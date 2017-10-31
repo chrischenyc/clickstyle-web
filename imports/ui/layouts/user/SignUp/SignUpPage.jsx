@@ -12,13 +12,20 @@ import Login from '../Login/Login';
 
 // web version of the sign up form, stateless component
 const SignUpPage = ({
-  onSubmit, onChange, onAgreement, disabled, loading, errors, modal,
+  onSubmit,
+  onChange,
+  onAgreement,
+  disabled,
+  loading,
+  errors,
+  modal,
+  onLoggedIn,
 }) => (
   <Grid textAlign="center" className="below-fixed-menu" verticalAlign="middle">
     <Grid.Row style={{ maxWidth: 450 }}>
       <Grid.Column>
         <Segment attached>
-          <SocialLoginButtons isSignUp disabled={disabled} />
+          <SocialLoginButtons isSignUp disabled={disabled} onLoggedIn={onLoggedIn} />
 
           <Divider horizontal>or</Divider>
 
@@ -87,7 +94,11 @@ const SignUpPage = ({
           {`Already have a ${Meteor.settings.public.applicationName} account? `}
 
           {modal ? (
-            <ModalLink to="/login" component={<Login modal />} title="Log in to continue">
+            <ModalLink
+              to="/login"
+              component={<Login modal onLoggedIn={onLoggedIn} />}
+              title="Log in to continue"
+            >
               Log in
             </ModalLink>
           ) : (
@@ -111,6 +122,10 @@ const SignUpPage = ({
   </Grid>
 );
 
+SignUpPage.defaultProps = {
+  onLoggedIn: null,
+};
+
 SignUpPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -119,6 +134,7 @@ SignUpPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   modal: PropTypes.bool.isRequired,
+  onLoggedIn: PropTypes.func,
 };
 
 export default SignUpPage;

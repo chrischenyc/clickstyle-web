@@ -1,32 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../modules/client/redux/modal';
 
-class ModalContainer extends Component {
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
+const ModalContainer = ({ closeModal: close, title, component }) => (
+  <Modal
+    size="small"
+    open
+    closeOnDimmerClick={false}
+    closeIcon
+    onClose={() => {
+      close();
+    }}
+  >
+    {title && <Modal.Header>{title}</Modal.Header>}
 
-  render() {
-    return (
-      <Modal
-        size="small"
-        open
-        closeOnDimmerClick={false}
-        closeIcon
-        onClose={() => {
-          this.props.closeModal();
-        }}
-      >
-        {this.props.title && <Modal.Header>{this.props.title}</Modal.Header>}
-
-        <Modal.Content>{this.props.component}</Modal.Content>
-      </Modal>
-    );
-  }
-}
+    <Modal.Content>{component}</Modal.Content>
+  </Modal>
+);
 
 ModalContainer.defaultProps = {
   title: null,

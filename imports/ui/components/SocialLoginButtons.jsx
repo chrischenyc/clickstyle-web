@@ -1,37 +1,42 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Button, Icon } from 'semantic-ui-react';
 
-const facebookLogin = () => {
-  Meteor.loginWithFacebook({
-    requestPermissions: ['email'],
-    loginStyle: 'popup',
-  });
-};
+import { userSignedIn } from '../../modules/client/redux/user';
 
-const googleLogin = () => {
-  Meteor.loginWithGoogle({
-    requestPermissions: ['email', 'profile'],
-    requestOfflineToken: true,
-    loginStyle: 'popup',
-  });
-};
-
-const SocialLoginButtons = ({ isSignUp, disabled }) => (
+const SocialLoginButtons = props => (
   <div>
     <Button
       fluid
       color="facebook"
       size="huge"
-      disabled={disabled}
+      disabled={props.disabled}
       style={{ marginBottom: '1rem' }}
       onClick={() => {
-        facebookLogin();
+        Meteor.loginWithFacebook(
+          {
+            requestPermissions: ['email'],
+            loginStyle: 'popup',
+          },
+          (error) => {
+            if (!error) {
+              props.userSignedIn(Meteor.user());
+              if (props.onLoggedIn) {
+                props.onLoggedIn();
+              }
+            } else {
+              /* eslint-disable no-console */
+              console.error(`Facebook sign in error: ${error}`);
+              /* eslint-enable no-console */
+            }
+          },
+        );
       }}
     >
       <Icon name="facebook f" />
-      {isSignUp ? 'Sign up with Facebook' : 'Log in with Facebook'}
+      {props.isSignUp ? 'Sign up with Facebook' : 'Log in with Facebook'}
     </Button>
 
     <Button
@@ -39,14 +44,32 @@ const SocialLoginButtons = ({ isSignUp, disabled }) => (
       color="grey"
       basic
       size="huge"
-      disabled={disabled}
+      disabled={props.disabled}
       style={{ marginBottom: '0.5rem' }}
       onClick={() => {
-        googleLogin();
+        Meteor.loginWithGoogle(
+          {
+            requestPermissions: ['email', 'profile'],
+            requestOfflineToken: true,
+            loginStyle: 'popup',
+          },
+          (error) => {
+            if (!error) {
+              props.userSignedIn(Meteor.user());
+              if (props.onLoggedIn) {
+                props.onLoggedIn();
+              }
+            } else {
+              /* eslint-disable no-console */
+              console.error(`Google sign in error: ${error}`);
+              /* eslint-enable no-console */
+            }
+          },
+        );
       }}
     >
       <Icon name="google" color="red" />
-      {isSignUp ? 'Sign up with Google' : 'Log in with Google'}
+      {props.isSignUp ? 'Sign up with Google' : 'Log in with Google'}
     </Button>
   </div>
 );
@@ -54,11 +77,14 @@ const SocialLoginButtons = ({ isSignUp, disabled }) => (
 SocialLoginButtons.defaultProps = {
   isSignUp: false,
   disabled: false,
+  onLoggedIn: null,
 };
 
 SocialLoginButtons.propTypes = {
   isSignUp: PropTypes.bool,
   disabled: PropTypes.bool,
+  onLoggedIn: PropTypes.func,
+  userSignedIn: PropTypes.func.isRequired,
 };
 
-export default SocialLoginButtons;
+export default connect(null, { userSignedIn })(SocialLoginButtons);

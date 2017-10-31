@@ -9,20 +9,27 @@ import { openModal } from '../../modules/client/redux/modal';
 
 const SecureLink = props => (
   <Link
-    {..._.omit(props, ['authenticated', 'dispatch', 'openModal'])}
+    {..._.omit(props, ['onLoggedIn', 'authenticated', 'dispatch', 'openModal'])}
     onClick={(e) => {
       if (!props.authenticated) {
         e.preventDefault();
-
-        // TODO: close modal after user sign in, push to props.to
-        props.openModal('/login', <Login />, 'Log in to continue');
+        props.openModal(
+          props.to,
+          <Login modal onLoggedIn={props.onLoggedIn} />,
+          'Log in to continue',
+        );
       }
     }}
   />
 );
 
+SecureLink.defaultProps = {
+  onLoggedIn: null,
+};
+
 SecureLink.propTypes = {
   to: PropTypes.string.isRequired,
+  onLoggedIn: PropTypes.func,
   authenticated: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
 };

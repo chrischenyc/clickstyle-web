@@ -13,13 +13,13 @@ import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 // web version of the login form, stateless component
 const LoginPage = ({
-  onSubmit, onChange, loading, errors, modal,
+  onSubmit, onChange, loading, errors, modal, onLoggedIn,
 }) => (
   <Grid textAlign="center" verticalAlign="middle" className="below-fixed-menu">
     <Grid.Row style={{ maxWidth: 450 }}>
       <Grid.Column>
         <Segment attached>
-          <SocialLoginButtons />
+          <SocialLoginButtons onLoggedIn={onLoggedIn} />
 
           <Divider horizontal>or</Divider>
 
@@ -61,7 +61,6 @@ const LoginPage = ({
             </ModalLink>
           ) : (
             <Link to="/forgot-password">
-              {' '}
               <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
             </Link>
           )}
@@ -70,7 +69,11 @@ const LoginPage = ({
         <Message attached="bottom" size="large">
           {"Don't have an account? "}
           {modal ? (
-            <ModalLink to="/signup" component={<SignUp modal />} title="Join us">
+            <ModalLink
+              to="/signup"
+              component={<SignUp modal onLoggedIn={onLoggedIn} />}
+              title="Join us"
+            >
               Sign up
             </ModalLink>
           ) : (
@@ -82,12 +85,17 @@ const LoginPage = ({
   </Grid>
 );
 
+LoginPage.defaultProps = {
+  onLoggedIn: null,
+};
+
 LoginPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   modal: PropTypes.bool.isRequired,
+  onLoggedIn: PropTypes.func,
 };
 
 export default LoginPage;
