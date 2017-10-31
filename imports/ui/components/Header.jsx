@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Container, Menu, Dropdown, Responsive } from 'semantic-ui-react';
 
+import { closeModal } from '../../modules/client/redux/modal';
 import ModalLink from '../components/ModalLink';
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
@@ -15,15 +16,15 @@ const StylistLandingPageLink = () => (
   </Menu.Item>
 );
 
-const Header = ({ authenticated, isStylist }) => (
+const Header = props => (
   <Responsive as={Menu} fixed="top" size="massive" inverted borderless stackable>
     <Container fluid style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
       <Menu.Item as={Link} to="/">
         {Meteor.settings.public.applicationName}
       </Menu.Item>
-      {authenticated ? (
+      {props.authenticated ? (
         <Menu.Menu position="right">
-          {!isStylist && <StylistLandingPageLink />}
+          {!props.isStylist && <StylistLandingPageLink />}
 
           <Dropdown text="Account" className="item">
             <Dropdown.Menu>
@@ -42,16 +43,35 @@ const Header = ({ authenticated, isStylist }) => (
         </Menu.Menu>
       ) : (
         <Menu.Menu position="right">
-          {!isStylist && <StylistLandingPageLink />}
+          {!props.isStylist && <StylistLandingPageLink />}
 
-          <Menu.Item as={ModalLink} to="/signup" component={<SignUp modal />} title="Join us">
+          <Menu.Item
+            as={ModalLink}
+            to="/signup"
+            component={
+              <SignUp
+                modal
+                onLoggedIn={() => {
+                  props.closeModal();
+                }}
+              />
+            }
+            title="Join us"
+          >
             Sign Up
           </Menu.Item>
 
           <Menu.Item
             as={ModalLink}
             to="/login"
-            component={<Login modal />}
+            component={
+              <Login
+                modal
+                onLoggedIn={() => {
+                  props.closeModal();
+                }}
+              />
+            }
             title="Log in to continue"
           >
             Log In
@@ -69,6 +89,7 @@ Header.defaultProps = {
 Header.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   isStylist: PropTypes.bool,
+  closeModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -76,4 +97,4 @@ const mapStateToProps = state => ({
   isStylist: state.user.isStylist,
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { closeModal })(Header);
