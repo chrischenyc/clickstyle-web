@@ -14,13 +14,14 @@ class StylistJoin extends Component {
     super(props);
 
     this.state = {
-      mobile: "",
-      address: "",
+      mobile: props.mobile || "",
+      address: props.address || "",
       services: [],
       file: null,
       url: "",
       errors: {},
-      submitting: false
+      submitting: false,
+      success: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -62,9 +63,13 @@ class StylistJoin extends Component {
     event.preventDefault();
 
     const { mobile, address, services, url } = this.state;
-    const selectedServices = services.filter(service => {
-      return service.checked;
-    });
+    const selectedServices = services
+      .filter(service => {
+        return service.checked;
+      })
+      .map(service => {
+        return service._id;
+      });
 
     const errors = validateStylistJoin(mobile, address, selectedServices, url);
 
@@ -72,6 +77,29 @@ class StylistJoin extends Component {
       this.setState({ errors });
     } else {
       this.setState({ submitting: true });
+
+      Meteor.call(
+        "stylists.join",
+        { mobile, address, services: selectedServices, url },
+        error => {
+          if (error) {
+            console.log(error);
+            this.setState({
+              submitting: false,
+              errors: {
+                message: error.reason
+              }
+            });
+          } else {
+            console.log("success");
+            this.setState({
+              submitting: false,
+              errors: {},
+              success: false
+            });
+          }
+        }
+      );
     }
   }
 
