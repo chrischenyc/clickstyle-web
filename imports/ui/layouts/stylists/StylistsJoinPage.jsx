@@ -32,8 +32,11 @@ class StylistsJoinPage extends Component {
       onServiceSelected,
       loading,
       errors,
+      mobile,
+      address,
       services,
-      file
+      file,
+      url
     } = this.props;
 
     return (
@@ -53,52 +56,36 @@ class StylistsJoinPage extends Component {
           error={!_.isEmpty(errors)}
           size="large"
         >
-          <Form.Group widths="equal">
-            <FormInputField
-              fluid
-              placeholder="First name"
-              label="First name"
-              name="firstName"
-              onChange={onChange}
-              errors={errors}
-            />
-
-            <FormInputField
-              fluid
-              placeholder="Last name"
-              label="Last name"
-              name="lastName"
-              onChange={onChange}
-              errors={errors}
-            />
-          </Form.Group>
-
           <FormInputField
-            label="Mobile number"
+            label={<Header>Mobile number</Header>}
             placeholder="Mobile number"
             name="mobile"
             onChange={onChange}
             errors={errors}
             note={`This is not on your public profile. We may ring you to confirm ...`}
+            value={mobile}
           />
 
           <Form.Field>
-            <label>Your address</label>
+            <label>
+              <Header>Your address</Header>
+            </label>
 
             <GeoSuggest
               placeholder="type to search address"
               country="au"
-              name="address.raw"
+              name="address"
               onChange={value => {
                 // convert to generic onChange param
-                onChange({ target: { name: "address.raw", value } });
+                onChange({ target: { name: "address", value } });
               }}
               onSuggestSelect={suggest => {
                 // force onChange as well
                 onChange({
-                  target: { name: "address.raw", value: suggest.label }
+                  target: { name: "address", value: suggest.label }
                 });
               }}
+              initialValue={address}
             />
 
             <p
@@ -175,9 +162,10 @@ class StylistsJoinPage extends Component {
             fluid
             placeholder="Please provide a link to view your work e.g Facebook, Instagram or your website."
             label={<Header>Reference</Header>}
-            name="reference"
+            name="url"
             onChange={onChange}
             errors={errors}
+            value={url}
           />
 
           <Form.Field>
@@ -217,8 +205,11 @@ StylistsJoinPage.propTypes = {
   onServiceSelected: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
+  mobile: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
   services: PropTypes.array.isRequired,
-  file: PropTypes.file
+  file: PropTypes.object,
+  url: PropTypes.string.isRequired
 };
 
 export default StylistsJoinPage;

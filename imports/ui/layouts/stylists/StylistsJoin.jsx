@@ -2,6 +2,8 @@ import { withTracker } from "meteor/react-meteor-data";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
+import { compose } from "redux";
+import { connect } from "react-redux";
 
 import Services from "../../../api/services/services";
 import StylistsJoinPage from "./StylistsJoinPage";
@@ -11,11 +13,12 @@ class StylistJoin extends Component {
     super(props);
 
     this.state = {
-      errors: {},
-      services: props.services.map(service => {
-        return { ...service, checked: false };
-      }),
-      file: null
+      mobile: "",
+      address: "",
+      services: [],
+      file: null,
+      url: "",
+      errors: {}
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,6 +28,8 @@ class StylistJoin extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
+      mobile: nextProps.mobile,
+      address: nextProps.address,
       services: nextProps.services.map(service => {
         return { ...service, checked: false };
       })
@@ -107,28 +112,43 @@ class StylistJoin extends Component {
         onServiceSelected={this.handleServiceSelected}
         loading={this.props.loading}
         errors={this.state.errors}
+        mobile={this.state.mobile}
+        address={this.state.address}
         services={this.state.services}
         file={this.state.file}
+        url={this.state.url}
       />
     );
   }
 }
 
 StylistJoin.defaultProps = {
-  services: [],
-  loading: true
+  loading: true,
+  services: []
 };
 
 StylistJoin.propTypes = {
-  services: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  mobile: PropTypes.string,
+  address: PropTypes.string,
+  services: PropTypes.array
 };
 
-export default withTracker(() => {
-  const handle = Meteor.subscribe("services");
-
+const mapStateToProps = state => {
   return {
-    services: Services.find().fetch(),
-    loading: !handle.ready()
+    mobile: state.profile.mobile,
+    address: state.profile.address && state.profile.address.raw
   };
-})(StylistJoin);
+};
+
+export default compose(
+  connect(mapStateToProps),
+  withTracker(() => {
+    const handle = Meteor.subscribe("services");
+
+    return {
+      loading: !handle.ready(),
+      services: Services.find().fetch()
+    };
+  })
+)(StylistJoin);
