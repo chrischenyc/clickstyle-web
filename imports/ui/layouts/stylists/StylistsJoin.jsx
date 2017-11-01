@@ -1,6 +1,9 @@
+import { withTracker } from "meteor/react-meteor-data";
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import _ from "lodash";
 
+import Services from "../../../api/services/services";
 import StylistsJoinPage from "./StylistsJoinPage";
 
 class StylistJoin extends Component {
@@ -10,15 +13,42 @@ class StylistJoin extends Component {
     this.state = {
       errors: {},
       loading: false,
-      disabled: false
+      disabled: false,
+      services: props.services.map(service => {
+        return { ...service, checked: false };
+      })
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleServiceSelected = this.handleServiceSelected.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      services: nextProps.services.map(service => {
+        return { ...service, checked: false };
+      })
+    });
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleServiceSelected(selectedService, selected) {
+    this.setState({
+      services: this.state.services.map(service => {
+        if (service === selectedService) {
+          return {
+            ...service,
+            checked: selected
+          };
+        } else {
+          return service;
+        }
+      })
+    });
   }
 
   handleSubmit(event) {
@@ -75,12 +105,28 @@ class StylistJoin extends Component {
       <StylistsJoinPage
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
+        onServiceSelected={this.handleServiceSelected}
         loading={this.state.loading}
         errors={this.state.errors}
         disabled={this.state.disabled}
+        services={this.state.services}
       />
     );
   }
 }
 
-export default StylistJoin;
+StylistJoin.defaultProps = {
+  services: []
+};
+
+StylistJoin.propTypes = {
+  services: PropTypes.array
+};
+
+export default withTracker(() => {
+  Meteor.subscribe("services");
+
+  return {
+    services: Services.find().fetch()
+  };
+})(StylistJoin);

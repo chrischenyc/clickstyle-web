@@ -106,16 +106,8 @@ if (Products.find().count() === 0) {
 if (Services.find().count() === 0) {
   const services = [
     "Make-Up",
-    "Barber",
     "Haircut",
     "Wedding",
-    "Weaves",
-    "Braids",
-    "Twists",
-    "Colour",
-    "Natural Hair",
-    "Straightening",
-    "Style",
     "Nails",
     "Eyebrow",
     "Eyelash",
