@@ -14,7 +14,8 @@ class StylistJoin extends Component {
       errors: {},
       services: props.services.map(service => {
         return { ...service, checked: false };
-      })
+      }),
+      file: null
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -107,6 +108,7 @@ class StylistJoin extends Component {
         loading={this.props.loading}
         errors={this.state.errors}
         services={this.state.services}
+        file={this.state.file}
       />
     );
   }

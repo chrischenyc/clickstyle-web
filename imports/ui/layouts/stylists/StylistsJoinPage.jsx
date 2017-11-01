@@ -6,7 +6,8 @@ import {
   Button,
   Form,
   Checkbox,
-  List
+  List,
+  Message
 } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import _ from "lodash";
@@ -30,7 +31,8 @@ class StylistsJoinPage extends Component {
       onServiceSelected,
       loading,
       errors,
-      services
+      services,
+      file
     } = this.props;
 
     return (
@@ -44,18 +46,22 @@ class StylistsJoinPage extends Component {
           eum neque.
         </p>
 
-        <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+        <Form
+          onSubmit={onSubmit}
+          loading={loading}
+          error={!_.isEmpty(errors)}
+          size="large"
+        >
           <Form.Field>
             <label>
               <Header>Services</Header>
             </label>
-            <List size="large">
+            <List>
               {services.map(service => {
                 return (
                   <List.Item key={service._id}>
                     <Checkbox
                       label={service.name}
-                      size="large"
                       checked={service.checked}
                       onChange={(event, data) => {
                         onServiceSelected(service, data.checked);
@@ -71,23 +77,38 @@ class StylistsJoinPage extends Component {
             <label>
               <Header>Qualifications</Header>
             </label>
-            <FileField
-              onFiles={files => {}}
-              uploadProps={{
-                accept: ".jpg,.jpeg,.png,.bmp,.pdf,.doc"
-              }}
-            >
-              <Button
-                color={Meteor.settings.public.semantic.color}
-                loading={false}
+
+            {file ? (
+              <Message
+                icon="file"
+                content={file.name}
+                onDismiss={() => {
+                  onChange({ target: { name: "file", value: null } });
+                }}
+              />
+            ) : (
+              <FileField
+                name="file"
+                onFiles={files => {
+                  const file = files[0];
+                  onChange({ target: { name: "file", value: file } });
+                }}
+                uploadProps={{
+                  accept: ".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                }}
               >
-                Upload file
-              </Button>
-              <span>
-                &nbsp;maximum file size:{" "}
-                {Meteor.settings.public.image.maxFileSize}MB
-              </span>
-            </FileField>
+                <Button
+                  color={Meteor.settings.public.semantic.color}
+                  loading={false}
+                >
+                  Upload file
+                </Button>
+                <span>
+                  &nbsp;maximum file size:{" "}
+                  {Meteor.settings.public.image.maxFileSize}MB
+                </span>
+              </FileField>
+            )}
           </Form.Field>
 
           <FormInputField
@@ -95,7 +116,6 @@ class StylistsJoinPage extends Component {
             placeholder="Please provide a link to view your work e.g Facebook, Instagram or your website."
             label={<Header>Reference</Header>}
             name="reference"
-            size="large"
             onChange={onChange}
             errors={errors}
           />
@@ -110,7 +130,7 @@ class StylistsJoinPage extends Component {
                   <Link to="/privacy">Privacy</Link>.
                 </label>
               }
-              checked={this.state.agreementChecked}
+              defaultChecked={this.state.agreementChecked}
               onChange={(event, data) => {
                 this.setState({ agreementChecked: data.checked });
               }}
@@ -119,8 +139,7 @@ class StylistsJoinPage extends Component {
 
           <Button
             color={Meteor.settings.public.semantic.color}
-            fluid
-            size="large"
+            size="huge"
             type="submit"
             disabled={!this.state.agreementChecked}
           >
@@ -138,7 +157,8 @@ StylistsJoinPage.propTypes = {
   onServiceSelected: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
-  services: PropTypes.array.isRequired
+  services: PropTypes.array.isRequired,
+  file: PropTypes.file
 };
 
 export default StylistsJoinPage;
