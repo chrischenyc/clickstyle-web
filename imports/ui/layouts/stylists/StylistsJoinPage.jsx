@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { UploadField as FileField } from "@navjobs/upload";
 import { Link } from "react-router-dom";
+import GeoSuggest from "react-geosuggest";
 
 import FormInputField from "../../components/FormInputField";
 
@@ -52,6 +53,65 @@ class StylistsJoinPage extends Component {
           error={!_.isEmpty(errors)}
           size="large"
         >
+          <Form.Group widths="equal">
+            <FormInputField
+              fluid
+              placeholder="First name"
+              label="First name"
+              name="firstName"
+              onChange={onChange}
+              errors={errors}
+            />
+
+            <FormInputField
+              fluid
+              placeholder="Last name"
+              label="Last name"
+              name="lastName"
+              onChange={onChange}
+              errors={errors}
+            />
+          </Form.Group>
+
+          <FormInputField
+            label="Mobile number"
+            placeholder="Mobile number"
+            name="mobile"
+            onChange={onChange}
+            errors={errors}
+            note={`This is not on your public profile. We may ring you to confirm ...`}
+          />
+
+          <Form.Field>
+            <label>Your address</label>
+
+            <GeoSuggest
+              placeholder="type to search address"
+              country="au"
+              name="address.raw"
+              onChange={value => {
+                // convert to generic onChange param
+                onChange({ target: { name: "address.raw", value } });
+              }}
+              onSuggestSelect={suggest => {
+                // force onChange as well
+                onChange({
+                  target: { name: "address.raw", value: suggest.label }
+                });
+              }}
+            />
+
+            <p
+              style={{
+                marginTop: "0.25rem",
+                marginBottom: "1rem",
+                color: "#aaa"
+              }}
+            >
+              {`This is not on your public profile. We need this info to confirm...`}
+            </p>
+          </Form.Field>
+
           <Form.Field>
             <label>
               <Header>Services</Header>
