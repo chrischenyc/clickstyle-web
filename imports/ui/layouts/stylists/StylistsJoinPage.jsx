@@ -1,26 +1,32 @@
-import { Meteor } from 'meteor/meteor';
-import React from 'react';
-import { Container, Header, Button, Form } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { Meteor } from "meteor/meteor";
+import React from "react";
+import { Container, Header, Button, Form } from "semantic-ui-react";
+import PropTypes from "prop-types";
+import _ from "lodash";
 
-import FormInputField from '../../components/FormInputField';
+import FormInputField from "../../components/FormInputField";
 
 const StylistsJoinPage = ({
-  onSubmit, onChange, disabled, loading, errors,
+  onSubmit,
+  onChange,
+  disabled,
+  loading,
+  errors
 }) => (
-  <Container text style={{ padding: '8rem 0' }}>
+  <Container text style={{ padding: "8rem 0" }}>
     <Header as="h1">Tell us something about you</Header>
 
     <p>
-      We need a bit extra information about you and the services you can provide... ducimus
-      exercitationem ratione occaecati optio maxime non. Non perferendis praesentium error et. Illum
-      molestias quibusdam cumque eum neque. Voluptas corporis fugiat tempora vitae animi dicta
-      velit. Libero dignissimos dolore consequatur in non nesciunt laborum. Laudantium modi ut optio
-      pariatur necessitatibus sed ullam itaque deserunt. Molestiae saepe accusantium ratione ut sunt
-      doloribus non libero. Velit explicabo eligendi possimus. Quia ab quibusdam. Nobis ducimus
-      dolorem culpa deleniti commodi velit voluptates. Est quia voluptates optio impedit. Eum ut est
-      ut eligendi sed quis. Sapiente dolor eius eos rem magni.
+      We need a bit extra information about you and the services you can
+      provide... ducimus exercitationem ratione occaecati optio maxime non. Non
+      perferendis praesentium error et. Illum molestias quibusdam cumque eum
+      neque. Voluptas corporis fugiat tempora vitae animi dicta velit. Libero
+      dignissimos dolore consequatur in non nesciunt laborum. Laudantium modi ut
+      optio pariatur necessitatibus sed ullam itaque deserunt. Molestiae saepe
+      accusantium ratione ut sunt doloribus non libero. Velit explicabo eligendi
+      possimus. Quia ab quibusdam. Nobis ducimus dolorem culpa deleniti commodi
+      velit voluptates. Est quia voluptates optio impedit. Eum ut est ut
+      eligendi sed quis. Sapiente dolor eius eos rem magni.
     </p>
 
     <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
@@ -60,7 +66,7 @@ StylistsJoinPage.propTypes = {
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 export default StylistsJoinPage;

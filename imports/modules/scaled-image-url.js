@@ -1,21 +1,21 @@
 const scaledImageURL = (originalURL, size) => {
-  const lastComponent = originalURL.split('/').pop();
+  const lastComponent = originalURL.split("/").pop();
   let newLastComponent = lastComponent;
 
   switch (size) {
-    case 'tiny':
+    case "tiny":
       newLastComponent = `c_limit,w_160/${lastComponent}`;
       break;
 
-    case 'small':
+    case "small":
       newLastComponent = `c_limit,w_320/${lastComponent}`;
       break;
 
-    case 'medium':
+    case "medium":
       newLastComponent = `c_limit,w_640/${lastComponent}`;
       break;
 
-    case 'large':
+    case "large":
       newLastComponent = `c_limit,w_1280/${lastComponent}`;
       break;
 

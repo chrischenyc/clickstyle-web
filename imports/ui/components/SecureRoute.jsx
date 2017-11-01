@@ -1,7 +1,7 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 // HOC
 // As the name implies, routes created using the <AuthRoute /> component are only
@@ -19,10 +19,10 @@ const SecureRoute = ({ authenticated, component, ...rest }) => {
 
 SecureRoute.propTypes = {
   authenticated: PropTypes.bool.isRequired,
-  component: PropTypes.func.isRequired,
+  component: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  authenticated: state.user.authenticated,
+  authenticated: state.user.authenticated
 });
 export default connect(mapStateToProps)(SecureRoute);

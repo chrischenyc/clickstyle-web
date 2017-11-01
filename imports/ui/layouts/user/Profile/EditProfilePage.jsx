@@ -1,6 +1,6 @@
-import { Meteor } from 'meteor/meteor';
-import React from 'react';
-import PropTypes from 'prop-types';
+import { Meteor } from "meteor/meteor";
+import React from "react";
+import PropTypes from "prop-types";
 import {
   Container,
   Button,
@@ -9,14 +9,14 @@ import {
   TextArea,
   Label,
   Icon,
-  Divider,
-} from 'semantic-ui-react';
-import _ from 'lodash';
-import GeoSuggest from 'react-geosuggest';
+  Divider
+} from "semantic-ui-react";
+import _ from "lodash";
+import GeoSuggest from "react-geosuggest";
 
-import '../../../components/GeoSuggest.css';
-import FormInputField from '../../../components/FormInputField';
-import EditPhotoPage from './EditPhotoPage';
+import "../../../components/GeoSuggest.css";
+import FormInputField from "../../../components/FormInputField";
+import EditPhotoPage from "./EditPhotoPage";
 
 // web version of the login form, stateless component
 const EditProfilePage = ({
@@ -37,7 +37,7 @@ const EditProfilePage = ({
   onDeselectProduct,
   saving,
   pristine,
-  errors,
+  errors
 }) => (
   <Container className="below-fixed-menu">
     <Form
@@ -65,7 +65,7 @@ const EditProfilePage = ({
         name="name.first"
         onChange={onChange}
         errors={errors}
-        value={_.has(profile, 'name.first') ? profile.name.first : ''}
+        value={_.has(profile, "name.first") ? profile.name.first : ""}
       />
 
       <FormInputField
@@ -74,9 +74,10 @@ const EditProfilePage = ({
         name="name.last"
         onChange={onChange}
         errors={errors}
-        value={_.has(profile, 'name.last') ? profile.name.last : ''}
+        value={_.has(profile, "name.last") ? profile.name.last : ""}
         note={`This is not on your public profile. This is only shared with another ${Meteor
-          .settings.public.applicationName} user once you two have a confirmed booking .`}
+          .settings.public
+          .applicationName} user once you two have a confirmed booking .`}
       />
 
       <FormInputField
@@ -85,9 +86,10 @@ const EditProfilePage = ({
         name="mobile"
         onChange={onChange}
         errors={errors}
-        value={_.has(profile, 'mobile') ? profile.mobile : ''}
+        value={_.has(profile, "mobile") ? profile.mobile : ""}
         note={`This is not on your public profile. This is only shared with another ${Meteor
-          .settings.public.applicationName} user once you two have a confirmed booking .`}
+          .settings.public
+          .applicationName} user once you two have a confirmed booking .`}
       />
 
       <Form.Field>
@@ -97,21 +99,26 @@ const EditProfilePage = ({
           placeholder="type to search address, suburb, or postcode"
           country="au"
           name="address.raw"
-          initialValue={_.has(profile, 'address.raw') ? profile.address.raw : ''}
-          onChange={(value) => {
+          initialValue={
+            _.has(profile, "address.raw") ? profile.address.raw : ""
+          }
+          onChange={value => {
             // convert to generic onChange param
-            onChange({ target: { name: 'address.raw', value } });
+            onChange({ target: { name: "address.raw", value } });
           }}
-          onSuggestSelect={(suggest) => {
+          onSuggestSelect={suggest => {
             // force onChange as well
-            onChange({ target: { name: 'address.raw', value: suggest.label } });
+            onChange({ target: { name: "address.raw", value: suggest.label } });
             onAddressSuggest(suggest);
           }}
         />
 
-        <p style={{ marginTop: '0.25rem', marginBottom: '1rem', color: '#aaa' }}>
-          {`This is not on your public profile. This is only shared with another ${Meteor.settings
-            .public.applicationName} user once you two have a confirmed booking .`}
+        <p
+          style={{ marginTop: "0.25rem", marginBottom: "1rem", color: "#aaa" }}
+        >
+          {`This is not on your public profile. This is only shared with another ${Meteor
+            .settings.public
+            .applicationName} user once you two have a confirmed booking .`}
         </p>
       </Form.Field>
 
@@ -122,7 +129,7 @@ const EditProfilePage = ({
         autoHeight
         onChange={onChange}
         errors={errors}
-        value={_.has(profile, 'about') ? profile.about : ''}
+        value={_.has(profile, "about") ? profile.about : ""}
         note="Help other people get to know you. Tell them about the things you like..."
       />
 
@@ -134,12 +141,12 @@ const EditProfilePage = ({
         <input
           placeholder="start searching by typing e.g.: l'oreal..."
           name="productsSearch"
-          style={{ marginBottom: '0.5rem' }}
+          style={{ marginBottom: "0.5rem" }}
           autoComplete="off"
           value={productsSearch}
           onChange={onChange}
-          onKeyPress={(event) => {
-            if (event.key === 'Enter') {
+          onKeyPress={event => {
+            if (event.key === "Enter") {
               event.preventDefault();
               onSelectProduct({ name: event.target.value });
             }
@@ -148,7 +155,7 @@ const EditProfilePage = ({
 
         {/* matched tags for selection */}
         {productsMatched && (
-          <div style={{ marginBottom: '0.5rem' }}>
+          <div style={{ marginBottom: "0.5rem" }}>
             {productsMatched.map(product => (
               <Label
                 size="large"
@@ -156,7 +163,7 @@ const EditProfilePage = ({
                 key={product.name}
                 color={Meteor.settings.public.semantic.color}
                 basic
-                style={{ marginBottom: '0.25rem' }}
+                style={{ marginBottom: "0.25rem" }}
                 onClick={() => {
                   onSelectProduct(product);
                 }}
@@ -170,13 +177,13 @@ const EditProfilePage = ({
 
         {/* selected tags */}
         {profile.products && (
-          <div style={{ marginBottom: '0.5rem' }}>
+          <div style={{ marginBottom: "0.5rem" }}>
             {profile.products.map(product => (
               <Label
                 size="large"
                 key={product.name}
                 color={Meteor.settings.public.semantic.color}
-                style={{ marginBottom: '0.25rem' }}
+                style={{ marginBottom: "0.25rem" }}
               >
                 {product.name}
                 <Icon
@@ -224,7 +231,7 @@ EditProfilePage.propTypes = {
   onDeselectProduct: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 export default EditProfilePage;

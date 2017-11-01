@@ -1,17 +1,27 @@
-import { Meteor } from 'meteor/meteor';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Menu, Image } from 'semantic-ui-react';
+import { Meteor } from "meteor/meteor";
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { Menu, Image } from "semantic-ui-react";
 
-import ScaledImageURL from '../../modules/scaled-image-url';
+import ScaledImageURL from "../../modules/scaled-image-url";
 
 const SideMenu = ({ profile }) => (
-  <Menu secondary vertical color={Meteor.settings.public.semantic.color} size="massive" stackable>
+  <Menu
+    secondary
+    vertical
+    color={Meteor.settings.public.semantic.color}
+    size="massive"
+    stackable
+  >
     {profile.photoURL && (
       <Menu.Item>
-        <Image src={ScaledImageURL(profile.photoURL, 'tiny')} size="tiny" shape="circular" />
+        <Image
+          src={ScaledImageURL(profile.photoURL, "tiny")}
+          size="tiny"
+          shape="circular"
+        />
       </Menu.Item>
     )}
 
@@ -62,11 +72,11 @@ const SideMenu = ({ profile }) => (
 );
 
 SideMenu.propTypes = {
-  profile: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
+  profile: state.profile
 });
 
 export default connect(mapStateToProps)(SideMenu);

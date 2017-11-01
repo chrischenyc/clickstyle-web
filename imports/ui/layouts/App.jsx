@@ -1,43 +1,43 @@
-import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Meteor } from "meteor/meteor";
+import { Tracker } from "meteor/tracker";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
 
-import Profiles from '../../api/profiles/profiles';
-import { userSignedIn, userSignedOut } from '../../modules/client/redux/user';
-import { fetchProfile } from '../../modules/client/redux/profile';
+import Profiles from "../../api/profiles/profiles";
+import { userSignedIn, userSignedOut } from "../../modules/client/redux/user";
+import { fetchProfile } from "../../modules/client/redux/profile";
 
-import SecureRoute from '../components/SecureRoute';
-import PublicRoute from '../components/PublicRoute';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import SideMenuContainer from '../components/SideMenuContainer';
-import ModalContainer from '../components/ModalContainer';
+import SecureRoute from "../components/SecureRoute";
+import PublicRoute from "../components/PublicRoute";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import SideMenuContainer from "../components/SideMenuContainer";
+import ModalContainer from "../components/ModalContainer";
 
-import HomePage from '../layouts/home/HomePage';
-import NotFoundPage from '../layouts/NotFoundPage';
+import HomePage from "../layouts/home/HomePage";
+import NotFoundPage from "../layouts/NotFoundPage";
 
-import Login from '../layouts/user/Login/Login';
-import SignUp from '../layouts/user/SignUp/SignUp';
-import VerifyEmailPage from '../layouts/user/VerifyEmailPage';
-import ForgotPassword from '../layouts/user/ForgotPassword/ForgotPassword';
-import ResetPassword from '../layouts/user/ResetPassword/ResetPassword';
-import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
+import Login from "../layouts/user/Login/Login";
+import SignUp from "../layouts/user/SignUp/SignUp";
+import VerifyEmailPage from "../layouts/user/VerifyEmailPage";
+import ForgotPassword from "../layouts/user/ForgotPassword/ForgotPassword";
+import ResetPassword from "../layouts/user/ResetPassword/ResetPassword";
+import ChangePassword from "../layouts/user/ChangePassword/ChangePassword";
 
-import DashboardPage from '../layouts/user/DashboardPage';
-import EditProfile from '../layouts/user/Profile/EditProfile';
-import SettingsPage from '../layouts/user/SettingsPage';
-import InboxPage from '../layouts/user/InboxPage';
+import DashboardPage from "../layouts/user/DashboardPage";
+import EditProfile from "../layouts/user/Profile/EditProfile";
+import SettingsPage from "../layouts/user/SettingsPage";
+import InboxPage from "../layouts/user/InboxPage";
 
-import BookingsPage from '../layouts/bookings/BookingsPage';
-import ViewBooking from '../layouts/bookings/ViewBooking';
-import NewBooking from '../layouts/bookings/NewBooking';
-import EditBooking from '../layouts/bookings/EditBooking';
+import BookingsPage from "../layouts/bookings/BookingsPage";
+import ViewBooking from "../layouts/bookings/ViewBooking";
+import NewBooking from "../layouts/bookings/NewBooking";
+import EditBooking from "../layouts/bookings/EditBooking";
 
-import StylistsHomePage from '../layouts/stylists/StylistsHomePage';
-import StylistsJoin from '../layouts/stylists/StylistsJoin';
+import StylistsHomePage from "../layouts/stylists/StylistsHomePage";
+import StylistsJoin from "../layouts/stylists/StylistsJoin";
 
 class App extends Component {
   // after web App is refreshed, try to fetch Meteor user data then update redux states
@@ -54,7 +54,7 @@ class App extends Component {
       }
 
       // get user profile
-      const handle = Meteor.subscribe('profiles.owner');
+      const handle = Meteor.subscribe("profiles.owner");
       const fetching = !handle.ready();
       const profile = Profiles.findOne({});
       this.props.fetchProfile(fetching, profile);
@@ -131,7 +131,11 @@ class App extends Component {
               )}
             />
             <Route exact path="/bookings/:_id" component={ViewBooking} />
-            <SecureRoute exact path="/bookings/:_id/edit" component={EditBooking} />
+            <SecureRoute
+              exact
+              path="/bookings/:_id/edit"
+              component={EditBooking}
+            />
 
             <Route exact path="/stylists" component={StylistsHomePage} />
             <SecureRoute path="/stylists/join" component={StylistsJoin} />
@@ -139,7 +143,9 @@ class App extends Component {
             <Route component={NotFoundPage} />
           </Switch>
 
-          {this.props.modalOpen && <Route to="/modal" component={ModalContainer} />}
+          {this.props.modalOpen && (
+            <Route to="/modal" component={ModalContainer} />
+          )}
 
           <Footer />
         </div>
@@ -152,15 +158,15 @@ App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
   fetchProfile: PropTypes.func.isRequired,
-  modalOpen: PropTypes.bool.isRequired,
+  modalOpen: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  modalOpen: state.modal.open,
+  modalOpen: state.modal.open
 });
 
 export default connect(mapStateToProps, {
   userSignedIn,
   userSignedOut,
-  fetchProfile,
+  fetchProfile
 })(App);

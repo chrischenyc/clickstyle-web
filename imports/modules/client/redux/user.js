@@ -1,25 +1,25 @@
 // --------- actions ----------
 export function userSignedIn(meteorUser) {
   return {
-    type: 'USER_SIGNED_IN',
-    meteorUser,
+    type: "USER_SIGNED_IN",
+    meteorUser
   };
 }
 
 export function userSignedOut() {
   return {
-    type: 'USER_SIGNED_OUT',
+    type: "USER_SIGNED_OUT"
   };
 }
 
 // --------- reducer ----------
 const defaultState = {
-  authenticated: localStorage.getItem('Meteor.userId') !== null,
+  authenticated: localStorage.getItem("Meteor.userId") !== null
 };
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
-    case 'USER_SIGNED_IN': {
+    case "USER_SIGNED_IN": {
       const { meteorUser } = action;
 
       return {
@@ -31,13 +31,16 @@ const reducer = (state = defaultState, action) => {
           meteorUser.emails.length > 0 &&
           meteorUser.emails[0].verified,
         roles: meteorUser && meteorUser.roles,
-        isStylist: meteorUser && meteorUser.roles && meteorUser.roles.indexOf('stylist') > -1,
+        isStylist:
+          meteorUser &&
+          meteorUser.roles &&
+          meteorUser.roles.indexOf("stylist") > -1
       };
     }
 
-    case 'USER_SIGNED_OUT': {
+    case "USER_SIGNED_OUT": {
       return {
-        authenticated: false,
+        authenticated: false
       };
     }
 

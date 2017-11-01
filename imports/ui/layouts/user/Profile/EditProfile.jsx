@@ -1,33 +1,39 @@
-import { Meteor } from 'meteor/meteor';
-import { Slingshot } from 'meteor/edgee:slingshot';
-import { withTracker } from 'meteor/react-meteor-data';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import _ from 'lodash';
+import { Meteor } from "meteor/meteor";
+import { Slingshot } from "meteor/edgee:slingshot";
+import { withTracker } from "meteor/react-meteor-data";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import _ from "lodash";
 
-import Products from '../../../../api/products/products';
-import { validateEditProfile } from '../../../../modules/validate';
-import GeoSuggestToAddress from '../../../../modules/geo-suggest-to-address';
-import EditProfilePage from './EditProfilePage';
+import Products from "../../../../api/products/products";
+import { validateEditProfile } from "../../../../modules/validate";
+import GeoSuggestToAddress from "../../../../modules/geo-suggest-to-address";
+import EditProfilePage from "./EditProfilePage";
 
 const availableProducts = (products, selectedProducts) => {
   if (!selectedProducts || selectedProducts.length === 0) {
     return products;
   }
 
-  const selectedNames = selectedProducts.map(selectedProduct => selectedProduct.name.toLowerCase());
+  const selectedNames = selectedProducts.map(selectedProduct =>
+    selectedProduct.name.toLowerCase()
+  );
 
-  return products.filter(product => selectedNames.indexOf(product.name.toLowerCase()) === -1);
+  return products.filter(
+    product => selectedNames.indexOf(product.name.toLowerCase()) === -1
+  );
 };
 
 const searchProducts = (products, keyword) => {
-  if (!keyword || keyword === '' || !products) {
+  if (!keyword || keyword === "" || !products) {
     return [];
   }
 
-  return products.filter(product => product.name.toLowerCase().includes(keyword.toLowerCase()));
+  return products.filter(product =>
+    product.name.toLowerCase().includes(keyword.toLowerCase())
+  );
 };
 
 // platform-independent stateful container component
@@ -37,16 +43,19 @@ class EditProfile extends Component {
     super(props);
 
     this.state = {
-      photoError: '',
+      photoError: "",
       photoUploading: false,
       photoPristine: true,
       profile: _.cloneDeep(props.profile),
-      productsAvailable: availableProducts(props.products, props.profile.products),
+      productsAvailable: availableProducts(
+        props.products,
+        props.profile.products
+      ),
       productsMatched: [],
-      productsSearch: '',
+      productsSearch: "",
       errors: {},
       saving: false,
-      pristine: true,
+      pristine: true
     };
 
     this.handlePhotoSelected = this.handlePhotoSelected.bind(this);
@@ -64,7 +73,10 @@ class EditProfile extends Component {
     this.setState({
       pristine: true,
       profile: _.cloneDeep(nextProps.profile),
-      productsAvailable: availableProducts(nextProps.products, nextProps.profile.products),
+      productsAvailable: availableProducts(
+        nextProps.products,
+        nextProps.profile.products
+      )
     });
   }
 
@@ -73,7 +85,7 @@ class EditProfile extends Component {
   }
 
   handlePhotoRemove() {
-    Meteor.call('profiles.photo.remove', (callError) => {
+    Meteor.call("profiles.photo.remove", callError => {
       if (callError) {
         this.setState({ photoError: callError.reason });
       }
@@ -81,9 +93,11 @@ class EditProfile extends Component {
   }
 
   handlePhotoUpload(file) {
-    this.setState({ photoError: '' });
+    this.setState({ photoError: "" });
 
-    const upload = new Slingshot.Upload(Meteor.settings.public.SlingshotCloudinaryImage);
+    const upload = new Slingshot.Upload(
+      Meteor.settings.public.SlingshotCloudinaryImage
+    );
     const validateError = upload.validate(file);
 
     if (validateError) {
@@ -93,11 +107,14 @@ class EditProfile extends Component {
 
       upload.send(file, (uploadError, downloadUrl) => {
         if (uploadError) {
-          this.setState({ photoUploading: false, photoError: uploadError.reason });
+          this.setState({
+            photoUploading: false,
+            photoError: uploadError.reason
+          });
         } else {
           // update user profile.photo.original
-          Meteor.call('profiles.photo.add', downloadUrl, (callError) => {
-            this.setState({ photoUploading: false, photoError: '' });
+          Meteor.call("profiles.photo.add", downloadUrl, callError => {
+            this.setState({ photoUploading: false, photoError: "" });
 
             if (callError) {
               this.setState({ photoError: callError.reason });
@@ -111,22 +128,28 @@ class EditProfile extends Component {
   }
 
   handleChange(event) {
-    if (event.target.name === 'productsSearch') {
+    if (event.target.name === "productsSearch") {
       this.setState({
         productsSearch: event.target.value,
-        productsMatched: searchProducts(this.state.productsAvailable, event.target.value),
+        productsMatched: searchProducts(
+          this.state.productsAvailable,
+          event.target.value
+        )
       });
     } else {
       let newProfile = _.cloneDeep(this.state.profile);
       newProfile = _.set(newProfile, event.target.name, event.target.value);
 
-      if (event.target.name === 'address.raw' && _.isEmpty(event.target.value)) {
+      if (
+        event.target.name === "address.raw" &&
+        _.isEmpty(event.target.value)
+      ) {
         newProfile.address = {};
       }
 
       this.setState({
         profile: newProfile,
-        pristine: _.isEqual(newProfile, this.props.profile),
+        pristine: _.isEqual(newProfile, this.props.profile)
       });
     }
   }
@@ -142,7 +165,7 @@ class EditProfile extends Component {
     } else {
       this.setState({ saving: true });
 
-      Meteor.call('profiles.update', this.state.profile, (error) => {
+      Meteor.call("profiles.update", this.state.profile, error => {
         this.setState({ saving: false, errors: {}, pristine: true });
 
         if (error) {
@@ -156,12 +179,15 @@ class EditProfile extends Component {
     const address = GeoSuggestToAddress(suggest);
 
     this.setState({
-      profile: { ...this.state.profile, address },
+      profile: { ...this.state.profile, address }
     });
   }
 
   handleSelectProduct(selectedProduct) {
-    if (selectedProduct.name === undefined || selectedProduct.name.length === 0) {
+    if (
+      selectedProduct.name === undefined ||
+      selectedProduct.name.length === 0
+    ) {
       return;
     }
 
@@ -170,7 +196,10 @@ class EditProfile extends Component {
     let updatedProducts = [selectedProduct];
 
     if (currentProducts) {
-      const matchedProducts = currentProducts.filter(product => product.name.toLowerCase() === selectedProduct.name.toLowerCase());
+      const matchedProducts = currentProducts.filter(
+        product =>
+          product.name.toLowerCase() === selectedProduct.name.toLowerCase()
+      );
       if (matchedProducts.length === 0) {
         updatedProducts = [...currentProducts, selectedProduct];
       } else {
@@ -180,27 +209,36 @@ class EditProfile extends Component {
 
     const newProfile = {
       ...this.state.profile,
-      products: updatedProducts,
+      products: updatedProducts
     };
 
     this.setState({
       profile: newProfile,
-      productsSearch: '',
+      productsSearch: "",
       productsMatched: [],
       pristine: _.isEqual(newProfile, this.props.profile),
-      productsAvailable: availableProducts(this.props.products, newProfile.products),
+      productsAvailable: availableProducts(
+        this.props.products,
+        newProfile.products
+      )
     });
   }
 
   handleDeselectProduct(deselectedProduct) {
     const newProfile = {
       ...this.state.profile,
-      products: this.state.profile.products.filter(product => product.name.toLowerCase() !== deselectedProduct.name.toLowerCase()),
+      products: this.state.profile.products.filter(
+        product =>
+          product.name.toLowerCase() !== deselectedProduct.name.toLowerCase()
+      )
     };
     this.setState({
       profile: newProfile,
       pristine: _.isEqual(newProfile, this.props.profile),
-      productsAvailable: availableProducts(this.props.products, newProfile.products),
+      productsAvailable: availableProducts(
+        this.props.products,
+        newProfile.products
+      )
     });
   }
 
@@ -231,23 +269,23 @@ class EditProfile extends Component {
 }
 
 EditProfile.defaultProps = {
-  products: [],
+  products: []
 };
 
 EditProfile.propTypes = {
   profile: PropTypes.object.isRequired,
-  products: PropTypes.array,
+  products: PropTypes.array
 };
 
 export default compose(
   connect(state => ({
-    profile: state.profile,
+    profile: state.profile
   })),
   withTracker(() => {
-    Meteor.subscribe('products');
+    Meteor.subscribe("products");
 
     return {
-      products: Products.find().fetch(),
+      products: Products.find().fetch()
     };
-  }),
+  })
 )(EditProfile);

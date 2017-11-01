@@ -1,14 +1,14 @@
-import { Meteor } from 'meteor/meteor';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Container, Menu, Dropdown, Responsive } from 'semantic-ui-react';
+import { Meteor } from "meteor/meteor";
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { Container, Menu, Dropdown, Responsive } from "semantic-ui-react";
 
-import { closeModal } from '../../modules/client/redux/modal';
-import ModalLink from '../components/ModalLink';
-import Login from '../layouts/user/Login/Login';
-import SignUp from '../layouts/user/SignUp/SignUp';
+import { closeModal } from "../../modules/client/redux/modal";
+import ModalLink from "../components/ModalLink";
+import Login from "../layouts/user/Login/Login";
+import SignUp from "../layouts/user/SignUp/SignUp";
 
 const StylistLandingPageLink = () => (
   <Menu.Item as={Link} to="/stylists">
@@ -17,8 +17,15 @@ const StylistLandingPageLink = () => (
 );
 
 const Header = props => (
-  <Responsive as={Menu} fixed="top" size="massive" inverted borderless stackable>
-    <Container fluid style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
+  <Responsive
+    as={Menu}
+    fixed="top"
+    size="massive"
+    inverted
+    borderless
+    stackable
+  >
+    <Container fluid style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
       <Menu.Item as={Link} to="/">
         {Meteor.settings.public.applicationName}
       </Menu.Item>
@@ -83,18 +90,18 @@ const Header = props => (
 );
 
 Header.defaultProps = {
-  isStylist: false,
+  isStylist: false
 };
 
 Header.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   isStylist: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
-  isStylist: state.user.isStylist,
+  isStylist: state.user.isStylist
 });
 
 export default connect(mapStateToProps, { closeModal })(Header);

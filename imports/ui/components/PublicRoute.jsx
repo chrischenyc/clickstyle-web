@@ -1,7 +1,7 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 // HOC
 // The <PublicRoute /> component is designed as a wrapper component around pages
@@ -21,10 +21,10 @@ const PublicRoute = ({ authenticated, component, ...rest }) => {
 
 PublicRoute.propTypes = {
   authenticated: PropTypes.bool.isRequired,
-  component: PropTypes.func.isRequired,
+  component: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  authenticated: state.user.authenticated,
+  authenticated: state.user.authenticated
 });
 export default connect(mapStateToProps)(PublicRoute);

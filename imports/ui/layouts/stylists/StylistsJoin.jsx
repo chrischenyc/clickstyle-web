@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
+import React, { Component } from "react";
+import _ from "lodash";
 
-import StylistsJoinPage from './StylistsJoinPage';
+import StylistsJoinPage from "./StylistsJoinPage";
 
 class StylistJoin extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class StylistJoin extends Component {
     this.state = {
       errors: {},
       loading: false,
-      disabled: false,
+      disabled: false
     };
 
     this.handleChange = this.handleChange.bind(this);

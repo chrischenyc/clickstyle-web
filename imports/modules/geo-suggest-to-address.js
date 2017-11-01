@@ -1,17 +1,21 @@
-const parseGmaps = (gmaps) => {
+const parseGmaps = gmaps => {
   const components = {};
 
   const { address_components: addressComponents } = gmaps;
   if (addressComponents !== undefined) {
-    addressComponents.forEach((addressComponent) => {
-      const { long_name: longName, short_name: shortName, types } = addressComponent;
+    addressComponents.forEach(addressComponent => {
+      const {
+        long_name: longName,
+        short_name: shortName,
+        types
+      } = addressComponent;
 
-      types.forEach((type) => {
-        if (type === 'postal_code') {
+      types.forEach(type => {
+        if (type === "postal_code") {
           components.postcode = longName;
-        } else if (type === 'administrative_area_level_1') {
+        } else if (type === "administrative_area_level_1") {
           components.state = shortName;
-        } else if (type === 'locality') {
+        } else if (type === "locality") {
           components.suburb = longName;
         }
       });
@@ -23,7 +27,7 @@ const parseGmaps = (gmaps) => {
 
 const GeoSuggestToAddress = suggest => ({
   raw: suggest.label,
-  ...parseGmaps(suggest.gmaps),
+  ...parseGmaps(suggest.gmaps)
 });
 
 export default GeoSuggestToAddress;

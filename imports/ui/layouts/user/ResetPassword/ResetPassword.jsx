@@ -1,10 +1,10 @@
-import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
-import React, { Component } from 'react';
-import _ from 'lodash';
+import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
+import React, { Component } from "react";
+import _ from "lodash";
 
-import { validateResetPassword } from '../../../../modules/validate';
-import ResetPasswordPage from './ResetPasswordPage';
+import { validateResetPassword } from "../../../../modules/validate";
+import ResetPasswordPage from "./ResetPasswordPage";
 
 // platform-independent stateful container component
 // to handle Login logic
@@ -13,12 +13,12 @@ class ResetPassword extends Component {
     super(props);
 
     this.state = {
-      password: '',
-      confirm: '',
+      password: "",
+      confirm: "",
       errors: {},
       loading: false,
       success: false,
-      redirect: false,
+      redirect: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -34,39 +34,46 @@ class ResetPassword extends Component {
       errors: {},
       loading: false,
       success: false,
-      redirect: false,
+      redirect: false
     });
     event.preventDefault();
 
-    const errors = validateResetPassword(this.state.password, this.state.confirm);
+    const errors = validateResetPassword(
+      this.state.password,
+      this.state.confirm
+    );
 
     if (!_.isEmpty(errors)) {
       this.setState({ errors });
     } else {
       this.setState({ loading: true });
 
-      Accounts.resetPassword(this.props.match.params.token, this.state.password, (error) => {
-        if (error) {
-          this.setState({
-            loading: false,
-            errors: {
-              message: error.reason,
-            },
-          });
-        } else {
-          this.setState({
-            loading: false,
-            errors: {},
-            success: true,
-          });
+      Accounts.resetPassword(
+        this.props.match.params.token,
+        this.state.password,
+        error => {
+          if (error) {
+            this.setState({
+              loading: false,
+              errors: {
+                message: error.reason
+              }
+            });
+          } else {
+            this.setState({
+              loading: false,
+              errors: {},
+              success: true
+            });
 
-          Meteor.call('users.sendPasswordChangedEmail');
+            Meteor.call("users.sendPasswordChangedEmail");
 
-          setTimeout(() => {
-            this.setState({ redirect: true });
-          }, 1500);
+            setTimeout(() => {
+              this.setState({ redirect: true });
+            }, 1500);
+          }
         }
-      });
+      );
     }
   }
 

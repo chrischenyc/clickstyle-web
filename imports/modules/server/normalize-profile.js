@@ -1,7 +1,7 @@
 const parsePasswordData = (options, user) => ({
   owner: user._id,
   email: user.emails && user.emails[0].address,
-  name: options.profile.name,
+  name: options.profile.name
 });
 
 const parseGoogleData = (options, user) => ({
@@ -9,12 +9,12 @@ const parseGoogleData = (options, user) => ({
   email: user.services.google.email,
   name: {
     first: user.services.google.given_name,
-    last: user.services.google.family_name,
+    last: user.services.google.family_name
   },
   photo: {
-    origin: user.services.google.picture,
+    origin: user.services.google.picture
   },
-  gender: user.services.google.gender,
+  gender: user.services.google.gender
 });
 
 const parseFacebookData = (options, user) => ({
@@ -22,9 +22,9 @@ const parseFacebookData = (options, user) => ({
   email: user.services.facebook.email,
   name: {
     first: user.services.facebook.first_name,
-    last: user.services.facebook.last_name,
+    last: user.services.facebook.last_name
   },
-  gender: user.services.facebook.gender,
+  gender: user.services.facebook.gender
 });
 
 const normalizeProfile = (options, user) => {

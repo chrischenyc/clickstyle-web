@@ -1,9 +1,9 @@
-import { Accounts } from 'meteor/accounts-base';
-import React, { Component } from 'react';
-import _ from 'lodash';
+import { Accounts } from "meteor/accounts-base";
+import React, { Component } from "react";
+import _ from "lodash";
 
-import { validateEmail } from '../../../../modules/validate';
-import ForgotPasswordPage from './ForgotPasswordPage';
+import { validateEmail } from "../../../../modules/validate";
+import ForgotPasswordPage from "./ForgotPasswordPage";
 
 // platform-independent stateful container component
 // to handle Login logic
@@ -12,11 +12,11 @@ class ForgotPassword extends Component {
     super(props);
 
     this.state = {
-      email: '',
+      email: "",
       errors: {},
       loading: false,
       success: false,
-      redirect: false,
+      redirect: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -32,7 +32,7 @@ class ForgotPassword extends Component {
       errors: {},
       loading: false,
       success: false,
-      redirect: false,
+      redirect: false
     });
     event.preventDefault();
 
@@ -43,19 +43,19 @@ class ForgotPassword extends Component {
     } else {
       this.setState({ loading: true });
 
-      Accounts.forgotPassword({ email: this.state.email }, (error) => {
+      Accounts.forgotPassword({ email: this.state.email }, error => {
         if (error) {
           this.setState({
             loading: false,
             errors: {
-              message: error.reason,
-            },
+              message: error.reason
+            }
           });
         } else {
           this.setState({
             loading: false,
             errors: {},
-            success: true,
+            success: true
           });
 
           setTimeout(() => {

@@ -1,14 +1,22 @@
-import { Meteor } from 'meteor/meteor';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Button, Form, Grid, Message, Segment, Divider, Checkbox } from 'semantic-ui-react';
-import _ from 'lodash';
+import { Meteor } from "meteor/meteor";
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import {
+  Button,
+  Form,
+  Grid,
+  Message,
+  Segment,
+  Divider,
+  Checkbox
+} from "semantic-ui-react";
+import _ from "lodash";
 
-import ModalLink from '../../../components/ModalLink';
-import FormInputField from '../../../components/FormInputField';
-import SocialLoginButtons from '../../../components/SocialLoginButtons';
-import Login from '../Login/Login';
+import ModalLink from "../../../components/ModalLink";
+import FormInputField from "../../../components/FormInputField";
+import SocialLoginButtons from "../../../components/SocialLoginButtons";
+import Login from "../Login/Login";
 
 // web version of the sign up form, stateless component
 const SignUpPage = ({
@@ -19,17 +27,25 @@ const SignUpPage = ({
   loading,
   errors,
   modal,
-  onLoggedIn,
+  onLoggedIn
 }) => (
   <Grid textAlign="center" className="below-fixed-menu" verticalAlign="middle">
     <Grid.Row style={{ maxWidth: 450 }}>
       <Grid.Column>
         <Segment attached>
-          <SocialLoginButtons isSignUp disabled={disabled} onLoggedIn={onLoggedIn} />
+          <SocialLoginButtons
+            isSignUp
+            disabled={disabled}
+            onLoggedIn={onLoggedIn}
+          />
 
           <Divider horizontal>or</Divider>
 
-          <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+          <Form
+            onSubmit={onSubmit}
+            loading={loading}
+            error={!_.isEmpty(errors)}
+          >
             <FormInputField
               fluid
               icon="mail"
@@ -86,7 +102,9 @@ const SignUpPage = ({
               Sign up
             </Button>
 
-            {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+            {!_.isEmpty(errors.message) && (
+              <Message error content={errors.message} />
+            )}
           </Form>
         </Segment>
 
@@ -110,10 +128,12 @@ const SignUpPage = ({
           onChange={onAgreement}
           label={
             <label htmlFor="agreement">
-              Check here to confirm that you are 18 or older, and agree to our&nbsp;
+              Check here to confirm that you are 18 or older, and agree to
+              our&nbsp;
               <Link to="/terms">Terms of Use</Link>,&nbsp;
-              <Link to="/privacy">Privacy</Link> and to receiving marketing and policy
-              communications (you may opt out of receiving these at any time).
+              <Link to="/privacy">Privacy</Link> and to receiving marketing and
+              policy communications (you may opt out of receiving these at any
+              time).
             </label>
           }
         />
@@ -123,7 +143,7 @@ const SignUpPage = ({
 );
 
 SignUpPage.defaultProps = {
-  onLoggedIn: null,
+  onLoggedIn: null
 };
 
 SignUpPage.propTypes = {
@@ -134,7 +154,7 @@ SignUpPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   modal: PropTypes.bool.isRequired,
-  onLoggedIn: PropTypes.func,
+  onLoggedIn: PropTypes.func
 };
 
 export default SignUpPage;

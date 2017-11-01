@@ -1,12 +1,12 @@
-import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
-import rateLimit from '../../../modules/server/rate-limit';
-import Profiles from '../profiles';
-import Products from '../../products/products';
-import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
+import { Meteor } from "meteor/meteor";
+import { check } from "meteor/check";
+import rateLimit from "../../../modules/server/rate-limit";
+import Profiles from "../profiles";
+import Products from "../../products/products";
+import deleteCloudinaryFile from "../../../modules/server/delete-cloudinary-file";
 
 Meteor.methods({
-  'profiles.update': function profilesUpdate(profile) {
+  "profiles.update": function profilesUpdate(profile) {
     check(profile, Object);
 
     try {
@@ -17,7 +17,7 @@ Meteor.methods({
       if (profileToUpdate.products) {
         profileToUpdate.products = profileToUpdate.products
           .filter(product => product.name && product.name.length > 0)
-          .map((product) => {
+          .map(product => {
             if (product.productId) {
               // existing product
               return product;
@@ -26,13 +26,16 @@ Meteor.methods({
             // insert new Product if it doesn't exist
             // case insensitive search: https://stackoverflow.com/questions/7101703/how-do-i-make-case-insensitive-queries-on-mongodb
             const existingProduct = Products.findOne({
-              name: { $regex: new RegExp(product.name, 'i') },
+              name: { $regex: new RegExp(product.name, "i") }
             });
             if (existingProduct) {
               return { productId: existingProduct._id, name: product.name };
             }
 
-            const productId = Products.insert({ name: product.name, system: false });
+            const productId = Products.insert({
+              name: product.name,
+              system: false
+            });
             return { productId, name: product.name };
           });
       }
@@ -42,11 +45,11 @@ Meteor.methods({
       /* eslint-disable no-console */
       console.error(exception);
       /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      throw new Meteor.Error("500");
     }
   },
 
-  'profiles.photo.add': function profilesPhotoAdd(URL) {
+  "profiles.photo.add": function profilesPhotoAdd(URL) {
     check(URL, String);
 
     try {
@@ -54,10 +57,12 @@ Meteor.methods({
 
       // remove current profile photo from cloud
       if (profile.photo && profile.photo.origin) {
-        deleteCloudinaryFile(profile.photo.origin, (error) => {
+        deleteCloudinaryFile(profile.photo.origin, error => {
           if (error) {
             /* eslint-disable no-console */
-            console.error(`Unable to delete cloudinary file: ${profile.photo.origin}`);
+            console.error(
+              `Unable to delete cloudinary file: ${profile.photo.origin}`
+            );
             console.error(error);
             /* eslint-enable no-console */
           }
@@ -65,25 +70,30 @@ Meteor.methods({
       }
 
       // update Profile.photo data
-      Profiles.update({ owner: this.userId }, { $set: { photo: { origin: URL } } });
+      Profiles.update(
+        { owner: this.userId },
+        { $set: { photo: { origin: URL } } }
+      );
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
       /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      throw new Meteor.Error("500");
     }
   },
 
-  'profiles.photo.remove': function profilesPhotoRemove() {
+  "profiles.photo.remove": function profilesPhotoRemove() {
     try {
       const profile = Profiles.findOne({ owner: this.userId });
 
       // remove profile photo from cloud
       if (profile.photo && profile.photo.origin) {
-        deleteCloudinaryFile(profile.photo.origin, (error) => {
+        deleteCloudinaryFile(profile.photo.origin, error => {
           if (error) {
             /* eslint-disable no-console */
-            console.error(`Unable to delete cloudinary file: ${profile.photo.origin}`);
+            console.error(
+              `Unable to delete cloudinary file: ${profile.photo.origin}`
+            );
             console.error(error);
             /* eslint-enable no-console */
           }
@@ -91,18 +101,18 @@ Meteor.methods({
       }
 
       // update Profile.photo data
-      Profiles.update({ owner: this.userId }, { $unset: { photo: '' } });
+      Profiles.update({ owner: this.userId }, { $unset: { photo: "" } });
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
       /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      throw new Meteor.Error("500");
     }
-  },
+  }
 });
 
 rateLimit({
-  methods: ['profiles.update', 'profiles.photo.add', 'profiles.photo.remove'],
+  methods: ["profiles.update", "profiles.photo.add", "profiles.photo.remove"],
   limit: 5,
-  timeRange: 1000,
+  timeRange: 1000
 });
