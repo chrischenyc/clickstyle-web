@@ -5,7 +5,6 @@ import {
   Header,
   Button,
   Form,
-  Popup,
   Checkbox,
   List
 } from "semantic-ui-react";
@@ -79,19 +78,14 @@ const StylistsJoinPage = ({
         </FileField>
       </Form.Field>
 
-      <Popup
-        trigger={
-          <FormInputField
-            fluid
-            placeholder="Please provide a link to view your work e.g Facebook, Instagram or your website."
-            label={<Header>Reference</Header>}
-            name="reference"
-            size="large"
-            onChange={onChange}
-            errors={errors}
-          />
-        }
-        content="your work e.g Facebook, Instagram or your website."
+      <FormInputField
+        fluid
+        placeholder="Please provide a link to view your work e.g Facebook, Instagram or your website."
+        label={<Header>Reference</Header>}
+        name="reference"
+        size="large"
+        onChange={onChange}
+        errors={errors}
       />
 
       <Form.Field>
