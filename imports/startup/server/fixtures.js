@@ -1,5 +1,6 @@
 import Bookings from "../../api/bookings/bookings";
 import Products from "../../api/products/products";
+import Services from "../../api/services/services";
 
 // TODO: remove sample data
 if (Bookings.find().count() === 0) {
@@ -97,6 +98,37 @@ if (Products.find().count() === 0) {
     Products.insert({
       name: brand,
       system: true
+    });
+  });
+}
+
+// seed Services data
+if (Services.find().count() === 0) {
+  const services = [
+    "Make-Up",
+    "Barber",
+    "Haircut",
+    "Wedding",
+    "Weaves",
+    "Braids",
+    "Twists",
+    "Colour",
+    "Natural Hair",
+    "Straightening",
+    "Style",
+    "Nails",
+    "Eyebrow",
+    "Eyelash",
+    "Massage & Spa",
+    "Tanning",
+    "Waxing"
+  ];
+
+  services.forEach(service => {
+    Services.insert({
+      name: service,
+      system: true,
+      published: true
     });
   });
 }
