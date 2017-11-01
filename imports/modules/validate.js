@@ -103,3 +103,21 @@ export const validateEditProfile = profile => {
 
   return errors;
 };
+
+export const validateStylistJoin = (mobile, address, services, url) => {
+  const errors = {};
+
+  if (validator.isEmpty(mobile)) {
+    errors.mobile = "Mobile number is required";
+  } else if (!validator.isMobilePhone(mobile, "en-AU")) {
+    errors.mobile = "Invalid mobile number";
+  } else if (validator.isEmpty(address)) {
+    errors.address = "Address is required";
+  } else if (services.length === 0) {
+    errors.services = "Please pick at least one service you can offer";
+  } else if (url && url.length >= 0 && !validator.isURL(url)) {
+    errors.url = "Invalid URL";
+  }
+
+  return errors;
+};

@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 import Services from "../../../api/services/services";
 import StylistsJoinPage from "./StylistsJoinPage";
+import { validateStylistJoin } from "../../../modules/validate";
 
 class StylistJoin extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class StylistJoin extends Component {
       services: [],
       file: null,
       url: "",
-      errors: {}
+      errors: {},
+      submitting: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -59,49 +61,18 @@ class StylistJoin extends Component {
     this.setState({ errors: {} });
     event.preventDefault();
 
-    /*
-    const errors = validateUserSignUp(
-      this.state.email,
-      this.state.firstName,
-      this.state.lastName,
-      this.state.password,
-    );
+    const { mobile, address, services, url } = this.state;
+    const selectedServices = services.filter(service => {
+      return service.checked;
+    });
+
+    const errors = validateStylistJoin(mobile, address, selectedServices, url);
 
     if (!_.isEmpty(errors)) {
       this.setState({ errors });
     } else {
-      this.setState({ loading: true });
-
-      // http://docs.meteor.com/api/passwords.html#Accounts-createUser
-      Accounts.createUser(
-        {
-          email: this.state.email,
-          password: this.state.password,
-          profile: {
-            name: {
-              first: this.state.firstName,
-              last: this.state.lastName,
-            },
-          },
-        },
-        (error) => {
-          if (error) {
-            this.setState({
-              loading: false,
-              errors: {
-                message: error.reason,
-              },
-            });
-          } else {
-            this.setState({
-              loading: false,
-              errors: {},
-            });
-          }
-        },
-      );
+      this.setState({ submitting: true });
     }
-    */
   }
 
   render() {
@@ -110,7 +81,7 @@ class StylistJoin extends Component {
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onServiceSelected={this.handleServiceSelected}
-        loading={this.props.loading}
+        loading={this.props.loading || this.state.submitting}
         errors={this.state.errors}
         mobile={this.state.mobile}
         address={this.state.address}

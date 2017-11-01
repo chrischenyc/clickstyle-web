@@ -88,6 +88,14 @@ class StylistsJoinPage extends Component {
               initialValue={address}
             />
 
+            {!_.isEmpty(errors.address) && (
+              <Message
+                error
+                content={errors.address}
+                style={{ marginTop: "-0.75rem", marginBottom: "1rem" }}
+              />
+            )}
+
             <p
               style={{
                 marginTop: "0.25rem",
@@ -118,6 +126,14 @@ class StylistsJoinPage extends Component {
                 );
               })}
             </List>
+
+            {!_.isEmpty(errors.services) && (
+              <Message
+                error
+                content={errors.services}
+                style={{ marginTop: "-0.75rem", marginBottom: "1rem" }}
+              />
+            )}
           </Form.Field>
 
           <Form.Field>
