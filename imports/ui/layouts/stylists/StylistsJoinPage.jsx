@@ -1,27 +1,19 @@
-import { Meteor } from "meteor/meteor";
-import React, { Component } from "react";
-import {
-  Container,
-  Header,
-  Button,
-  Form,
-  Checkbox,
-  List,
-  Message
-} from "semantic-ui-react";
-import PropTypes from "prop-types";
-import _ from "lodash";
-import { UploadField as FileField } from "@navjobs/upload";
-import { Link } from "react-router-dom";
-import GeoSuggest from "react-geosuggest";
+import { Meteor } from 'meteor/meteor';
+import React, { Component } from 'react';
+import { Container, Header, Button, Form, Checkbox, List, Message } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { UploadField as FileField } from '@navjobs/upload';
+import { Link } from 'react-router-dom';
+import GeoSuggest from 'react-geosuggest';
 
-import FormInputField from "../../components/FormInputField";
+import FormInputField from '../../components/FormInputField';
 
 class StylistsJoinPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      agreementChecked: false
+      agreementChecked: false,
     };
   }
 
@@ -32,37 +24,42 @@ class StylistsJoinPage extends Component {
       onServiceSelected,
       loading,
       errors,
+      success,
       mobile,
       address,
       services,
       file,
-      url
+      url,
     } = this.props;
 
+    if (success) {
+      return (
+        <Container text style={{ padding: '8rem 0' }}>
+          <Header as="h1">Thanks!</Header>
+
+          <p>We will be in touch with you shortly!</p>
+        </Container>
+      );
+    }
+
     return (
-      <Container text style={{ padding: "8rem 0" }}>
+      <Container text style={{ padding: '8rem 0' }}>
         <Header as="h1">Tell us something about you</Header>
 
         <p>
-          We need a bit extra information about you and the services you can
-          provide... ducimus exercitationem ratione occaecati optio maxime non.
-          Non perferendis praesentium error et. Illum molestias quibusdam cumque
-          eum neque.
+          We need a bit extra information about you and the services you can provide... ducimus
+          exercitationem ratione occaecati optio maxime non. Non perferendis praesentium error et.
+          Illum molestias quibusdam cumque eum neque.
         </p>
 
-        <Form
-          onSubmit={onSubmit}
-          loading={loading}
-          error={!_.isEmpty(errors)}
-          size="large"
-        >
+        <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)} size="large">
           <FormInputField
             label={<Header>Mobile number</Header>}
             placeholder="Mobile number"
             name="mobile"
             onChange={onChange}
             errors={errors}
-            note={`This is not on your public profile. We may ring you to confirm ...`}
+            note="This is not on your public profile. We may ring you to confirm ..."
             value={mobile}
           />
 
@@ -75,14 +72,14 @@ class StylistsJoinPage extends Component {
               placeholder="type to search address"
               country="au"
               name="address"
-              onChange={value => {
+              onChange={(value) => {
                 // convert to generic onChange param
-                onChange({ target: { name: "address", value } });
+                onChange({ target: { name: 'address', value } });
               }}
-              onSuggestSelect={suggest => {
+              onSuggestSelect={(suggest) => {
                 // force onChange as well
                 onChange({
-                  target: { name: "address", value: suggest.label }
+                  target: { name: 'address', value: suggest.label },
                 });
               }}
               initialValue={address}
@@ -92,18 +89,18 @@ class StylistsJoinPage extends Component {
               <Message
                 error
                 content={errors.address}
-                style={{ marginTop: "-0.75rem", marginBottom: "1rem" }}
+                style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
               />
             )}
 
             <p
               style={{
-                marginTop: "0.25rem",
-                marginBottom: "1rem",
-                color: "#aaa"
+                marginTop: '0.25rem',
+                marginBottom: '1rem',
+                color: '#aaa',
               }}
             >
-              {`This is not on your public profile. We need this info to confirm...`}
+              {'This is not on your public profile. We need this info to confirm...'}
             </p>
           </Form.Field>
 
@@ -112,26 +109,24 @@ class StylistsJoinPage extends Component {
               <Header>Services</Header>
             </label>
             <List>
-              {services.map(service => {
-                return (
-                  <List.Item key={service._id}>
-                    <Checkbox
-                      label={service.name}
-                      checked={service.checked}
-                      onChange={(event, data) => {
-                        onServiceSelected(service, data.checked);
-                      }}
-                    />
-                  </List.Item>
-                );
-              })}
+              {services.map(service => (
+                <List.Item key={service._id}>
+                  <Checkbox
+                    label={service.name}
+                    checked={service.checked}
+                    onChange={(event, data) => {
+                      onServiceSelected(service, data.checked);
+                    }}
+                  />
+                </List.Item>
+              ))}
             </List>
 
             {!_.isEmpty(errors.services) && (
               <Message
                 error
                 content={errors.services}
-                style={{ marginTop: "-0.75rem", marginBottom: "1rem" }}
+                style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
               />
             )}
           </Form.Field>
@@ -146,30 +141,24 @@ class StylistsJoinPage extends Component {
                 icon="file"
                 content={file.name}
                 onDismiss={() => {
-                  onChange({ target: { name: "file", value: null } });
+                  onChange({ target: { name: 'file', value: null } });
                 }}
               />
             ) : (
               <FileField
                 name="file"
-                onFiles={files => {
+                onFiles={(files) => {
                   const file = files[0];
-                  onChange({ target: { name: "file", value: file } });
+                  onChange({ target: { name: 'file', value: file } });
                 }}
                 uploadProps={{
-                  accept: ".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                  accept: '.jpg,.jpeg,.png,.pdf,.doc,.docx',
                 }}
               >
-                <Button
-                  color={Meteor.settings.public.semantic.color}
-                  loading={false}
-                >
+                <Button color={Meteor.settings.public.semantic.color} loading={false}>
                   Upload file
                 </Button>
-                <span>
-                  &nbsp;maximum file size:{" "}
-                  {Meteor.settings.public.image.maxFileSize}MB
-                </span>
+                <span>&nbsp;maximum file size: {Meteor.settings.public.image.maxFileSize}MB</span>
               </FileField>
             )}
           </Form.Field>
@@ -221,11 +210,12 @@ StylistsJoinPage.propTypes = {
   onServiceSelected: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
+  success: PropTypes.bool.isRequired,
   mobile: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
   services: PropTypes.array.isRequired,
   file: PropTypes.object,
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
 };
 
 export default StylistsJoinPage;

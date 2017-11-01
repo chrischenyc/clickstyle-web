@@ -1,27 +1,28 @@
-import { withTracker } from "meteor/react-meteor-data";
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import _ from "lodash";
-import { compose } from "redux";
-import { connect } from "react-redux";
+import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
-import Services from "../../../api/services/services";
-import StylistsJoinPage from "./StylistsJoinPage";
-import { validateStylistJoin } from "../../../modules/validate";
+import Services from '../../../api/services/services';
+import StylistsJoinPage from './StylistsJoinPage';
+import { validateStylistJoin } from '../../../modules/validate';
 
 class StylistJoin extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      mobile: props.mobile || "",
-      address: props.address || "",
+      mobile: props.mobile || '',
+      address: props.address || '',
       services: [],
       file: null,
-      url: "",
+      url: '',
       errors: {},
       submitting: false,
-      success: false
+      success: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,9 +34,7 @@ class StylistJoin extends Component {
     this.setState({
       mobile: nextProps.mobile,
       address: nextProps.address,
-      services: nextProps.services.map(service => {
-        return { ...service, checked: false };
-      })
+      services: nextProps.services.map(service => ({ ...service, checked: false })),
     });
   }
 
@@ -45,16 +44,15 @@ class StylistJoin extends Component {
 
   handleServiceSelected(selectedService, selected) {
     this.setState({
-      services: this.state.services.map(service => {
+      services: this.state.services.map((service) => {
         if (service === selectedService) {
           return {
             ...service,
-            checked: selected
+            checked: selected,
           };
-        } else {
-          return service;
         }
-      })
+        return service;
+      }),
     });
   }
 
@@ -62,14 +60,12 @@ class StylistJoin extends Component {
     this.setState({ errors: {} });
     event.preventDefault();
 
-    const { mobile, address, services, url } = this.state;
+    const {
+      mobile, address, services, url,
+    } = this.state;
     const selectedServices = services
-      .filter(service => {
-        return service.checked;
-      })
-      .map(service => {
-        return service._id;
-      });
+      .filter(service => service.checked)
+      .map(service => service._id);
 
     const errors = validateStylistJoin(mobile, address, selectedServices, url);
 
@@ -79,26 +75,29 @@ class StylistJoin extends Component {
       this.setState({ submitting: true });
 
       Meteor.call(
-        "stylists.join",
-        { mobile, address, services: selectedServices, url },
-        error => {
+        'stylists.join',
+        {
+          mobile,
+          address,
+          services: selectedServices,
+          url,
+        },
+        (error) => {
           if (error) {
-            console.log(error);
             this.setState({
               submitting: false,
               errors: {
-                message: error.reason
-              }
+                message: error.reason,
+              },
             });
           } else {
-            console.log("success");
             this.setState({
               submitting: false,
               errors: {},
-              success: false
+              success: true,
             });
           }
-        }
+        },
       );
     }
   }
@@ -111,6 +110,7 @@ class StylistJoin extends Component {
         onServiceSelected={this.handleServiceSelected}
         loading={this.props.loading || this.state.submitting}
         errors={this.state.errors}
+        success={this.state.success}
         mobile={this.state.mobile}
         address={this.state.address}
         services={this.state.services}
@@ -123,31 +123,31 @@ class StylistJoin extends Component {
 
 StylistJoin.defaultProps = {
   loading: true,
-  services: []
+  services: [],
+  mobile: '',
+  address: '',
 };
 
 StylistJoin.propTypes = {
   loading: PropTypes.bool,
   mobile: PropTypes.string,
   address: PropTypes.string,
-  services: PropTypes.array
+  services: PropTypes.array,
 };
 
-const mapStateToProps = state => {
-  return {
-    mobile: state.profile.mobile,
-    address: state.profile.address && state.profile.address.raw
-  };
-};
+const mapStateToProps = state => ({
+  mobile: state.profile.mobile,
+  address: state.profile.address && state.profile.address.raw,
+});
 
 export default compose(
   connect(mapStateToProps),
   withTracker(() => {
-    const handle = Meteor.subscribe("services");
+    const handle = Meteor.subscribe('services');
 
     return {
       loading: !handle.ready(),
-      services: Services.find().fetch()
+      services: Services.find().fetch(),
     };
-  })
+  }),
 )(StylistJoin);
