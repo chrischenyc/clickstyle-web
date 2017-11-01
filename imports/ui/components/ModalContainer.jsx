@@ -4,19 +4,18 @@ import { Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../modules/client/redux/modal';
 
-const ModalContainer = ({ closeModal: close, title, component }) => (
+const ModalContainer = props => (
   <Modal
     size="small"
     open
-    closeOnDimmerClick={false}
     closeIcon
     onClose={() => {
-      close();
+      props.closeModal();
     }}
   >
-    {title && <Modal.Header>{title}</Modal.Header>}
+    {props.title && <Modal.Header>{props.title}</Modal.Header>}
 
-    <Modal.Content>{component}</Modal.Content>
+    <Modal.Content>{props.component}</Modal.Content>
   </Modal>
 );
 
