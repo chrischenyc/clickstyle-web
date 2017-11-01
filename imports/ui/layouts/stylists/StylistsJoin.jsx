@@ -12,8 +12,6 @@ class StylistJoin extends Component {
 
     this.state = {
       errors: {},
-      loading: false,
-      disabled: false,
       services: props.services.map(service => {
         return { ...service, checked: false };
       })
@@ -106,9 +104,8 @@ class StylistJoin extends Component {
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onServiceSelected={this.handleServiceSelected}
-        loading={this.state.loading}
+        loading={this.props.loading}
         errors={this.state.errors}
-        disabled={this.state.disabled}
         services={this.state.services}
       />
     );
@@ -116,17 +113,20 @@ class StylistJoin extends Component {
 }
 
 StylistJoin.defaultProps = {
-  services: []
+  services: [],
+  loading: true
 };
 
 StylistJoin.propTypes = {
-  services: PropTypes.array
+  services: PropTypes.array,
+  loading: PropTypes.bool
 };
 
 export default withTracker(() => {
-  Meteor.subscribe("services");
+  const handle = Meteor.subscribe("services");
 
   return {
-    services: Services.find().fetch()
+    services: Services.find().fetch(),
+    loading: !handle.ready()
   };
 })(StylistJoin);
