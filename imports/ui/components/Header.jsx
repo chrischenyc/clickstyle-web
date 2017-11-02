@@ -9,7 +9,6 @@ import { closeModal } from '../../modules/client/redux/modal';
 import ModalLink from '../components/ModalLink';
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
-import ScaledImageURL from '../../modules/scaled-image-url';
 
 const StylistLandingPageLink = () => (
   <Menu.Item as={Link} to="/stylists">
