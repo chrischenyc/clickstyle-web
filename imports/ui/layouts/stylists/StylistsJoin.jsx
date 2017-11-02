@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Slingshot } from 'meteor/edgee:slingshot';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -56,13 +57,45 @@ class StylistJoin extends Component {
     });
   }
 
+  submitApplication(mobile, address, selectedServices, qualification, url) {
+    this.setState({ submitting: true });
+    Meteor.call(
+      'stylists.join',
+      {
+        mobile,
+        address,
+        services: selectedServices,
+        qualification,
+        url,
+      },
+      (error) => {
+        if (error) {
+          this.setState({
+            submitting: false,
+            errors: {
+              message: error.reason,
+            },
+          });
+        } else {
+          this.setState({
+            submitting: false,
+            errors: {},
+            success: true,
+          });
+        }
+      },
+    );
+  }
+
   handleSubmit(event) {
     this.setState({ errors: {} });
     event.preventDefault();
 
     const {
-      mobile, address, services, url,
+      mobile, address, services, file, url,
     } = this.state;
+
+    // only send selected services' id to server
     const selectedServices = services
       .filter(service => service.checked)
       .map(service => service._id);
@@ -71,34 +104,28 @@ class StylistJoin extends Component {
 
     if (!_.isEmpty(errors)) {
       this.setState({ errors });
-    } else {
-      this.setState({ submitting: true });
+    } else if (file) {
+      const upload = new Slingshot.Upload(Meteor.settings.public.SlingshotS3File);
+      const validateError = upload.validate(file);
 
-      Meteor.call(
-        'stylists.join',
-        {
-          mobile,
-          address,
-          services: selectedServices,
-          url,
-        },
-        (error) => {
-          if (error) {
+      if (validateError) {
+        this.setState({ errors: { qualification: validateError.reason } });
+      } else {
+        this.setState({ submitting: true });
+
+        upload.send(file, (uploadError, downloadUrl) => {
+          if (uploadError) {
             this.setState({
               submitting: false,
-              errors: {
-                message: error.reason,
-              },
+              errors: { qualification: uploadError.reason },
             });
           } else {
-            this.setState({
-              submitting: false,
-              errors: {},
-              success: true,
-            });
+            this.submitApplication(mobile, address, selectedServices, downloadUrl, url);
           }
-        },
-      );
+        });
+      }
+    } else {
+      this.submitApplication(mobile, address, selectedServices, null, url);
     }
   }
 

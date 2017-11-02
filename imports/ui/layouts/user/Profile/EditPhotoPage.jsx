@@ -1,12 +1,12 @@
-import { Meteor } from "meteor/meteor";
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Message, Image, Button, Confirm } from "semantic-ui-react";
-import _ from "lodash";
-import { UploadField as FileField } from "@navjobs/upload";
-import AvatarEditor from "react-avatar-editor";
+import { Meteor } from 'meteor/meteor';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Message, Image, Button, Confirm } from 'semantic-ui-react';
+import _ from 'lodash';
+import { UploadField as FileField } from '@navjobs/upload';
+import AvatarEditor from 'react-avatar-editor';
 
-import ScaledImageURL from "../../../../modules/scaled-image-url";
+import ScaledImageURL from '../../../../modules/scaled-image-url';
 
 // web version of the login form, stateless component
 
@@ -20,7 +20,7 @@ class EditPhotoPage extends Component {
       file: null,
       scale: 1.0,
       rotate: 0,
-      openRemoveConfirm: false
+      openRemoveConfirm: false,
     };
   }
 
@@ -32,15 +32,15 @@ class EditPhotoPage extends Component {
       onPhotoRemove,
       photoUploading,
       photoPristine,
-      photoError
+      photoError,
     } = this.props;
 
-    const { file, scale, rotate, openRemoveConfirm } = this.state;
+    const {
+      file, scale, rotate, openRemoveConfirm,
+    } = this.state;
 
-    const photoOriginURL =
-      photo !== undefined && photo && photo.origin ? photo.origin : null;
-    const photoURL =
-      photoOriginURL || Meteor.settings.public.image.defaultProfilePhoto;
+    const photoOriginURL = photo !== undefined && photo && photo.origin ? photo.origin : null;
+    const photoURL = photoOriginURL || Meteor.settings.public.image.defaultProfilePhoto;
 
     // if file selected, show photo editor UI
     return (
@@ -54,7 +54,7 @@ class EditPhotoPage extends Component {
               scale={scale}
               rotate={rotate}
               border={0}
-              ref={editor => {
+              ref={(editor) => {
                 this.editor = editor;
               }}
             />
@@ -68,7 +68,7 @@ class EditPhotoPage extends Component {
               max="300"
               defaultValue="100"
               disabled={photoUploading}
-              onChange={event => {
+              onChange={(event) => {
                 this.setState({ scale: event.target.value / 100.0 });
               }}
             />
@@ -77,7 +77,7 @@ class EditPhotoPage extends Component {
 
             <Button
               icon="repeat"
-              onClick={event => {
+              onClick={(event) => {
                 event.preventDefault();
                 this.setState({ rotate: rotate + 90 });
               }}
@@ -86,12 +86,12 @@ class EditPhotoPage extends Component {
             <div>
               <Button.Group>
                 <Button
-                  onClick={event => {
+                  onClick={(event) => {
                     event.preventDefault();
 
                     this.setState({
                       file: null,
-                      scale: 1.0
+                      scale: 1.0,
                     });
                   }}
                   disabled={photoUploading}
@@ -101,7 +101,7 @@ class EditPhotoPage extends Component {
                 <Button.Or />
                 <Button
                   positive
-                  onClick={event => {
+                  onClick={(event) => {
                     event.preventDefault();
 
                     const canvas = this.editor.getImage();
@@ -109,11 +109,11 @@ class EditPhotoPage extends Component {
                     // convert to jpeg format
                     // rename file name to photo.jpeg
                     canvas.toBlob(
-                      blob => {
+                      (blob) => {
                         onPhotoUpload(blob);
                       },
-                      "image/jpeg",
-                      1
+                      'image/jpeg',
+                      1,
                     );
                   }}
                   loading={photoUploading}
@@ -125,11 +125,7 @@ class EditPhotoPage extends Component {
           </div>
         ) : (
           <div>
-            <Image
-              src={ScaledImageURL(photoURL, "small")}
-              width={ImageSize}
-              height={ImageSize}
-            />
+            <Image src={ScaledImageURL(photoURL, 'small')} width={ImageSize} height={ImageSize} />
 
             <p>Your photo will appear on your public profile</p>
 
@@ -139,30 +135,26 @@ class EditPhotoPage extends Component {
                 onClick={() => {
                   this.setState({ openRemoveConfirm: true });
                 }}
-                style={{ marginBottom: "0.5rem" }}
+                style={{ marginBottom: '0.5rem' }}
               >
                 Remove photo
               </Button>
             )}
 
             <FileField
-              onFiles={files => {
+              onFiles={(files) => {
                 this.setState({ file: files[0], scale: 1.0, rotate: 0 });
                 onPhotoSelected();
               }}
               uploadProps={{
-                accept: ".jpg,.jpeg,.png,.bmp"
+                accept: '.jpg,.jpeg,.png',
               }}
             >
-              <Button
-                color={Meteor.settings.public.semantic.color}
-                loading={photoUploading}
-              >
+              <Button color={Meteor.settings.public.semantic.color} loading={photoUploading}>
                 Upload photo
               </Button>
               <span>
-                &nbsp;maximum image file size:{" "}
-                {Meteor.settings.public.image.maxFileSize}MB
+                &nbsp;maximum image file size: {Meteor.settings.public.image.maxFileSize}MB
               </span>
             </FileField>
 
@@ -186,7 +178,7 @@ class EditPhotoPage extends Component {
 }
 
 EditPhotoPage.defaultProps = {
-  photo: {}
+  photo: {},
 };
 
 EditPhotoPage.propTypes = {
@@ -196,7 +188,7 @@ EditPhotoPage.propTypes = {
   onPhotoRemove: PropTypes.func.isRequired,
   photoUploading: PropTypes.bool.isRequired,
   photoPristine: PropTypes.bool.isRequired,
-  photoError: PropTypes.string.isRequired
+  photoError: PropTypes.string.isRequired,
 };
 
 export default EditPhotoPage;

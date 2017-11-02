@@ -148,18 +148,27 @@ class StylistsJoinPage extends Component {
               <FileField
                 name="file"
                 onFiles={(files) => {
-                  const file = files[0];
-                  onChange({ target: { name: 'file', value: file } });
+                  onChange({ target: { name: 'file', value: files[0] } });
                 }}
                 uploadProps={{
-                  accept: '.jpg,.jpeg,.png,.pdf,.doc,.docx',
+                  accept: '.jpg,.jpeg,.png,.pdf,.doc,.docx,.dot',
                 }}
               >
                 <Button color={Meteor.settings.public.semantic.color} loading={false}>
                   Upload file
                 </Button>
-                <span>&nbsp;maximum file size: {Meteor.settings.public.image.maxFileSize}MB</span>
+                <span>
+                  &nbsp;maximum file size: {Meteor.settings.public.document.maxFileSize}MB
+                </span>
               </FileField>
+            )}
+
+            {!_.isEmpty(errors.qualification) && (
+              <Message
+                error
+                content={errors.qualification}
+                style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
+              />
             )}
           </Form.Field>
 
