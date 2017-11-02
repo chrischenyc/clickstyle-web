@@ -32,20 +32,6 @@ StylistApplications.attachBehaviour('timestampable', {
   updatedBy: false,
 });
 
-const ApprovalSchema = new SimpleSchema({
-  approved: {
-    type: Boolean,
-  },
-  adminId: {
-    type: String,
-    optional: true,
-  },
-  date: {
-    type: Date,
-    optional: true,
-  },
-});
-
 const StylistApplicationsSchema = new SimpleSchema({
   // required fields
   userId: {
@@ -63,16 +49,24 @@ const StylistApplicationsSchema = new SimpleSchema({
   services: {
     type: [String],
   },
-  qualification: {
+  qualificationUrl: {
     type: String,
     optional: true,
   },
-  url: {
+  referenceUrl: {
     type: String,
     optional: true,
   },
-  approval: {
-    type: ApprovalSchema,
+  approved: {
+    type: Boolean,
+  },
+  approvedBy: {
+    type: String,
+    optional: true,
+  },
+  approvedAt: {
+    type: Date,
+    optional: true,
   },
 });
 

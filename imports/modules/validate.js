@@ -104,7 +104,7 @@ export const validateEditProfile = (profile) => {
   return errors;
 };
 
-export const validateStylistJoin = (mobile, address, services, url) => {
+export const validateStylistJoin = (mobile, address, services, referenceUrl) => {
   const errors = {};
 
   if (validator.isEmpty(mobile)) {
@@ -115,10 +115,10 @@ export const validateStylistJoin = (mobile, address, services, url) => {
     errors.address = 'Address is required';
   } else if (services.length === 0) {
     errors.services = 'Please pick at least one service you can offer';
-  } else if (validator.isEmpty(url)) {
-    errors.url = 'Reference link is required';
-  } else if (url && url.length >= 0 && !validator.isURL(url)) {
-    errors.url = 'Reference link is invalid';
+  } else if (validator.isEmpty(referenceUrl)) {
+    errors.referenceUrl = 'Reference link is required';
+  } else if (referenceUrl && referenceUrl.length >= 0 && !validator.isURL(referenceUrl)) {
+    errors.referenceUrl = 'Reference link is invalid';
   }
 
   return errors;

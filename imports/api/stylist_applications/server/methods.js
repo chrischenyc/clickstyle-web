@@ -9,30 +9,28 @@ Meteor.methods({
       throw new Meteor.Error(403, 'unauthorized');
     }
 
+    check(data, Object);
     const {
-      mobile, address, services, qualification, url,
+      mobile, address, services, qualificationUrl, referenceUrl,
     } = data;
 
     try {
-      check(data, Object);
       check(mobile, String);
       check(address, String);
       check(services, Array);
-      if (qualification) {
-        check(qualification, String);
+      if (qualificationUrl) {
+        check(qualificationUrl, String);
       }
-      check(url, String);
+      check(referenceUrl, String);
 
       StylistApplications.insert({
         userId: this.userId,
         mobile,
         address,
         services,
-        qualification,
-        url,
-        approval: {
-          approved: false,
-        },
+        qualificationUrl,
+        referenceUrl,
+        approved: false,
       });
     } catch (exception) {
       /* eslint-disable no-console */

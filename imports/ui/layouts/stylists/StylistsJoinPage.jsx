@@ -28,8 +28,8 @@ class StylistsJoinPage extends Component {
       mobile,
       address,
       services,
-      file,
-      url,
+      qualificationFile,
+      referenceUrl,
     } = this.props;
 
     if (success) {
@@ -136,19 +136,19 @@ class StylistsJoinPage extends Component {
               <Header>Qualifications</Header>
             </label>
 
-            {file ? (
+            {qualificationFile ? (
               <Message
                 icon="file"
-                content={file.name}
+                content={qualificationFile.name}
                 onDismiss={() => {
-                  onChange({ target: { name: 'file', value: null } });
+                  onChange({ target: { name: 'qualificationFile', value: null } });
                 }}
               />
             ) : (
               <FileField
-                name="file"
+                name="qualificationFile"
                 onFiles={(files) => {
-                  onChange({ target: { name: 'file', value: files[0] } });
+                  onChange({ target: { name: 'qualificationFile', value: files[0] } });
                 }}
                 uploadProps={{
                   accept: '.jpg,.jpeg,.png,.pdf,.doc,.docx,.dot',
@@ -163,10 +163,10 @@ class StylistsJoinPage extends Component {
               </FileField>
             )}
 
-            {!_.isEmpty(errors.qualification) && (
+            {!_.isEmpty(errors.qualificationFile) && (
               <Message
                 error
-                content={errors.qualification}
+                content={errors.qualificationFile}
                 style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
               />
             )}
@@ -176,10 +176,10 @@ class StylistsJoinPage extends Component {
             fluid
             placeholder="Please provide a link to view your work e.g Facebook, Instagram or your website."
             label={<Header>Reference</Header>}
-            name="url"
+            name="referenceUrl"
             onChange={onChange}
             errors={errors}
-            value={url}
+            value={referenceUrl}
           />
 
           <Form.Field>
@@ -223,8 +223,8 @@ StylistsJoinPage.propTypes = {
   mobile: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
   services: PropTypes.array.isRequired,
-  file: PropTypes.object,
-  url: PropTypes.string.isRequired,
+  qualificationFile: PropTypes.object,
+  referenceUrl: PropTypes.string.isRequired,
 };
 
 export default StylistsJoinPage;

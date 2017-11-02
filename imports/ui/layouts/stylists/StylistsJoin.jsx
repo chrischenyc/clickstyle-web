@@ -19,8 +19,8 @@ class StylistJoin extends Component {
       mobile: props.mobile || '',
       address: props.address || '',
       services: [],
-      file: null,
-      url: '',
+      qualificationFile: null,
+      referenceUrl: '',
       errors: {},
       submitting: false,
       success: false,
@@ -57,7 +57,7 @@ class StylistJoin extends Component {
     });
   }
 
-  submitApplication(mobile, address, selectedServices, qualification, url) {
+  submitApplication(mobile, address, selectedServices, qualificationUrl, referenceUrl) {
     this.setState({ submitting: true });
     Meteor.call(
       'stylists.join',
@@ -65,8 +65,8 @@ class StylistJoin extends Component {
         mobile,
         address,
         services: selectedServices,
-        qualification,
-        url,
+        qualificationUrl,
+        referenceUrl,
       },
       (error) => {
         if (error) {
@@ -92,7 +92,7 @@ class StylistJoin extends Component {
     event.preventDefault();
 
     const {
-      mobile, address, services, file, url,
+      mobile, address, services, qualificationFile, referenceUrl,
     } = this.state;
 
     // only send selected services' id to server
@@ -100,32 +100,38 @@ class StylistJoin extends Component {
       .filter(service => service.checked)
       .map(service => service._id);
 
-    const errors = validateStylistJoin(mobile, address, selectedServices, url);
+    const errors = validateStylistJoin(mobile, address, selectedServices, referenceUrl);
 
     if (!_.isEmpty(errors)) {
       this.setState({ errors });
-    } else if (file) {
+    } else if (qualificationFile) {
       const upload = new Slingshot.Upload(Meteor.settings.public.SlingshotS3File);
-      const validateError = upload.validate(file);
+      const validateError = upload.validate(qualificationFile);
 
       if (validateError) {
         this.setState({ errors: { qualification: validateError.reason } });
       } else {
         this.setState({ submitting: true });
 
-        upload.send(file, (uploadError, downloadUrl) => {
+        upload.send(qualificationFile, (uploadError, qualificationUrl) => {
           if (uploadError) {
             this.setState({
               submitting: false,
               errors: { qualification: uploadError.reason },
             });
           } else {
-            this.submitApplication(mobile, address, selectedServices, downloadUrl, url);
+            this.submitApplication(
+              mobile,
+              address,
+              selectedServices,
+              qualificationUrl,
+              referenceUrl,
+            );
           }
         });
       }
     } else {
-      this.submitApplication(mobile, address, selectedServices, null, url);
+      this.submitApplication(mobile, address, selectedServices, null, referenceUrl);
     }
   }
 
@@ -141,8 +147,8 @@ class StylistJoin extends Component {
         mobile={this.state.mobile}
         address={this.state.address}
         services={this.state.services}
-        file={this.state.file}
-        url={this.state.url}
+        qualificationFile={this.state.qualificationFile}
+        referenceUrl={this.state.referenceUrl}
       />
     );
   }
