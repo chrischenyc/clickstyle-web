@@ -1,7 +1,7 @@
-import React from "react";
-import { Grid } from "semantic-ui-react";
-import PropTypes from "prop-types";
-import SideMenu from "./SideMenu";
+import React from 'react';
+import { Grid } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import SideMenu from './SideMenu';
 
 const SideMenuContainer = props => (
   <Grid stackable className="below-fixed-menu">
@@ -15,14 +15,11 @@ const SideMenuContainer = props => (
 );
 
 SideMenuContainer.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ])
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 
 SideMenuContainer.defaultProps = {
-  children: null // or [] I guess
+  children: null, // or [] I guess
 };
 
 export default SideMenuContainer;

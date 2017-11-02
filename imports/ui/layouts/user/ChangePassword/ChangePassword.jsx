@@ -1,10 +1,10 @@
-import { Meteor } from "meteor/meteor";
-import { Accounts } from "meteor/accounts-base";
-import React, { Component } from "react";
-import _ from "lodash";
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+import React, { Component } from 'react';
+import _ from 'lodash';
 
-import { validateChangePassword } from "../../../../modules/validate";
-import ChangePasswordPage from "./ChangePasswordPage";
+import { validateChangePassword } from '../../../../modules/validate';
+import ChangePasswordPage from './ChangePasswordPage';
 
 // platform-independent stateful container component
 // to handle Login logic
@@ -13,13 +13,13 @@ class ChangePassword extends Component {
     super(props);
 
     this.state = {
-      oldPassword: "",
-      password: "",
-      confirm: "",
+      oldPassword: '',
+      password: '',
+      confirm: '',
       errors: {},
       loading: false,
       success: false,
-      redirect: false
+      redirect: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,14 +35,14 @@ class ChangePassword extends Component {
       errors: {},
       loading: false,
       success: false,
-      redirect: false
+      redirect: false,
     });
     event.preventDefault();
 
     const errors = validateChangePassword(
       this.state.oldPassword,
       this.state.password,
-      this.state.confirm
+      this.state.confirm,
     );
 
     if (!_.isEmpty(errors)) {
@@ -50,32 +50,28 @@ class ChangePassword extends Component {
     } else {
       this.setState({ loading: true });
 
-      Accounts.changePassword(
-        this.state.oldPassword,
-        this.state.password,
-        error => {
-          if (error) {
-            this.setState({
-              loading: false,
-              errors: {
-                message: error.reason
-              }
-            });
-          } else {
-            this.setState({
-              loading: false,
-              errors: {},
-              success: true
-            });
+      Accounts.changePassword(this.state.oldPassword, this.state.password, (error) => {
+        if (error) {
+          this.setState({
+            loading: false,
+            errors: {
+              message: error.reason,
+            },
+          });
+        } else {
+          this.setState({
+            loading: false,
+            errors: {},
+            success: true,
+          });
 
-            Meteor.call("users.sendPasswordChangedEmail");
+          Meteor.call('users.sendPasswordChangedEmail');
 
-            setTimeout(() => {
-              this.setState({ redirect: true });
-            }, 1500);
-          }
+          setTimeout(() => {
+            this.setState({ redirect: true });
+          }, 1500);
         }
-      );
+      });
     }
   }
 

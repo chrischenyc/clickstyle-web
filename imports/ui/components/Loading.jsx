@@ -1,11 +1,11 @@
-import React from "react";
-import { Segment } from "semantic-ui-react";
-import "../../../client/loading.css";
+import React from 'react';
+import { Segment } from 'semantic-ui-react';
+import '../../../client/loading.css';
 
 const Loading = () => (
   <Segment
     style={{
-      padding: "2rem 0"
+      padding: '2rem 0',
     }}
     vertical
   >

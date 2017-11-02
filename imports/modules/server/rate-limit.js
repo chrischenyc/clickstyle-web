@@ -1,5 +1,5 @@
-import { Meteor } from "meteor/meteor";
-import { DDPRateLimiter } from "meteor/ddp-rate-limiter";
+import { Meteor } from 'meteor/meteor';
+import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 
 export default ({ methods, limit, timeRange }) => {
   if (Meteor.isServer) {
@@ -10,10 +10,10 @@ export default ({ methods, limit, timeRange }) => {
         },
         connectionId() {
           return true;
-        }
+        },
       },
       limit,
-      timeRange
+      timeRange,
     );
   }
 };

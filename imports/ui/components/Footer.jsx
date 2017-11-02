@@ -1,13 +1,13 @@
-import React from "react";
-import { Container, Grid, Header, List, Segment } from "semantic-ui-react";
+import React from 'react';
+import { Container, Grid, Header, List, Segment } from 'semantic-ui-react';
 
 const Footer = () => (
   <Segment
     inverted
     vertical
     style={{
-      padding: "4rem 0",
-      marginTop: "4rem"
+      padding: '4rem 0',
+      marginTop: '4rem',
     }}
   >
     <Container>
@@ -36,8 +36,7 @@ const Footer = () => (
               Footer Header
             </Header>
             <p>
-              Extra space for a call to action inside the footer that could help
-              re - engage users.
+              Extra space for a call to action inside the footer that could help re - engage users.
             </p>
           </Grid.Column>
         </Grid.Row>

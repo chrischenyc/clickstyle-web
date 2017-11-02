@@ -1,8 +1,8 @@
 // definition of the Bookings collection
-import { Mongo } from "meteor/mongo";
-import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Bookings = new Mongo.Collection("bookings");
+const Bookings = new Mongo.Collection('bookings');
 
 Bookings.allow({
   insert() {
@@ -13,7 +13,7 @@ Bookings.allow({
   },
   remove() {
     return false;
-  }
+  },
 });
 Bookings.deny({
   insert() {
@@ -24,31 +24,31 @@ Bookings.deny({
   },
   remove() {
     return true;
-  }
+  },
 });
 
-Bookings.attachBehaviour("timestampable", {
+Bookings.attachBehaviour('timestampable', {
   createdBy: false,
-  updatedBy: false
+  updatedBy: false,
 });
 
 // TODO: complete Bookings schema
 const BookingsSchema = new SimpleSchema({
   title: {
     type: String,
-    label: "Title",
-    max: 200
+    label: 'Title',
+    max: 200,
   },
   location: {
     type: String,
-    label: "Location"
+    label: 'Location',
   },
   summary: {
     type: String,
-    label: "Brief summary",
+    label: 'Brief summary',
     optional: true,
-    max: 1000
-  }
+    max: 1000,
+  },
 });
 
 Bookings.attachSchema(BookingsSchema);

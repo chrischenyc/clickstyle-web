@@ -1,8 +1,8 @@
 // definition of the Services stylist can provide
-import { Mongo } from "meteor/mongo";
-import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Services = new Mongo.Collection("services");
+const Services = new Mongo.Collection('services');
 
 Services.allow({
   insert() {
@@ -13,7 +13,7 @@ Services.allow({
   },
   remove() {
     return false;
-  }
+  },
 });
 Services.deny({
   insert() {
@@ -24,20 +24,20 @@ Services.deny({
   },
   remove() {
     return true;
-  }
+  },
 });
 
-Services.attachBehaviour("timestampable", {
+Services.attachBehaviour('timestampable', {
   createdBy: false,
-  updatedBy: false
+  updatedBy: false,
 });
 
 const ServicesSchema = new SimpleSchema({
   // required fields
   name: {
     type: String,
-    unique: true
-  }
+    unique: true,
+  },
 });
 
 Services.attachSchema(ServicesSchema);

@@ -1,16 +1,16 @@
 // --------- actions ----------
 export function openModal(to, component, title) {
   return {
-    type: "OPEN_MODAL",
+    type: 'OPEN_MODAL',
     to,
     component,
-    title
+    title,
   };
 }
 
 export function closeModal() {
   return {
-    type: "CLOSE_MODAL"
+    type: 'CLOSE_MODAL',
   };
 }
 
@@ -19,12 +19,12 @@ const defaultState = {
   open: false,
   to: null,
   component: null,
-  title: null
+  title: null,
 };
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
-    case "OPEN_MODAL": {
+    case 'OPEN_MODAL': {
       const { to, component, title } = action;
 
       return {
@@ -32,17 +32,17 @@ const reducer = (state = defaultState, action) => {
         open: true,
         to,
         component,
-        title
+        title,
       };
     }
 
-    case "CLOSE_MODAL": {
+    case 'CLOSE_MODAL': {
       return {
         ...state,
         open: false,
         to: null,
         component: null,
-        title: null
+        title: null,
       };
     }
 

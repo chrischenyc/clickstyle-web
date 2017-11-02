@@ -1,9 +1,9 @@
-import { Meteor } from "meteor/meteor";
-import { Accounts } from "meteor/accounts-base";
-import { Roles } from "meteor/alanning:roles";
-import Profiles from "../../api/profiles/profiles";
-import normalizeProfile from "../../modules/server/normalize-profile";
-import { sendWelcomeEmail } from "../../modules/server/send-email";
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+import { Roles } from 'meteor/alanning:roles';
+import Profiles from '../../api/profiles/profiles';
+import normalizeProfile from '../../modules/server/normalize-profile';
+import { sendWelcomeEmail } from '../../modules/server/send-email';
 
 // customize user account creation
 // email registration and social sign-in will all come to here
@@ -14,10 +14,7 @@ Accounts.onCreateUser((options, user) => {
   const normalizedProfile = normalizeProfile(options, user);
   if (normalizedProfile) {
     // TODO: conditionally update existing user profile data fields when accounts merge
-    Profiles.upsert(
-      { owner: normalizedProfile.owner },
-      { $set: normalizedProfile }
-    );
+    Profiles.upsert({ owner: normalizedProfile.owner }, { $set: normalizedProfile });
 
     // keep name in User.profile for email-templates.js to use
     userToCreate.profile = { name: normalizedProfile.name };
@@ -39,5 +36,5 @@ Accounts.onCreateUser((options, user) => {
     return userToCreate;
   }
 
-  throw new Error("something went wrong");
+  throw new Error('something went wrong');
 });

@@ -1,7 +1,7 @@
-import { Accounts } from "meteor/accounts-base";
-import React from "react";
-import PropTypes from "prop-types";
-import { Container, Message, Icon } from "semantic-ui-react";
+import { Accounts } from 'meteor/accounts-base';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Container, Message, Icon } from 'semantic-ui-react';
 
 class VerifyEmailPage extends React.Component {
   constructor(props) {
@@ -10,17 +10,17 @@ class VerifyEmailPage extends React.Component {
   }
 
   componentDidMount() {
-    Accounts.verifyEmail(this.props.match.params.token, error => {
+    Accounts.verifyEmail(this.props.match.params.token, (error) => {
       if (error) {
         this.setState({
           loading: false,
-          error: `${error.reason}. Please try again.`
+          error: `${error.reason}. Please try again.`,
         });
       } else {
         this.setState({ loading: false, error: null });
 
         setTimeout(() => {
-          this.props.history.push("/dashboard");
+          this.props.history.push('/dashboard');
         }, 1500);
       }
     });
@@ -32,9 +32,7 @@ class VerifyEmailPage extends React.Component {
         <Message icon>
           <Icon name="spinner" loading />
 
-          <Message.Content>
-            Just one second, we are verifying your email...
-          </Message.Content>
+          <Message.Content>Just one second, we are verifying your email...</Message.Content>
         </Message>
       );
     } else if (this.state.error) {
@@ -51,21 +49,14 @@ class VerifyEmailPage extends React.Component {
       <Message icon success>
         <Icon name="checkmark" />
 
-        <Message.Content>
-          All set, thank! Sending you to Dashboard...
-        </Message.Content>
+        <Message.Content>All set, thank! Sending you to Dashboard...</Message.Content>
       </Message>
     );
   }
 
   render() {
     return (
-      <Container
-        text
-        textAlign="center"
-        className="below-fixed-menu"
-        style={{ padding: "8rem 0" }}
-      >
+      <Container text textAlign="center" className="below-fixed-menu" style={{ padding: '8rem 0' }}>
         {this.renderMessage()}
       </Container>
     );
@@ -74,7 +65,7 @@ class VerifyEmailPage extends React.Component {
 
 VerifyEmailPage.propTypes = {
   match: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 };
 
 export default VerifyEmailPage;

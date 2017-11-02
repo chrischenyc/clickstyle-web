@@ -1,12 +1,12 @@
-import { Meteor } from "meteor/meteor";
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import _ from "lodash";
+import { Meteor } from 'meteor/meteor';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import { userSignedIn } from "../../../../modules/client/redux/user";
-import { validateUserLogin } from "../../../../modules/validate";
-import LoginPage from "./LoginPage";
+import { userSignedIn } from '../../../../modules/client/redux/user';
+import { validateUserLogin } from '../../../../modules/validate';
+import LoginPage from './LoginPage';
 
 // platform-independent stateful container component
 // to handle Login logic
@@ -15,10 +15,10 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       errors: {},
-      loading: false
+      loading: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -41,21 +41,18 @@ class Login extends Component {
       this.setState({ loading: true });
 
       // http://docs.meteor.com/api/accounts.html#Meteor-loginWithPassword
-      Meteor.loginWithPassword(this.state.email, this.state.password, error => {
+      Meteor.loginWithPassword(this.state.email, this.state.password, (error) => {
         if (error) {
           this.setState({
             loading: false,
             errors: {
-              message:
-                error.error === 403
-                  ? "email and password do not match"
-                  : error.reason
-            }
+              message: error.error === 403 ? 'email and password do not match' : error.reason,
+            },
           });
         } else {
           this.setState({
             loading: false,
-            errors: {}
+            errors: {},
           });
 
           this.props.userSignedIn(Meteor.user());
@@ -85,13 +82,13 @@ class Login extends Component {
 
 Login.defaultProps = {
   modal: false,
-  onLoggedIn: null
+  onLoggedIn: null,
 };
 
 Login.propTypes = {
   modal: PropTypes.bool,
   onLoggedIn: PropTypes.func,
-  userSignedIn: PropTypes.func.isRequired
+  userSignedIn: PropTypes.func.isRequired,
 };
 
 export default connect(null, { userSignedIn })(Login);

@@ -1,1 +1,1 @@
-import "../slingshot-restrictions";
+import '../slingshot-restrictions';

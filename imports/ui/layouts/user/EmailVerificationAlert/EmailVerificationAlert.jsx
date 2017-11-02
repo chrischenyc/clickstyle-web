@@ -1,18 +1,18 @@
-import { Meteor } from "meteor/meteor";
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { Meteor } from 'meteor/meteor';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import EmailVerificationAlertPage from "./EmailVerificationAlertPage";
+import EmailVerificationAlertPage from './EmailVerificationAlertPage';
 
 class EmailVerificationAlert extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: "",
+      error: '',
       success: false,
-      loading: false
+      loading: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +21,7 @@ class EmailVerificationAlert extends Component {
   handleSubmit() {
     this.setState({ loading: true });
 
-    Meteor.call("users.sendVerificationEmail", error => {
+    Meteor.call('users.sendVerificationEmail', (error) => {
       if (error) {
         this.setState({ error, loading: false });
       } else {
@@ -32,7 +32,7 @@ class EmailVerificationAlert extends Component {
 
   render() {
     if (this.props.verified === undefined || this.props.verified === true) {
-      return "";
+      return '';
     }
     return (
       <EmailVerificationAlertPage
@@ -46,15 +46,15 @@ class EmailVerificationAlert extends Component {
 }
 
 EmailVerificationAlert.defaultProps = {
-  verified: undefined
+  verified: undefined,
 };
 
 EmailVerificationAlert.propTypes = {
-  verified: PropTypes.bool
+  verified: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
-  verified: state.user.verified
+  verified: state.user.verified,
 });
 
 export default connect(mapStateToProps)(EmailVerificationAlert);

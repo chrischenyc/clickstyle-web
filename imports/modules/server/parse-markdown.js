@@ -1,4 +1,4 @@
-import { Parser, HtmlRenderer } from "commonmark";
+import { Parser, HtmlRenderer } from 'commonmark';
 
 export default (markdown, options) => {
   const reader = new Parser();

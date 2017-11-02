@@ -1,13 +1,13 @@
-import { Meteor } from "meteor/meteor";
-import { Accounts } from "meteor/accounts-base";
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import _ from "lodash";
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import { userSignedIn } from "../../../../modules/client/redux/user";
-import { validateUserSignUp } from "../../../../modules/validate";
-import SignUpPage from "./SignUpPage";
+import { userSignedIn } from '../../../../modules/client/redux/user';
+import { validateUserSignUp } from '../../../../modules/validate';
+import SignUpPage from './SignUpPage';
 
 // platform-independent stateful container component
 // to handle SignUp logic
@@ -16,13 +16,13 @@ class SignUp extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
+      email: '',
+      firstName: '',
+      lastName: '',
+      password: '',
       errors: {},
       loading: false,
-      disabled: false
+      disabled: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -42,7 +42,7 @@ class SignUp extends Component {
       this.state.email,
       this.state.firstName,
       this.state.lastName,
-      this.state.password
+      this.state.password,
     );
 
     if (!_.isEmpty(errors)) {
@@ -58,22 +58,22 @@ class SignUp extends Component {
           profile: {
             name: {
               first: this.state.firstName,
-              last: this.state.lastName
-            }
-          }
+              last: this.state.lastName,
+            },
+          },
         },
-        error => {
+        (error) => {
           if (error) {
             this.setState({
               loading: false,
               errors: {
-                message: error.reason
-              }
+                message: error.reason,
+              },
             });
           } else {
             this.setState({
               loading: false,
-              errors: {}
+              errors: {},
             });
 
             this.props.userSignedIn(Meteor.user());
@@ -83,7 +83,7 @@ class SignUp extends Component {
               this.props.onLoggedIn();
             }
           }
-        }
+        },
       );
     }
   }
@@ -109,13 +109,13 @@ class SignUp extends Component {
 }
 
 SignUp.defaultProps = {
-  modal: false
+  modal: false,
 };
 
 SignUp.propTypes = {
   modal: PropTypes.bool,
   onLoggedIn: PropTypes.func,
-  userSignedIn: PropTypes.func.isRequired
+  userSignedIn: PropTypes.func.isRequired,
 };
 
 export default connect(null, { userSignedIn })(SignUp);

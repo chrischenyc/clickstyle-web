@@ -1,16 +1,16 @@
-import { Meteor } from "meteor/meteor";
-import { withTracker } from "meteor/react-meteor-data";
+import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 
-import React from "react";
-import PropTypes from "prop-types";
-import { Segment } from "semantic-ui-react";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Segment } from 'semantic-ui-react';
 
-import BannerSegment from "./BannerSegment";
-import HowItWorksSegment from "./HowItWorksSegment";
-import ArticlesSegment from "./ArticlesSegment";
-import BookingsList from "../bookings/BookingsList";
+import BannerSegment from './BannerSegment';
+import HowItWorksSegment from './HowItWorksSegment';
+import ArticlesSegment from './ArticlesSegment';
+import BookingsList from '../bookings/BookingsList';
 
-import Bookings from "../../../api/bookings/bookings";
+import Bookings from '../../../api/bookings/bookings';
 
 const HomePage = props => (
   <div className="below-fixed-menu">
@@ -23,7 +23,7 @@ const HomePage = props => (
     <Segment
       textAlign="center"
       style={{
-        padding: "2rem 0"
+        padding: '2rem 0',
       }}
       vertical
     >
@@ -34,14 +34,14 @@ const HomePage = props => (
 
 HomePage.propTypes = {
   bookingsLoading: PropTypes.bool.isRequired,
-  bookings: PropTypes.array.isRequired
+  bookings: PropTypes.array.isRequired,
 };
 
 export default withTracker(() => {
-  const handle = Meteor.subscribe("bookings");
+  const handle = Meteor.subscribe('bookings');
 
   return {
     bookingsLoading: !handle.ready(),
-    bookings: Bookings.find({}).fetch()
+    bookings: Bookings.find({}).fetch(),
   };
 })(HomePage);

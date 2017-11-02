@@ -1,8 +1,8 @@
 // definition of the Profiles collection
-import { Mongo } from "meteor/mongo";
-import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Products = new Mongo.Collection("products");
+const Products = new Mongo.Collection('products');
 
 Products.allow({
   insert() {
@@ -13,7 +13,7 @@ Products.allow({
   },
   remove() {
     return false;
-  }
+  },
 });
 Products.deny({
   insert() {
@@ -24,23 +24,23 @@ Products.deny({
   },
   remove() {
     return true;
-  }
+  },
 });
 
-Products.attachBehaviour("timestampable", {
+Products.attachBehaviour('timestampable', {
   createdBy: false,
-  updatedBy: false
+  updatedBy: false,
 });
 
 const ProductsSchema = new SimpleSchema({
   // required fields
   name: {
     type: String,
-    unique: true
+    unique: true,
   },
   system: {
-    type: Boolean
-  }
+    type: Boolean,
+  },
 });
 
 Products.attachSchema(ProductsSchema);
