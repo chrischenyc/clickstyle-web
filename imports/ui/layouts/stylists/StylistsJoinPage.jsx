@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import GeoSuggest from 'react-geosuggest';
 
 import FormInputField from '../../components/FormInputField';
+import { formatDate } from '../../../modules/format-date';
 
 class StylistsJoinPage extends Component {
   constructor(props) {
@@ -30,9 +31,44 @@ class StylistsJoinPage extends Component {
       services,
       qualificationFile,
       referenceUrl,
+      application,
     } = this.props;
 
-    if (success) {
+    if (application) {
+      if (application.approved) {
+        return (
+          <Container text style={{ padding: '8rem 0' }}>
+            <Header as="h1">Welcome to the club!</Header>
+
+            <p>
+              Your application was approved on {formatDate(application.approvedAt)}. Thanks for
+              being part of us.
+            </p>
+
+            <p>
+              Meanwhile, if you have any question, feel free to&nbsp;
+              <Link to="/contact-us">contact us</Link>.
+            </p>
+          </Container>
+        );
+      }
+
+      return (
+        <Container text style={{ padding: '8rem 0' }}>
+          <Header as="h1">Relax and sit tight</Header>
+
+          <p>
+            Your previous application submitted on {formatDate(application.createdAt)} is under
+            review process, we will contact you shortly.
+          </p>
+
+          <p>
+            Meanwhile, if you have any question, feel free to&nbsp;
+            <Link to="/contact-us">contact us</Link>.
+          </p>
+        </Container>
+      );
+    } else if (success) {
       return (
         <Container text style={{ padding: '8rem 0' }}>
           <Header as="h1">Thanks!</Header>
@@ -225,6 +261,7 @@ StylistsJoinPage.propTypes = {
   services: PropTypes.array.isRequired,
   qualificationFile: PropTypes.object,
   referenceUrl: PropTypes.string.isRequired,
+  application: PropTypes.object.isRequired,
 };
 
 export default StylistsJoinPage;

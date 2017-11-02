@@ -8,6 +8,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import Services from '../../../api/services/services';
+import StylistApplications from '../../../api/stylist_applications/stylist_applications';
 import StylistsJoinPage from './StylistsJoinPage';
 import { validateStylistJoin } from '../../../modules/validate';
 
@@ -149,6 +150,7 @@ class StylistJoin extends Component {
         services={this.state.services}
         qualificationFile={this.state.qualificationFile}
         referenceUrl={this.state.referenceUrl}
+        application={this.props.application}
       />
     );
   }
@@ -156,9 +158,10 @@ class StylistJoin extends Component {
 
 StylistJoin.defaultProps = {
   loading: true,
-  services: [],
   mobile: '',
   address: '',
+  services: [],
+  application: null,
 };
 
 StylistJoin.propTypes = {
@@ -166,6 +169,7 @@ StylistJoin.propTypes = {
   mobile: PropTypes.string,
   address: PropTypes.string,
   services: PropTypes.array,
+  application: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
@@ -177,10 +181,12 @@ export default compose(
   connect(mapStateToProps),
   withTracker(() => {
     const handle = Meteor.subscribe('services');
+    Meteor.subscribe('stylists.application');
 
     return {
       loading: !handle.ready(),
       services: Services.find().fetch(),
+      application: StylistApplications.findOne(),
     };
   }),
 )(StylistJoin);
