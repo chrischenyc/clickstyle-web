@@ -240,6 +240,10 @@ class StylistsJoinPage extends Component {
   }
 }
 
+StylistsJoinPage.defaultProps = {
+  application: null,
+};
+
 StylistsJoinPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -251,7 +255,7 @@ StylistsJoinPage.propTypes = {
   services: PropTypes.array.isRequired,
   qualificationFile: PropTypes.object,
   referenceUrl: PropTypes.string.isRequired,
-  application: PropTypes.object.isRequired,
+  application: PropTypes.object,
 };
 
 export default StylistsJoinPage;
