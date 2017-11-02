@@ -24,7 +24,6 @@ class StylistJoin extends Component {
       referenceUrl: '',
       errors: {},
       submitting: false,
-      success: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -81,7 +80,6 @@ class StylistJoin extends Component {
           this.setState({
             submitting: false,
             errors: {},
-            success: true,
           });
         }
       },
@@ -144,7 +142,6 @@ class StylistJoin extends Component {
         onServiceSelected={this.handleServiceSelected}
         loading={this.props.loading || this.state.submitting}
         errors={this.state.errors}
-        success={this.state.success}
         mobile={this.state.mobile}
         address={this.state.address}
         services={this.state.services}

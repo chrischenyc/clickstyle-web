@@ -25,7 +25,6 @@ class StylistsJoinPage extends Component {
       onServiceSelected,
       loading,
       errors,
-      success,
       mobile,
       address,
       services,
@@ -66,14 +65,6 @@ class StylistsJoinPage extends Component {
             Meanwhile, if you have any question, feel free to&nbsp;
             <Link to="/contact-us">contact us</Link>.
           </p>
-        </Container>
-      );
-    } else if (success) {
-      return (
-        <Container text style={{ padding: '8rem 0' }}>
-          <Header as="h1">Thanks!</Header>
-
-          <p>We will be in touch with you shortly!</p>
         </Container>
       );
     }
@@ -255,7 +246,6 @@ StylistsJoinPage.propTypes = {
   onServiceSelected: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
-  success: PropTypes.bool.isRequired,
   mobile: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
   services: PropTypes.array.isRequired,
