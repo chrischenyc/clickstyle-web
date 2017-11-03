@@ -4,7 +4,7 @@
 
 `npm install` (don't use yarn, Meteor doesn't work well with yarn)
 
-`meteor -s settings-development.json`
+`npm run dev`
 
 ## Heroku deployment
 
