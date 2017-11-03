@@ -12,12 +12,7 @@ Meteor.methods({
       throw new Meteor.Error('403');
     }
 
-    const user = Meteor.users.findOne(this.userId);
-    if (!user || user.emails.count === 0) {
-      throw new Meteor.Error('403');
-    }
-
-    sendPasswordChangedEmail(user.emails[0].address, user.profile.name.first);
+    sendPasswordChangedEmail(this.userId);
   },
 });
 

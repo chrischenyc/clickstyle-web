@@ -30,7 +30,7 @@ Accounts.onCreateUser((options, user) => {
         Accounts.sendVerificationEmail(user._id);
       }
 
-      sendWelcomeEmail(normalizedProfile.email, normalizedProfile.name.first);
+      sendWelcomeEmail(user._id);
     });
 
     return userToCreate;

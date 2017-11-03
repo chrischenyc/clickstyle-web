@@ -5,6 +5,8 @@ import templateToText from './handlebars-email-to-text';
 import templateToHTML from './handlebars-email-to-html';
 import { formatDateTime } from '../../modules/format-date';
 
+import Profiles from '../../api/profiles/profiles';
+
 // core function to send email
 const sendEmail = ({
   text, html, template, templateVars, ...rest
@@ -42,15 +44,17 @@ const sendEmail = ({
 const { applicationName, supportEmail } = Meteor.settings.public;
 const fromAddress = `${applicationName} <${supportEmail}>`;
 
-export const sendWelcomeEmail = (email, firstName) => {
+export const sendWelcomeEmail = (userId) => {
+  const profile = Profiles.findOne({ owner: userId });
+
   sendEmail({
-    to: email,
+    to: profile.email,
     from: fromAddress,
     subject: `Welcome to ${applicationName}!`,
     template: 'welcome',
     templateVars: {
       applicationName,
-      firstName,
+      firstName: profile.name.first,
       supportEmail,
       welcomeUrl: Meteor.absoluteUrl('dashboard'),
     },
@@ -59,18 +63,38 @@ export const sendWelcomeEmail = (email, firstName) => {
   });
 };
 
-export const sendPasswordChangedEmail = (email, firstName) => {
+export const sendPasswordChangedEmail = (userId) => {
+  const profile = Profiles.findOne({ owner: userId });
+
   sendEmail({
-    to: email,
+    to: profile.email,
     from: fromAddress,
     subject: `Account alert: ${applicationName} password updated`,
     template: 'password-changed',
     templateVars: {
       applicationName,
-      firstName,
+      firstName: profile.name.first,
       supportEmail,
-      accountEmail: email,
+      accountEmail: profile.email,
       changedOn: formatDateTime(Date.now(0)),
+    },
+  }).catch((error) => {
+    throw new Meteor.Error('500', `${error}`);
+  });
+};
+
+export const sendStylistJoinConfirmEmail = (userId) => {
+  const profile = Profiles.findOne({ owner: userId });
+
+  sendEmail({
+    to: profile.email,
+    from: fromAddress,
+    subject: `We received your application to become a stylist on ${applicationName}`,
+    template: 'stylist-join-confirm',
+    templateVars: {
+      applicationName,
+      firstName: profile.name.first,
+      supportEmail,
     },
   }).catch((error) => {
     throw new Meteor.Error('500', `${error}`);
