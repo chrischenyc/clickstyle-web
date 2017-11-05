@@ -165,6 +165,7 @@ class StylistsJoinPage extends Component {
 
             {qualificationFile ? (
               <Message
+                info
                 icon="file"
                 content={qualificationFile.name}
                 onDismiss={() => {
