@@ -2,7 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import rateLimit from '../../../modules/server/rate-limit';
 import StylistApplications from '../stylist_applications';
-import { sendStylistJoinConfirmEmail } from '../../../modules/server/send-email';
+import {
+  sendStylistJoinConfirmEmail,
+  sendAdminEmailStylistApplication,
+} from '../../../modules/server/send-email';
 
 Meteor.methods({
   'stylists.join': function stylistsJoin(data) {
@@ -24,7 +27,7 @@ Meteor.methods({
       }
       check(referenceUrl, String);
 
-      StylistApplications.insert(
+      const applicationId = StylistApplications.insert(
         {
           userId: this.userId,
           mobile,
@@ -40,6 +43,8 @@ Meteor.methods({
           }
         },
       );
+
+      sendAdminEmailStylistApplication(applicationId);
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);

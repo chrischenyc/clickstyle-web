@@ -1,0 +1,6 @@
+Someone has applied to join as a stylist.
+Review the application: {{adminUrl}}
+
+
+Cheers, 
+{{supportEmail}}

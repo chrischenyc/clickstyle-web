@@ -100,3 +100,31 @@ export const sendStylistJoinConfirmEmail = (userId) => {
     throw new Meteor.Error('500', `${error}`);
   });
 };
+
+export const sendAdminEmailStylistApplication = (applicationId) => {
+  const adminHost = Meteor.settings.AdminHost;
+  const adminUrl = `${adminHost}/stylists/applications/${applicationId}`;
+
+  const adminUsers = Meteor.users
+    .find({ roles: { $has: Meteor.settings.roles.admin } }, { fields: { emails: 1 } })
+    .fetch();
+
+  try {
+    adminUsers.forEach((adminUser) => {
+      sendEmail({
+        to: adminUser.emails[0],
+        from: fromAddress,
+        subject: 'New stylist join application',
+        template: 'stylist-join-notify',
+        templateVars: {
+          adminUrl,
+          supportEmail,
+        },
+      });
+    });
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error(error);
+    /* eslint-enable no-console */
+  }
+};
