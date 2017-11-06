@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 // --------- actions ----------
 export function userSignedIn(meteorUser) {
   return {
@@ -31,7 +33,10 @@ const reducer = (state = defaultState, action) => {
           meteorUser.emails.length > 0 &&
           meteorUser.emails[0].verified,
         roles: meteorUser && meteorUser.roles,
-        isStylist: meteorUser && meteorUser.roles && meteorUser.roles.indexOf('stylist') > -1,
+        isStylist:
+          meteorUser &&
+          meteorUser.roles &&
+          meteorUser.roles.indexOf(Meteor.settings.public.roles.stylist) > -1,
       };
     }
 

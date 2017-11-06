@@ -106,7 +106,7 @@ export const sendAdminEmailStylistApplication = (applicationId) => {
   const adminUrl = `${adminHost}/stylists/applications/${applicationId}`;
 
   const adminUsers = Meteor.users
-    .find({ roles: { $has: Meteor.settings.roles.admin } }, { fields: { emails: 1 } })
+    .find({ roles: { $has: Meteor.settings.public.roles.admin } }, { fields: { emails: 1 } })
     .fetch();
 
   try {
