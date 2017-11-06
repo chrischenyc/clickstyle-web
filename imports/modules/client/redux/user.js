@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 
 // --------- actions ----------
 export function userSignedIn(meteorUser) {
@@ -34,9 +35,7 @@ const reducer = (state = defaultState, action) => {
           meteorUser.emails[0].verified,
         roles: meteorUser && meteorUser.roles,
         isStylist:
-          meteorUser &&
-          meteorUser.roles &&
-          meteorUser.roles.indexOf(Meteor.settings.public.roles.stylist) > -1,
+          meteorUser && Roles.userIsInRole(meteorUser._id, Meteor.settings.public.roles.stylist),
       };
     }
 
