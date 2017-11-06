@@ -106,7 +106,7 @@ export const sendAdminEmailStylistApplication = (applicationId) => {
   const adminUrl = `${adminHost}/stylists/applications/${applicationId}`;
 
   const adminUsers = Meteor.users
-    .find({ roles: { $has: Meteor.settings.public.roles.admin } }, { fields: { emails: 1 } })
+    .find({ roles: Meteor.settings.public.roles.admin }, { fields: { emails: 1 } })
     .fetch();
 
   try {
@@ -115,8 +115,9 @@ export const sendAdminEmailStylistApplication = (applicationId) => {
         to: adminUser.emails[0],
         from: fromAddress,
         subject: 'New stylist join application',
-        template: 'stylist-join-notify',
+        template: 'stylist-join-notify-admin',
         templateVars: {
+          applicationName,
           adminUrl,
           supportEmail,
         },
