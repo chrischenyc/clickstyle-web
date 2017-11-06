@@ -99,15 +99,19 @@ class EditProfile extends Component {
           });
         } else {
           // attach cloudinary url to profile
-          Meteor.call('profiles.photo.add', downloadUrl, (callError) => {
-            this.setState({ photoUploading: false, photoError: '' });
+          Meteor.call(
+            'profiles.photo.add',
+            downloadUrl.replace('http://', 'https://'),
+            (callError) => {
+              this.setState({ photoUploading: false, photoError: '' });
 
-            if (callError) {
-              this.setState({ photoError: callError.reason });
-            } else {
-              this.setState({ photoPristine: true });
-            }
-          });
+              if (callError) {
+                this.setState({ photoError: callError.reason });
+              } else {
+                this.setState({ photoPristine: true });
+              }
+            },
+          );
         }
       });
     }
