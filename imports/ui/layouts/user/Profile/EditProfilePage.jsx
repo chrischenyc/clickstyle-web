@@ -206,8 +206,12 @@ const EditProfilePage = ({
   </Container>
 );
 
+EditProfilePage.defaultProps = {
+  photo: null,
+};
+
 EditProfilePage.propTypes = {
-  photo: PropTypes.object,
+  photo: PropTypes.string,
   onPhotoSelected: PropTypes.func.isRequired,
   onPhotoUpload: PropTypes.func.isRequired,
   onPhotoRemove: PropTypes.func.isRequired,

@@ -64,11 +64,11 @@ Meteor.methods({
       const profile = Profiles.findOne({ owner: this.userId });
 
       // remove current profile photo from cloud
-      if (profile.photo && profile.photo.origin) {
-        deleteCloudinaryFile(profile.photo.origin, (error) => {
+      if (profile.photo) {
+        deleteCloudinaryFile(profile.photo, (error) => {
           if (error) {
             /* eslint-disable no-console */
-            console.error(`Unable to delete cloudinary file: ${profile.photo.origin}`);
+            console.error(`Unable to delete cloudinary file: ${profile.photo}`);
             console.error(error);
             /* eslint-enable no-console */
           }
@@ -76,7 +76,7 @@ Meteor.methods({
       }
 
       // update Profile.photo data
-      Profiles.update({ owner: this.userId }, { $set: { photo: { origin: URL } } });
+      Profiles.update({ owner: this.userId }, { $set: { photo: URL } });
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -94,11 +94,11 @@ Meteor.methods({
       const profile = Profiles.findOne({ owner: this.userId });
 
       // remove profile photo from cloud
-      if (profile.photo && profile.photo.origin) {
-        deleteCloudinaryFile(profile.photo.origin, (error) => {
+      if (profile.photo) {
+        deleteCloudinaryFile(profile.photo, (error) => {
           if (error) {
             /* eslint-disable no-console */
-            console.error(`Unable to delete cloudinary file: ${profile.photo.origin}`);
+            console.error(`Unable to delete cloudinary file: ${profile.photo}`);
             console.error(error);
             /* eslint-enable no-console */
           }

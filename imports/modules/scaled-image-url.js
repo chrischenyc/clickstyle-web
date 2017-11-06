@@ -1,5 +1,5 @@
-const scaledImageURL = (originalURL, size) => {
-  const lastComponent = originalURL.split('/').pop();
+const scaledImageURL = (url, size) => {
+  const lastComponent = url.split('/').pop();
   let newLastComponent = lastComponent;
 
   switch (size) {
@@ -23,7 +23,7 @@ const scaledImageURL = (originalURL, size) => {
       break;
   }
 
-  return originalURL.replace(lastComponent, newLastComponent);
+  return url.replace(lastComponent, newLastComponent);
 };
 
 export default scaledImageURL;

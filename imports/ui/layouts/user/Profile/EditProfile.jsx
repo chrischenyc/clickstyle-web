@@ -98,7 +98,7 @@ class EditProfile extends Component {
             photoError: uploadError.reason,
           });
         } else {
-          // update user profile.photo.original
+          // attach cloudinary url to profile
           Meteor.call('profiles.photo.add', downloadUrl, (callError) => {
             this.setState({ photoUploading: false, photoError: '' });
 

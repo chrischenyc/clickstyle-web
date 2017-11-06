@@ -39,8 +39,7 @@ class EditPhotoPage extends Component {
       file, scale, rotate, openRemoveConfirm,
     } = this.state;
 
-    const photoOriginURL = photo !== undefined && photo && photo.origin ? photo.origin : null;
-    const photoURL = photoOriginURL || Meteor.settings.public.image.defaultProfilePhoto;
+    const displayPhotoUrl = photo || Meteor.settings.public.image.defaultProfilePhoto;
 
     // if file selected, show photo editor UI
     return (
@@ -125,11 +124,15 @@ class EditPhotoPage extends Component {
           </div>
         ) : (
           <div>
-            <Image src={ScaledImageURL(photoURL, 'small')} width={ImageSize} height={ImageSize} />
+            <Image
+              src={ScaledImageURL(displayPhotoUrl, 'small')}
+              width={ImageSize}
+              height={ImageSize}
+            />
 
             <p>Your photo will appear on your public profile</p>
 
-            {photoOriginURL && (
+            {photo && (
               <Button
                 negative
                 onClick={() => {
@@ -182,7 +185,7 @@ EditPhotoPage.defaultProps = {
 };
 
 EditPhotoPage.propTypes = {
-  photo: PropTypes.object,
+  photo: PropTypes.string,
   onPhotoSelected: PropTypes.func.isRequired,
   onPhotoUpload: PropTypes.func.isRequired,
   onPhotoRemove: PropTypes.func.isRequired,

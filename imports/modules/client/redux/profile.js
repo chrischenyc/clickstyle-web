@@ -20,9 +20,7 @@ const reducer = (state = defaultState, action) => {
       return {
         fetching,
         ...profile,
-        photoURL:
-          (profile && profile.photo && profile.photo.origin) ||
-          Meteor.settings.public.image.defaultProfilePhoto,
+        photoURL: (profile && profile.photo) || Meteor.settings.public.image.defaultProfilePhoto,
       };
     }
 
