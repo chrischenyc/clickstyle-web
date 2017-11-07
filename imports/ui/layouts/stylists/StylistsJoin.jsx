@@ -95,9 +95,7 @@ class StylistJoin extends Component {
     } = this.state;
 
     // only send selected services' id to server
-    const selectedServices = services
-      .filter(service => service.checked)
-      .map(service => service._id);
+    const selectedServices = services.filter(service => service.checked);
 
     const errors = validateStylistJoin(mobile, address, selectedServices, referenceUrl);
 
