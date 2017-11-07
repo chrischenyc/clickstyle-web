@@ -2,6 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import Profiles from '../profiles';
 
 Meteor.publish('profiles.owner', function profilesOwner() {
+  if (!this.userId) {
+    return null;
+  }
+
   return Profiles.find(
     { owner: this.userId },
     {
