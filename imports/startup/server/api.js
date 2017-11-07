@@ -1,3 +1,4 @@
+import '../../api/users/users';
 import '../../api/users/server/methods';
 
 import '../../api/bookings/server/publications';
