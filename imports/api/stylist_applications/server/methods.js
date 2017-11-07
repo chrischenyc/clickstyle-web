@@ -25,7 +25,7 @@ Meteor.methods({
       }
       check(referenceUrl, String);
 
-      const profile = Profiles.findOne({ owner: this.userId }, { fields: { name: 1, email: 1 } });
+      const profile = Profiles.findOne({ owner: this.userId });
 
       StylistApplications.insert({
         userId: this.userId,
