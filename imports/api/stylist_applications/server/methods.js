@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+
 import rateLimit from '../../../modules/server/rate-limit';
 import StylistApplications from '../stylist_applications';
+import Profiles from '../../profiles/profiles';
 import {
   sendStylistJoinConfirmEmail,
   sendAdminEmailStylistApplication,
@@ -27,9 +29,13 @@ Meteor.methods({
       }
       check(referenceUrl, String);
 
+      const profile = Profiles.findOne({ owner: this.userId }, { fields: { name: 1, email: 1 } });
+
       const applicationId = StylistApplications.insert(
         {
           userId: this.userId,
+          name: `${profile.name.first} ${profile.name.last}`,
+          email: profile.email,
           mobile,
           address,
           services,
