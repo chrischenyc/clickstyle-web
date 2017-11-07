@@ -1,5 +1,6 @@
 import '../../api/users/users';
 import '../../api/users/server/methods';
+import '../../api/users/server/hooks';
 
 import '../../api/bookings/server/publications';
 import '../../api/bookings/server/methods';
