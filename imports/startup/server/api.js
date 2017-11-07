@@ -13,3 +13,4 @@ import '../../api/services/server/publications';
 
 import '../../api/stylist_applications/server/methods';
 import '../../api/stylist_applications/server/publications';
+import '../../api/stylist_applications/server/hooks';

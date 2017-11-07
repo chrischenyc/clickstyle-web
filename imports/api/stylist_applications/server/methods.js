@@ -4,10 +4,6 @@ import { check } from 'meteor/check';
 import rateLimit from '../../../modules/server/rate-limit';
 import StylistApplications from '../stylist_applications';
 import Profiles from '../../profiles/profiles';
-import {
-  sendStylistJoinConfirmEmail,
-  sendAdminEmailStylistApplication,
-} from '../../../modules/server/send-email';
 
 Meteor.methods({
   'stylists.join': function stylistsJoin(data) {
@@ -31,26 +27,17 @@ Meteor.methods({
 
       const profile = Profiles.findOne({ owner: this.userId }, { fields: { name: 1, email: 1 } });
 
-      const applicationId = StylistApplications.insert(
-        {
-          userId: this.userId,
-          name: `${profile.name.first} ${profile.name.last}`,
-          email: profile.email,
-          mobile,
-          address,
-          services,
-          qualificationUrl,
-          referenceUrl,
-          approved: false,
-        },
-        (error) => {
-          if (!error) {
-            sendStylistJoinConfirmEmail(this.userId);
-          }
-        },
-      );
-
-      sendAdminEmailStylistApplication(applicationId);
+      StylistApplications.insert({
+        userId: this.userId,
+        name: `${profile.name.first} ${profile.name.last}`,
+        email: profile.email,
+        mobile,
+        address,
+        services,
+        qualificationUrl,
+        referenceUrl,
+        approved: false,
+      });
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
