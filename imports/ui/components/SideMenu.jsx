@@ -11,7 +11,7 @@ const SideMenu = ({ profile }) => (
   <Menu secondary vertical color={Meteor.settings.public.semantic.color} size="massive" stackable>
     {profile.photoURL && (
       <Menu.Item>
-        <Image src={ScaledImageURL(profile.photoURL, 'tiny')} size="tiny" shape="circular" />
+        <Image src={ScaledImageURL(profile.photoURL, 'tiny')} size="tiny" avatar />
       </Menu.Item>
     )}
 
