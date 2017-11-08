@@ -43,12 +43,8 @@ const SideMenu = ({ profile }) => (
           Make a booking
         </Menu.Item>
 
-        <Menu.Item as={NavLink} to="/upcoming-bookings">
+        <Menu.Item as={NavLink} to="/bookings">
           Bookings
-        </Menu.Item>
-
-        <Menu.Item as={NavLink} to="/past-bookings">
-          Past Bookings
         </Menu.Item>
 
         <Menu.Item as={NavLink} to="/favourites">
