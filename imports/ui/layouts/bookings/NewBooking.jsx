@@ -1,12 +1,14 @@
 import React from 'react';
-import { Segment, Container, Header } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
+
+import SideMenuContainer from '../../components/SideMenuContainer';
 
 const NewBooking = () => (
-  <Segment vertical className="below-fixed-menu">
+  <SideMenuContainer>
     <Container>
       <Header>new booking</Header>
     </Container>
-  </Segment>
+  </SideMenuContainer>
 );
 
 export default NewBooking;

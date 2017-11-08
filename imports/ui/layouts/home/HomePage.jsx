@@ -3,7 +3,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment } from 'semantic-ui-react';
+import { Container, Segment } from 'semantic-ui-react';
 
 import BannerSegment from './BannerSegment';
 import HowItWorksSegment from './HowItWorksSegment';
@@ -13,7 +13,7 @@ import BookingsList from '../bookings/BookingsList';
 import Bookings from '../../../api/bookings/bookings';
 
 const HomePage = props => (
-  <div className="below-fixed-menu">
+  <Container fluid className="below-fixed-menu">
     <BannerSegment />
 
     <HowItWorksSegment />
@@ -29,7 +29,7 @@ const HomePage = props => (
     >
       <BookingsList bookings={props.bookings} />
     </Segment>
-  </div>
+  </Container>
 );
 
 HomePage.propTypes = {

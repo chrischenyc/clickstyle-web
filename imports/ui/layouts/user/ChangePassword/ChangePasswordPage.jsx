@@ -5,6 +5,7 @@ import { Container, Button, Form, Grid, Message, Header, Icon } from 'semantic-u
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
+import SideMenuContainer from '../../../components/SideMenuContainer';
 import FormInputField from '../../../components/FormInputField';
 
 const ChangePasswordPage = ({
@@ -14,72 +15,76 @@ const ChangePasswordPage = ({
     return <Redirect to="/dashboard" />;
   } else if (success) {
     return (
-      <Container text className="below-fixed-menu" style={{ padding: '4rem 0' }}>
-        <Grid textAlign="left" verticalAlign="middle">
-          <Message icon success>
-            <Icon name="checkmark" />
+      <SideMenuContainer>
+        <Container text>
+          <Grid textAlign="left" verticalAlign="middle">
+            <Message icon success>
+              <Icon name="checkmark" />
 
-            <Message.Content>Password has been changed, thanks!</Message.Content>
-          </Message>
-        </Grid>
-      </Container>
+              <Message.Content>Password has been changed, thanks!</Message.Content>
+            </Message>
+          </Grid>
+        </Container>
+      </SideMenuContainer>
     );
   }
 
   return (
-    <Container text className="below-fixed-menu" style={{ padding: '4rem 0' }}>
-      <Grid textAlign="left" verticalAlign="middle">
-        <Grid.Row style={{ maxWidth: 450 }}>
-          <Grid.Column>
-            <Header as="h1">Change Your Password</Header>
+    <SideMenuContainer>
+      <Container text>
+        <Grid textAlign="left" verticalAlign="middle">
+          <Grid.Row style={{ maxWidth: 450 }}>
+            <Grid.Column>
+              <Header as="h1">Change Your Password</Header>
 
-            <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-              <FormInputField
-                fluid
-                icon="lock"
-                iconPosition="left"
-                placeholder="Old password"
-                type="password"
-                name="oldPassword"
-                size="huge"
-                onChange={onChange}
-                errors={errors}
-              />
+              <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+                <FormInputField
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="Old password"
+                  type="password"
+                  name="oldPassword"
+                  size="huge"
+                  onChange={onChange}
+                  errors={errors}
+                />
 
-              <FormInputField
-                fluid
-                icon="lock"
-                iconPosition="left"
-                placeholder="New password"
-                type="password"
-                name="password"
-                size="huge"
-                onChange={onChange}
-                errors={errors}
-              />
+                <FormInputField
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="New password"
+                  type="password"
+                  name="password"
+                  size="huge"
+                  onChange={onChange}
+                  errors={errors}
+                />
 
-              <FormInputField
-                fluid
-                icon="lock"
-                iconPosition="left"
-                placeholder="Confirm password"
-                type="password"
-                name="confirm"
-                size="huge"
-                onChange={onChange}
-                errors={errors}
-              />
+                <FormInputField
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="Confirm password"
+                  type="password"
+                  name="confirm"
+                  size="huge"
+                  onChange={onChange}
+                  errors={errors}
+                />
 
-              {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+                {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
 
-              <Button color={Meteor.settings.public.semantic.color} size="huge" type="submit">
-                Change password
-              </Button>
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Container>
+                <Button color={Meteor.settings.public.semantic.color} size="huge" type="submit">
+                  Change password
+                </Button>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
+    </SideMenuContainer>
   );
 };
 

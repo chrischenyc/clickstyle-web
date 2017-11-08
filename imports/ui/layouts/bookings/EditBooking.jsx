@@ -1,12 +1,10 @@
 import React from 'react';
-import { Segment, Container, Header } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
 
 const EditBooking = () => (
-  <Segment vertical className="below-fixed-menu">
-    <Container>
-      <Header>edit booking</Header>
-    </Container>
-  </Segment>
+  <Container>
+    <Header>edit booking</Header>
+  </Container>
 );
 
 export default EditBooking;

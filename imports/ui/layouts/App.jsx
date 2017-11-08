@@ -13,7 +13,6 @@ import SecureRoute from '../components/SecureRoute';
 import PublicRoute from '../components/PublicRoute';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import SideMenuContainer from '../components/SideMenuContainer';
 import ModalContainer from '../components/ModalContainer';
 
 import HomePage from '../layouts/home/HomePage';
@@ -76,61 +75,15 @@ class App extends Component {
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password/:token" component={ResetPassword} />
 
-            <SecureRoute
-              exact
-              path="/dashboard"
-              component={() => (
-                <SideMenuContainer>
-                  <DashboardPage />
-                </SideMenuContainer>
-              )}
-            />
-            <SecureRoute
-              exact
-              path="/profile"
-              component={() => (
-                <SideMenuContainer>
-                  <EditProfile />
-                </SideMenuContainer>
-              )}
-            />
-            <SecureRoute
-              exact
-              path="/settings"
-              component={() => (
-                <SideMenuContainer>
-                  <SettingsPage />
-                </SideMenuContainer>
-              )}
-            />
-            <SecureRoute
-              path="/change-password"
-              component={() => (
-                <SideMenuContainer>
-                  <ChangePassword />
-                </SideMenuContainer>
-              )}
-            />
-            <SecureRoute
-              path="/inbox"
-              component={() => (
-                <SideMenuContainer>
-                  <InboxPage />
-                </SideMenuContainer>
-              )}
-            />
+            <SecureRoute exact path="/dashboard" component={DashboardPage} />
+            <SecureRoute exact path="/profile" component={EditProfile} />
+            <SecureRoute exact path="/settings" component={SettingsPage} />
+            <SecureRoute path="/change-password" component={ChangePassword} />
+            <SecureRoute path="/inbox" component={InboxPage} />
 
             <Route exact path="/bookings" component={BookingsPage} />
-            <SecureRoute
-              exact
-              path="/bookings/new"
-              component={() => (
-                <SideMenuContainer>
-                  <NewBooking />
-                </SideMenuContainer>
-              )}
-            />
-            <Route exact path="/bookings/:_id" component={ViewBooking} />
+            <SecureRoute exact path="/bookings/new" component={NewBooking} />
+            <SecureRoute exact path="/bookings/:_id" component={ViewBooking} />
             <SecureRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
             <Route exact path="/stylists" component={StylistsHomePage} />
