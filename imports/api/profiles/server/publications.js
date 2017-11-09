@@ -17,11 +17,11 @@ Meteor.publish('profiles.owner', function profilesOwner() {
 });
 
 Meteor.publish('profiles', (_id) => {
+  check(_id, String);
+
   if (!this.userId) {
     return null;
   }
-
-  check(_id, String);
 
   return Profiles.find(
     { _id },
