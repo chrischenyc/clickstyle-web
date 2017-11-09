@@ -13,7 +13,7 @@ import BookingsList from '../bookings/BookingsList';
 import Bookings from '../../../api/bookings/bookings';
 
 const HomePage = props => (
-  <div className="below-fixed-menu">
+  <div style={{ marginTop: '51px' }}>
     <BannerSegment />
 
     <HowItWorksSegment />

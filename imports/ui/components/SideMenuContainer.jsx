@@ -4,16 +4,22 @@ import PropTypes from 'prop-types';
 import SideMenu from './SideMenu';
 
 const SideMenuContainer = props => (
-  <Grid className="below-fixed-menu">
-    <Responsive minWidth={Responsive.onlyTablet.minWidth} as={Grid.Row}>
-      <Grid.Column width="3">
-        <SideMenu />
-      </Grid.Column>
-      <Grid.Column width="13">{props.children}</Grid.Column>
+  <div style={{ marginTop: '51px', paddingTop: '1rem' }}>
+    <Responsive
+      minWidth={Responsive.onlyTablet.minWidth}
+      as={Grid}
+      style={{ paddingLeft: '1rem', paddingRight: '1rem' }}
+    >
+      <Grid.Row>
+        <Grid.Column width="3">
+          <SideMenu />
+        </Grid.Column>
+        <Grid.Column width="13">{props.children}</Grid.Column>
+      </Grid.Row>
     </Responsive>
 
     <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>{props.children}</Responsive>
-  </Grid>
+  </div>
 );
 
 SideMenuContainer.propTypes = {

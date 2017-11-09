@@ -14,7 +14,7 @@ const ResetPasswordPage = ({
     return <Redirect to="/dashboard" />;
   } else if (success) {
     return (
-      <Container text className="below-fixed-menu" style={{ padding: '4rem 0' }}>
+      <Container text style={{ marginTop: '51px', padding: '4rem 0' }}>
         <Grid textAlign="left" verticalAlign="middle">
           <Message icon success>
             <Icon name="checkmark" />
@@ -27,7 +27,7 @@ const ResetPasswordPage = ({
   }
 
   return (
-    <Container text className="below-fixed-menu" style={{ padding: '4rem 0' }}>
+    <Container text style={{ marginTop: '51px', padding: '4rem 0' }}>
       <Grid textAlign="left" verticalAlign="middle">
         <Grid.Row style={{ maxWidth: 450 }}>
           <Grid.Column>

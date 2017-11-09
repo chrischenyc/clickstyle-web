@@ -6,13 +6,13 @@ import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
 const ForgotPasswordPage = ({
-  onSubmit, onChange, loading, errors, success, redirect,
+  onSubmit, onChange, loading, errors, success, redirect, modal,
 }) => {
   if (redirect) {
     return <Redirect to="/" />;
   } else if (success) {
     return (
-      <Container text className="below-fixed-menu" style={{ padding: '4rem 0' }}>
+      <Container text style={{ marginTop: modal ? '0' : '51px', padding: '2rem 0' }}>
         <Grid textAlign="left" verticalAlign="middle">
           <Message icon success>
             <Icon name="checkmark" />
@@ -25,7 +25,7 @@ const ForgotPasswordPage = ({
   }
 
   return (
-    <Container text className="below-fixed-menu" style={{ padding: '4rem 0' }}>
+    <Container text style={{ marginTop: modal ? '0' : '51px', padding: '2rem 0' }}>
       <Grid textAlign="left" verticalAlign="middle">
         <Grid.Row style={{ maxWidth: 450 }}>
           <Grid.Column>
@@ -62,6 +62,10 @@ const ForgotPasswordPage = ({
   );
 };
 
+ForgotPasswordPage.defaultProps = {
+  modal: false,
+};
+
 ForgotPasswordPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -69,6 +73,7 @@ ForgotPasswordPage.propTypes = {
   errors: PropTypes.object.isRequired,
   success: PropTypes.bool.isRequired,
   redirect: PropTypes.bool.isRequired,
+  modal: PropTypes.bool,
 };
 
 export default ForgotPasswordPage;

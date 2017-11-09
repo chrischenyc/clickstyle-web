@@ -15,7 +15,7 @@ import ForgotPassword from '../ForgotPassword/ForgotPassword';
 const LoginPage = ({
   onSubmit, onChange, loading, errors, modal, onLoggedIn,
 }) => (
-  <Grid textAlign="center" verticalAlign="middle" className="below-fixed-menu">
+  <Grid textAlign="center" verticalAlign="middle" style={{ marginTop: modal ? '0' : '51px' }}>
     <Grid.Row style={{ maxWidth: 450 }}>
       <Grid.Column>
         <Segment attached>

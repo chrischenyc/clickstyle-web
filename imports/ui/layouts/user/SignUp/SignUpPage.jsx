@@ -21,7 +21,7 @@ const SignUpPage = ({
   modal,
   onLoggedIn,
 }) => (
-  <Grid textAlign="center" className="below-fixed-menu" verticalAlign="middle">
+  <Grid textAlign="center" verticalAlign="middle" style={{ marginTop: modal ? '0' : '51px' }}>
     <Grid.Row style={{ maxWidth: 450 }}>
       <Grid.Column>
         <Segment attached>
