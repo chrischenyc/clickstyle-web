@@ -40,6 +40,13 @@ import EditBooking from '../layouts/bookings/EditBooking';
 import StylistsHomePage from '../layouts/stylists/StylistsHomePage';
 import StylistsJoin from '../layouts/stylists/StylistsJoin';
 
+// scroll to page top when route changes
+// https://github.com/ReactTraining/react-router/issues/2019#issuecomment-292711226
+const ScrollToTop = () => {
+  window.scrollTo(0, 0);
+  return null;
+};
+
 class App extends Component {
   // after web App is refreshed, try to fetch Meteor user data then update redux states
   componentDidMount() {
@@ -66,6 +73,7 @@ class App extends Component {
     return (
       <Router>
         <div>
+          <Route component={ScrollToTop} />
           <Header />
 
           <Switch>
