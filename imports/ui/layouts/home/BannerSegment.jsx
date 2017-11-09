@@ -57,6 +57,7 @@ const BannerSegment = props => (
         size="huge"
         color={Meteor.settings.public.semantic.color}
         as={SecureLink}
+        history={props.history}
         to="/bookings/new"
         title="Log in to continue"
         onLoggedIn={() => {

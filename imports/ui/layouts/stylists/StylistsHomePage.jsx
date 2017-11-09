@@ -26,6 +26,7 @@ const StylistsHomepage = props => (
       icon="right arrow"
       labelPosition="right"
       as={SecureLink}
+      history={props.history}
       to="/stylists/join"
       onLoggedIn={() => {
         props.closeModal();
