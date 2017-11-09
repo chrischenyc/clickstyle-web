@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import SideMenu from './SideMenu';
 
 const SideMenuContainer = props => (
-  <Grid stackable className="below-fixed-menu">
+  <Grid className="below-fixed-menu">
     <Responsive minWidth={Responsive.onlyTablet.minWidth} as={Grid.Row}>
-      <Grid.Column width="1">
+      <Grid.Column width="3">
         <SideMenu />
       </Grid.Column>
-      <Grid.Column width="15">{props.children}</Grid.Column>
+      <Grid.Column width="13">{props.children}</Grid.Column>
     </Responsive>
 
     <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>{props.children}</Responsive>
