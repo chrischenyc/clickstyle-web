@@ -55,9 +55,15 @@ const LoginPage = ({
             {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
           </Form>
 
-          <ModalLink to="/forgot-password" component={<ForgotPassword modal />}>
-            <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
-          </ModalLink>
+          {modal ? (
+            <ModalLink to="/forgot-password" component={<ForgotPassword modal />}>
+              <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
+            </ModalLink>
+          ) : (
+            <Link to="/forgot-password">
+              <p style={{ margin: '0.5rem 0' }}>Forgot password?</p>
+            </Link>
+          )}
         </Segment>
 
         <Message attached="bottom" size="large">
