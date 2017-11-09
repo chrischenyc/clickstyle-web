@@ -1,6 +1,6 @@
 {
-  "extends": ["airbnb", "plugin:meteor/recommended"],
   "plugins": ["meteor"],
+  "extends": ["airbnb", "plugin:meteor/recommended"],
   "env": {
     "browser": true,
     "commonjs": true,
