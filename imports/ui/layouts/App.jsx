@@ -18,6 +18,8 @@ import ModalContainer from '../components/ModalContainer';
 import HomePage from '../layouts/home/HomePage';
 import NotFoundPage from '../layouts/NotFoundPage';
 
+import Profile from '../layouts/profiles/Profile';
+
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
 import VerifyEmailPage from '../layouts/user/VerifyEmailPage';
@@ -74,6 +76,8 @@ class App extends Component {
             <Route path="/verify-email/:token" component={VerifyEmailPage} />
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/reset-password/:token" component={ResetPassword} />
+
+            <SecureRoute path="/profiles/:_id" component={Profile} />
 
             <SecureRoute exact path="/dashboard" component={DashboardPage} />
             <SecureRoute exact path="/profile" component={EditProfile} />

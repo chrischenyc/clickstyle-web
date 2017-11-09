@@ -11,6 +11,7 @@ import {
   Icon,
   Divider,
 } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import GeoSuggest from 'react-geosuggest';
 
@@ -42,6 +43,13 @@ const EditProfilePage = ({
 }) => (
   <SideMenuContainer>
     <Container>
+      <Button
+        color={Meteor.settings.public.semantic.color}
+        as={Link}
+        to={`/profiles/${profile._id}`}
+      >
+        View profile
+      </Button>
       <Form
         onSubmit={onSubmit}
         loading={profile.fetching || saving}
@@ -77,8 +85,6 @@ const EditProfilePage = ({
           onChange={onChange}
           errors={errors}
           value={_.has(profile, 'name.last') ? profile.name.last : ''}
-          note={`This is not on your public profile. This is only shared with another ${Meteor
-            .settings.public.applicationName} user once you two have a confirmed booking .`}
         />
 
         <FormInputField
@@ -195,7 +201,7 @@ const EditProfilePage = ({
 
         <Button
           color={Meteor.settings.public.semantic.color}
-          size="massive"
+          size="huge"
           type="submit"
           disabled={pristine}
           loading={saving}
