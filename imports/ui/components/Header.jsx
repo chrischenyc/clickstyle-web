@@ -16,6 +16,9 @@ const StylistLandingPageLink = () => (
   </Menu.Item>
 );
 
+/**
+ * Header has a desktop/tablet version and a mobile phone version
+ */
 const Header = props => (
   <div>
     <Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -124,37 +127,13 @@ const Header = props => (
               )}
 
               {!props.authenticated && (
-                <Dropdown.Item
-                  as={ModalLink}
-                  to="/signup"
-                  component={
-                    <SignUp
-                      modal
-                      onLoggedIn={() => {
-                        props.closeModal();
-                      }}
-                    />
-                  }
-                  title="Join us"
-                >
+                <Dropdown.Item as={Link} to="/signup">
                   Sign up
                 </Dropdown.Item>
               )}
 
               {!props.authenticated && (
-                <Dropdown.Item
-                  as={ModalLink}
-                  to="/login"
-                  component={
-                    <Login
-                      modal
-                      onLoggedIn={() => {
-                        props.closeModal();
-                      }}
-                    />
-                  }
-                  title="Log in to continue"
-                >
+                <Dropdown.Item as={Link} to="/login">
                   Log in
                 </Dropdown.Item>
               )}
