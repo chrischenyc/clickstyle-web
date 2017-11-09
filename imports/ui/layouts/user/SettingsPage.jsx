@@ -3,8 +3,6 @@ import { Container, Header, List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import SideMenuContainer from '../../components/SideMenuContainer';
-import ModalLink from '../../components/ModalLink';
-import ForgotPassword from './ForgotPassword/ForgotPassword';
 
 const SettingsPage = () => (
   <SideMenuContainer>
@@ -16,9 +14,7 @@ const SettingsPage = () => (
           <Link to="/change-password">Change Password</Link>
         </List.Item>
         <List.Item>
-          <ModalLink to="/forgot-password" component={<ForgotPassword modal />}>
-            Reset password
-          </ModalLink>
+          <Link to="/reset-password">Reset password</Link>
         </List.Item>
       </List>
     </Container>

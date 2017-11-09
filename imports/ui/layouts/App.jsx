@@ -79,6 +79,10 @@ class App extends Component {
             <SecureRoute exact path="/profile" component={EditProfile} />
             <SecureRoute exact path="/settings" component={SettingsPage} />
             <SecureRoute path="/change-password" component={ChangePassword} />
+            <SecureRoute
+              path="/reset-password"
+              component={props => <ForgotPassword {...props} embedded />}
+            />
             <SecureRoute path="/inbox" component={InboxPage} />
 
             <Route exact path="/bookings" component={BookingsPage} />

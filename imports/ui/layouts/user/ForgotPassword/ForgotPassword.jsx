@@ -78,6 +78,8 @@ class ForgotPassword extends Component {
         errors={this.state.errors}
         success={this.state.success}
         redirect={this.state.redirect}
+        modal={this.props.modal}
+        embedded={this.props.embedded}
       />
     );
   }
@@ -85,10 +87,12 @@ class ForgotPassword extends Component {
 
 ForgotPassword.defaultProps = {
   modal: false,
+  embedded: false,
 };
 
 ForgotPassword.propTypes = {
   modal: PropTypes.bool,
+  embedded: PropTypes.bool,
 };
 
 export default ForgotPassword;

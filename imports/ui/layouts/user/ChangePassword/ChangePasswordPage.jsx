@@ -16,7 +16,7 @@ const ChangePasswordPage = ({
   } else if (success) {
     return (
       <SideMenuContainer>
-        <Container text>
+        <Container text style={{ padding: '2rem 0' }}>
           <Grid textAlign="left" verticalAlign="middle">
             <Message icon success>
               <Icon name="checkmark" />
@@ -31,7 +31,7 @@ const ChangePasswordPage = ({
 
   return (
     <SideMenuContainer>
-      <Container text>
+      <Container text style={{ padding: '2rem 0' }}>
         <Grid textAlign="left" verticalAlign="middle">
           <Grid.Row style={{ maxWidth: 450 }}>
             <Grid.Column>
