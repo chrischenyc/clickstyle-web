@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+import log from 'winston';
+
 import rateLimit from '../../../modules/server/rate-limit';
 import Profiles from '../profiles';
 import Products from '../../products/products';
@@ -10,6 +12,8 @@ Meteor.methods({
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
+
+    log.info('Meteor.methods', 'profiles.update');
 
     check(profile, Object);
 
