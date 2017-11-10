@@ -6,7 +6,7 @@ import { Button, Form, Grid, Message, Segment, Divider, Checkbox } from 'semanti
 import _ from 'lodash';
 
 import ModalLink from '../../../components/ModalLink';
-import FormInputField from '../../../components/FormInputField';
+import { FormInputField } from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
 import Login from '../Login/Login';
 

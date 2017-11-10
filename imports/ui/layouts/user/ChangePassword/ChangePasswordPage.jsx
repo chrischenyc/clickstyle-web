@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
-import FormInputField from '../../../components/FormInputField';
+import { FormInputField } from '../../../components/FormInputField';
 
 const ChangePasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,

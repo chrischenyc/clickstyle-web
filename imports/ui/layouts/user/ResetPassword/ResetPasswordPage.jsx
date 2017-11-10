@@ -5,7 +5,7 @@ import { Container, Button, Form, Grid, Message, Header, Icon } from 'semantic-u
 import { Redirect, Link } from 'react-router-dom';
 import _ from 'lodash';
 
-import FormInputField from '../../../components/FormInputField';
+import { FormInputField } from '../../../components/FormInputField';
 
 const ResetPasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,

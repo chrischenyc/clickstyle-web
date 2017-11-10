@@ -7,24 +7,27 @@ import {
   Form,
   Message,
   TextArea,
-  Label,
-  Icon,
   Divider,
+  List,
+  Checkbox,
+  Label,
+  Input,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
-import FormInputField from '../../../components/FormInputField';
+import {
+  FormInputField,
+  FormFieldErrorMessage,
+  FormFieldNote,
+} from '../../../components/FormInputField';
 
 const StylistServicesPricesPage = ({
   profile,
-  productsMatched,
-  productsSearch,
   onSubmit,
   onChange,
-  onSelectProduct,
-  onDeselectProduct,
+  services,
   saving,
   pristine,
   errors,
@@ -41,34 +44,34 @@ const StylistServicesPricesPage = ({
       <Form onSubmit={onSubmit} loading={profile.fetching || saving} error={!_.isEmpty(errors)}>
         <Divider horizontal>Services &amp; Prices</Divider>
 
-        <FormInputField
-          label="First name"
-          placeholder="First name"
-          name="name.first"
-          onChange={onChange}
-          errors={errors}
-          value={_.has(profile, 'name.first') ? profile.name.first : ''}
-        />
+        <List>
+          {services.map(service => (
+            <List.Item key={service._id}>
+              <Checkbox
+                label={service.name}
+                checked={service.checked}
+                onChange={(event, data) => {
+                  onServiceSelected(service, data.checked);
+                }}
+              />
+            </List.Item>
+          ))}
+        </List>
 
-        <FormInputField
-          label="Last name"
-          placeholder="Last name"
-          name="name.last"
+        <Input
+          labelPosition="right"
+          type="text"
+          name="basePrice"
+          placeholder="base price"
           onChange={onChange}
           errors={errors}
-          value={_.has(profile, 'name.last') ? profile.name.last : ''}
-        />
-
-        <FormInputField
-          label="Mobile number"
-          placeholder="Mobile number"
-          name="mobile"
-          onChange={onChange}
-          errors={errors}
-          value={_.has(profile, 'mobile') ? profile.mobile : ''}
-          note={`This is not on your public profile. This is only shared with another ${Meteor
-            .settings.public.applicationName} user once you two have a confirmed booking .`}
-        />
+          value={_.has(profile, 'basePrice') ? profile.basePrice : ''}
+        >
+          <Label basic>$</Label>
+          <input />
+          <Label>.00</Label>
+        </Input>
+        <p style={{ marginTop: '0', marginBottom: '1rem', color: '#aaa' }}>Base price means ...</p>
 
         <FormInputField
           label="About you"
@@ -80,71 +83,6 @@ const StylistServicesPricesPage = ({
           value={_.has(profile, 'about') ? profile.about : ''}
           note="Help other people get to know you. Tell them about the things you like..."
         />
-
-        <Divider horizontal>Products</Divider>
-
-        <Form.Field>
-          <label>Products you used</label>
-
-          <input
-            placeholder="start searching by typing e.g.: l'oreal..."
-            name="productsSearch"
-            style={{ marginBottom: '0.5rem' }}
-            autoComplete="off"
-            value={productsSearch}
-            onChange={onChange}
-            onKeyPress={(event) => {
-              if (event.key === 'Enter') {
-                event.preventDefault();
-                onSelectProduct({ name: event.target.value });
-              }
-            }}
-          />
-
-          {/* matched tags for selection */}
-          {productsMatched && (
-            <div style={{ marginBottom: '0.5rem' }}>
-              {productsMatched.map(product => (
-                <Label
-                  size="large"
-                  as="a"
-                  key={product.name}
-                  color={Meteor.settings.public.semantic.color}
-                  basic
-                  style={{ marginBottom: '0.25rem' }}
-                  onClick={() => {
-                    onSelectProduct(product);
-                  }}
-                >
-                  <Icon name="add" />
-                  {product.name}
-                </Label>
-              ))}
-            </div>
-          )}
-
-          {/* selected tags */}
-          {profile.products && (
-            <div style={{ marginBottom: '0.5rem' }}>
-              {profile.products.map(product => (
-                <Label
-                  size="large"
-                  key={product.name}
-                  color={Meteor.settings.public.semantic.color}
-                  style={{ marginBottom: '0.25rem' }}
-                >
-                  {product.name}
-                  <Icon
-                    name="delete"
-                    onClick={() => {
-                      onDeselectProduct(product);
-                    }}
-                  />
-                </Label>
-              ))}
-            </div>
-          )}
-        </Form.Field>
 
         <Button
           color={Meteor.settings.public.semantic.color}
@@ -164,12 +102,9 @@ const StylistServicesPricesPage = ({
 
 StylistServicesPricesPage.propTypes = {
   profile: PropTypes.object.isRequired,
-  productsMatched: PropTypes.array.isRequired,
-  productsSearch: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onSelectProduct: PropTypes.func.isRequired,
-  onDeselectProduct: PropTypes.func.isRequired,
+  services: PropTypes.array.isRequired,
   saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,

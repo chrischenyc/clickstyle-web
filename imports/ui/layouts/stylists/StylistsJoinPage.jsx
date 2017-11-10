@@ -7,7 +7,7 @@ import { UploadField as FileField } from '@navjobs/upload';
 import { Link } from 'react-router-dom';
 import GeoSuggest from 'react-geosuggest';
 
-import FormInputField from '../../components/FormInputField';
+import { FormInputField } from '../../components/FormInputField';
 import { formatDate } from '../../../modules/format-date';
 
 class StylistsJoinPage extends Component {

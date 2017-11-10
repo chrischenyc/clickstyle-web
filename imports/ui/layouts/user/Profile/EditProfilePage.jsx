@@ -17,7 +17,7 @@ import GeoSuggest from 'react-geosuggest';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
 import '../../../components/GeoSuggest.css';
-import FormInputField from '../../../components/FormInputField';
+import { FormInputField } from '../../../components/FormInputField';
 import EditPhotoPage from './EditPhotoPage';
 
 const EditProfilePage = ({
