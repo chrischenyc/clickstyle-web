@@ -7,7 +7,7 @@ import { Menu, Image } from 'semantic-ui-react';
 
 import ScaledImageURL from '../../modules/scaled-image-url';
 
-const SideMenu = ({ profile }) => (
+const SideMenu = ({ profile, isStylist }) => (
   <Menu secondary vertical color={Meteor.settings.public.semantic.color} size="massive" stackable>
     {profile.photoURL && (
       <Menu.Item>
@@ -53,16 +53,31 @@ const SideMenu = ({ profile }) => (
       </Menu.Menu>
     </Menu.Item>
 
-    {/* TODO: if stylist role, add more menu items */}
+    {isStylist && (
+      <Menu.Item>
+        <Menu.Header>Stylist</Menu.Header>
+        <Menu.Menu>
+          <Menu.Item as={NavLink} to="/stylists/profile">
+            Stylist profile
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu.Item>
+    )}
   </Menu>
 );
 
 SideMenu.propTypes = {
+  isStylist: false,
+};
+
+SideMenu.propTypes = {
   profile: PropTypes.object.isRequired,
+  isStylist: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   profile: state.profile,
+  isStylist: state.user.isStylist,
 });
 
 export default connect(mapStateToProps)(SideMenu);
