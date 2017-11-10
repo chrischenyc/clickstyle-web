@@ -20,7 +20,6 @@ import '../../../components/GeoSuggest.css';
 import FormInputField from '../../../components/FormInputField';
 import EditPhotoPage from './EditPhotoPage';
 
-// web version of the login form, stateless component
 const EditProfilePage = ({
   photo,
   onPhotoSelected,

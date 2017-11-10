@@ -13,28 +13,16 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import GeoSuggest from 'react-geosuggest';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
-import '../../../components/GeoSuggest.css';
 import FormInputField from '../../../components/FormInputField';
-import EditPhotoPage from './EditPhotoPage';
 
-// web version of the login form, stateless component
-const EditStylistProfilePage = ({
-  photo,
-  onPhotoSelected,
-  onPhotoUpload,
-  onPhotoRemove,
-  photoUploading,
-  photoPristine,
-  photoError,
+const StylistServicesPricesPage = ({
   profile,
   productsMatched,
   productsSearch,
   onSubmit,
   onChange,
-  onAddressSuggest,
   onSelectProduct,
   onDeselectProduct,
   saving,
@@ -48,26 +36,10 @@ const EditStylistProfilePage = ({
         as={Link}
         to={`/profiles/${profile._id}`}
       >
-        View profile
+        View stylist profile
       </Button>
-      <Form
-        onSubmit={onSubmit}
-        loading={profile.fetching || saving}
-        error={!_.isEmpty(errors) || !_.isEmpty(photoError)}
-      >
-        <Divider horizontal>Photo</Divider>
-
-        <EditPhotoPage
-          photo={photo}
-          onPhotoSelected={onPhotoSelected}
-          onPhotoUpload={onPhotoUpload}
-          onPhotoRemove={onPhotoRemove}
-          photoUploading={photoUploading}
-          photoPristine={photoPristine}
-          photoError={photoError}
-        />
-
-        <Divider horizontal>Basic info</Divider>
+      <Form onSubmit={onSubmit} loading={profile.fetching || saving} error={!_.isEmpty(errors)}>
+        <Divider horizontal>Services &amp; Prices</Divider>
 
         <FormInputField
           label="First name"
@@ -97,31 +69,6 @@ const EditStylistProfilePage = ({
           note={`This is not on your public profile. This is only shared with another ${Meteor
             .settings.public.applicationName} user once you two have a confirmed booking .`}
         />
-
-        <Form.Field>
-          <label>Your address</label>
-
-          <GeoSuggest
-            placeholder="type to search address, suburb, or postcode"
-            country="au"
-            name="address.raw"
-            initialValue={_.has(profile, 'address.raw') ? profile.address.raw : ''}
-            onChange={(value) => {
-              // convert to generic onChange param
-              onChange({ target: { name: 'address.raw', value } });
-            }}
-            onSuggestSelect={(suggest) => {
-              // force onChange as well
-              onChange({ target: { name: 'address.raw', value: suggest.label } });
-              onAddressSuggest(suggest);
-            }}
-          />
-
-          <p style={{ marginTop: '0.25rem', marginBottom: '1rem', color: '#aaa' }}>
-            {`This is not on your public profile. This is only shared with another ${Meteor.settings
-              .public.applicationName} user once you two have a confirmed booking .`}
-          </p>
-        </Form.Field>
 
         <FormInputField
           label="About you"
@@ -215,24 +162,12 @@ const EditStylistProfilePage = ({
   </SideMenuContainer>
 );
 
-EditStylistProfilePage.defaultProps = {
-  photo: null,
-};
-
-EditStylistProfilePage.propTypes = {
-  photo: PropTypes.string,
-  onPhotoSelected: PropTypes.func.isRequired,
-  onPhotoUpload: PropTypes.func.isRequired,
-  onPhotoRemove: PropTypes.func.isRequired,
-  photoUploading: PropTypes.bool.isRequired,
-  photoPristine: PropTypes.bool.isRequired,
-  photoError: PropTypes.string.isRequired,
+StylistServicesPricesPage.propTypes = {
   profile: PropTypes.object.isRequired,
   productsMatched: PropTypes.array.isRequired,
   productsSearch: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onAddressSuggest: PropTypes.func.isRequired,
   onSelectProduct: PropTypes.func.isRequired,
   onDeselectProduct: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
@@ -240,4 +175,4 @@ EditStylistProfilePage.propTypes = {
   errors: PropTypes.object.isRequired,
 };
 
-export default EditStylistProfilePage;
+export default StylistServicesPricesPage;

@@ -8,8 +8,6 @@ import AvatarEditor from 'react-avatar-editor';
 
 import ScaledImageURL from '../../../../modules/scaled-image-url';
 
-// web version of the login form, stateless component
-
 const ImageSize = 280;
 
 class EditPhotoPage extends Component {

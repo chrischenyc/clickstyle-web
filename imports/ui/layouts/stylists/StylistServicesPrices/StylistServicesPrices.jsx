@@ -9,8 +9,7 @@ import _ from 'lodash';
 
 import Products from '../../../../api/products/products';
 import { validateEditProfile } from '../../../../modules/validate';
-import GeoSuggestToAddress from '../../../../modules/geo-suggest-to-address';
-import EditStylistProfilePage from './EditStylistProfilePage';
+import StylistServicesPricesPage from './StylistServicesPricesPage';
 
 const availableProducts = (products, selectedProducts) => {
   if (!selectedProducts || selectedProducts.length === 0) {
@@ -32,14 +31,11 @@ const searchProducts = (products, keyword) => {
 
 // platform-independent stateful container component
 // to handle edit user profile logic
-class EditStylistProfile extends Component {
+class StylistServicesPrices extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      photoError: '',
-      photoUploading: false,
-      photoPristine: true,
       profile: _.cloneDeep(props.profile),
       productsAvailable: availableProducts(props.products, props.profile.products),
       productsMatched: [],
@@ -49,12 +45,8 @@ class EditStylistProfile extends Component {
       pristine: true,
     };
 
-    this.handlePhotoSelected = this.handlePhotoSelected.bind(this);
-    this.handlePhotoUpload = this.handlePhotoUpload.bind(this);
-    this.handlePhotoRemove = this.handlePhotoRemove.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleAddressSuggest = this.handleAddressSuggest.bind(this);
     this.handleSelectProduct = this.handleSelectProduct.bind(this);
     this.handleDeselectProduct = this.handleDeselectProduct.bind(this);
   }
@@ -68,55 +60,6 @@ class EditStylistProfile extends Component {
     });
   }
 
-  handlePhotoSelected() {
-    this.setState({ photoPristine: false });
-  }
-
-  handlePhotoRemove() {
-    Meteor.call('profiles.photo.remove', (callError) => {
-      if (callError) {
-        this.setState({ photoError: callError.reason });
-      }
-    });
-  }
-
-  handlePhotoUpload(file) {
-    this.setState({ photoError: '' });
-
-    const upload = new Slingshot.Upload(Meteor.settings.public.SlingshotCloudinaryImage);
-    const validateError = upload.validate(file);
-
-    if (validateError) {
-      this.setState({ photoError: validateError.reason });
-    } else {
-      this.setState({ photoUploading: true });
-
-      upload.send(file, (uploadError, downloadUrl) => {
-        if (uploadError) {
-          this.setState({
-            photoUploading: false,
-            photoError: uploadError.reason,
-          });
-        } else {
-          // attach cloudinary url to profile
-          Meteor.call(
-            'profiles.photo.add',
-            downloadUrl.replace('http://', 'https://'),
-            (callError) => {
-              this.setState({ photoUploading: false, photoError: '' });
-
-              if (callError) {
-                this.setState({ photoError: callError.reason });
-              } else {
-                this.setState({ photoPristine: true });
-              }
-            },
-          );
-        }
-      });
-    }
-  }
-
   handleChange(event) {
     if (event.target.name === 'productsSearch') {
       this.setState({
@@ -126,10 +69,6 @@ class EditStylistProfile extends Component {
     } else {
       let newProfile = _.cloneDeep(this.state.profile);
       newProfile = _.set(newProfile, event.target.name, event.target.value);
-
-      if (event.target.name === 'address.raw' && _.isEmpty(event.target.value)) {
-        newProfile.address = {};
-      }
 
       this.setState({
         profile: newProfile,
@@ -157,14 +96,6 @@ class EditStylistProfile extends Component {
         }
       });
     }
-  }
-
-  handleAddressSuggest(suggest) {
-    const address = GeoSuggestToAddress(suggest);
-
-    this.setState({
-      profile: { ...this.state.profile, address },
-    });
   }
 
   handleSelectProduct(selectedProduct) {
@@ -213,20 +144,12 @@ class EditStylistProfile extends Component {
 
   render() {
     return (
-      <EditStylistProfilePage
-        photo={this.props.profile.photo}
-        onPhotoSelected={this.handlePhotoSelected}
-        onPhotoUpload={this.handlePhotoUpload}
-        onPhotoRemove={this.handlePhotoRemove}
-        photoUploading={this.state.photoUploading}
-        photoPristine={this.state.photoPristine}
-        photoError={this.state.photoError}
+      <StylistServicesPricesPage
         profile={this.state.profile}
         productsMatched={this.state.productsMatched}
         productsSearch={this.state.productsSearch}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        onAddressSuggest={this.handleAddressSuggest}
         onSelectProduct={this.handleSelectProduct}
         onDeselectProduct={this.handleDeselectProduct}
         saving={this.state.saving}
@@ -237,11 +160,11 @@ class EditStylistProfile extends Component {
   }
 }
 
-EditStylistProfile.defaultProps = {
+StylistServicesPrices.defaultProps = {
   products: [],
 };
 
-EditStylistProfile.propTypes = {
+StylistServicesPrices.propTypes = {
   profile: PropTypes.object.isRequired,
   products: PropTypes.array,
 };
@@ -257,4 +180,4 @@ export default compose(
       products: Products.find().fetch(),
     };
   }),
-)(EditStylistProfile);
+)(StylistServicesPrices);
