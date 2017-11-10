@@ -1,5 +1,6 @@
 // import server startup through a single index entry point
 
+import './log';
 import './api';
 import './fixtures';
 import './oauth';

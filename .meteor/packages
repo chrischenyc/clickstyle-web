@@ -35,3 +35,4 @@ splendido:accounts-meld         # merge social sign in accounts with password ac
 edgee:slingshot                 # file upload
 jimmiebtlr:slingshot-cloudinary # support uploading to cloudinary
 matb33:collection-hooks
+wylio:winston-papertrail
