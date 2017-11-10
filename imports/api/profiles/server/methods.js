@@ -13,7 +13,7 @@ Meteor.methods({
       throw new Meteor.Error(403, 'unauthorized');
     }
 
-    log.info('Meteor.methods', 'profiles.update');
+    log.info('Meteor.methods - profiles.update', this.userId);
 
     check(profile, Object);
 
