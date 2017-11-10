@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+import log from 'winston';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import StylistApplications from '../stylist_applications';
@@ -10,6 +11,8 @@ Meteor.methods({
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
+
+    log.info('Meteor.methods - stylists.join', `userId - ${this.userId}`);
 
     check(data, Object);
     const {

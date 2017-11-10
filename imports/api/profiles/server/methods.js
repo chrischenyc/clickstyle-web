@@ -62,6 +62,8 @@ Meteor.methods({
       throw new Meteor.Error(403, 'unauthorized');
     }
 
+    log.info('Meteor.methods - profiles.photo.add', `userId - ${this.userId}`);
+
     check(URL, String);
 
     try {
@@ -93,6 +95,8 @@ Meteor.methods({
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
+
+    log.info('Meteor.methods - profiles.photo.remove', `userId - ${this.userId}`);
 
     try {
       const profile = Profiles.findOne({ owner: this.userId });
