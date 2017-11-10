@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
+import log from 'winston';
 
 import { sendWelcomeEmail } from '../../../modules/server/send-email';
 
@@ -15,4 +16,6 @@ Meteor.users.after.insert((userId, user) => {
 
   // default sign-up role is Customer
   Roles.addUsersToRoles(user._id, [Meteor.settings.public.roles.customer]);
+
+  log.info('Meteor.methods - users.insert', `userId - ${user._id}`);
 });
