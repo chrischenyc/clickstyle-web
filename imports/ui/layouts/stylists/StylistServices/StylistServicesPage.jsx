@@ -24,65 +24,20 @@ import {
 } from '../../../components/FormInputField';
 
 const StylistServicesPage = ({
-  profile,
+  selectedServices,
+  availableServices,
   onSubmit,
   onChange,
   services,
+  loading,
   saving,
   pristine,
   errors,
 }) => (
   <SideMenuContainer>
     <Container>
-      <Button
-        color={Meteor.settings.public.semantic.color}
-        as={Link}
-        to={`/profiles/${profile._id}`}
-      >
-        View stylist profile
-      </Button>
-      <Form onSubmit={onSubmit} loading={profile.fetching || saving} error={!_.isEmpty(errors)}>
+      <Form onSubmit={onSubmit} loading={loading || saving} error={!_.isEmpty(errors)}>
         <Divider horizontal>Services &amp; Prices</Divider>
-
-        <List>
-          {services.map(service => (
-            <List.Item key={service._id}>
-              <Checkbox
-                label={service.name}
-                checked={service.checked}
-                onChange={(event, data) => {
-                  onServiceSelected(service, data.checked);
-                }}
-              />
-            </List.Item>
-          ))}
-        </List>
-
-        <Input
-          labelPosition="right"
-          type="text"
-          name="basePrice"
-          placeholder="base price"
-          onChange={onChange}
-          errors={errors}
-          value={_.has(profile, 'basePrice') ? profile.basePrice : ''}
-        >
-          <Label basic>$</Label>
-          <input />
-          <Label>.00</Label>
-        </Input>
-        <p style={{ marginTop: '0', marginBottom: '1rem', color: '#aaa' }}>Base price means ...</p>
-
-        <FormInputField
-          label="About you"
-          name="about"
-          control={TextArea}
-          autoHeight
-          onChange={onChange}
-          errors={errors}
-          value={_.has(profile, 'about') ? profile.about : ''}
-          note="Help other people get to know you. Tell them about the things you like..."
-        />
 
         <Button
           color={Meteor.settings.public.semantic.color}
@@ -101,10 +56,11 @@ const StylistServicesPage = ({
 );
 
 StylistServicesPage.propTypes = {
-  profile: PropTypes.object.isRequired,
+  selectedServices: PropTypes.array.isRequired,
+  availableServices: PropTypes.array.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  services: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
   saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,

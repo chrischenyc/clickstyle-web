@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Slingshot } from 'meteor/edgee:slingshot';
 import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -8,17 +7,23 @@ import { compose } from 'redux';
 import _ from 'lodash';
 
 import Services from '../../../../api/services/services';
-import { validateEditProfile } from '../../../../modules/validate';
+import { validateStylistServices } from '../../../../modules/validate';
 import StylistServicesPage from './StylistServicesPage';
 
+const availableServices = (allServices, selectedServices) => {
+  const selectedServicedIds = selectedServices.map(service => service._id);
+
+  return allServices.filter(service => selectedServicedIds.indexOf(service._id) === -1);
+};
+
 // platform-independent stateful container component
-// to handle edit user profile logic
+// to handle edit stylist services and prices logic
 class StylistServices extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      profile: _.cloneDeep(props.profile),
+      selectedServices: _.cloneDeep(props.selectedServices),
       errors: {},
       saving: false,
       pristine: true,
@@ -32,32 +37,24 @@ class StylistServices extends Component {
     // after Profile object is fetched, set it in state
     this.setState({
       pristine: true,
-      profile: _.cloneDeep(nextProps.profile),
+      selectedServices: _.cloneDeep(nextProps.selectedServices),
     });
   }
 
-  handleChange(event) {
-    let newProfile = _.cloneDeep(this.state.profile);
-    newProfile = _.set(newProfile, event.target.name, event.target.value);
-
-    this.setState({
-      profile: newProfile,
-      pristine: _.isEqual(newProfile, this.props.profile),
-    });
-  }
+  handleChange(event) {}
 
   handleSubmit(event) {
     this.setState({ errors: {} });
     event.preventDefault();
 
-    const errors = validateEditProfile(this.state.profile);
+    const errors = validateStylistServices(this.state.selectedServices);
 
     if (!_.isEmpty(errors)) {
       this.setState({ errors });
     } else {
       this.setState({ saving: true });
 
-      Meteor.call('profiles.update', this.state.profile, (error) => {
+      Meteor.call('stylists.update.services', this.state.selectedServices, (error) => {
         this.setState({ saving: false, errors: {}, pristine: true });
 
         if (error) {
@@ -70,10 +67,11 @@ class StylistServices extends Component {
   render() {
     return (
       <StylistServicesPage
-        profile={this.state.profile}
+        selectedServices={this.state.selectedServices}
+        availableServices={availableServices(this.props.allServices, this.state.selectedServices)}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        services={this.props.services}
+        loading={this.props.loading}
         saving={this.state.saving}
         pristine={this.state.pristine}
         errors={this.state.errors}
@@ -83,23 +81,27 @@ class StylistServices extends Component {
 }
 
 StylistServices.defaultProps = {
-  services: [],
+  loading: false,
+  selectedServices: [],
+  allServices: [],
 };
 
 StylistServices.propTypes = {
-  profile: PropTypes.object.isRequired,
-  services: PropTypes.array,
+  loading: PropTypes.bool,
+  selectedServices: PropTypes.array,
+  allServices: PropTypes.array,
 };
 
 export default compose(
   connect(state => ({
-    profile: state.profile,
+    loading: state.profile.fetching,
+    selectedServices: state.profile && state.profile.stylist && state.profile.stylist.services,
   })),
   withTracker(() => {
     Meteor.subscribe('services');
 
     return {
-      services: Services.find().fetch(),
+      allServices: Services.find().fetch(),
     };
   }),
 )(StylistServices);

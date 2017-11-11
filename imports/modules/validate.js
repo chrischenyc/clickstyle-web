@@ -123,3 +123,9 @@ export const validateStylistJoin = (mobile, address, services, referenceUrl) => 
 
   return errors;
 };
+
+export const validateStylistServices = (services) => {
+  const errors = {};
+
+  return errors;
+};
