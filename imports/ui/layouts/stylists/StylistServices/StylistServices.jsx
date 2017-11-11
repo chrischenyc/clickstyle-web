@@ -9,11 +9,11 @@ import _ from 'lodash';
 
 import Services from '../../../../api/services/services';
 import { validateEditProfile } from '../../../../modules/validate';
-import StylistServicesPricesPage from './StylistServicesPricesPage';
+import StylistServicesPage from './StylistServicesPage';
 
 // platform-independent stateful container component
 // to handle edit user profile logic
-class StylistServicesPrices extends Component {
+class StylistServices extends Component {
   constructor(props) {
     super(props);
 
@@ -69,7 +69,7 @@ class StylistServicesPrices extends Component {
 
   render() {
     return (
-      <StylistServicesPricesPage
+      <StylistServicesPage
         profile={this.state.profile}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
@@ -82,11 +82,11 @@ class StylistServicesPrices extends Component {
   }
 }
 
-StylistServicesPrices.defaultProps = {
+StylistServices.defaultProps = {
   services: [],
 };
 
-StylistServicesPrices.propTypes = {
+StylistServices.propTypes = {
   profile: PropTypes.object.isRequired,
   services: PropTypes.array,
 };
@@ -102,4 +102,4 @@ export default compose(
       services: Services.find().fetch(),
     };
   }),
-)(StylistServicesPrices);
+)(StylistServices);

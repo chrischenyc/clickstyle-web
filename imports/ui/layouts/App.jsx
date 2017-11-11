@@ -37,8 +37,7 @@ import ViewBooking from '../layouts/bookings/ViewBooking';
 import NewBooking from '../layouts/bookings/NewBooking';
 import EditBooking from '../layouts/bookings/EditBooking';
 
-import StylistServicesPrices from '../layouts/stylists/StylistServicesPrices/StylistServicesPrices';
-import StylistPhotos from '../layouts/stylists/StylistPhotos/StylistPhotos';
+import StylistServices from '../layouts/stylists/StylistServices/StylistServices';
 
 import StylistsHomePage from '../layouts/stylists/StylistsHomePage';
 import StylistsJoin from '../layouts/stylists/StylistsJoin';
@@ -107,8 +106,7 @@ class App extends Component {
 
             <Route exact path="/stylists" component={StylistsHomePage} />
             <SecureRoute path="/stylists/join" component={StylistsJoin} />
-            <SecureRoute path="/stylists/services-prices" component={StylistServicesPrices} />
-            <SecureRoute path="/stylists/photos" component={StylistPhotos} />
+            <SecureRoute path="/stylists/services" component={StylistServices} />
 
             <Route component={NotFoundPage} />
           </Switch>

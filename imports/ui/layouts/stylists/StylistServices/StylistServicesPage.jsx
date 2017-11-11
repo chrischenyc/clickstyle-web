@@ -23,7 +23,7 @@ import {
   FormFieldNote,
 } from '../../../components/FormInputField';
 
-const StylistServicesPricesPage = ({
+const StylistServicesPage = ({
   profile,
   onSubmit,
   onChange,
@@ -100,7 +100,7 @@ const StylistServicesPricesPage = ({
   </SideMenuContainer>
 );
 
-StylistServicesPricesPage.propTypes = {
+StylistServicesPage.propTypes = {
   profile: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -110,4 +110,4 @@ StylistServicesPricesPage.propTypes = {
   errors: PropTypes.object.isRequired,
 };
 
-export default StylistServicesPricesPage;
+export default StylistServicesPage;
