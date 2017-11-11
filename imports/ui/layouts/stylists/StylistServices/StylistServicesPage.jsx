@@ -22,12 +22,14 @@ import {
   FormFieldErrorMessage,
   FormFieldNote,
 } from '../../../components/FormInputField';
+import StylistServiceItem from './StylistServiceItem';
 
 const StylistServicesPage = ({
   selectedServices,
   availableServices,
   onSubmit,
   onChange,
+  onDeleteService,
   services,
   loading,
   saving,
@@ -38,6 +40,16 @@ const StylistServicesPage = ({
     <Container>
       <Form onSubmit={onSubmit} loading={loading || saving} error={!_.isEmpty(errors)}>
         <Divider horizontal>Services &amp; Prices</Divider>
+
+        {selectedServices.map(service => (
+          <StylistServiceItem
+            key={service._id}
+            service={service}
+            onDelete={() => {
+              onDeleteService(service);
+            }}
+          />
+        ))}
 
         <Button
           color={Meteor.settings.public.semantic.color}
@@ -60,6 +72,7 @@ StylistServicesPage.propTypes = {
   availableServices: PropTypes.array.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onDeleteService: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,

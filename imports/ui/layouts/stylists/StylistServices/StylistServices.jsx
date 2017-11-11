@@ -29,6 +29,7 @@ class StylistServices extends Component {
       pristine: true,
     };
 
+    this.handleDeleteService = this.handleDeleteService.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -38,6 +39,13 @@ class StylistServices extends Component {
     this.setState({
       pristine: true,
       selectedServices: _.cloneDeep(nextProps.selectedServices),
+    });
+  }
+
+  handleDeleteService(service) {
+    this.setState({
+      pristine: false,
+      selectedServices: this.state.selectedServices.filter(selectedService => selectedService._id !== service._id),
     });
   }
 
@@ -71,6 +79,7 @@ class StylistServices extends Component {
         availableServices={availableServices(this.props.allServices, this.state.selectedServices)}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
+        onDeleteService={this.handleDeleteService}
         loading={this.props.loading}
         saving={this.state.saving}
         pristine={this.state.pristine}
