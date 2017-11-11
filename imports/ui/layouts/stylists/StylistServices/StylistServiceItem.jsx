@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Segment, Message, Confirm } from 'semantic-ui-react';
+import { Segment, Message, Confirm, List, Input, Label, Divider, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 class StylistServiceItem extends Component {
@@ -27,9 +27,33 @@ class StylistServiceItem extends Component {
         />
 
         <Segment attached>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          <List>
+            <List.Item>
+              Base price:&nbsp;
+              <Input labelPosition="right" type="text" placeholder="Amount">
+                <Label basic>$</Label>
+                <input type="number" />
+                <Label>.00</Label>
+              </Input>
+            </List.Item>
+            <List.Item>
+              <Divider horizontal>Add-ons</Divider>
+            </List.Item>
+            {/* TODO: map service.addons here */}
+            <List.Item>
+              <Button
+                basic
+                color={Meteor.settings.public.semantic.color}
+                content="Add an add-on"
+                icon="add"
+                type="button"
+                labelPosition="right"
+                onClick={() => {
+                  this.setState({ showAvailableServicesModal: true });
+                }}
+              />
+            </List.Item>
+          </List>
         </Segment>
 
         <Confirm
