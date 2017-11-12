@@ -45,7 +45,7 @@ class StylistServiceItem extends Component {
                 basic
                 color={Meteor.settings.public.semantic.color}
                 content="Add an add-on"
-                icon="add"
+                icon="add circle"
                 type="button"
                 labelPosition="right"
                 onClick={() => {

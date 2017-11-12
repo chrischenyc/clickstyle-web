@@ -116,10 +116,10 @@ class StylistServicesPage extends Component {
             {availableServices.length > 0 && (
               <p>
                 <Button
-                  basic
                   color={Meteor.settings.public.semantic.color}
+                  size="large"
                   content="Add more services"
-                  icon="add"
+                  icon="add circle"
                   type="button"
                   labelPosition="right"
                   onClick={() => {
@@ -131,7 +131,7 @@ class StylistServicesPage extends Component {
 
             <Button
               color={Meteor.settings.public.semantic.color}
-              size="huge"
+              size="massive"
               type="submit"
               disabled={pristine}
               loading={saving}
