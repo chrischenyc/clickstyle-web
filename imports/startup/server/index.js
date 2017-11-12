@@ -3,6 +3,7 @@
 import './log';
 import './api';
 import './fixtures';
+import './migration';
 import './oauth';
 import './email';
 import './accounts';

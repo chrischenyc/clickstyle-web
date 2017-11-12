@@ -25,8 +25,12 @@ export const FormFieldErrorMessage = ({ message }) => {
   );
 };
 
+FormFieldErrorMessage.defaultProps = {
+  message: '',
+};
+
 FormFieldErrorMessage.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
 };
 
 export const FormInputField = ({

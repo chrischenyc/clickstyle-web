@@ -2,11 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
 import _ from 'lodash';
 
 import Services from '../../../../api/services/services';
+import Stylists from '../../../../api/stylists/stylists.js';
 import { validateStylistServices } from '../../../../modules/validate';
 import StylistServicesPage from './StylistServicesPage';
 
@@ -23,7 +22,8 @@ class StylistServices extends Component {
     super(props);
 
     this.state = {
-      selectedServices: _.cloneDeep(props.selectedServices),
+      selectedServices:
+        props.stylist && props.stylist.services ? _.cloneDeep(props.stylist.services) : [],
       errors: {},
       saving: false,
       pristine: true,
@@ -39,7 +39,10 @@ class StylistServices extends Component {
     // after Profile object is fetched, set it in state
     this.setState({
       pristine: true,
-      selectedServices: _.cloneDeep(nextProps.selectedServices),
+      selectedServices:
+        nextProps.stylist && nextProps.stylist.services
+          ? _.cloneDeep(nextProps.stylist.services)
+          : [],
     });
   }
 
@@ -100,26 +103,23 @@ class StylistServices extends Component {
 
 StylistServices.defaultProps = {
   loading: false,
-  selectedServices: [],
+  stylist: null,
   allServices: [],
 };
 
 StylistServices.propTypes = {
   loading: PropTypes.bool,
-  selectedServices: PropTypes.array,
+  stylist: PropTypes.object,
   allServices: PropTypes.array,
 };
 
-export default compose(
-  connect(state => ({
-    loading: state.profile.fetching,
-    selectedServices: state.profile && state.profile.stylist && state.profile.stylist.services,
-  })),
-  withTracker(() => {
-    Meteor.subscribe('services');
+export default withTracker(() => {
+  const handleStylist = Meteor.subscribe('stylists.owner');
+  const handleServices = Meteor.subscribe('services');
 
-    return {
-      allServices: Services.find().fetch(),
-    };
-  }),
-)(StylistServices);
+  return {
+    loading: !handleServices.ready() || !handleStylist.ready(),
+    stylist: Stylists.findOne(),
+    allServices: Services.find().fetch(),
+  };
+})(StylistServices);

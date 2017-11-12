@@ -87,50 +87,6 @@ const ProductSchema = new SimpleSchema({
   },
 });
 
-const AddonSchema = new new SimpleSchema({
-  name: {
-    type: String,
-  },
-  description: {
-    type: String,
-    optional: true,
-  },
-  price: {
-    type: Number,
-  },
-})();
-
-const ServiceSchema = new SimpleSchema({
-  _id: {
-    type: String,
-  },
-  name: {
-    type: String,
-  },
-  basePrice: {
-    type: Number,
-    optional: true,
-  },
-  addons: {
-    type: [AddonSchema],
-    optional: true,
-  },
-});
-
-const StylistSchema = new SimpleSchema({
-  services: {
-    type: [ServiceSchema],
-  },
-  qualificationUrl: {
-    type: String,
-    optional: true,
-  },
-  referenceUrl: {
-    type: String,
-    optional: true,
-  },
-});
-
 const ProfilesSchema = new SimpleSchema({
   // required fields
   owner: {
@@ -171,10 +127,6 @@ const ProfilesSchema = new SimpleSchema({
   products: {
     type: [ProductSchema],
     optional: true,
-  },
-  stylist: {
-    optional: true,
-    type: StylistSchema,
   },
 });
 
