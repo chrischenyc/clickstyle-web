@@ -18,6 +18,7 @@ class StylistServiceItem extends Component {
 
     this.handleAddAddon = this.handleAddAddon.bind(this);
     this.handleRemoveAddon = this.handleRemoveAddon.bind(this);
+    this.handleChangeAddon = this.handleChangeAddon.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -31,6 +32,8 @@ class StylistServiceItem extends Component {
     const newAddon = {
       _id: uuid(),
       name: '',
+      price: '',
+      description: '',
     };
 
     const { service } = this.state;
@@ -55,6 +58,25 @@ class StylistServiceItem extends Component {
     });
   }
 
+  handleChangeAddon(addonToChange, event) {
+    const { service } = this.state;
+    this.setState({
+      service: {
+        ...service,
+        addons: service.addons.map((addon) => {
+          if (addon._id === addonToChange._id) {
+            const updatedAddon = { ...addonToChange };
+
+            updatedAddon[event.target.name] = event.target.value;
+
+            return updatedAddon;
+          }
+          return addon;
+        }),
+      },
+    });
+  }
+
   render() {
     const { service } = this.state;
     const { onDelete } = this.props;
@@ -73,12 +95,7 @@ class StylistServiceItem extends Component {
         <Segment attached>
           <List>
             <List.Item>
-              Base price:&nbsp;&nbsp;
-              <Input labelPosition="right" type="text" placeholder="Amount">
-                <Label basic>$</Label>
-                <input type="number" />
-                <Label>.00</Label>
-              </Input>
+              <Input label="Base price" type="number" placeholder="Amount" min="1" />
             </List.Item>
 
             <List.Item>
@@ -93,6 +110,9 @@ class StylistServiceItem extends Component {
                     onRemove={() => {
                       this.handleRemoveAddon(addon);
                     }}
+                    onChange={(event) => {
+                      this.handleChangeAddon(addon, event);
+                    }}
                   />
                 </List.Item>
               ))}
@@ -104,7 +124,6 @@ class StylistServiceItem extends Component {
                 color={Meteor.settings.public.semantic.color}
                 content="Add an add-on"
                 icon="add circle"
-                type="button"
                 labelPosition="right"
                 onClick={() => {
                   this.handleAddAddon();
