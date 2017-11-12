@@ -99,7 +99,7 @@ class StylistServicesPage extends Component {
 
     return (
       <SideMenuContainer>
-        <Container text>
+        <Container>
           <Form onSubmit={onSubmit} loading={loading || saving} error={!_.isEmpty(errors)}>
             <Divider horizontal>Services &amp; Prices</Divider>
 
