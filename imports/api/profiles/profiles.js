@@ -87,13 +87,33 @@ const ProductSchema = new SimpleSchema({
   },
 });
 
+const AddonSchema = new new SimpleSchema({
+  name: {
+    type: String,
+  },
+  description: {
+    type: String,
+    optional: true,
+  },
+  price: {
+    type: Number,
+  },
+})();
+
 const ServiceSchema = new SimpleSchema({
-  // required fields
   _id: {
     type: String,
   },
   name: {
     type: String,
+  },
+  basePrice: {
+    type: Number,
+    optional: true,
+  },
+  addons: {
+    type: [AddonSchema],
+    optional: true,
   },
 });
 
