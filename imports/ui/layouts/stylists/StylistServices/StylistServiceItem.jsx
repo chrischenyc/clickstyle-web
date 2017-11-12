@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Segment, Message, Confirm, List, Input, Label, Divider, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import uuid from 'uuid/v1';
 
 import StylistServiceAddonItem from './StylistServiceAddonItem';
 
@@ -16,6 +17,7 @@ class StylistServiceItem extends Component {
     };
 
     this.handleAddAddon = this.handleAddAddon.bind(this);
+    this.handleRemoveAddon = this.handleRemoveAddon.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,6 +29,7 @@ class StylistServiceItem extends Component {
 
   handleAddAddon() {
     const newAddon = {
+      _id: uuid(),
       name: '',
     };
 
@@ -39,6 +42,17 @@ class StylistServiceItem extends Component {
         service: { ...service, addons: [...service.addons, newAddon] },
       });
     }
+  }
+
+  handleRemoveAddon(addonToRemove) {
+    const { service } = this.state;
+
+    this.setState({
+      service: {
+        ...service,
+        addons: service.addons.filter(addon => addon._id !== addonToRemove._id),
+      },
+    });
   }
 
   render() {
@@ -72,19 +86,21 @@ class StylistServiceItem extends Component {
             </List.Item>
 
             {service.addons &&
-              service.addons.map((addon) => {
-                console.log(addon);
-
-                return (
-                  <List.Item>
-                    <StylistServiceAddonItem addon={addon} />
-                  </List.Item>
-                );
-              })}
+              service.addons.map(addon => (
+                <List.Item key={addon._id}>
+                  <StylistServiceAddonItem
+                    addon={addon}
+                    onRemove={() => {
+                      this.handleRemoveAddon(addon);
+                    }}
+                  />
+                </List.Item>
+              ))}
 
             <List.Item>
               <Button
                 basic
+                type="button"
                 color={Meteor.settings.public.semantic.color}
                 content="Add an add-on"
                 icon="add circle"
