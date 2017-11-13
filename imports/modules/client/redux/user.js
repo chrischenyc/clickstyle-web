@@ -27,13 +27,13 @@ const reducer = (state = defaultState, action) => {
 
       return {
         ...state,
+        id: meteorUser._id,
         authenticated: meteorUser && true,
         verified:
           meteorUser &&
           meteorUser.emails &&
           meteorUser.emails.length > 0 &&
           meteorUser.emails[0].verified,
-        roles: meteorUser && meteorUser.roles,
         isStylist:
           meteorUser && Roles.userIsInRole(meteorUser._id, Meteor.settings.public.roles.stylist),
       };
