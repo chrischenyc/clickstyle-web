@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Segment, Message, Confirm, List, Divider, Button } from 'semantic-ui-react';
+import { Segment, Message, Confirm, List, Divider, Button, Responsive } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid from 'uuid/v1';
@@ -115,13 +115,25 @@ class StylistServiceItem extends Component {
         <Segment attached>
           <List>
             <List.Item>
-              <PriceField
-                name="basePrice"
-                label="Base price"
-                placeholder="base price"
-                value={service.basePrice}
-                onChange={this.handleChange}
-              />
+              <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+                <PriceField
+                  name="basePrice"
+                  label="Base price"
+                  placeholder="base price"
+                  value={service.basePrice}
+                  onChange={this.handleChange}
+                />
+              </Responsive>
+              <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
+                <PriceField
+                  fluid
+                  name="basePrice"
+                  label="Base price"
+                  placeholder="base price"
+                  value={service.basePrice}
+                  onChange={this.handleChange}
+                />
+              </Responsive>
 
               <div>
                 <FormFieldErrorMessage
