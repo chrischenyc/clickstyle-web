@@ -16,7 +16,7 @@ Meteor.methods({
     check(services, Array);
 
     try {
-      Stylists.update({ owner: this.userId }, { $set: services });
+      Stylists.update({ owner: this.userId }, { $set: { services } });
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);

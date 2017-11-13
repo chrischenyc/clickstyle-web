@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Message } from 'semantic-ui-react';
+import { Form, Message, Input } from 'semantic-ui-react';
 import _ from 'lodash';
 
 export const FormFieldNote = ({ note }) => {
@@ -52,4 +52,23 @@ FormInputField.propTypes = {
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   note: PropTypes.string,
+};
+
+export const PriceField = ({ onChange, ...rest }) => (
+  <Input
+    type="number"
+    min="1"
+    onChange={onChange}
+    onBlur={(event) => {
+      const price = parseInt(event.target.value);
+      if (price <= 0) {
+        onChange({ target: { name: event.target.name, value: '' } });
+      }
+    }}
+    {...rest}
+  />
+);
+
+PriceField.propTypes = {
+  onChange: PropTypes.func.isRequired,
 };

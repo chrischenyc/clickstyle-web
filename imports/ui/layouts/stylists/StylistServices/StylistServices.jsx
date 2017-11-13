@@ -31,7 +31,7 @@ class StylistServices extends Component {
 
     this.handleDeleteService = this.handleDeleteService.bind(this);
     this.handleAddServices = this.handleAddServices.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeService = this.handleChangeService.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -60,7 +60,17 @@ class StylistServices extends Component {
     });
   }
 
-  handleChange(event) {}
+  handleChangeService(changedService) {
+    this.setState({
+      pristine: false,
+      selectedServices: this.state.selectedServices.map((service) => {
+        if (changedService._id === service._id) {
+          return changedService;
+        }
+        return service;
+      }),
+    });
+  }
 
   handleSubmit(event) {
     this.setState({ errors: {} });
@@ -89,7 +99,7 @@ class StylistServices extends Component {
         selectedServices={this.state.selectedServices}
         availableServices={availableServices(this.props.allServices, this.state.selectedServices)}
         onSubmit={this.handleSubmit}
-        onChange={this.handleChange}
+        onChangeService={this.handleChangeService}
         onDeleteService={this.handleDeleteService}
         onAddServices={this.handleAddServices}
         loading={this.props.loading}

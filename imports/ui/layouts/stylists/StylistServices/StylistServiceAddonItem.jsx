@@ -2,6 +2,8 @@ import React from 'react';
 import { Input, Grid, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
+import { PriceField } from '../../../components/FormInputField';
+
 const StylistServiceAddonItem = ({ addon, onRemove, onChange }) => (
   <Grid style={{ margin: '0.5rem 0' }}>
     <Grid.Row style={{ paddingTop: '0', paddingBottom: '0' }}>
@@ -18,21 +20,13 @@ const StylistServiceAddonItem = ({ addon, onRemove, onChange }) => (
       </Grid.Column>
 
       <Grid.Column width="6">
-        <Input
+        <PriceField
           fluid
           name="price"
           label="Price"
-          type="number"
           placeholder="add-on price"
-          min="1"
           value={addon.price}
           onChange={onChange}
-          onBlur={(event) => {
-            const price = parseInt(event.target.value);
-            if (price <= 0) {
-              onChange({ target: { name: event.target.name, value: '' } });
-            }
-          }}
         />
       </Grid.Column>
 

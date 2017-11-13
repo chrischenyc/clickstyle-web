@@ -1,11 +1,21 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Segment, Message, Confirm, List, Input, Label, Divider, Button } from 'semantic-ui-react';
+import { Segment, Message, Confirm, List, Input, Divider, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid from 'uuid/v1';
 
 import StylistServiceAddonItem from './StylistServiceAddonItem';
+import { PriceField } from '../../../components/FormInputField';
+
+const normalizeService = (service) => {
+  const cloneService = _.cloneDeep(service);
+
+  cloneService.basePrice = cloneService.basePrice || '';
+  cloneService.addons = cloneService.addons || [];
+
+  return cloneService;
+};
 
 class StylistServiceItem extends Component {
   constructor(props) {
@@ -13,19 +23,26 @@ class StylistServiceItem extends Component {
 
     this.state = {
       showDeleteServiceConfirm: false,
-      service: _.cloneDeep(props.service),
+      service: normalizeService(props.service),
     };
 
     this.handleAddAddon = this.handleAddAddon.bind(this);
     this.handleRemoveAddon = this.handleRemoveAddon.bind(this);
     this.handleChangeAddon = this.handleChangeAddon.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     // after Profile object is fetched, set it in state
     this.setState({
-      service: _.cloneDeep(nextProps.service),
+      service: normalizeService(nextProps.service),
     });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevState.service, this.state.service)) {
+      this.props.onChange(this.state.service);
+    }
   }
 
   handleAddAddon() {
@@ -38,13 +55,9 @@ class StylistServiceItem extends Component {
 
     const { service } = this.state;
 
-    if (!service.addons) {
-      this.setState({ service: { ...service, addons: [newAddon] } });
-    } else {
-      this.setState({
-        service: { ...service, addons: [...service.addons, newAddon] },
-      });
-    }
+    this.setState({
+      service: { ...service, addons: [...service.addons, newAddon] },
+    });
   }
 
   handleRemoveAddon(addonToRemove) {
@@ -77,6 +90,12 @@ class StylistServiceItem extends Component {
     });
   }
 
+  handleChange(event) {
+    const service = { ...this.state.service };
+    service[event.target.name] = event.target.value;
+    this.setState({ service });
+  }
+
   render() {
     const { service } = this.state;
     const { onDelete } = this.props;
@@ -95,7 +114,14 @@ class StylistServiceItem extends Component {
         <Segment attached>
           <List>
             <List.Item>
-              <Input label="Base price" type="number" placeholder="Amount" min="1" />
+              <PriceField
+                fluid
+                name="basePrice"
+                label="Base price"
+                placeholder="base price"
+                value={service.basePrice}
+                onChange={this.handleChange}
+              />
             </List.Item>
 
             <List.Item>
@@ -152,6 +178,7 @@ class StylistServiceItem extends Component {
 StylistServiceItem.propTypes = {
   service: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default StylistServiceItem;

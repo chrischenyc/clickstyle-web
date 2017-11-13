@@ -36,7 +36,7 @@ class StylistServicesPage extends Component {
       selectedServices,
       availableServices,
       onSubmit,
-      onChange,
+      onChangeService,
       onDeleteService,
       onAddServices,
       loading,
@@ -110,6 +110,7 @@ class StylistServicesPage extends Component {
                 onDelete={() => {
                   onDeleteService(service);
                 }}
+                onChange={onChangeService}
               />
             ))}
 
@@ -153,7 +154,7 @@ StylistServicesPage.propTypes = {
   selectedServices: PropTypes.array.isRequired,
   availableServices: PropTypes.array.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChangeService: PropTypes.func.isRequired,
   onDeleteService: PropTypes.func.isRequired,
   onAddServices: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
