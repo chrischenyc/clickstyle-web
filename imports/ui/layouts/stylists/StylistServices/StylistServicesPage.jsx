@@ -14,11 +14,6 @@ import {
 import _ from 'lodash';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
-import {
-  FormInputField,
-  FormFieldErrorMessage,
-  FormFieldNote,
-} from '../../../components/FormInputField';
 import StylistServiceItem from './StylistServiceItem';
 
 class StylistServicesPage extends Component {
@@ -100,7 +95,7 @@ class StylistServicesPage extends Component {
     return (
       <SideMenuContainer>
         <Container>
-          <Form onSubmit={onSubmit} loading={loading || saving} error={!_.isEmpty(errors)}>
+          <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
             <Divider horizontal>Services &amp; Prices</Divider>
 
             {selectedServices.map(service => (
@@ -111,12 +106,14 @@ class StylistServicesPage extends Component {
                   onDeleteService(service);
                 }}
                 onChange={onChangeService}
+                errors={errors[service._id]}
               />
             ))}
 
             {availableServices.length > 0 && (
               <p>
                 <Button
+                  basic
                   color={Meteor.settings.public.semantic.color}
                   size="large"
                   content="Add more services"

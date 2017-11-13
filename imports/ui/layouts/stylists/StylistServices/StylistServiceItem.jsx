@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Segment, Message, Confirm, List, Input, Divider, Button } from 'semantic-ui-react';
+import { Segment, Message, Confirm, List, Divider, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid from 'uuid/v1';
 
 import StylistServiceAddonItem from './StylistServiceAddonItem';
-import { PriceField } from '../../../components/FormInputField';
+import { PriceField, FormFieldErrorMessage } from '../../../components/FormInputField';
 
 const normalizeService = (service) => {
   const cloneService = _.cloneDeep(service);
@@ -98,11 +98,12 @@ class StylistServiceItem extends Component {
 
   render() {
     const { service } = this.state;
-    const { onDelete } = this.props;
+    const { onDelete, errors } = this.props;
 
     return (
       <div style={{ padding: '1rem 0' }}>
         <Message
+          style={{ background: '#E0F2F1' }}
           attached
           header={service.name}
           info
@@ -115,13 +116,20 @@ class StylistServiceItem extends Component {
           <List>
             <List.Item>
               <PriceField
-                fluid
                 name="basePrice"
                 label="Base price"
                 placeholder="base price"
                 value={service.basePrice}
                 onChange={this.handleChange}
               />
+
+              <div>
+                <FormFieldErrorMessage
+                  compact
+                  message={errors.basePrice}
+                  style={{ marginTop: '0.2rem' }}
+                />
+              </div>
             </List.Item>
 
             <List.Item>
@@ -139,6 +147,7 @@ class StylistServiceItem extends Component {
                     onChange={(event) => {
                       this.handleChangeAddon(addon, event);
                     }}
+                    errors={errors[addon._id]}
                   />
                 </List.Item>
               ))}
@@ -175,10 +184,15 @@ class StylistServiceItem extends Component {
   }
 }
 
+StylistServiceItem.defaultProps = {
+  errors: {},
+};
+
 StylistServiceItem.propTypes = {
   service: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  errors: PropTypes.object,
 };
 
 export default StylistServiceItem;

@@ -1,4 +1,5 @@
 import validator from 'validator';
+import _ from 'lodash';
 
 export const validateUserLogin = (email, password) => {
   const errors = {};
@@ -124,8 +125,38 @@ export const validateStylistJoin = (mobile, address, services, referenceUrl) => 
   return errors;
 };
 
+/*
+Sample return
+{
+  serviceId: {
+    basePrice: "Please assign an amount",
+    addonId: {
+      name: "Please input add-on name",
+      price: "Please assign an amount"
+    }
+  }
+}
+*/
 export const validateStylistServices = (services) => {
   const errors = {};
+
+  services.forEach((service) => {
+    if (!service.basePrice || parseInt(service.basePrice) <= 0) {
+      _.set(errors, `${service._id}.basePrice`, 'Please assign an amount');
+    }
+
+    if (service.addons) {
+      service.addons.forEach((addon) => {
+        if (validator.isEmpty(addon.name)) {
+          _.set(errors, `${service._id}.${addon._id}.name`, 'Please input add-on name');
+        }
+
+        if (!addon.price || parseInt(addon.price) <= 0) {
+          _.set(errors, `${service._id}.${addon._id}.price`, 'Please assign an amount');
+        }
+      });
+    }
+  });
 
   return errors;
 };

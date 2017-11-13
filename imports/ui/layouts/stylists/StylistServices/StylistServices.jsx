@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import Services from '../../../../api/services/services';
-import Stylists from '../../../../api/stylists/stylists.js';
+import Stylists from '../../../../api/stylists/stylists';
 import { validateStylistServices } from '../../../../modules/validate';
 import StylistServicesPage from './StylistServicesPage';
 

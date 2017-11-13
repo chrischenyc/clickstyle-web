@@ -15,14 +15,12 @@ FormFieldNote.propTypes = {
   note: PropTypes.string.isRequired,
 };
 
-export const FormFieldErrorMessage = ({ message }) => {
+export const FormFieldErrorMessage = ({ message, ...rest }) => {
   if (_.isEmpty(message)) {
     return '';
   }
 
-  return (
-    <Message error content={message} style={{ marginTop: '-0.75rem', marginBottom: '1rem' }} />
-  );
+  return <Message error content={message} {...rest} />;
 };
 
 FormFieldErrorMessage.defaultProps = {
@@ -38,7 +36,10 @@ export const FormInputField = ({
 }) => (
   <Form.Field>
     <Form.Input name={name} onChange={onChange} error={!_.isEmpty(errors[name])} {...rest} />
-    <FormFieldErrorMessage message={errors[name]} />
+    <FormFieldErrorMessage
+      message={errors[name]}
+      style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
+    />
     <FormFieldNote note={note} />
   </Form.Field>
 );
