@@ -227,7 +227,18 @@ if (Services.find().count() === 0) {
     });
 
     service.addons.forEach((addon) => {
-      Addons.insert({ serviceId, name: addon, createdBy: 'system' });
+      Addons.insert({
+        serviceId,
+        name: addon,
+        createdBy: 'system',
+        public: true,
+      });
     });
   });
 }
+
+Addons.find()
+  .fetch()
+  .forEach((addon) => {
+    Addons.update({ _id: addon._id }, { $set: { public: true } });
+  });
