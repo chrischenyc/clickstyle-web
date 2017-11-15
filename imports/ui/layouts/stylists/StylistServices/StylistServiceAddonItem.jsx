@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { PriceField, FormFieldErrorMessage } from '../../../components/FormInputField';
 
 const StylistServiceAddonItem = ({
-  addon, onRemove, onChange, errors,
+  publicAddons, addon, onRemove, onChange, errors,
 }) => (
   <div>
     <Responsive
@@ -149,6 +149,7 @@ StylistServiceAddonItem.defaultProps = {
 
 StylistServiceAddonItem.propTypes = {
   addon: PropTypes.object.isRequired,
+  publicAddons: PropTypes.array.isRequired,
   onRemove: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object,

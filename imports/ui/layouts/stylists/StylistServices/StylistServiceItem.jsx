@@ -153,6 +153,7 @@ class StylistServiceItem extends Component {
                 <List.Item key={addon._id}>
                   <StylistServiceAddonItem
                     addon={addon}
+                    publicAddons={service.publicAddons}
                     onRemove={() => {
                       this.handleRemoveAddon(addon);
                     }}
