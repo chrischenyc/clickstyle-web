@@ -10,7 +10,6 @@ import { userSignedIn, userSignedOut } from '../../modules/client/redux/user';
 import { fetchProfile } from '../../modules/client/redux/profile';
 
 import SecureRoute from '../components/SecureRoute';
-import SecureStylistRoute from '../components/SecureStylistRoute';
 import PublicRoute from '../components/PublicRoute';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -107,7 +106,7 @@ class App extends Component {
 
             <Route exact path="/stylists" component={StylistsHomePage} />
             <SecureRoute path="/stylists/join" component={StylistsJoin} />
-            <SecureStylistRoute path="/stylists/services" component={StylistServices} />
+            <SecureRoute path="/stylists/services" component={StylistServices} />
 
             <Route component={NotFoundPage} />
           </Switch>
