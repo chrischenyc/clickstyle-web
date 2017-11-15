@@ -13,8 +13,6 @@ Meteor.methods({
       throw new Meteor.Error(403, 'unauthorized');
     }
 
-    log.info('Meteor.methods - profiles.update', `userId - ${this.userId}`);
-
     check(profile, Object);
 
     try {
@@ -49,6 +47,8 @@ Meteor.methods({
       }
 
       Profiles.update({ owner: this.userId }, { $set: profileToUpdate });
+
+      log.info('Meteor.methods - profiles.update', `userId - ${this.userId}`);
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -61,8 +61,6 @@ Meteor.methods({
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
-
-    log.info('Meteor.methods - profiles.photo.add', `userId - ${this.userId}`);
 
     check(URL, String);
 
@@ -83,6 +81,8 @@ Meteor.methods({
 
       // update Profile.photo data
       Profiles.update({ owner: this.userId }, { $set: { photo: URL } });
+
+      log.info('Meteor.methods - profiles.photo.add', `userId - ${this.userId}`);
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -95,8 +95,6 @@ Meteor.methods({
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
-
-    log.info('Meteor.methods - profiles.photo.remove', `userId - ${this.userId}`);
 
     try {
       const profile = Profiles.findOne({ owner: this.userId });
@@ -115,6 +113,8 @@ Meteor.methods({
 
       // update Profile.photo data
       Profiles.update({ owner: this.userId }, { $unset: { photo: '' } });
+
+      log.info('Meteor.methods - profiles.photo.remove', `userId - ${this.userId}`);
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);

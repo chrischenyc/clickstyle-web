@@ -12,8 +12,6 @@ Meteor.methods({
       throw new Meteor.Error(403, 'unauthorized');
     }
 
-    log.info('Meteor.methods - stylists.join', `userId - ${this.userId}`);
-
     check(data, Object);
     const {
       mobile, address, services, qualificationUrl, referenceUrl,
@@ -41,6 +39,8 @@ Meteor.methods({
         referenceUrl,
         approved: false,
       });
+
+      log.info('Meteor.methods - stylists.join', `userId - ${this.userId}`);
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
