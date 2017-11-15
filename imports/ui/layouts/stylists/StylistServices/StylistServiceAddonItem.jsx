@@ -39,7 +39,7 @@ class StylistServiceAddonItem extends Component {
 
   render() {
     const {
-      publicAddons, addon, onRemove, onChange, errors,
+      addon, onRemove, onChange, errors,
     } = this.props;
 
     return (
