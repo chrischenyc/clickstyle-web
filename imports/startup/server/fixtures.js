@@ -236,9 +236,3 @@ if (Services.find().count() === 0) {
     });
   });
 }
-
-Addons.find()
-  .fetch()
-  .forEach((addon) => {
-    Addons.update({ _id: addon._id }, { $set: { public: true } });
-  });
