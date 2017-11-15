@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import Services from '../../../../api/services/services';
+import Addons from '../../../../api/addons/addons';
 import Stylists from '../../../../api/stylists/stylists';
 import { validateStylistServices } from '../../../../modules/validate';
 import StylistServicesPage from './StylistServicesPage';
@@ -126,10 +127,24 @@ StylistServices.propTypes = {
 export default withTracker(() => {
   const handleStylist = Meteor.subscribe('stylists.owner');
   const handleServices = Meteor.subscribe('services');
+  const handleAddons = Meteor.subscribe('addons');
 
   return {
-    loading: !handleServices.ready() || !handleStylist.ready(),
+    loading: !handleServices.ready() || !handleStylist.ready() || !handleAddons.ready(),
     stylist: Stylists.findOne(),
-    allServices: Services.find({}, { sort: { displayOrder: 1 } }).fetch(),
+    allServices: Services.find(
+      {},
+      {
+        sort: { displayOrder: 1 },
+        transform: (service) => {
+          const publicAddons = Addons.find({ serviceId: service._id }).fetch();
+
+          return {
+            ...service,
+            publicAddons,
+          };
+        },
+      },
+    ).fetch(),
   };
 })(StylistServices);
