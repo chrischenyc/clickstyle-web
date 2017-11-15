@@ -30,6 +30,7 @@ class StylistServicesPage extends Component {
     const {
       selectedServices,
       availableServices,
+      publicAddons,
       onSubmit,
       onChangeService,
       onDeleteService,
@@ -98,17 +99,21 @@ class StylistServicesPage extends Component {
           <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
             <Divider horizontal>Services &amp; Prices</Divider>
 
-            {selectedServices.map(service => (
-              <StylistServiceItem
-                key={service._id}
-                service={service}
-                onDelete={() => {
-                  onDeleteService(service);
-                }}
-                onChange={onChangeService}
-                errors={errors[service._id]}
-              />
-            ))}
+            {selectedServices.map((service) => {
+              const addons = publicAddons.filter(addon => addon.serviceId === service._id);
+
+              return (
+                <StylistServiceItem
+                  key={service._id}
+                  service={{ ...service, publicAddons: addons }}
+                  onDelete={() => {
+                    onDeleteService(service);
+                  }}
+                  onChange={onChangeService}
+                  errors={errors[service._id]}
+                />
+              );
+            })}
 
             {availableServices.length > 0 && (
               <p>
@@ -150,6 +155,7 @@ class StylistServicesPage extends Component {
 StylistServicesPage.propTypes = {
   selectedServices: PropTypes.array.isRequired,
   availableServices: PropTypes.array.isRequired,
+  publicAddons: PropTypes.array.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChangeService: PropTypes.func.isRequired,
   onDeleteService: PropTypes.func.isRequired,

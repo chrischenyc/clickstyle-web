@@ -99,6 +99,7 @@ class StylistServices extends Component {
       <StylistServicesPage
         selectedServices={this.state.selectedServices}
         availableServices={availableServices(this.props.allServices, this.state.selectedServices)}
+        publicAddons={this.props.publicAddons}
         onSubmit={this.handleSubmit}
         onChangeService={this.handleChangeService}
         onDeleteService={this.handleDeleteService}
@@ -116,12 +117,14 @@ StylistServices.defaultProps = {
   loading: false,
   stylist: null,
   allServices: [],
+  publicAddons: [],
 };
 
 StylistServices.propTypes = {
   loading: PropTypes.bool,
   stylist: PropTypes.object,
   allServices: PropTypes.array,
+  publicAddons: PropTypes.array,
 };
 
 export default withTracker(() => {
@@ -136,15 +139,8 @@ export default withTracker(() => {
       {},
       {
         sort: { displayOrder: 1 },
-        transform: (service) => {
-          const publicAddons = Addons.find({ serviceId: service._id }).fetch();
-
-          return {
-            ...service,
-            publicAddons,
-          };
-        },
       },
     ).fetch(),
+    publicAddons: Addons.find().fetch(),
   };
 })(StylistServices);
