@@ -180,7 +180,7 @@ export default compose(
 
     return {
       loading: !handle.ready(),
-      services: Services.find().fetch(),
+      services: Services.find({}, { sort: { displayOrder: 1 } }).fetch(),
       application: StylistApplications.findOne(),
     };
   }),

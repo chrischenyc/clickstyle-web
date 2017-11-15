@@ -130,6 +130,6 @@ export default withTracker(() => {
   return {
     loading: !handleServices.ready() || !handleStylist.ready(),
     stylist: Stylists.findOne(),
-    allServices: Services.find().fetch(),
+    allServices: Services.find({}, { sort: { displayOrder: 1 } }).fetch(),
   };
 })(StylistServices);

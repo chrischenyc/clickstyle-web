@@ -221,9 +221,12 @@ if (Services.find().count() === 0) {
     { name: 'Skincare treatment', addons: ['Facial', 'Acne Facial'] },
   ];
 
-  services.forEach((service) => {
+  for (let index = 0; index < services.length; index++) {
+    const service = services[index];
+
     const serviceId = Services.insert({
       name: service.name,
+      displayOrder: index,
     });
 
     service.addons.forEach((addon) => {
@@ -234,5 +237,5 @@ if (Services.find().count() === 0) {
         public: true,
       });
     });
-  });
+  }
 }
