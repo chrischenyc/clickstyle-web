@@ -65,11 +65,11 @@ const ResetPasswordPage = ({
               </Button>
 
               <p>
-                By clicking "Save and continue", you confirm that you are 18 or older, and agree to
-                our&nbsp;
-                <Link to="/terms">Terms of Use</Link>,&nbsp;
-                <Link to="/privacy">Privacy</Link> and to receiving marketing and policy
-                communications (you may opt out of receiving these at any time).
+                By clicking &quot;Save and continue&quot;, I confirm I am over 18 and I agree
+                to&nbsp;
+                {Meteor.settings.public.applicationName}&apos;s&nbsp;
+                <Link to="/terms">Terms of Use</Link>&nbsp;and&nbsp;
+                <Link to="/privacy">Privacy Policy</Link>.
               </p>
             </Form>
           </Grid.Column>

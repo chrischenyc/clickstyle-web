@@ -110,10 +110,9 @@ const SignUpPage = ({
           onChange={onAgreement}
           label={
             <label htmlFor="agreement">
-              Check here to confirm that you are 18 or older, and agree to our&nbsp;
-              <Link to="/terms">Terms of Use</Link>,&nbsp;
-              <Link to="/privacy">Privacy</Link> and to receiving marketing and policy
-              communications (you may opt out of receiving these at any time).
+              I confirm I am over 18 and I agree to {Meteor.settings.public.applicationName}&apos;s&nbsp;
+              <Link to="/terms">Terms of Use</Link>&nbsp;and&nbsp;
+              <Link to="/privacy">Privacy Policy</Link>.
             </label>
           }
         />

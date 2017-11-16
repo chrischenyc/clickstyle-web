@@ -215,9 +215,10 @@ class StylistsJoinPage extends Component {
               defaultChecked
               label={
                 <label htmlFor="agreement">
-                  Check here to confirm that you agree to our&nbsp;
+                  I confirm I am over 18 and I agree to&nbsp;
+                  {Meteor.settings.public.applicationName}&apos;s&nbsp;
                   <Link to="/terms">Terms of Use</Link>&nbsp;and&nbsp;
-                  <Link to="/privacy">Privacy</Link>.
+                  <Link to="/privacy">Privacy Policy</Link>.
                 </label>
               }
               defaultChecked={this.state.agreementChecked}
