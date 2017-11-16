@@ -1,9 +1,20 @@
-Hey, {{firstName}}!
+Hi, {{firstName}}
 
-Can you do us a favor and verify your email address?
+Woohooo! Thanks heaps for registering an account with Stylesquad! You are super awesome (and I’ve met many awesome people).
+
+Before we get started, we'll need to verify your email. (Just to make sure you are human like us and not an alien spy from another planet) 
+
 
 [Verify Email Address]({{verifyUrl}})
 
-Thanks!
-{{applicationName}} Team
+
+See you on the other side :D
+{{applicationName}} Family
+
+Before you go, here’s a cool fact:
+Hair is more elastic than you think! It can expand by up to 30% of its original length when wet.
+
 {{supportEmail}}
+{{facebookUrl}}
+{{twitterUrl}}
+{{instagramUrl}}

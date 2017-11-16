@@ -6,7 +6,13 @@ import templateToText from '../../modules/server/handlebars-email-to-text';
 
 // override Meteor default Accounts email template
 
-const { applicationName, supportEmail } = Meteor.settings.public;
+const {
+  applicationName,
+  supportEmail,
+  facebookUrl,
+  twitterUrl,
+  instagramUrl,
+} = Meteor.settings.public;
 const fromAddress = `${applicationName} <${supportEmail}>`;
 const { emailTemplates } = Accounts;
 
@@ -24,6 +30,9 @@ emailTemplates.verifyEmail = {
       firstName: user.profile.name.first,
       verifyUrl: urlWithoutHash,
       supportEmail,
+      facebookUrl,
+      twitterUrl,
+      instagramUrl,
     });
   },
   text(user, url) {
@@ -34,6 +43,9 @@ emailTemplates.verifyEmail = {
       firstName: user.profile.name.first,
       verifyUrl: urlWithoutHash,
       supportEmail,
+      facebookUrl,
+      twitterUrl,
+      instagramUrl,
     });
   },
 };
@@ -50,6 +62,9 @@ emailTemplates.resetPassword = {
       emailAddress: user.emails[0].address,
       resetUrl: urlWithoutHash,
       supportEmail,
+      facebookUrl,
+      twitterUrl,
+      instagramUrl,
     });
   },
   text(user, url) {
@@ -61,6 +76,9 @@ emailTemplates.resetPassword = {
       emailAddress: user.emails[0].address,
       resetUrl: urlWithoutHash,
       supportEmail,
+      facebookUrl,
+      twitterUrl,
+      instagramUrl,
     });
   },
 };
