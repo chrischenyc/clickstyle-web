@@ -40,7 +40,11 @@ Meteor.methods({
         approved: false,
       });
 
-      log.info('Meteor.methods - stylists.join', `userId - ${this.userId}`);
+      log.info(
+        'Meteor.methods: stylists.join',
+        `userId: ${this.userId}`,
+        `param: ${JSON.stringify(data)}`,
+      );
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);

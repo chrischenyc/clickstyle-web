@@ -32,13 +32,20 @@ Meteor.methods({
 
           newAddonNames.forEach((name) => {
             Addons.insert({
-              serviceId: service._id, name, createdBy: this.userId, public: false,
+              serviceId: service._id,
+              name,
+              createdBy: this.userId,
+              public: false,
             });
           });
         });
       });
 
-      log.info('Meteor.methods - stylists.update.services', `userId - ${this.userId}`);
+      log.info(
+        'Meteor.methods: stylists.update.services',
+        `userId: ${this.userId}`,
+        `param: ${JSON.stringify(services)}`,
+      );
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);

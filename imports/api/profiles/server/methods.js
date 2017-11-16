@@ -48,7 +48,11 @@ Meteor.methods({
 
       Profiles.update({ owner: this.userId }, { $set: profileToUpdate });
 
-      log.info('Meteor.methods - profiles.update', `userId - ${this.userId}`);
+      log.info(
+        'Meteor.methods: profiles.update',
+        `userId: ${this.userId}`,
+        `param: ${JSON.stringify(profile)}`,
+      );
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -82,7 +86,7 @@ Meteor.methods({
       // update Profile.photo data
       Profiles.update({ owner: this.userId }, { $set: { photo: URL } });
 
-      log.info('Meteor.methods - profiles.photo.add', `userId - ${this.userId}`);
+      log.info('Meteor.methods: profiles.photo.add', `userId: ${this.userId}`, `param: ${URL}`);
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -114,7 +118,7 @@ Meteor.methods({
       // update Profile.photo data
       Profiles.update({ owner: this.userId }, { $unset: { photo: '' } });
 
-      log.info('Meteor.methods - profiles.photo.remove', `userId - ${this.userId}`);
+      log.info('Meteor.methods: profiles.photo.remove', `userId: ${this.userId}`);
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
