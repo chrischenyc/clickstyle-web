@@ -39,12 +39,6 @@ class StylistServiceItem extends Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevState.service, this.state.service)) {
-      this.props.onChange(this.state.service);
-    }
-  }
-
   handleAddAddon() {
     const newAddon = {
       _id: uuid(),
@@ -54,46 +48,57 @@ class StylistServiceItem extends Component {
     };
 
     const { service } = this.state;
-
+    const newService = { ...service, addons: [...service.addons, newAddon] };
     this.setState({
-      service: { ...service, addons: [...service.addons, newAddon] },
+      service: newService,
     });
+
+    this.props.onChange(newService);
   }
 
   handleRemoveAddon(addonToRemove) {
     const { service } = this.state;
 
+    const newService = {
+      ...service,
+      addons: service.addons.filter(addon => addon._id !== addonToRemove._id),
+    };
     this.setState({
-      service: {
-        ...service,
-        addons: service.addons.filter(addon => addon._id !== addonToRemove._id),
-      },
+      service: newService,
     });
+
+    this.props.onChange(newService);
   }
 
   handleChangeAddon(addonToChange, event) {
     const { service } = this.state;
+    const newService = {
+      ...service,
+      addons: service.addons.map((addon) => {
+        if (addon._id === addonToChange._id) {
+          const updatedAddon = { ...addonToChange };
+
+          updatedAddon[event.target.name] = event.target.value;
+
+          return updatedAddon;
+        }
+        return addon;
+      }),
+    };
+
     this.setState({
-      service: {
-        ...service,
-        addons: service.addons.map((addon) => {
-          if (addon._id === addonToChange._id) {
-            const updatedAddon = { ...addonToChange };
-
-            updatedAddon[event.target.name] = event.target.value;
-
-            return updatedAddon;
-          }
-          return addon;
-        }),
-      },
+      service: newService,
     });
+
+    this.props.onChange(newService);
   }
 
   handleChange(event) {
     const service = { ...this.state.service };
     service[event.target.name] = event.target.value;
     this.setState({ service });
+
+    this.props.onChange(service);
   }
 
   render() {
