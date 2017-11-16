@@ -41,7 +41,13 @@ const sendEmail = ({
 };
 
 // helpers
-const { applicationName, supportEmail } = Meteor.settings.public;
+const {
+  applicationName,
+  supportEmail,
+  facebookUrl,
+  twitterUrl,
+  instagramUrl,
+} = Meteor.settings.public;
 const fromAddress = `${applicationName} <${supportEmail}>`;
 
 export const sendWelcomeEmail = (userId) => {
@@ -53,10 +59,13 @@ export const sendWelcomeEmail = (userId) => {
     subject: `Welcome to ${applicationName}!`,
     template: 'welcome',
     templateVars: {
-      applicationName,
       firstName: profile.name.first,
+      applicationName,
+      welcomeUrl: Meteor.absoluteUrl(''),
       supportEmail,
-      welcomeUrl: Meteor.absoluteUrl('dashboard'),
+      facebookUrl,
+      twitterUrl,
+      instagramUrl,
     },
   }).catch((error) => {
     throw new Meteor.Error('500', `${error}`);

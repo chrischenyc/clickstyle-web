@@ -120,20 +120,14 @@
     h1 {
       font-size: 32px;
       font-weight: 500;
-      /* 1.2em * 32px = 38.4px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
-      /*line-height: 38px;*/
     }
 
     h2 {
       font-size: 24px;
-      /* 1.2em * 24px = 28.8px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
-      /*line-height: 29px;*/
     }
 
     h3 {
       font-size: 18px;
-      /* 1.2em * 18px = 21.6px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
-      /*line-height: 22px;*/
     }
 
     h4 {
@@ -167,8 +161,8 @@
     .btn-primary {
       text-decoration: none;
       color: #FFF;
-      background-color: #4285F4;
-      border: solid #4285F4;
+      background-color: #00aca4;
+      border: solid #00aca4;
       border-width: 10px 20px;
       line-height: 2em;
       /* 2em * 14px = 28px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
@@ -293,28 +287,55 @@
                 <table width="100%" cellpadding="0" cellspacing="0">
                   <tr>
                     <td class="content-block">
-                      Hey, {{firstName}}!
+                      Welcome, {{firstName}}
                     </td>
                   </tr>
                   <tr>
                     <td class="content-block">
-                      Welcome to {{applicationName}}. We're excited to have you on board.
+                      Thanks heaps for jumping on board the {{applicationName}} bandwagon. Here’s a quick guide to how you can make your first
+                      booking and experience that royal like service at your time.
                     </td>
                   </tr>
                   <tr>
                     <td class="content-block">
-                      Ready to get started?
+                      <b>Search</b> - Select when, where and what time suits you
+                      <br/>
+                      <b>Find & Book</b> - Select a stylist from the list and select the service and book
+                      <br/>
+                      <b>Get pampered</b> - Your selected stylist will arrive at your desired location and get your pampered
                     </td>
                   </tr>
                   <tr>
                     <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-                      <a href="{{welcomeUrl}}" class="btn-primary" itemprop="url">View Your Dashboard</a>
+                      <a href="{{welcomeUrl}}" class="btn-primary" itemprop="url">Get Started</a>
                     </td>
                   </tr>
                   <tr>
                     <td class="content-block">
-                      Cheers,
-                      <br /> {{applicationName}} Team
+                      Try it out, you’d be surprises how easy and convenient mobile service is. Be part of the revolution. Try it out before your
+                      neighbour does, so you could be the coolest person on the street;)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="content-block">
+                      For more info, deals, competitions and latest news follow us on social media.
+                      <br/>
+                      <a href={{facebookUrl}}>facebook</a>&nbsp;
+                      <a href={{twitterUrl}}>facebook</a>&nbsp;
+                      <a href={{instagramUrl}}>instagram</a>&nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="content-block">
+                      Warm Regards
+                      <br/>{{applicationName}} Family
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="content-block">
+                      PS: How cool is this Fun Fact:
+                      <br/>Our hair is constantly growing, and has a lifespan of around 5 years. 90% of our hair is growing at
+                      any given time, while the other 10% is taking a break.
                     </td>
                   </tr>
                 </table>
@@ -325,7 +346,10 @@
             <table width="100%">
               <tr>
                 <td class="aligncenter content-block">
-                  Contact Us&nbsp;{{supportEmail}}
+                  <a href={{supportEmail}}>{{supportEmail}}</a>
+                  <a href={{facebookUrl}}>facebook</a>&nbsp;
+                  <a href={{twitterUrl}}>facebook</a>&nbsp;
+                  <a href={{instagramUrl}}>instagram</a>&nbsp;
                 </td>
               </tr>
             </table>
