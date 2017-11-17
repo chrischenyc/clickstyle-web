@@ -83,9 +83,11 @@ export const sendPasswordChangedEmail = (userId) => {
     templateVars: {
       applicationName,
       firstName: profile.name.first,
+      contactUrl: Meteor.absoluteUrl('/contact'),
       supportEmail,
-      accountEmail: profile.email,
-      changedOn: formatDateTime(Date.now(0)),
+      facebookUrl,
+      twitterUrl,
+      instagramUrl,
     },
   }).catch((error) => {
     throw new Meteor.Error('500', `${error}`);

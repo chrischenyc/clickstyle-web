@@ -1,14 +1,17 @@
-Hey, {{firstName}}!
+Hi, {{firstName}}
 
-Thanks for you interest in becoming a stylist on {{applicationName}}! This is to confirm that we have received your application.
+Thank you for submitting your stylist application, we really appreciate every application that comes through, currently it's on the conveyor belt just about to reach our stylist application team who will review and get back to you as soon as they can. 
 
-What's next? 
-Please sit back and relax. We will contact your shortly to sort everything out. Meanwhile, if you have any question, feel free to contact us.
+Sit back and hang tight. 
 
-Why join as a stylist on {{applicationName}}? 
-TBD
+Warm Regards
+{{applicationName}} Family
 
+For your entertainment here’s a fun fact:
+Beauty can take time. The average time a woman spends to wash, dry and style her hair is 1 hour and 53 minutes a week. By the time she is 65, she will have spent 7 months of her life doing her hair.
 
-Cheers, 
-{{applicationName}} Team
 {{supportEmail}}
+{{facebookUrl}}
+{{twitterUrl}}
+{{instagramUrl}}
+

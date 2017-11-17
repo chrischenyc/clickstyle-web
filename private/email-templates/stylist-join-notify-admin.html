@@ -4,7 +4,7 @@
 <head>
   <meta name="viewport" content="width=device-width" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Welcome! | {{applicationName}}</title>
+  <title>{{applicationName}} Admin</title>
   <style>
     /* -------------------------------------
     GLOBAL
@@ -28,8 +28,6 @@
       width: 100% !important;
       height: 100%;
       line-height: 1.6em;
-      /* 1.6em * 14px = 22.4px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
-      /*line-height: 22px;*/
     }
 
     /* Let's make sure all tables have defaults */
@@ -120,20 +118,14 @@
     h1 {
       font-size: 32px;
       font-weight: 500;
-      /* 1.2em * 32px = 38.4px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
-      /*line-height: 38px;*/
     }
 
     h2 {
       font-size: 24px;
-      /* 1.2em * 24px = 28.8px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
-      /*line-height: 29px;*/
     }
 
     h3 {
       font-size: 18px;
-      /* 1.2em * 18px = 21.6px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
-      /*line-height: 22px;*/
     }
 
     h4 {
@@ -171,8 +163,6 @@
       border: solid #00aca4;
       border-width: 10px 20px;
       line-height: 2em;
-      /* 2em * 14px = 28px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
-      /*line-height: 28px;*/
       font-weight: bold;
       text-align: center;
       cursor: pointer;
@@ -310,7 +300,10 @@
             <table width="100%">
               <tr>
                 <td class="aligncenter content-block">
-                  Contact Us&nbsp;{{supportEmail}}
+                  <a href=mailto:{{supportEmail}}>email</a>
+                  <a href={{facebookUrl}}>facebook</a>&nbsp;
+                  <a href={{twitterUrl}}>twitter</a>&nbsp;
+                  <a href={{instagramUrl}}>instagram</a>&nbsp;
                 </td>
               </tr>
             </table>
