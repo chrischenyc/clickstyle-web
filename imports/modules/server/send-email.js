@@ -3,7 +3,6 @@ import { Email } from 'meteor/email';
 import getPrivateFile from './get-private-file';
 import templateToText from './handlebars-email-to-text';
 import templateToHTML from './handlebars-email-to-html';
-import { formatDateTime } from '../../modules/format-date';
 
 import Profiles from '../../api/profiles/profiles';
 

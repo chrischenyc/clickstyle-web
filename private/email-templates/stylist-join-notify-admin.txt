@@ -3,6 +3,3 @@ Review the application: {{adminUrl}}
 
 You received this email because you are one of the admin users on {{applicationName}}.
 
-
-Cheers, 
-{{supportEmail}}
