@@ -17,5 +17,9 @@ Meteor.users.after.insert((userId, user) => {
   // default sign-up role is Customer
   Roles.addUsersToRoles(user._id, [Meteor.settings.public.roles.customer]);
 
-  log.info('Meteor.methods - users.insert', `userId - ${user._id}`);
+  log.info(
+    'Meteor.methods: users.after.insert',
+    `userId: ${this.userId}`,
+    `param: ${JSON.stringify(user)}`,
+  );
 });
