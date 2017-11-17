@@ -37,10 +37,10 @@ import ViewBooking from '../layouts/bookings/ViewBooking';
 import NewBooking from '../layouts/bookings/NewBooking';
 import EditBooking from '../layouts/bookings/EditBooking';
 
-import StylistServices from '../layouts/stylists/StylistServices/StylistServices';
-
 import StylistsHomePage from '../layouts/stylists/StylistsHomePage';
 import StylistsJoin from '../layouts/stylists/StylistsJoin';
+import StylistServices from '../layouts/stylists/StylistServices/StylistServices';
+import StylistAvailability from '../layouts/stylists/StylistAvailability/StylistAvailability';
 
 // scroll to page top when route changes
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-292711226
@@ -107,6 +107,7 @@ class App extends Component {
             <Route exact path="/stylists" component={StylistsHomePage} />
             <SecureRoute path="/stylists/join" component={StylistsJoin} />
             <SecureRoute path="/stylists/services" component={StylistServices} />
+            <SecureRoute path="/stylists/availability" component={StylistAvailability} />
 
             <Route component={NotFoundPage} />
           </Switch>

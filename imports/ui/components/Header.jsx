@@ -121,6 +121,9 @@ const Header = props => (
               {props.isStylist && (
                 <Dropdown.Item as={Link} to="/stylists/services" text="Services & Prices" />
               )}
+              {props.isStylist && (
+                <Dropdown.Item as={Link} to="/stylists/availability" text="Availability" />
+              )}
               {props.isStylist && <Dropdown.Divider />}
 
               {props.authenticated && (
