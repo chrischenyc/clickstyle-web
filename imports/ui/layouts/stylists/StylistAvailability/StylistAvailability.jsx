@@ -15,8 +15,8 @@ class StylistAvailability extends Component {
     super(props);
 
     this.state = {
-      // selectedServices:
-      //   props.stylist && props.stylist.services ? _.cloneDeep(props.stylist.services) : [],
+      openHours:
+        props.stylist && props.stylist.openHours ? _.cloneDeep(props.stylist.openHours) : [],
       errors: {},
       saving: false,
       pristine: true,
@@ -30,10 +30,10 @@ class StylistAvailability extends Component {
 
     this.setState({
       pristine: true,
-      // selectedServices:
-      //   nextProps.stylist && nextProps.stylist.services
-      //     ? _.cloneDeep(nextProps.stylist.services)
-      //     : [],
+      openHours:
+        nextProps.stylist && nextProps.stylist.openHours
+          ? _.cloneDeep(nextProps.stylist.openHours)
+          : [],
     });
   }
 
@@ -64,6 +64,7 @@ class StylistAvailability extends Component {
   render() {
     return (
       <StylistAvailabilityPage
+        openHours={this.state.openHours}
         onSubmit={this.handleSubmit}
         loading={this.props.loading}
         saving={this.state.saving}
