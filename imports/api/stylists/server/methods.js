@@ -17,7 +17,7 @@ Meteor.methods({
     check(services, Array);
 
     try {
-      Stylists.update({ owner: this.userId }, { $set: { services } });
+      Stylists.update({ owner: this.userId }, { $set: { services, public: true } });
 
       // insert user-defined addons
       Meteor.defer(() => {
