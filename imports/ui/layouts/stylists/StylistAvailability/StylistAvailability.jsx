@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import Stylists from '../../../../api/stylists/stylists';
-import { validateStylistServices } from '../../../../modules/validate';
+import { validateStylistOpenHours } from '../../../../modules/validate';
 import StylistAvailabilityPage from './StylistAvailabilityPage';
 
 // platform-independent stateful container component
@@ -47,11 +47,15 @@ class StylistAvailability extends Component {
     });
 
     // validate
+    const errors = validateStylistOpenHours(newOpenHours);
+    this.setState({ errors });
 
-    this.setState({
-      pristine: _.isEqual(this.props.stylist.openHours, newOpenHours),
-      openHours: newOpenHours,
-    });
+    if (_.isEmpty(errors)) {
+      this.setState({
+        pristine: _.isEqual(this.props.stylist.openHours, newOpenHours),
+        openHours: newOpenHours,
+      });
+    }
   }
 
   handleSubmit(event) {

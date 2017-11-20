@@ -160,3 +160,20 @@ export const validateStylistServices = (services) => {
 
   return errors;
 };
+
+export const validateStylistOpenHours = (openHours) => {
+  const errors = {};
+
+  openHours.forEach((openHour) => {
+    if (
+      openHour.open &&
+      (openHour.openAtHour > openHour.closeAtHour ||
+        (openHour.openAtHour === openHour.closeAtHour &&
+          openHour.openAtMinute >= openHour.closeAtMinute))
+    ) {
+      _.set(errors, `${openHour.day}`, "must be earlier than 'Available to' time");
+    }
+  });
+
+  return errors;
+};
