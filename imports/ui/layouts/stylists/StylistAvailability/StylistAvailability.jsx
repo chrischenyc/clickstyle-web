@@ -22,6 +22,7 @@ class StylistAvailability extends Component {
       pristine: true,
     };
 
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -34,6 +35,22 @@ class StylistAvailability extends Component {
         nextProps.stylist && nextProps.stylist.openHours
           ? _.cloneDeep(nextProps.stylist.openHours)
           : [],
+    });
+  }
+
+  handleChange(day, name, value) {
+    const newOpenHours = this.state.openHours.map((openHour) => {
+      if (openHour.day === day) {
+        return _.set(openHour, name, value);
+      }
+      return openHour;
+    });
+
+    // validate
+
+    this.setState({
+      pristine: _.isEqual(this.props.stylist.openHours, newOpenHours),
+      openHours: newOpenHours,
     });
   }
 
@@ -65,6 +82,7 @@ class StylistAvailability extends Component {
     return (
       <StylistAvailabilityPage
         openHours={this.state.openHours}
+        onChange={this.handleChange}
         onSubmit={this.handleSubmit}
         loading={this.props.loading}
         saving={this.state.saving}

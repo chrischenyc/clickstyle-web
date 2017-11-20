@@ -29,8 +29,8 @@ const hours = [
   { text: '23', value: 23 },
 ];
 
-const HoursDropdown = ({ hour, onChange }) => (
-  <Dropdown scrolling options={hours} value={hours[hour].value} onChange={onChange} />
+const HoursDropdown = ({ hour, onChange, disabled }) => (
+  <Dropdown scrolling options={hours} value={hour} onChange={onChange} disabled={disabled} />
 );
 
 HoursDropdown.defaultProps = {
@@ -40,6 +40,7 @@ HoursDropdown.defaultProps = {
 HoursDropdown.propTypes = {
   hour: PropTypes.number,
   onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default HoursDropdown;

@@ -10,7 +10,13 @@ import MinutesDropdown from '../../../components/MinutesDropdown';
 import { dayOfWeekAsString } from '../../../../modules/format-date';
 
 const StylistServicesPage = ({
-  openHours, onSubmit, loading, saving, pristine, errors,
+  openHours,
+  onChange,
+  onSubmit,
+  loading,
+  saving,
+  pristine,
+  errors,
 }) => (
   <SideMenuContainer>
     <Container>
@@ -37,15 +43,17 @@ const StylistServicesPage = ({
                     <HoursDropdown
                       hour={openHour.openAtHour}
                       onChange={(event, data) => {
-                        console.log(data);
+                        onChange(openHour.day, 'openAtHour', data.value);
                       }}
+                      disabled={!openHour.open}
                     />
                     &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
                     <MinutesDropdown
                       minute={openHour.openAtMinute}
                       onChange={(event, data) => {
-                        console.log(data);
+                        onChange(openHour.day, 'openAtMinute', data.value);
                       }}
+                      disabled={!openHour.open}
                     />
                   </Table.Cell>
 
@@ -53,20 +61,28 @@ const StylistServicesPage = ({
                     <HoursDropdown
                       hour={openHour.closeAtHour}
                       onChange={(event, data) => {
-                        console.log(data);
+                        onChange(openHour.day, 'closeAtHour', data.value);
                       }}
+                      disabled={!openHour.open}
                     />
                     &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
                     <MinutesDropdown
                       minute={openHour.closeAtMinute}
                       onChange={(event, data) => {
-                        console.log(data);
+                        onChange(openHour.day, 'closeAtMinute', data.value);
                       }}
+                      disabled={!openHour.open}
                     />
                   </Table.Cell>
 
                   <Table.Cell>
-                    <Checkbox toggle checked={openHour.open} />
+                    <Checkbox
+                      toggle
+                      checked={openHour.open}
+                      onChange={(event, data) => {
+                        onChange(openHour.day, 'open', data.checked);
+                      }}
+                    />
                   </Table.Cell>
                 </Table.Row>
               ))}
@@ -91,6 +107,7 @@ const StylistServicesPage = ({
 
 StylistServicesPage.propTypes = {
   openHours: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired, // (day, name, value)
   onSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   saving: PropTypes.bool.isRequired,

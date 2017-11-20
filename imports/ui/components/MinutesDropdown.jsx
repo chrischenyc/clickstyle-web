@@ -9,8 +9,8 @@ const minutes = [
   { text: '45', value: 45 },
 ];
 
-const MinutesDropdown = ({ minute, onChange }) => (
-  <Dropdown options={minutes} value={minutes[minute].value} onChange={onChange} />
+const MinutesDropdown = ({ minute, onChange, disabled }) => (
+  <Dropdown options={minutes} value={minute} onChange={onChange} disabled={disabled} />
 );
 
 MinutesDropdown.defaultProps = {
@@ -20,6 +20,7 @@ MinutesDropdown.defaultProps = {
 MinutesDropdown.propTypes = {
   minute: PropTypes.number,
   onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default MinutesDropdown;
