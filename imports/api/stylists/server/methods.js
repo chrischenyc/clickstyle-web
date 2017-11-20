@@ -53,10 +53,32 @@ Meteor.methods({
       throw new Meteor.Error('500');
     }
   },
+  'stylists.update.openHours': function updateStylistsOpenHours(openHours) {
+    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(openHours, Array);
+
+    try {
+      Stylists.update({ owner: this.userId }, { $set: { openHours } });
+
+      log.info(
+        'Meteor.methods: stylists.update.openHours',
+        `userId: ${this.userId}`,
+        `param: ${JSON.stringify(openHours)}`,
+      );
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500');
+    }
+  },
 });
 
 rateLimit({
-  methods: ['stylists.update.services'],
+  methods: ['stylists.update.services', 'stylists.update.openHours'],
   limit: 5,
   timeRange: 1000,
 });

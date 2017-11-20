@@ -62,15 +62,14 @@ class StylistAvailability extends Component {
     this.setState({ errors: {} });
     event.preventDefault();
 
-    /*
-    const errors = validateStylistServices(this.state.selectedServices);
+    const errors = validateStylistOpenHours(this.state.openHours);
 
     if (!_.isEmpty(errors)) {
       this.setState({ errors });
     } else {
       this.setState({ saving: true });
 
-      Meteor.call('stylists.update.services', this.state.selectedServices, (error) => {
+      Meteor.call('stylists.update.openHours', this.state.openHours, (error) => {
         this.setState({ saving: false, errors: {}, pristine: true });
 
         if (error) {
@@ -78,8 +77,6 @@ class StylistAvailability extends Component {
         }
       });
     }
-
-    */
   }
 
   render() {
