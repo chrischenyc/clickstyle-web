@@ -69,7 +69,8 @@ const StylistServicesPage = ({
                       />
                       {!_.isEmpty(error) && (
                         <div>
-                          &nbsp;<Icon name="attention" />&nbsp;{error}
+                          <Icon name="attention" />
+                          {error}
                         </div>
                       )}
                     </Table.Cell>
@@ -111,7 +112,7 @@ const StylistServicesPage = ({
           color={Meteor.settings.public.semantic.color}
           size="massive"
           type="submit"
-          disabled={pristine}
+          disabled={pristine || !_.isEmpty(errors)}
           loading={saving}
         >
           Save

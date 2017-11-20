@@ -171,7 +171,7 @@ export const validateStylistOpenHours = (openHours) => {
         (openHour.openAtHour === openHour.closeAtHour &&
           openHour.openAtMinute >= openHour.closeAtMinute))
     ) {
-      _.set(errors, `${openHour.day}`, "must be earlier than 'Available to' time");
+      _.set(errors, `${openHour.day}`, "'Available from' must be earlier than 'Available to'");
     }
   });
 
