@@ -1,4 +1,4 @@
-Hi, {{firstName}}
+Hi {{firstName}},
 
 Thank you for submitting your stylist application, we really appreciate every application that comes through, currently it's on the conveyor belt just about to reach our stylist application team who will review and get back to you as soon as they can. 
 

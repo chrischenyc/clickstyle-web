@@ -1,4 +1,4 @@
-Hi, {{firstName}}
+Hi {{firstName}},
 
 Woohooo! Thanks heaps for registering an account with Stylesquad! You are super awesome (and I’ve met many awesome people).
 
