@@ -107,10 +107,7 @@ const Header = props => (
               {props.authenticated && <Dropdown.Item as={Link} to="/settings" text="Settings" />}
               {props.authenticated && <Dropdown.Divider />}
 
-              {props.authenticated && <Dropdown.Header>Bookings</Dropdown.Header>}
-              {props.authenticated && (
-                <Dropdown.Item as={Link} to="/bookings/new" text="Make a booking" />
-              )}
+              {props.authenticated && <Dropdown.Header>My Bookings</Dropdown.Header>}
               {props.authenticated && <Dropdown.Item as={Link} to="/bookings" text="Bookings" />}
               {props.authenticated && (
                 <Dropdown.Item as={Link} to="/favourites" text="My Favourites" />

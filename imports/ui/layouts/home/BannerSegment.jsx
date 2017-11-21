@@ -1,14 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 
-import { closeModal } from '../../../modules/client/redux/modal';
-import SecureLink from '../../components/SecureLink';
-
-const BannerSegment = props => (
+const BannerSegment = () => (
   <Segment
     inverted
     textAlign="center"
@@ -53,27 +48,11 @@ const BannerSegment = props => (
         }}
       />
 
-      <Button
-        size="huge"
-        color={Meteor.settings.public.semantic.color}
-        as={SecureLink}
-        history={props.history}
-        to="/bookings/new"
-        title="Log in to continue"
-        onLoggedIn={() => {
-          props.closeModal();
-          props.history.push('/bookings/new');
-        }}
-      >
+      <Button size="huge" color={Meteor.settings.public.semantic.color} as={Link} to="/search">
         Book Now
       </Button>
     </Container>
   </Segment>
 );
 
-BannerSegment.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-};
-
-export default withRouter(connect(null, { closeModal })(BannerSegment));
+export default BannerSegment;

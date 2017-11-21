@@ -34,7 +34,7 @@ import InboxPage from '../layouts/user/InboxPage';
 
 import BookingsPage from '../layouts/bookings/BookingsPage';
 import ViewBooking from '../layouts/bookings/ViewBooking';
-import NewBooking from '../layouts/bookings/NewBooking';
+import Search from '../layouts/search/Search';
 import EditBooking from '../layouts/bookings/EditBooking';
 
 import StylistsHomePage from '../layouts/stylists/StylistsHomePage';
@@ -80,6 +80,7 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route exact path="/search" component={Search} />
 
             <PublicRoute path="/login" component={Login} />
             <PublicRoute path="/signup" component={SignUp} />
@@ -100,7 +101,6 @@ class App extends Component {
             <SecureRoute path="/inbox" component={InboxPage} />
 
             <Route exact path="/bookings" component={BookingsPage} />
-            <SecureRoute exact path="/bookings/new" component={NewBooking} />
             <SecureRoute exact path="/bookings/:_id" component={ViewBooking} />
             <SecureRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
