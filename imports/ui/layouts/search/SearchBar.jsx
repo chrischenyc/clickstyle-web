@@ -32,7 +32,7 @@ class SearchBar extends Component {
 
   render() {
     const {
-      loading, services, addons, ...rest
+      loading, services, addons, onSearch, searching, ...rest
     } = this.props;
 
     return (
@@ -120,7 +120,15 @@ class SearchBar extends Component {
           </Grid.Column>
 
           <Grid.Column width="3" style={{ padding: '0 2px' }}>
-            <Button fluid color={Meteor.settings.public.semantic.color} size="large">
+            <Button
+              fluid
+              color={Meteor.settings.public.semantic.color}
+              size="large"
+              onClick={() => {
+                onSearch(this.state.service);
+              }}
+              loading={searching}
+            >
               Search
             </Button>
           </Grid.Column>
@@ -138,8 +146,10 @@ SearchBar.defaultProps = {
 
 SearchBar.propTypes = {
   loading: PropTypes.bool,
+  searching: PropTypes.bool.isRequired,
   services: PropTypes.array,
   addons: PropTypes.array,
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default withTracker(() => {
