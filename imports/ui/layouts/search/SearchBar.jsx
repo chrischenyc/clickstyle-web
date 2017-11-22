@@ -85,6 +85,9 @@ class SearchBar extends Component {
               placeholder="suburb, postcode"
               country="au"
               name="address.raw"
+              onFocus={() => {
+                this.setState({ isServicesListOpen: false });
+              }}
               onChange={(value) => {
                 // convert to generic onChange param
                 // onChange({ target: { name: 'address.raw', value } });
