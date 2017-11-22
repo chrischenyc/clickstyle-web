@@ -13,10 +13,9 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
-import GeoSuggest from 'react-geosuggest';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
-import '../../../components/GeoSuggest.css';
+import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import { FormInputField } from '../../../components/FormInputField';
 import EditPhotoPage from './EditPhotoPage';
 
@@ -100,7 +99,7 @@ const EditProfilePage = ({
         <Form.Field>
           <label>Your address</label>
 
-          <GeoSuggest
+          <SemanticGeoSuggest
             placeholder="type to search address, suburb, or postcode"
             country="au"
             name="address.raw"

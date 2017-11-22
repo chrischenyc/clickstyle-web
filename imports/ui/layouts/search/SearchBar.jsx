@@ -1,48 +1,75 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { Input, Button, Popup } from 'semantic-ui-react';
-import GeoSuggest from 'react-geosuggest';
+import { Input, Button, Popup, Grid } from 'semantic-ui-react';
 
-import '../../components/GeoSuggest.css';
+import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 
 const SearchBar = () => (
-  <div style={{ padding: '0 32px' }}>
-    <Popup
-      trigger={
-        <Input
-          icon="search"
-          iconPosition="left"
-          color={Meteor.settings.public.semantic.color}
-          placeholder="haircut, make-up, stylist"
-          size="huge"
-          style={{ width: '25rem', margin: '0 2px' }}
+  <Grid stackable stretched>
+    <Grid.Row>
+      <Grid.Column computer="3" tablet="5" style={{ padding: '0 2px' }}>
+        <Popup
+          trigger={
+            <Input
+              fluid
+              icon="search"
+              iconPosition="left"
+              color={Meteor.settings.public.semantic.color}
+              placeholder="haircut, make-up, stylist"
+              size="large"
+            />
+          }
+          content="TODO: display services categories"
+          on="focus"
+          position="bottom center"
         />
-      }
-      content="TODO: display services categories"
-      on="hover"
-      position="bottom center"
-    />
+      </Grid.Column>
 
-    <Popup
-      trigger={
-        <Button
-          basic
-          size="huge"
-          color={Meteor.settings.public.semantic.color}
-          content="Any Date"
-          icon="calendar"
-          style={{ width: '15rem', margin: '0 2px' }}
+      <Grid.Column computer="2" tablet="4" style={{ padding: '0 2px' }}>
+        <SemanticGeoSuggest
+          fluid
+          size="large"
+          placeholder="suburb, postcode"
+          country="au"
+          name="address.raw"
+          onChange={(value) => {
+            // convert to generic onChange param
+            // onChange({ target: { name: 'address.raw', value } });
+          }}
+          onSuggestSelect={(suggest) => {
+            // force onChange as well
+            // onChange({ target: { name: 'address.raw', value: suggest.label } });
+            // onAddressSuggest(suggest);
+          }}
+          style={{ width: '100%' }}
         />
-      }
-      content="TODO: display calendar"
-      on="hover"
-      position="bottom center"
-    />
+      </Grid.Column>
 
-    <Button color={Meteor.settings.public.semantic.color} size="huge" style={{ margin: '0 2px' }}>
-      Search
-    </Button>
-  </div>
+      <Grid.Column computer="2" tablet="3" style={{ padding: '0 2px' }}>
+        <Popup
+          trigger={
+            <Button
+              fluid
+              basic
+              size="large"
+              color={Meteor.settings.public.semantic.color}
+              content="Any Date"
+              icon="calendar"
+            />
+          }
+          content="TODO: display calendar"
+          on="hover"
+          position="bottom center"
+        />
+      </Grid.Column>
+
+      <Grid.Column computer="2" tablet="3" style={{ padding: '0 2px' }}>
+        <Button fluid color={Meteor.settings.public.semantic.color} size="large">
+          Search
+        </Button>
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
 );
 
 export default SearchBar;

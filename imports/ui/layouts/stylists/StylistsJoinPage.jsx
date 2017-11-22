@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { UploadField as FileField } from '@navjobs/upload';
 import { Link } from 'react-router-dom';
-import GeoSuggest from 'react-geosuggest';
 
+import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import { FormInputField } from '../../components/FormInputField';
 import { formatDate } from '../../../modules/format-date';
 
@@ -95,7 +95,7 @@ class StylistsJoinPage extends Component {
               <Header>Your address</Header>
             </label>
 
-            <GeoSuggest
+            <SemanticGeoSuggest
               placeholder="type to search address"
               country="au"
               name="address"
