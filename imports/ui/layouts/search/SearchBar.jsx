@@ -4,10 +4,10 @@ import { Input, Button, Popup, Grid } from 'semantic-ui-react';
 
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 
-const SearchBar = () => (
-  <Grid stackable stretched>
+const SearchBar = ({ ...rest }) => (
+  <Grid stackable stretched {...rest}>
     <Grid.Row>
-      <Grid.Column computer="3" tablet="5" style={{ padding: '0 2px' }}>
+      <Grid.Column width="5" style={{ padding: '0 2px' }}>
         <Popup
           trigger={
             <Input
@@ -25,7 +25,7 @@ const SearchBar = () => (
         />
       </Grid.Column>
 
-      <Grid.Column computer="2" tablet="4" style={{ padding: '0 2px' }}>
+      <Grid.Column width="5" style={{ padding: '0 2px' }}>
         <SemanticGeoSuggest
           fluid
           size="large"
@@ -45,7 +45,7 @@ const SearchBar = () => (
         />
       </Grid.Column>
 
-      <Grid.Column computer="2" tablet="3" style={{ padding: '0 2px' }}>
+      <Grid.Column width="3" style={{ padding: '0 2px' }}>
         <Popup
           trigger={
             <Button
@@ -63,7 +63,7 @@ const SearchBar = () => (
         />
       </Grid.Column>
 
-      <Grid.Column computer="2" tablet="3" style={{ padding: '0 2px' }}>
+      <Grid.Column width="3" style={{ padding: '0 2px' }}>
         <Button fluid color={Meteor.settings.public.semantic.color} size="large">
           Search
         </Button>
