@@ -23,7 +23,6 @@ const SearchPage = ({ onSearch, searching, stylists }) => (
 );
 
 SearchPage.propTypes = {
-  onSearch: PropTypes.func.isRequired,
   searching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   stylists: PropTypes.array.isRequired,

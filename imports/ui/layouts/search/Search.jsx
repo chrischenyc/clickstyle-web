@@ -17,6 +17,10 @@ class Search extends Component {
   }
 
   handleSearch(service) {
+    this.props.history.push(`/stylists/${service}`);
+  }
+
+  search(service) {
     this.setState({ searching: true });
 
     Meteor.call('stylists.search', { service }, (error, stylists) => {

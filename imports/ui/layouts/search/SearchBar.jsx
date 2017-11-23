@@ -125,7 +125,11 @@ class SearchBar extends Component {
               color={Meteor.settings.public.semantic.color}
               size="large"
               onClick={() => {
-                onSearch(this.state.service);
+                // normalize service name as url parameter
+                onSearch(this.state.service
+                    .replace(/ /g, '-')
+                    .replace(/---/g, '-')
+                    .toLowerCase());
               }}
               loading={searching}
             >
