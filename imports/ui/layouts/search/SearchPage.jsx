@@ -16,7 +16,9 @@ const SearchPage = ({ onSearch, searching, stylists }) => (
       <SearchBar style={{ margin: '0 8rem' }} onSearch={onSearch} searching={searching} />
     </Responsive>
 
-    <StylistsList stylists={stylists} />
+    <Container>
+      <StylistsList stylists={stylists} />
+    </Container>
   </Container>
 );
 
