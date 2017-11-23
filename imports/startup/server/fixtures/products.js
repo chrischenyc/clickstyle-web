@@ -1,0 +1,63 @@
+import Products from '../../../api/products/products';
+
+// seed Products data
+if (Products.find().count() === 0) {
+  const brands = [
+    "L'Oréal",
+    'Pantene',
+    'Nivea',
+    'Lancôme',
+    'Avon',
+    'Dove',
+    'Olay',
+    'Estée Lauder',
+    'Head & Shoulders',
+    'Christian Dior',
+    'Chanel',
+    'Aveeno',
+    'Garnier',
+    'Schwarzkopf',
+    'Maybelline',
+    'Clarins',
+    'Shiseido',
+    'Clean & Clear',
+    'Neutrogena',
+    'Natura',
+    "L'Occitane",
+    "Johnson's",
+    'Lux',
+    'M.A.C.',
+    'Kérastase',
+    'Redken',
+    'Rexona',
+    'Biotherm',
+    'Vichy',
+    'Oriflame',
+    'Matrix',
+    'Clearasil',
+    'Rimmel',
+    'Yves Saint Laurent',
+    'The Body Shop',
+    'Pola Orbis',
+    'Sunsilk',
+    'Clinique',
+    'Softsoap',
+    'Biore',
+    'Irish Spring',
+    'Coty',
+    'Revlon',
+    'Elizabeth Arden',
+    'Eucerin',
+    'RoC',
+    'La Roche-Posay',
+    'KOSÉ',
+    "Kiehl's",
+    'Speed Stick',
+  ];
+  brands.forEach((brand) => {
+    Products.insert({
+      name: brand,
+      system: true,
+    });
+  });
+}

@@ -1,0 +1,14 @@
+[
+  { "state": "VIC", "postcode": "3000", "suburb": "Melbourne" },
+  { "state": "VIC", "postcode": "3011", "suburb": "Footscray" },
+  { "state": "VIC", "postcode": "3182", "suburb": "St Kilda" },
+  { "state": "VIC", "postcode": "3122", "suburb": "Hawthorn" },
+  { "state": "VIC", "postcode": "3121", "suburb": "Richmond" },
+  { "state": "VIC", "postcode": "3056", "suburb": "Brunswick" },
+  { "state": "NSW", "postcode": "2000", "suburb": "Sydney" },
+  { "state": "NSW", "postcode": "2010", "suburb": "Surry Hills" },
+  { "state": "NSW", "postcode": "2055", "suburb": "North Sydney" },
+  { "state": "NSW", "postcode": "2057", "suburb": "Chatswood" },
+  { "state": "NSW", "postcode": "2020", "suburb": "Mascot" },
+  { "state": "NSW", "postcode": "2088", "suburb": "Mosman" }
+]
