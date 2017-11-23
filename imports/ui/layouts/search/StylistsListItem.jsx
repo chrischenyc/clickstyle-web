@@ -52,6 +52,7 @@ const StylistsListItem = ({ stylist }) => (
                     basic
                     color={Meteor.settings.public.semantic.color}
                     key={product.productId}
+                    style={{ marginBottom: '0.25rem' }}
                   >
                     {product.name}
                   </Label>
