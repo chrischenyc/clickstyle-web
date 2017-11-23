@@ -48,7 +48,7 @@ const BannerSegment = () => (
         }}
       />
 
-      <Button size="huge" color={Meteor.settings.public.semantic.color} as={Link} to="/search">
+      <Button size="huge" color={Meteor.settings.public.semantic.color} as={Link} to="/stylists">
         Book Now
       </Button>
     </Container>

@@ -1,263 +1,68 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
-import { Container, Header, Button, Form, Checkbox, List, Message } from 'semantic-ui-react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { UploadField as FileField } from '@navjobs/upload';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Container, Header, Button, Divider } from 'semantic-ui-react';
 
-import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
-import { FormInputField } from '../../components/FormInputField';
-import { formatDate } from '../../../modules/format-date';
+import { closeModal } from '../../../modules/client/redux/modal';
+import SecureLink from '../../components/SecureLink';
 
-class StylistsJoinPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      agreementChecked: false,
-    };
-  }
+const StylistsJoinPage = props => (
+  <Container style={{ padding: '8rem 0' }}>
+    <Header as="h1">Why Join?</Header>
 
-  render() {
-    const {
-      onSubmit,
-      onChange,
-      onServiceSelected,
-      loading,
-      errors,
-      mobile,
-      address,
-      services,
-      qualificationFile,
-      referenceUrl,
-      application,
-    } = this.props;
+    <p style={{ fontSize: '1.5rem' }}>
+      By joining stylesquad, you wil expedita ducimus exercitationem ratione occaecati optio maxime
+      non. Non perferendis praesentium error et. Illum molestias quibusdam cumque eum neque.
+      Voluptas corporis fugiat tempora vitae animi dicta velit. Libero dignissimos dolore
+      consequatur in non nesciunt laborum. Laudantium modi ut optio pariatur necessitatibus sed
+      ullam itaque deserunt. Molestiae saepe accusantium ratione ut sunt doloribus non libero.
+    </p>
 
-    if (application) {
-      if (application.approved) {
-        return (
-          <Container text style={{ padding: '8rem 0' }}>
-            <Header as="h1">Welcome to the club!</Header>
+    <Button
+      content="Join the squad!"
+      size="massive"
+      color={Meteor.settings.public.semantic.color}
+      icon="right arrow"
+      labelPosition="right"
+      as={SecureLink}
+      history={props.history}
+      to="/join/application"
+      onLoggedIn={() => {
+        props.closeModal();
+        props.history.push('/join/application');
+      }}
+    />
 
-            <p>
-              Your application was approved on {formatDate(application.approvedAt)}. Thanks for
-              being part of us.
-            </p>
+    <Header as="h2">Reason 1</Header>
+    <p style={{ fontSize: '1.33rem' }}>
+      Commodi itaque esse ut beatae atque et aperiam sed. Aut et voluptatem iusto. Consectetur amet
+      expedita quidem quis in. Dicta voluptatem ea veniam. Quae aspernatur delectus. Aut laboriosam
+      in et eius nam quas est. Porro sunt commodi dolorem exercitationem tempore aspernatur quasi.
+      Voluptas labore pariatur rerum aut fugiat.
+    </p>
 
-            <p>
-              Meanwhile, if you have any question, feel free to&nbsp;
-              <Link to="/contact-us">contact us</Link>.
-            </p>
-          </Container>
-        );
-      }
+    <Header as="h2">Reason 2</Header>
+    <p style={{ fontSize: '1.33rem' }}>
+      Commodi itaque esse ut beatae atque et aperiam sed. Aut et voluptatem iusto. Consectetur amet
+      expedita quidem quis in. Dicta voluptatem ea veniam. Quae aspernatur delectus. Aut laboriosam
+      in et eius nam quas est. Porro sunt commodi dolorem exercitationem tempore aspernatur quasi.
+      Voluptas labore pariatur rerum aut fugiat.
+    </p>
 
-      return (
-        <Container text style={{ padding: '8rem 0' }}>
-          <Header as="h1">Relax and sit tight</Header>
-
-          <p>
-            Your previous application submitted on {formatDate(application.createdAt)} is under
-            review process, we will contact you shortly.
-          </p>
-
-          <p>
-            Meanwhile, if you have any question, feel free to&nbsp;
-            <Link to="/contact-us">contact us</Link>.
-          </p>
-        </Container>
-      );
-    }
-
-    return (
-      <Container text style={{ padding: '8rem 0' }}>
-        <Header as="h1">Tell us something about you</Header>
-
-        <p>
-          We need a bit extra information about you and the services you can provide... ducimus
-          exercitationem ratione occaecati optio maxime non. Non perferendis praesentium error et.
-          Illum molestias quibusdam cumque eum neque.
-        </p>
-
-        <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)} size="large">
-          <FormInputField
-            label={<Header>Mobile number</Header>}
-            placeholder="Mobile number"
-            name="mobile"
-            onChange={onChange}
-            errors={errors}
-            note="This is not on your public profile. We may ring you to confirm ..."
-            value={mobile}
-          />
-
-          <Form.Field>
-            <label>
-              <Header>Your address</Header>
-            </label>
-
-            <SemanticGeoSuggest
-              placeholder="type to search address"
-              country="au"
-              name="address"
-              onChange={(value) => {
-                // convert to generic onChange param
-                onChange({ target: { name: 'address', value } });
-              }}
-              onSuggestSelect={(suggest) => {
-                // force onChange as well
-                onChange({
-                  target: { name: 'address', value: suggest.label },
-                });
-              }}
-              initialValue={address}
-            />
-
-            {!_.isEmpty(errors.address) && (
-              <Message
-                error
-                content={errors.address}
-                style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
-              />
-            )}
-
-            <p
-              style={{
-                marginTop: '0.25rem',
-                marginBottom: '1rem',
-                color: '#aaa',
-              }}
-            >
-              {'This is not on your public profile. We need this info to confirm...'}
-            </p>
-          </Form.Field>
-
-          <Form.Field>
-            <label>
-              <Header>Services</Header>
-            </label>
-            <List>
-              {services.map(service => (
-                <List.Item key={service._id}>
-                  <Checkbox
-                    label={service.name}
-                    checked={service.checked}
-                    onChange={(event, data) => {
-                      onServiceSelected(service, data.checked);
-                    }}
-                  />
-                </List.Item>
-              ))}
-            </List>
-
-            {!_.isEmpty(errors.services) && (
-              <Message
-                error
-                content={errors.services}
-                style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
-              />
-            )}
-          </Form.Field>
-
-          <Form.Field>
-            <label>
-              <Header>Qualifications</Header>
-            </label>
-
-            {qualificationFile ? (
-              <Message
-                info
-                icon="file"
-                content={qualificationFile.name}
-                onDismiss={() => {
-                  onChange({ target: { name: 'qualificationFile', value: null } });
-                }}
-              />
-            ) : (
-              <FileField
-                name="qualificationFile"
-                onFiles={(files) => {
-                  onChange({ target: { name: 'qualificationFile', value: files[0] } });
-                }}
-                uploadProps={{
-                  accept: '.jpg,.jpeg,.png,.pdf,.doc,.docx,.dot',
-                }}
-              >
-                <Button color={Meteor.settings.public.semantic.color} loading={false}>
-                  Upload file
-                </Button>
-                <span>
-                  &nbsp;maximum file size: {Meteor.settings.public.document.maxFileSize}MB
-                </span>
-              </FileField>
-            )}
-
-            {!_.isEmpty(errors.qualificationFile) && (
-              <Message
-                error
-                content={errors.qualificationFile}
-                style={{ marginTop: '-0.75rem', marginBottom: '1rem' }}
-              />
-            )}
-          </Form.Field>
-
-          <FormInputField
-            fluid
-            placeholder="Please provide a link to view your work e.g Facebook, Instagram or your website."
-            label={<Header>Reference</Header>}
-            name="referenceUrl"
-            onChange={onChange}
-            errors={errors}
-            value={referenceUrl}
-          />
-
-          <Form.Field>
-            <Checkbox
-              defaultChecked
-              label={
-                <label htmlFor="agreement">
-                  I confirm I am over 18 and I agree to&nbsp;
-                  {Meteor.settings.public.applicationName}&apos;s&nbsp;
-                  <Link to="/terms">Terms of Use</Link>&nbsp;and&nbsp;
-                  <Link to="/privacy">Privacy Policy</Link>.
-                </label>
-              }
-              defaultChecked={this.state.agreementChecked}
-              onChange={(event, data) => {
-                this.setState({ agreementChecked: data.checked });
-              }}
-            />
-          </Form.Field>
-
-          <Button
-            color={Meteor.settings.public.semantic.color}
-            size="huge"
-            type="submit"
-            disabled={!this.state.agreementChecked}
-          >
-            Join
-          </Button>
-        </Form>
-      </Container>
-    );
-  }
-}
-
-StylistsJoinPage.defaultProps = {
-  application: null,
-};
+    <Header as="h2">Reason 3</Header>
+    <p style={{ fontSize: '1.33rem' }}>
+      Commodi itaque esse ut beatae atque et aperiam sed. Aut et voluptatem iusto. Consectetur amet
+      expedita quidem quis in. Dicta voluptatem ea veniam. Quae aspernatur delectus. Aut laboriosam
+      in et eius nam quas est. Porro sunt commodi dolorem exercitationem tempore aspernatur quasi.
+      Voluptas labore pariatur rerum aut fugiat.
+    </p>
+  </Container>
+);
 
 StylistsJoinPage.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onServiceSelected: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
-  mobile: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  services: PropTypes.array.isRequired,
-  qualificationFile: PropTypes.object,
-  referenceUrl: PropTypes.string.isRequired,
-  application: PropTypes.object,
+  closeModal: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
-export default StylistsJoinPage;
+export default connect(null, { closeModal })(StylistsJoinPage);

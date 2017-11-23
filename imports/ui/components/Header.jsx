@@ -11,7 +11,7 @@ import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
 
 const StylistLandingPageLink = () => (
-  <Menu.Item as={Link} to="/stylists">
+  <Menu.Item as={Link} to="/join">
     Are you a stylist?
   </Menu.Item>
 );
@@ -35,7 +35,7 @@ const Header = props => (
               <Dropdown.Menu>
                 <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />
                 <Dropdown.Item as={Link} to="/inbox" text="Inbox" />
-                <Dropdown.Item as={Link} to="/profile" text="Profile" />
+                <Dropdown.Item as={Link} to="/profiles/edit" text="Profile" />
                 <Dropdown.Item as={Link} to="/settings" text="Settings" />
                 <Dropdown.Item
                   text="Logout"
@@ -95,15 +95,15 @@ const Header = props => (
         <Menu.Menu position="right">
           <Dropdown icon="content" className="item">
             <Dropdown.Menu>
-              {!props.isStylist && (
-                <Dropdown.Item as={Link} to="/stylists" text="Are you a stylist?" />
-              )}
+              {!props.isStylist && <Dropdown.Item as={Link} to="/join" text="Are you a stylist?" />}
               <Dropdown.Divider />
 
               {props.authenticated && <Dropdown.Header>Account</Dropdown.Header>}
               {props.authenticated && <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />}
               {props.authenticated && <Dropdown.Item as={Link} to="/inbox" text="Inbox" />}
-              {props.authenticated && <Dropdown.Item as={Link} to="/profile" text="Profile" />}
+              {props.authenticated && (
+                <Dropdown.Item as={Link} to="/profiles/edit" text="Profile" />
+              )}
               {props.authenticated && <Dropdown.Item as={Link} to="/settings" text="Settings" />}
               {props.authenticated && <Dropdown.Divider />}
 
@@ -116,10 +116,10 @@ const Header = props => (
 
               {props.isStylist && <Dropdown.Header>Stylist</Dropdown.Header>}
               {props.isStylist && (
-                <Dropdown.Item as={Link} to="/stylists/services" text="Services & Prices" />
+                <Dropdown.Item as={Link} to="/stylists/me/services" text="Services & Prices" />
               )}
               {props.isStylist && (
-                <Dropdown.Item as={Link} to="/stylists/availability" text="Availability" />
+                <Dropdown.Item as={Link} to="/stylists/me/availability" text="Availability" />
               )}
               {props.isStylist && <Dropdown.Divider />}
 

@@ -9,10 +9,10 @@ import { connect } from 'react-redux';
 
 import Services from '../../../api/services/services';
 import StylistApplications from '../../../api/stylist_applications/stylist_applications';
-import StylistsJoinPage from './StylistsJoinPage';
+import StylistsApplicationPage from './StylistsApplicationPage';
 import { validateStylistJoin } from '../../../modules/validate';
 
-class StylistJoin extends Component {
+class StylistApplication extends Component {
   constructor(props) {
     super(props);
 
@@ -134,7 +134,7 @@ class StylistJoin extends Component {
 
   render() {
     return (
-      <StylistsJoinPage
+      <StylistsApplicationPage
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onServiceSelected={this.handleServiceSelected}
@@ -151,7 +151,7 @@ class StylistJoin extends Component {
   }
 }
 
-StylistJoin.defaultProps = {
+StylistApplication.defaultProps = {
   loading: true,
   mobile: '',
   address: '',
@@ -159,7 +159,7 @@ StylistJoin.defaultProps = {
   application: null,
 };
 
-StylistJoin.propTypes = {
+StylistApplication.propTypes = {
   loading: PropTypes.bool,
   mobile: PropTypes.string,
   address: PropTypes.string,
@@ -184,4 +184,4 @@ export default compose(
       application: StylistApplications.findOne(),
     };
   }),
-)(StylistJoin);
+)(StylistApplication);

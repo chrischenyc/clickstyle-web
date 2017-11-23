@@ -26,7 +26,7 @@ const SideMenu = ({ profile, isStylist }) => (
           Inbox
         </Menu.Item>
 
-        <Menu.Item as={NavLink} to="/profile">
+        <Menu.Item as={NavLink} to="/profiles/edit">
           Profile
         </Menu.Item>
 
@@ -53,10 +53,10 @@ const SideMenu = ({ profile, isStylist }) => (
       <Menu.Item>
         <Menu.Header>Stylist</Menu.Header>
         <Menu.Menu>
-          <Menu.Item as={NavLink} to="/stylists/services">
+          <Menu.Item as={NavLink} to="/stylists/me/services">
             Services &amp; Prices
           </Menu.Item>
-          <Menu.Item as={NavLink} to="/stylists/availability">
+          <Menu.Item as={NavLink} to="/stylists/me/availability">
             Availability
           </Menu.Item>
         </Menu.Menu>
