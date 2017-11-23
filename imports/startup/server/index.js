@@ -13,6 +13,6 @@ import './cloudinary';
 
 import './fixtures/products';
 import './fixtures/services';
-import './fixtures/demo_stylists';
+// import './fixtures/demo_stylists';
 
 WebApp.addHtmlAttributeHook(() => ({ lang: 'en' }));

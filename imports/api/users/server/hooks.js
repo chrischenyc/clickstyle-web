@@ -12,14 +12,14 @@ Meteor.users.after.insert((userId, user) => {
 
   // send email verification for email sign-up
   if (user.services.password) {
-    // Accounts.sendVerificationEmail(user._id);
+    Accounts.sendVerificationEmail(user._id);
   }
 
   // send welcome email regardless sign-up types
-  // sendWelcomeEmail(user._id);
+  sendWelcomeEmail(user._id);
 
   // subscribe user to MailChimp
-  // subscribeToList(user._id, Meteor.settings.MailChimpListId);
+  subscribeToList(user._id, Meteor.settings.MailChimpListId);
 
   log.info('Meteor.methods: users.after.insert', `userId: ${user._id}`);
 });
