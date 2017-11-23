@@ -18,7 +18,9 @@ import Products from '../../../api/products/products';
 names.forEach((name) => {
   if (!Meteor.users.findOne({ profile: { name } })) {
     Accounts.createUser({
-      email: `${name.first.replace(' ', '_')}.${name.last.replace(' ', '_')}@test-squad.com`,
+      email: `${name.first.replace(' ', '_').toLowerCase()}.${name.last
+        .replace(' ', '_')
+        .toLowerCase()}@test-squad.com`,
       password: 'tester123',
       profile: {
         name,
