@@ -8,6 +8,7 @@ import Services from '../../../api/services/services';
 import Addons from '../../../api/addons/addons';
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ServicesList from './ServicesList';
+import SEOFriendlyName from '../../../modules/seo-friendly-name.js';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -126,10 +127,7 @@ class SearchBar extends Component {
               size="large"
               onClick={() => {
                 // normalize service name as url parameter
-                onSearch(this.state.service
-                    .replace(/ /g, '-')
-                    .replace(/---/g, '-')
-                    .toLowerCase());
+                onSearch(SEOFriendlyName(this.state.service));
               }}
               loading={searching}
             >

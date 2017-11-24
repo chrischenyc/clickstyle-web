@@ -19,6 +19,14 @@ class Search extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  componentDidMount() {
+    if (this.state.service) {
+      this.search(this.state.service, this.state.suburb);
+    } else {
+      // TODO: display empty page
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(this.props.match.params, nextProps.match.params)) {
       const { service, suburb } = nextProps.match.params;
@@ -43,6 +51,10 @@ class Search extends Component {
 
       if (stylists) {
         this.setState({ stylists });
+
+        if (stylists.length === 0) {
+          // TODO: display empty results page
+        }
       } else {
         this.setState({ stylists: [] });
       }
