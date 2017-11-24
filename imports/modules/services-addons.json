@@ -13,7 +13,7 @@
   },
   {
     "name": "Hair - Women",
-    "seoNames": ["hair-women"],
+    "seoNames": ["hair-women", "women-hair"],
     "addons": [
       { "name": "Cut & Style", "seoNames": ["cut-and-style", "cut-style"] },
       { "name": "Updo", "seoNames": ["updo", "hair-updo"] },
@@ -42,7 +42,7 @@
       { "name": "Haircut", "seoNames": ["haircut"] },
       { "name": "Hot Towel Massage", "seoNames": ["hot-towel-massage"] },
       { "name": "Bald Head", "seoNames": ["bald-head"] },
-      { "name": "Cut & Side design", "seoNames": ["cut-and-side-design"] },
+      { "name": "Cut & Side Design", "seoNames": ["cut-and-side-design", "cut-side-design"] },
       { "name": "Hair Coloring", "seoNames": ["hair-coloring"] },
       { "name": "Braids", "seoNames": ["braids"] }
     ]
@@ -52,7 +52,7 @@
     "seoNames": ["hair-children"],
     "addons": [
       { "name": "Hair Cut", "seoNames": ["hair-cut"] },
-      { "name": "Cut & Side Design", "seoNames": ["cut-and-side-design"] },
+      { "name": "Cut & Side Design", "seoNames": ["cut-and-side-design", "cut-side-design"] },
       { "name": "Braids", "seoNames": ["braids"] }
     ]
   },

@@ -1,4 +1,4 @@
-import services from './services-addons.json';
+const services = require('./services-addons.json');
 
 /**
  * Convert service or add-on name to SEO friendly URL part
@@ -15,7 +15,7 @@ export const ServiceNameToSEOName = (name) => {
       seoName = service.seoNames[0];
     }
 
-    if (seoName === null) {
+    if (!seoName) {
       service.addons.some((addon) => {
         if (addon.name === name && addon.seoNames && addon.seoNames.length > 0) {
           seoName = addon.seoNames[0];
@@ -57,11 +57,11 @@ export const SEONameToServiceName = (seoName) => {
           originalName = service.name;
         }
 
-        return seoName !== null;
+        return originalName !== null;
       });
     }
 
-    if (originalName === null) {
+    if (!originalName) {
       service.addons.some((addon) => {
         if (addon.seoNames) {
           addon.seoNames.some((seo) => {
@@ -69,7 +69,7 @@ export const SEONameToServiceName = (seoName) => {
               originalName = addon.name;
             }
 
-            return seoName !== null;
+            return originalName !== null;
           });
         }
 
@@ -77,7 +77,7 @@ export const SEONameToServiceName = (seoName) => {
       });
     }
 
-    return seoName !== null;
+    return originalName !== null;
   });
 
   // fallback

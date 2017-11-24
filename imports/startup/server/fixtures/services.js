@@ -1,7 +1,7 @@
 import Services from '../../../api/services/services';
 import Addons from '../../../api/addons/addons';
 
-import services from '../../../modules/services-addons.json';
+const services = require('../../../modules/services-addons.json');
 
 // seed Services and Addons data if database is empty
 if (Services.find().count() === 0) {
