@@ -16,14 +16,24 @@ class Search extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  componentDidMount() {
+    const { service, suburb } = this.props.match.params;
+
+    if (service) {
+      this.search(service, suburb);
+    } else {
+      // search for empty page
+    }
+  }
+
   handleSearch(service) {
     this.props.history.push(`/stylists/${service}`);
   }
 
-  search(service) {
+  search(service, suburb) {
     this.setState({ searching: true });
 
-    Meteor.call('stylists.search', { service }, (error, stylists) => {
+    Meteor.call('stylists.search', { service, suburb }, (error, stylists) => {
       this.setState({ searching: false });
 
       if (error) {
