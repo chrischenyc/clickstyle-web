@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Responsive } from 'semantic-ui-react';
 
-import SearchBar from './SearchBar';
+import SearchBar from './SearchBar/SearchBar';
 import StylistsList from './StylistsList';
 
 const SearchPage = ({
@@ -37,6 +37,7 @@ const SearchPage = ({
 );
 
 SearchPage.propTypes = {
+  onSearch: PropTypes.func.isRequired,
   service: PropTypes.string.isRequired,
   suburb: PropTypes.string.isRequired,
   searching: PropTypes.bool.isRequired,

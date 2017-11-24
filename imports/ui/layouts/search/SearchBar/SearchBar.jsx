@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { Input, Button, Popup, Grid } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import Services from '../../../api/services/services';
-import Addons from '../../../api/addons/addons';
-import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
+import Services from '../../../../api/services/services';
+import Addons from '../../../../api/addons/addons';
+import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ServicesList from './ServicesList';
 
 class SearchBar extends Component {
@@ -21,6 +21,7 @@ class SearchBar extends Component {
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
     this.handleServiceSelection = this.handleServiceSelection.bind(this);
+    this.handleServiceInputKeyDown = this.handleServiceInputKeyDown.bind(this);
   }
 
   handleServiceChange(service) {
@@ -29,6 +30,15 @@ class SearchBar extends Component {
 
   handleServiceSelection(service) {
     this.setState({ service, isServicesListOpen: false });
+    this.props.onSearch(service);
+  }
+
+  handleServiceInputKeyDown(event) {
+    if (event.which === 13 && !_.isEmpty(this.state.service)) {
+      // 'Enter'
+      this.setState({ isServicesListOpen: false });
+      this.props.onSearch(this.state.service);
+    }
   }
 
   render() {
@@ -43,6 +53,7 @@ class SearchBar extends Component {
             <Popup
               trigger={
                 <Input
+                  name="service"
                   fluid
                   icon="search"
                   iconPosition="left"
@@ -53,6 +64,7 @@ class SearchBar extends Component {
                   onChange={(event) => {
                     this.handleServiceChange(event.target.value);
                   }}
+                  onKeyDown={this.handleServiceInputKeyDown}
                 />
               }
               position="bottom left"
