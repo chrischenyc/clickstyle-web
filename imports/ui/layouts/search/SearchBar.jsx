@@ -3,6 +3,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button, Popup, Grid } from 'semantic-ui-react';
+import _ from 'lodash';
 
 import Services from '../../../api/services/services';
 import Addons from '../../../api/addons/addons';
@@ -69,10 +70,34 @@ class SearchBar extends Component {
             >
               <Popup.Content>
                 <ServicesList
-                  services={services.map(service => ({
-                    ...service,
-                    addons: addons.filter(addon => addon.serviceId === service._id),
-                  }))}
+                  services={services
+                    .map(service => ({
+                      ...service,
+                      addons: addons.filter(addon => addon.serviceId === service._id),
+                    }))
+                    .filter((service) => {
+                      if (!_.isEmpty(this.state.service)) {
+                        if (
+                          service.name.toLowerCase().indexOf(this.state.service.toLowerCase()) !==
+                          -1
+                        ) {
+                          return true;
+                        }
+
+                        let addonMatched = false;
+                        service.addons.forEach((addon) => {
+                          if (
+                            addon.name.toLowerCase().indexOf(this.state.service.toLowerCase()) !==
+                            -1
+                          ) {
+                            addonMatched = true;
+                          }
+                        });
+
+                        return addonMatched;
+                      }
+                      return true;
+                    })}
                   onSelection={this.handleServiceSelection}
                 />
               </Popup.Content>
