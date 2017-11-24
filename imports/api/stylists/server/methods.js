@@ -94,18 +94,21 @@ Meteor.methods({
       );
 
       // query by service/addon name
-      const serviceNameSelector = { 'services.name': 'Make-Up' };
-      const addonNameSelector = { 'services.addons.name': 'Full Face Makeup' };
+      const serviceNameSelector = { 'services.name': RegExp(service, 'i') };
+      const addonNameSelector = { 'services.addons.name': RegExp(service, 'i') };
 
       // TODO: query by suburb
 
-      const stylists = Stylists.find(
-        {
-          public: true,
-          $or: [serviceNameSelector, addonNameSelector],
-        },
-        { fields: { owner: 1, services: 1 }, limit: 20 },
-      ).fetch();
+      // final compose
+      const selector = {
+        public: true,
+        $or: [serviceNameSelector, addonNameSelector],
+      };
+
+      const stylists = Stylists.find(selector, {
+        fields: { owner: 1, services: 1 },
+        limit: 20,
+      }).fetch();
 
       const userIds = stylists.map(stylist => stylist.owner);
 

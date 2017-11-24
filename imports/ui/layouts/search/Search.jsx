@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import _ from 'lodash';
 
 import SearchPage from './SearchPage';
 
@@ -18,11 +19,11 @@ class Search extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  componentDidMount() {
-    if (this.state.service) {
-      this.search(this.state.service, this.state.suburb);
-    } else {
-      // search for empty page
+  componentWillReceiveProps(nextProps) {
+    if (!_.isEqual(this.props.match.params, nextProps.match.params)) {
+      const { service, suburb } = nextProps.match.params;
+
+      this.search(service, suburb);
     }
   }
 
