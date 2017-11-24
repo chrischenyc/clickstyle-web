@@ -80,8 +80,11 @@ Meteor.methods({
 
   'stylists.search': function searchStylists(data) {
     check(data, Object);
-    const { service } = data;
+    const { service, suburb } = data;
     check(service, String);
+    if (suburb) {
+      check(suburb, String);
+    }
 
     try {
       log.info(
@@ -90,9 +93,18 @@ Meteor.methods({
         `param: ${JSON.stringify(data)}`,
       );
 
+      // query by service/addon name
+      const serviceNameSelector = { 'services.name': 'Make-Up' };
+      const addonNameSelector = { 'services.addons.name': 'Full Face Makeup' };
+
+      // TODO: query by suburb
+
       const stylists = Stylists.find(
-        { public: true },
-        { fields: { owner: 1, services: 1 } },
+        {
+          public: true,
+          $or: [serviceNameSelector, addonNameSelector],
+        },
+        { fields: { owner: 1, services: 1 }, limit: 20 },
       ).fetch();
 
       const userIds = stylists.map(stylist => stylist.owner);

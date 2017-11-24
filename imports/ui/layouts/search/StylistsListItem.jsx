@@ -2,9 +2,18 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, Grid, Image, Header, Button, List, Label, Icon } from 'semantic-ui-react';
+import { Card, Grid, Image, Header, Button, List, Label, Icon, Divider } from 'semantic-ui-react';
+import _ from 'lodash';
 
 import ScaledImageURL from '../../../modules/scaled-image-url';
+
+const dummyBanners = [
+  'http://res.cloudinary.com/stylesquard/image/upload/v1511498808/banner1_wahqwj',
+  'http://res.cloudinary.com/stylesquard/image/upload/v1511498807/banner2_nzwd8s',
+  'http://res.cloudinary.com/stylesquard/image/upload/v1511499198/banner4_e0qb2e',
+  'http://res.cloudinary.com/stylesquard/image/upload/v1511499199/banner3_wzdcon',
+  'http://res.cloudinary.com/stylesquard/image/upload/v1511499198/banner5_u7lgpc',
+];
 
 const StylistsListItem = ({ stylist }) => (
   <Card fluid as={Link} to={`/stylists/${stylist._id}`} style={{ color: '#212121' }}>
@@ -31,11 +40,7 @@ const StylistsListItem = ({ stylist }) => (
               </div>
             )}
 
-            <Button color={Meteor.settings.public.semantic.color} content="Book Now" size="large" />
-          </div>
-        </Grid.Column>
-        <Grid.Column width="12" verticalAlign="middle">
-          <div style={{ padding: '1rem 0' }}>
+            <Divider style={{ margin: '0 4rem' }} />
             <List>
               {stylist.services.map(service => (
                 <List.Item key={service._id}>
@@ -44,9 +49,18 @@ const StylistsListItem = ({ stylist }) => (
               ))}
             </List>
 
+            <Button color={Meteor.settings.public.semantic.color} content="Book Now" size="large" />
+          </div>
+        </Grid.Column>
+        <Grid.Column width="12" verticalAlign="middle">
+          <div style={{ padding: '0 0 1rem 0' }}>
+            <Image src={_.sample(dummyBanners)} fluid />
+
             {stylist.profile.products && (
               <div>
-                Products used&nbsp;
+                <Divider horizontal style={{ padding: '0 2rem' }}>
+                  Products used
+                </Divider>
                 {stylist.profile.products.map(product => (
                   <Label
                     basic
