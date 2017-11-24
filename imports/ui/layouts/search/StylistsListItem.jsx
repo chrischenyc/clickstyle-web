@@ -82,7 +82,7 @@ const StylistsListItem = ({ stylist }) => (
             <Button color={Meteor.settings.public.semantic.color} content="Book Now" size="large" />
           </div>
         </Grid.Column>
-        <Grid.Column width="12" verticalAlign="middle">
+        <Grid.Column width="12" verticalAlign="top">
           <div style={{ padding: '0 0 1rem 0' }}>
             <Image src={_.sample(dummyBanners)} fluid />
 
