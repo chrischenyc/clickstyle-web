@@ -92,7 +92,7 @@ Meteor.methods({
       // sample conversion: "full-face-makeup" -> "/full.+face.+makeup/i"
       const keywords = service.split('-').filter(word => word !== 'and');
       let regex = '';
-      for (let index = 0; index < keywords.length; index++) {
+      for (let index = 0; index < keywords.length; index += 1) {
         regex += keywords[index];
         if (index < keywords.length - 1) {
           regex += '.+';

@@ -322,7 +322,7 @@ class SemanticGeoSuggest extends React.Component {
       newIndex = 0,
       i = 0;
 
-    for (i; i <= suggestsCount; i++) {
+    for (i; i <= suggestsCount; i += 1) {
       if (this.state.suggests[i] === this.state.activeSuggest) {
         newIndex = next ? i + 1 : i - 1;
       }

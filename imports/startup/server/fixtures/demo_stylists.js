@@ -108,7 +108,7 @@ const randomServices = () => {
   const services = [];
   const numberOfServices = _.random(1, 5);
 
-  for (let indexOfService = 0; indexOfService < numberOfServices; indexOfService++) {
+  for (let indexOfService = 0; indexOfService < numberOfServices; indexOfService += 1) {
     const service = _.sample(allServices);
     const { _id, name } = service;
     const basePrice = _.random(20, 150);
@@ -116,7 +116,7 @@ const randomServices = () => {
     const serviceAddons = allAddons.filter(addon => addon.serviceId === service._id);
     const addons = [];
     const numberOfAddons = _.random(1, 3);
-    for (let indexOfAddon = 0; indexOfAddon < numberOfAddons; indexOfAddon++) {
+    for (let indexOfAddon = 0; indexOfAddon < numberOfAddons; indexOfAddon += 1) {
       const addon = _.sample(serviceAddons);
       const addonPrice = _.random(10, 100);
 
@@ -139,7 +139,7 @@ const randomProducts = () => {
   const numberOfProducts = _.random(5, 20);
   const products = [];
 
-  for (let indexOfProduct = 0; indexOfProduct < numberOfProducts; indexOfProduct++) {
+  for (let indexOfProduct = 0; indexOfProduct < numberOfProducts; indexOfProduct += 1) {
     const { _id: productId, name } = _.sample(allProducts);
     products.push({ productId, name });
   }
