@@ -3,13 +3,15 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 import SearchPage from './SearchPage';
+import { ServiceNameToSEOName, SEONameToServiceName } from '../../../modules/seo-name';
 
 class Search extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      service: props.match.params.service || '',
+      service:
+        (props.match.params.service && SEONameToServiceName(props.match.params.service)) || '',
       suburb: props.match.params.suburb || '',
       searching: false,
       error: '',
@@ -31,12 +33,12 @@ class Search extends Component {
     if (!_.isEqual(this.props.match.params, nextProps.match.params)) {
       const { service, suburb } = nextProps.match.params;
 
-      this.search(service, suburb);
+      this.search(SEONameToServiceName(service), suburb);
     }
   }
 
   handleSearch(service) {
-    this.props.history.push(`/stylists/${service}`);
+    this.props.history.push(`/stylists/${ServiceNameToSEOName(service)}`);
   }
 
   search(service, suburb) {

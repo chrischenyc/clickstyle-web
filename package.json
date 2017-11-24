@@ -8,7 +8,7 @@
     "Chris Chen <chrischen79@gmail.com>"
   ],
   "scripts": {
-    "dev": "MONGO_URL=mongodb://localhost:27017/stylesquad  meteor -s settings-development.json",
+    "dev": "MONGO_URL=mongodb://localhost:27017/stylesquad meteor -s settings-development.json",
     "start": "meteor run"
   },
   "dependencies": {

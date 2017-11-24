@@ -9,7 +9,6 @@ import Services from '../../../api/services/services';
 import Addons from '../../../api/addons/addons';
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ServicesList from './ServicesList';
-import SEOFriendlyName from '../../../modules/seo-friendly-name.js';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -151,7 +150,7 @@ class SearchBar extends Component {
               color={Meteor.settings.public.semantic.color}
               size="large"
               onClick={() => {
-                onSearch(SEOFriendlyName(this.state.service));
+                onSearch(this.state.service);
               }}
               loading={searching}
             >

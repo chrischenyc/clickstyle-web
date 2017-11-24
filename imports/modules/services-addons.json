@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Make-Up",
+    "seoNames": ["make-up", "makeup"],
+    "addons": [
+      { "name": "Full Face Makeup", "seoNames": ["full-face-makeup"] },
+      { "name": "Full Face Makeup with Glitter", "seoNames": ["full-face-makeup-with-glitter"] },
+      { "name": "Full Face Makeup with Lashes", "seoNames": ["full-face-makeup-with-lashes"] },
+      { "name": "Airbrush Makeup", "seoNames": ["airbrush-makeup"] },
+      { "name": "Special Effects Makeup", "seoNames": ["special-effects-makeup"] },
+      { "name": "Prom Makeup", "seoNames": ["prom-makeup"] }
+    ]
+  },
+  {
+    "name": "Hair - Women",
+    "seoNames": ["hair-women"],
+    "addons": [
+      { "name": "Cut & Style", "seoNames": ["cut-and-style", "cut-style"] },
+      { "name": "Updo", "seoNames": ["updo", "hair-updo"] },
+      { "name": "Shampoo & Style", "seoNames": ["shampoo-and-style"] },
+      { "name": "Braids", "seoNames": ["braids"] },
+      { "name": "Full Hair Color", "seoNames": ["full-hair-color"] },
+      { "name": "Color Retouch", "seoNames": ["color-retouch"] },
+      { "name": "Full Highlights", "seoNames": ["full-highlights"] },
+      { "name": "Partial Highlights", "seoNames": ["partial-highlights"] },
+      { "name": "Permanent Hair Treatment", "seoNames": ["permanent-hair-treatment"] },
+      { "name": "Roller Set", "seoNames": ["roller-set"] },
+      { "name": "Silk Press", "seoNames": ["silk-press"] },
+      { "name": "Blowout", "seoNames": ["blowout"] },
+      { "name": "Hair Extension", "seoNames": ["hair-extension"] },
+      { "name": "Keratin Treatment", "seoNames": ["keratin-treatment"] },
+      { "name": "Styling", "seoNames": ["styling"] },
+      { "name": "Blowout with Iron", "seoNames": ["blowout-with-iron"] },
+      { "name": "Curling", "seoNames": ["curling"] }
+    ]
+  },
+  {
+    "name": "Hair - Men",
+    "seoNames": ["hair-men"],
+    "addons": [
+      { "name": "Beard Trim", "seoNames": ["beard-trim"] },
+      { "name": "Haircut", "seoNames": ["haircut"] },
+      { "name": "Hot Towel Massage", "seoNames": ["hot-towel-massage"] },
+      { "name": "Bald Head", "seoNames": ["bald-head"] },
+      { "name": "Cut & Side design", "seoNames": ["cut-and-side-design"] },
+      { "name": "Hair Coloring", "seoNames": ["hair-coloring"] },
+      { "name": "Braids", "seoNames": ["braids"] }
+    ]
+  },
+  {
+    "name": "Hair - Children",
+    "seoNames": ["hair-children"],
+    "addons": [
+      { "name": "Hair Cut", "seoNames": ["hair-cut"] },
+      { "name": "Cut & Side Design", "seoNames": ["cut-and-side-design"] },
+      { "name": "Braids", "seoNames": ["braids"] }
+    ]
+  },
+  {
+    "name": "Wedding",
+    "seoNames": ["wedding"],
+    "addons": [
+      { "name": "Bridal Makeup", "seoNames": ["bridal-makeup"] },
+      { "name": "Bridal Wedding Package", "seoNames": ["bridal-wedding-package"] },
+      { "name": "Bridal Makeup & Hair Styling", "seoNames": ["bridal-makeup-and-hair-styling"] },
+      { "name": "Bridal Hair Styling", "seoNames": ["bridal-hair-styling"] },
+      { "name": "Bridesmaid Hair Styling", "seoNames": ["bridesmaid-hair-styling"] },
+      { "name": "Bridesmaid Makeup", "seoNames": ["bridesmaid-makeup"] },
+      { "name": "Bridal Trials", "seoNames": ["bridal-trials"] }
+    ]
+  },
+  {
+    "name": "Nails",
+    "seoNames": ["nails"],
+    "addons": [
+      { "name": "Full Set Acrylic", "seoNames": ["full-set-acrylic"] },
+      { "name": "Refill Acrylic Nails", "seoNames": ["refill-acrylic-nails"] },
+      { "name": "Gel Manicure", "seoNames": ["gel-manicure"] },
+      { "name": "Pedicure", "seoNames": ["pedicure"] },
+      { "name": "Nail Art", "seoNames": ["nail-art"] },
+      { "name": "Spa Pedicure", "seoNames": ["spa-pedicure"] }
+    ]
+  },
+  {
+    "name": "Eyebrow",
+    "seoNames": ["eyebrow"],
+    "addons": [
+      { "name": "Threading", "seoNames": ["threading"] },
+      { "name": "Tinting", "seoNames": ["tinting"] },
+      { "name": "Men’s Eyebrow Threading", "seoNames": ["men’s-eyebrow-threading"] },
+      { "name": "Eyebrow Shaping", "seoNames": ["eyebrow-shaping"] },
+      { "name": "Waxing", "seoNames": ["waxing"] }
+    ]
+  },
+  {
+    "name": "Eyelash",
+    "seoNames": ["eyelash"],
+    "addons": [
+      { "name": "Lashes", "seoNames": ["lashes"] },
+      { "name": "Bottom Lashes", "seoNames": ["bottom-lashes"] },
+      { "name": "Mink Lashes", "seoNames": ["mink-lashes"] },
+      { "name": "Eyelash Extension", "seoNames": ["eyelash-extension"] }
+    ]
+  },
+  {
+    "name": "Massage & Spa - Women",
+    "seoNames": ["massage-and-spa-women"],
+    "addons": [
+      { "name": "30min Massage", "seoNames": ["30min-massage"] },
+      { "name": "60min Massage", "seoNames": ["60min-massage"] },
+      { "name": "90min Massage", "seoNames": ["90min-massage"] },
+      { "name": "Foot Massage", "seoNames": ["foot-massage"] },
+      { "name": "Hot Stone Massage", "seoNames": ["hot-stone-massage"] },
+      { "name": "Aromatherapy Massage", "seoNames": ["aromatherapy-massage"] },
+      { "name": "Remedial Massage", "seoNames": ["remedial-massage"] },
+      { "name": "Prenatal Massage", "seoNames": ["prenatal-massage"] }
+    ]
+  },
+  {
+    "name": "Massage & Spa - Men",
+    "seoNames": ["massage-and-spa-men"],
+    "addons": [
+      { "name": "30min Massage", "seoNames": ["30min-massage"] },
+      { "name": "60min Massage", "seoNames": ["60min-massage"] },
+      { "name": "90min Massage", "seoNames": ["90min-massage"] },
+      { "name": "Foot Massage", "seoNames": ["foot-massage"] },
+      { "name": "Hot Stone Massage", "seoNames": ["hot-stone-massage"] },
+      { "name": "Aromatherapy Massage", "seoNames": ["aromatherapy-massage"] },
+      { "name": "Remedial Massage", "seoNames": ["remedial-massage"] }
+    ]
+  },
+  {
+    "name": "Tanning",
+    "seoNames": ["tanning"],
+    "addons": [
+      { "name": "Full Body Airbrush Tan", "seoNames": ["full-body-airbrush-tan"] },
+      { "name": "Half Body Airbrush Tan", "seoNames": ["half-body-airbrush-tan"] }
+    ]
+  },
+  {
+    "name": "Waxing",
+    "seoNames": ["waxing"],
+    "addons": [
+      { "name": "Brazilian", "seoNames": ["brazilian"] },
+      { "name": "Bikini Line", "seoNames": ["bikini-line"] },
+      { "name": "Full Arm Wax", "seoNames": ["full-arm-wax"] },
+      { "name": "Full Leg Wax", "seoNames": ["full-leg-wax"] },
+      { "name": "Full Face Wax", "seoNames": ["full-face-wax"] },
+      { "name": "Half Arm Wax", "seoNames": ["half-arm-wax"] },
+      { "name": "Half Leg Wax", "seoNames": ["half-leg-wax"] },
+      { "name": "Underarm Wax", "seoNames": ["underarm-wax"] }
+    ]
+  },
+  {
+    "name": "Skincare treatment",
+    "seoNames": ["skincare-treatment"],
+    "addons": [
+      { "name": "Facial", "seoNames": ["facial"] },
+      { "name": "Acne Facial", "seoNames": ["acne-facial"] }
+    ]
+  }
+]
