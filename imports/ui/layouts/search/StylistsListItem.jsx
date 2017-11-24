@@ -2,7 +2,18 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, Grid, Image, Header, Button, List, Label, Icon, Divider } from 'semantic-ui-react';
+import {
+  Card,
+  Grid,
+  Image,
+  Header,
+  Button,
+  List,
+  Label,
+  Icon,
+  Divider,
+  Popup,
+} from 'semantic-ui-react';
 import _ from 'lodash';
 
 import ScaledImageURL from '../../../modules/scaled-image-url';
@@ -44,7 +55,26 @@ const StylistsListItem = ({ stylist }) => (
             <List>
               {stylist.services.map(service => (
                 <List.Item key={service._id}>
-                  {`${service.name} from $${service.basePrice}`}
+                  {`${service.name} from $${service.basePrice}`}&nbsp;
+                  {service.addons.length > 0 && (
+                    <Popup
+                      flowing
+                      position="top center"
+                      trigger={<Icon name="tags" color={Meteor.settings.public.semantic.color} />}
+                    >
+                      <Popup.Content>
+                        <List>
+                          <List.Header>{`base price: $${service.basePrice}`}</List.Header>
+                          <List.Header>add-ons:</List.Header>
+                          {service.addons.map(addon => (
+                            <List.Item key={addon._id}>
+                              {`${addon.name} - $${addon.price}`}
+                            </List.Item>
+                          ))}
+                        </List>
+                      </Popup.Content>
+                    </Popup>
+                  )}
                 </List.Item>
               ))}
             </List>
