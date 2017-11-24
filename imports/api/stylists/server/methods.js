@@ -87,15 +87,22 @@ Meteor.methods({
     }
 
     try {
-      log.info(
-        'Meteor.methods: stylists.search',
-        `userId: ${this.userId}`,
-        `param: ${JSON.stringify(data)}`,
-      );
+      // break down service name into words,
+      // match with names of services and their subordinate addons
+      // sample conversion: "full-face-makeup" -> "/full.+face.+makeup/i"
+      const keywords = service.split('-').filter(word => word !== 'and');
+      let regex = '';
+      for (let index = 0; index < keywords.length; index++) {
+        regex += keywords[index];
+        if (index < keywords.length - 1) {
+          regex += '.+';
+        }
+      }
 
-      // query by service/addon name
-      const serviceNameSelector = { 'services.name': RegExp(service, 'i') };
-      const addonNameSelector = { 'services.addons.name': RegExp(service, 'i') };
+      const serviceNameSelector = { 'services.name': RegExp(regex, 'i') };
+      const addonNameSelector = {
+        'services.addons.name': RegExp(regex, 'i'),
+      };
 
       // TODO: query by suburb
 

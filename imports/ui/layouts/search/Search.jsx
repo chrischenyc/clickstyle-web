@@ -42,6 +42,8 @@ class Search extends Component {
   search(service, suburb) {
     this.setState({ searching: true });
 
+    // TODO: GA tracking
+
     Meteor.call('stylists.search', { service, suburb }, (error, stylists) => {
       this.setState({ searching: false });
 

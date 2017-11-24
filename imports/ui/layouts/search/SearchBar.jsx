@@ -126,7 +126,6 @@ class SearchBar extends Component {
               color={Meteor.settings.public.semantic.color}
               size="large"
               onClick={() => {
-                // normalize service name as url parameter
                 onSearch(SEOFriendlyName(this.state.service));
               }}
               loading={searching}
