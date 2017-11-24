@@ -87,7 +87,7 @@
     "addons": [
       { "name": "Threading", "seoNames": ["threading"] },
       { "name": "Tinting", "seoNames": ["tinting"] },
-      { "name": "Men’s Eyebrow Threading", "seoNames": ["men’s-eyebrow-threading"] },
+      { "name": "Men’s Eyebrow Threading", "seoNames": ["men-eyebrow-threading"] },
       { "name": "Eyebrow Shaping", "seoNames": ["eyebrow-shaping"] },
       { "name": "Waxing", "seoNames": ["waxing"] }
     ]
