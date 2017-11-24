@@ -14,7 +14,7 @@ class SearchBar extends Component {
     super(props);
 
     this.state = {
-      service: '',
+      service: props.service || '',
       isServicesListOpen: false,
     };
 
@@ -150,6 +150,8 @@ SearchBar.defaultProps = {
 
 SearchBar.propTypes = {
   loading: PropTypes.bool,
+  service: PropTypes.string.isRequired,
+  suburb: PropTypes.string.isRequired,
   searching: PropTypes.bool.isRequired,
   services: PropTypes.array,
   addons: PropTypes.array,

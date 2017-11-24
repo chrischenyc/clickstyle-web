@@ -8,6 +8,8 @@ class Search extends Component {
     super(props);
 
     this.state = {
+      service: props.match.params.service || '',
+      suburb: props.match.params.suburb || '',
       searching: false,
       error: '',
       stylists: [],
@@ -17,10 +19,8 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    const { service, suburb } = this.props.match.params;
-
-    if (service) {
-      this.search(service, suburb);
+    if (this.state.service) {
+      this.search(this.state.service, this.state.suburb);
     } else {
       // search for empty page
     }
@@ -52,6 +52,8 @@ class Search extends Component {
     return (
       <SearchPage
         onSearch={this.handleSearch}
+        service={this.state.service}
+        suburb={this.state.suburb}
         searching={this.state.searching}
         error={this.state.error}
         stylists={this.state.stylists}
