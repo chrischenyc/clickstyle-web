@@ -14,9 +14,11 @@ class Search extends Component {
         (props.match.params.service && SEONameToServiceName(props.match.params.service)) || '',
       suburb: props.match.params.suburb || '',
       searching: false,
+      searched: false,
       error: '',
       stylists: [],
       hasMore: false,
+      foundNothing: false,
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -44,29 +46,41 @@ class Search extends Component {
   }
 
   handleLoadMore() {
-    this.search(this.state.service, this.state.suburb);
+    this.search(this.state.service, this.state.suburb, this.state.stylists.length);
   }
 
-  search(service, suburb) {
-    this.setState({ searching: true });
+  search(service, suburb, offset = 0) {
+    this.setState({
+      searching: true,
+      searched: false,
+      error: '',
+      hasMore: false,
+      foundNothing: false,
+    });
+
+    // reset current records in case of new search
+    if (offset === 0) {
+      this.setState({ stylists: [] });
+    }
 
     // TODO: GA tracking
 
-    Meteor.call(
-      'stylists.search',
-      { service, suburb, offset: this.state.stylists.length },
-      (error, result) => {
-        this.setState({ searching: false });
+    Meteor.call('stylists.search', { service, suburb, offset }, (error, result) => {
+      this.setState({ searching: false, searched: true });
 
-        if (error) {
-          this.setState({ error });
-        } else if (result) {
-          const { stylists, hasMore } = result;
+      if (error) {
+        this.setState({ error });
+      } else if (result) {
+        const { stylists, hasMore } = result;
+        const newStylists = [...this.state.stylists, ...stylists];
 
-          this.setState({ stylists: [...this.state.stylists, ...stylists], hasMore });
-        }
-      },
-    );
+        this.setState({
+          stylists: newStylists,
+          hasMore,
+          foundNothing: newStylists.length === 0 && !hasMore,
+        });
+      }
+    });
   }
 
   render() {
@@ -77,9 +91,11 @@ class Search extends Component {
         service={this.state.service}
         suburb={this.state.suburb}
         searching={this.state.searching}
+        searched={this.state.searched}
         error={this.state.error}
         stylists={this.state.stylists}
         hasMore={this.state.hasMore}
+        foundNothing={this.state.foundNothing}
       />
     );
   }
