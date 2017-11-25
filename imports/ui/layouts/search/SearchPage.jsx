@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Responsive } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 
 import SearchBar from './SearchBar/SearchBar';
 import StylistsList from './StylistsList';

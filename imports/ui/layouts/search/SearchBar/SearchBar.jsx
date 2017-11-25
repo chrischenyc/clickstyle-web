@@ -44,7 +44,10 @@ class SearchBar extends Component {
   }
 
   handleServiceChange(service) {
-    this.setState({ service });
+    this.setState({
+      service,
+      isServicesListOpen: servicesKeywordMatch(this.state.services, service).length > 0,
+    });
   }
 
   handleServiceSelection(service) {

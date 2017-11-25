@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "MONGO_URL=mongodb://localhost:27017/stylesquad meteor -s settings-development.json",
     "start": "meteor run",
-    "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001"
+    "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001",
+    "cloc": "cloc imports client server public private"
   },
   "dependencies": {
     "@navjobs/upload": "^3.1.1",
