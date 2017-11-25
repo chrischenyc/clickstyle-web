@@ -32,6 +32,9 @@ const SearchPage = ({
       />
 
       <StylistsList stylists={stylists} />
+
+      {!searched &&
+        !searching && <p>TODO: we need to display something on the empty search page</p>}
     </Container>
 
     {searching && (
