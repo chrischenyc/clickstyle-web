@@ -9,12 +9,17 @@ import Services from '../../../../api/services/services';
 import Addons from '../../../../api/addons/addons';
 import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ServicesList from './ServicesList';
+import servicesKeywordMatch from '../../../../modules/services-keyword-match.js';
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      services: props.services.map(service => ({
+        ...service,
+        addons: props.addons.filter(addon => addon.serviceId === service._id),
+      })),
       service: props.service || '',
       isServicesListOpen: false,
     };
@@ -22,6 +27,20 @@ class SearchBar extends Component {
     this.handleServiceChange = this.handleServiceChange.bind(this);
     this.handleServiceSelection = this.handleServiceSelection.bind(this);
     this.handleServiceInputKeyDown = this.handleServiceInputKeyDown.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      !_.isEqual(this.props.services, nextProps.services) ||
+      !_.isEqual(this.props.addons, nextProps.addons)
+    ) {
+      this.setState({
+        services: nextProps.services.map(service => ({
+          ...service,
+          addons: nextProps.addons.filter(addon => addon.serviceId === service._id),
+        })),
+      });
+    }
   }
 
   handleServiceChange(service) {
@@ -81,34 +100,7 @@ class SearchBar extends Component {
             >
               <Popup.Content>
                 <ServicesList
-                  services={services
-                    .map(service => ({
-                      ...service,
-                      addons: addons.filter(addon => addon.serviceId === service._id),
-                    }))
-                    .filter((service) => {
-                      if (!_.isEmpty(this.state.service)) {
-                        if (
-                          service.name.toLowerCase().indexOf(this.state.service.toLowerCase()) !==
-                          -1
-                        ) {
-                          return true;
-                        }
-
-                        let addonMatched = false;
-                        service.addons.forEach((addon) => {
-                          if (
-                            addon.name.toLowerCase().indexOf(this.state.service.toLowerCase()) !==
-                            -1
-                          ) {
-                            addonMatched = true;
-                          }
-                        });
-
-                        return addonMatched;
-                      }
-                      return true;
-                    })}
+                  services={servicesKeywordMatch(this.state.services, this.state.service)}
                   onSelection={this.handleServiceSelection}
                 />
               </Popup.Content>
