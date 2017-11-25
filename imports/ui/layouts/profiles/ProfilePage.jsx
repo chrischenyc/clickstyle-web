@@ -1,12 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { Card, Icon, Image, Container, Label } from 'semantic-ui-react';
+import { Card, Image, Container, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import { formatYear } from '../../../modules/format-date';
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import SideMenuContainer from '../../components/SideMenuContainer';
 import Loading from '../../components/Loading';
+import { PrimaryColor } from '../../../modules/client/constants';
 
 const ProfilePage = ({ profile }) => {
   if (!profile) {
@@ -40,7 +41,7 @@ const ProfilePage = ({ profile }) => {
                 <Label
                   size="large"
                   key={product.name}
-                  color={Meteor.settings.public.semantic.color}
+                  color={PrimaryColor}
                   basic
                   style={{ marginBottom: '0.25rem' }}
                 >

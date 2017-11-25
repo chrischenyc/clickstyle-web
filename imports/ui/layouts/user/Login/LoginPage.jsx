@@ -10,6 +10,7 @@ import { FormInputField } from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
 import SignUp from '../SignUp/SignUp';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
+import { PrimaryColor } from '../../../../modules/client/constants';
 
 // web version of the login form, stateless component
 const LoginPage = ({
@@ -48,7 +49,7 @@ const LoginPage = ({
               errors={errors}
             />
 
-            <Button color={Meteor.settings.public.semantic.color} fluid size="huge" type="submit">
+            <Button color={PrimaryColor} fluid size="huge" type="submit">
               Login
             </Button>
 

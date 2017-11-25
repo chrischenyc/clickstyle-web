@@ -9,7 +9,8 @@ import Services from '../../../../api/services/services';
 import Addons from '../../../../api/addons/addons';
 import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ServicesList from './ServicesList';
-import servicesKeywordMatch from '../../../../modules/services-keyword-match.js';
+import servicesKeywordMatch from '../../../../modules/services-keyword-match';
+import { PrimaryColor } from '../../../../modules/client/constants';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -79,7 +80,7 @@ class SearchBar extends Component {
                   fluid
                   icon="search"
                   iconPosition="left"
-                  color={Meteor.settings.public.semantic.color}
+                  color={PrimaryColor}
                   placeholder="haircut, make-up, spa"
                   size="large"
                   value={this.state.service}
@@ -140,7 +141,7 @@ class SearchBar extends Component {
                   fluid
                   basic
                   size="large"
-                  color={Meteor.settings.public.semantic.color}
+                  color={PrimaryColor}
                   content="Any Date"
                   icon="calendar"
                 />
@@ -154,7 +155,7 @@ class SearchBar extends Component {
           <Grid.Column width="3" style={{ padding: '0 1px' }}>
             <Button
               fluid
-              color={Meteor.settings.public.semantic.color}
+              color={PrimaryColor}
               size="large"
               onClick={() => {
                 onSearch(this.state.service);

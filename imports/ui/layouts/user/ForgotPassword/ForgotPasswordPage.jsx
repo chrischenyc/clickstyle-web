@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
+import { PrimaryColor } from '../../../../modules/client/constants';
 
 const ForgotPasswordPage = ({
   onSubmit,
@@ -60,7 +61,7 @@ const ForgotPasswordPage = ({
 
               {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
 
-              <Button color={Meteor.settings.public.semantic.color} size="huge" type="submit">
+              <Button color={PrimaryColor} size="huge" type="submit">
                 Send reset link
               </Button>
             </Form>

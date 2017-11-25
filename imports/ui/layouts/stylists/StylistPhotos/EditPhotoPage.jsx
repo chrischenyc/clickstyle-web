@@ -7,6 +7,7 @@ import { UploadField as FileField } from '@navjobs/upload';
 import AvatarEditor from 'react-avatar-editor';
 
 import ScaledImageURL from '../../../../modules/scaled-image-url';
+import { PrimaryColor } from '../../../../modules/client/constants';
 
 const ImageSize = 280;
 
@@ -151,7 +152,7 @@ class EditPhotoPage extends Component {
                 accept: '.jpg,.jpeg,.png',
               }}
             >
-              <Button color={Meteor.settings.public.semantic.color} loading={photoUploading}>
+              <Button color={PrimaryColor} loading={photoUploading}>
                 Upload photo
               </Button>
               <span>

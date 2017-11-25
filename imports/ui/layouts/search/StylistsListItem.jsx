@@ -17,6 +17,7 @@ import {
 import _ from 'lodash';
 
 import ScaledImageURL from '../../../modules/scaled-image-url';
+import { PrimaryColor } from '../../../modules/client/constants';
 
 const dummyBanners = [
   'http://res.cloudinary.com/stylesquard/image/upload/v1511498808/banner1_wahqwj',
@@ -46,7 +47,7 @@ const StylistsListItem = ({ stylist }) => (
 
             {stylist.profile.address.suburb && (
               <div style={{ marginBottom: '1rem' }}>
-                <Icon name="marker" color={Meteor.settings.public.semantic.color} />
+                <Icon name="marker" color={PrimaryColor} />
                 {`${stylist.profile.address.suburb} ${stylist.profile.address.state}`}
               </div>
             )}
@@ -60,7 +61,7 @@ const StylistsListItem = ({ stylist }) => (
                     <Popup
                       flowing
                       position="top center"
-                      trigger={<Icon name="tags" color={Meteor.settings.public.semantic.color} />}
+                      trigger={<Icon name="tags" color={PrimaryColor} />}
                     >
                       <Popup.Content>
                         <List>
@@ -79,7 +80,7 @@ const StylistsListItem = ({ stylist }) => (
               ))}
             </List>
 
-            <Button color={Meteor.settings.public.semantic.color} content="Book Now" size="large" />
+            <Button color={PrimaryColor} content="Book Now" size="large" />
           </div>
         </Grid.Column>
         <Grid.Column width="12" verticalAlign="top">
@@ -94,7 +95,7 @@ const StylistsListItem = ({ stylist }) => (
                 {stylist.profile.products.map(product => (
                   <Label
                     basic
-                    color={Meteor.settings.public.semantic.color}
+                    color={PrimaryColor}
                     key={product.productId}
                     style={{ marginBottom: '0.25rem' }}
                   >

@@ -2,10 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Container, Header, Button, Divider } from 'semantic-ui-react';
+import { Container, Header, Button } from 'semantic-ui-react';
 
 import { closeModal } from '../../../modules/client/redux/modal';
 import SecureLink from '../../components/SecureLink';
+import { PrimaryColor } from '../../../modules/client/constants';
 
 const StylistsJoinPage = props => (
   <Container style={{ padding: '8rem 0' }}>
@@ -22,7 +23,7 @@ const StylistsJoinPage = props => (
     <Button
       content="Join the squad!"
       size="massive"
-      color={Meteor.settings.public.semantic.color}
+      color={PrimaryColor}
       icon="right arrow"
       labelPosition="right"
       as={SecureLink}

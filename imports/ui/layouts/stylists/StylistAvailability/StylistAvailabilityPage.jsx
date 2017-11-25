@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import _ from 'lodash';
 
+import { PrimaryColor } from '../../../../modules/client/constants';
 import SideMenuContainer from '../../../components/SideMenuContainer';
 import HoursDropdown from '../../../components/HoursDropdown';
 import MinutesDropdown from '../../../components/MinutesDropdown';
@@ -109,7 +110,7 @@ const StylistServicesPage = ({
         </Table>
 
         <Button
-          color={Meteor.settings.public.semantic.color}
+          color={PrimaryColor}
           size="massive"
           type="submit"
           disabled={pristine || !_.isEmpty(errors)}

@@ -7,6 +7,7 @@ import _ from 'lodash';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
 import { FormInputField } from '../../../components/FormInputField';
+import { PrimaryColor } from '../../../../modules/client/constants';
 
 const ChangePasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
@@ -76,7 +77,7 @@ const ChangePasswordPage = ({
 
                 {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
 
-                <Button color={Meteor.settings.public.semantic.color} size="huge" type="submit">
+                <Button color={PrimaryColor} size="huge" type="submit">
                   Change password
                 </Button>
               </Form>

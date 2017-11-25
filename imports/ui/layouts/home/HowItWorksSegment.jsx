@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Grid, Header, Icon, Segment } from 'semantic-ui-react';
 
+import { PrimaryColor } from '../../../modules/client/constants';
+
 const HowItWorksSegment = () => (
   <Segment style={{ padding: '4rem' }} vertical textAlign="center">
     <Header as="h2" style={{ fontSize: '2rem' }}>
@@ -11,7 +13,7 @@ const HowItWorksSegment = () => (
     <Grid columns="equal" stackable>
       <Grid.Row textAlign="center">
         <Grid.Column style={{ padding: '2rem 2rem' }}>
-          <Icon name="search" size="big" color={Meteor.settings.public.semantic.color} />
+          <Icon name="search" size="big" color={PrimaryColor} />
           <Header as="h3" style={{ fontSize: '1.2rem' }}>
             View and select our services
           </Header>
@@ -23,7 +25,7 @@ const HowItWorksSegment = () => (
           </p>
         </Grid.Column>
         <Grid.Column style={{ padding: '2rem 2rem' }}>
-          <Icon name="checked calendar" size="big" color={Meteor.settings.public.semantic.color} />
+          <Icon name="checked calendar" size="big" color={PrimaryColor} />
           <Header as="h3" style={{ fontSize: '1.2rem' }}>
             Book your appointment
           </Header>
@@ -33,7 +35,7 @@ const HowItWorksSegment = () => (
           </p>
         </Grid.Column>
         <Grid.Column style={{ padding: '2rem 2rem' }}>
-          <Icon name="smile" size="big" color={Meteor.settings.public.semantic.color} />
+          <Icon name="smile" size="big" color={PrimaryColor} />
           <Header as="h3" style={{ fontSize: '1.2rem' }}>
             Prepare to get pampered
           </Header>

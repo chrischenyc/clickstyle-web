@@ -9,6 +9,7 @@ import ModalLink from '../../../components/ModalLink';
 import { FormInputField } from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
 import Login from '../Login/Login';
+import { PrimaryColor } from '../../../../modules/client/constants';
 
 // web version of the sign up form, stateless component
 const SignUpPage = ({
@@ -76,13 +77,7 @@ const SignUpPage = ({
               errors={errors}
             />
 
-            <Button
-              color={Meteor.settings.public.semantic.color}
-              fluid
-              size="huge"
-              type="submit"
-              disabled={disabled}
-            >
+            <Button color={PrimaryColor} fluid size="huge" type="submit" disabled={disabled}>
               Sign up
             </Button>
 

@@ -18,6 +18,7 @@ import SideMenuContainer from '../../../components/SideMenuContainer';
 import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import { FormInputField } from '../../../components/FormInputField';
 import EditPhotoPage from './EditPhotoPage';
+import { PrimaryColor } from '../../../../modules/client/constants';
 
 const EditProfilePage = ({
   photo,
@@ -41,11 +42,7 @@ const EditProfilePage = ({
 }) => (
   <SideMenuContainer>
     <Container>
-      <Button
-        color={Meteor.settings.public.semantic.color}
-        as={Link}
-        to={`/profiles/${profile._id}`}
-      >
+      <Button color={PrimaryColor} as={Link} to={`/profiles/${profile._id}`}>
         View profile
       </Button>
       <Form
@@ -92,8 +89,9 @@ const EditProfilePage = ({
           onChange={onChange}
           errors={errors}
           value={_.has(profile, 'mobile') ? profile.mobile : ''}
-          note={`This is not on your public profile. This is only shared with another ${Meteor
-            .settings.public.applicationName} user once you two have a confirmed booking .`}
+          note={`This is not on your public profile. This is only shared with another ${
+            Meteor.settings.public.applicationName
+          } user once you two have a confirmed booking .`}
         />
 
         <Form.Field>
@@ -116,8 +114,9 @@ const EditProfilePage = ({
           />
 
           <p style={{ marginTop: '0.25rem', marginBottom: '1rem', color: '#aaa' }}>
-            {`This is not on your public profile. This is only shared with another ${Meteor.settings
-              .public.applicationName} user once you two have a confirmed booking .`}
+            {`This is not on your public profile. This is only shared with another ${
+              Meteor.settings.public.applicationName
+            } user once you two have a confirmed booking .`}
           </p>
         </Form.Field>
 
@@ -160,7 +159,7 @@ const EditProfilePage = ({
                   size="large"
                   as="a"
                   key={product.name}
-                  color={Meteor.settings.public.semantic.color}
+                  color={PrimaryColor}
                   basic
                   style={{ marginBottom: '0.25rem' }}
                   onClick={() => {
@@ -181,7 +180,7 @@ const EditProfilePage = ({
                 <Label
                   size="large"
                   key={product.name}
-                  color={Meteor.settings.public.semantic.color}
+                  color={PrimaryColor}
                   style={{ marginBottom: '0.25rem' }}
                 >
                   {product.name}
@@ -197,13 +196,7 @@ const EditProfilePage = ({
           )}
         </Form.Field>
 
-        <Button
-          color={Meteor.settings.public.semantic.color}
-          size="huge"
-          type="submit"
-          disabled={pristine}
-          loading={saving}
-        >
+        <Button color={PrimaryColor} size="huge" type="submit" disabled={pristine} loading={saving}>
           Save
         </Button>
 

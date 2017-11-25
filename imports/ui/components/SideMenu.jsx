@@ -6,9 +6,10 @@ import { NavLink } from 'react-router-dom';
 import { Menu, Image } from 'semantic-ui-react';
 
 import ScaledImageURL from '../../modules/scaled-image-url';
+import { PrimaryColor } from '../../modules/client/constants';
 
 const SideMenu = ({ profile, isStylist }) => (
-  <Menu secondary vertical color={Meteor.settings.public.semantic.color} size="massive" stackable>
+  <Menu secondary vertical color={PrimaryColor} size="massive" stackable>
     {profile.photoURL && (
       <Menu.Item>
         <Image src={ScaledImageURL(profile.photoURL, 'tiny')} size="tiny" avatar />

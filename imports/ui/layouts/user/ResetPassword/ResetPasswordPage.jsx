@@ -6,6 +6,7 @@ import { Redirect, Link } from 'react-router-dom';
 import _ from 'lodash';
 
 import { FormInputField } from '../../../components/FormInputField';
+import { PrimaryColor } from '../../../../modules/client/constants';
 
 const ResetPasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
@@ -60,7 +61,7 @@ const ResetPasswordPage = ({
 
               {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
 
-              <Button color={Meteor.settings.public.semantic.color} size="huge" type="submit">
+              <Button color={PrimaryColor} size="huge" type="submit">
                 Save and continue
               </Button>
 

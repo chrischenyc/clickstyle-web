@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container, Header, Segment } from 'semantic-ui-react';
 
+import { PrimaryColor } from '../../../modules/client/constants';
+
 const BannerSegment = () => (
   <Segment
     inverted
@@ -48,7 +50,7 @@ const BannerSegment = () => (
         }}
       />
 
-      <Button size="huge" color={Meteor.settings.public.semantic.color} as={Link} to="/stylists">
+      <Button size="huge" color={PrimaryColor} as={Link} to="/stylists">
         Book Now
       </Button>
     </Container>

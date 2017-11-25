@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
+import { PrimaryColor } from '../../../../modules/client/constants';
 import EditPhotoPage from './EditPhotoPage';
 
 const StylistPhotosPage = ({
@@ -24,11 +25,7 @@ const StylistPhotosPage = ({
 }) => (
   <SideMenuContainer>
     <Container>
-      <Button
-        color={Meteor.settings.public.semantic.color}
-        as={Link}
-        to={`/profiles/${profile._id}`}
-      >
+      <Button color={PrimaryColor} as={Link} to={`/profiles/${profile._id}`}>
         View stylist profile
       </Button>
       <Form
@@ -51,7 +48,7 @@ const StylistPhotosPage = ({
         <Divider horizontal>Portfolio images</Divider>
 
         <Button
-          color={Meteor.settings.public.semantic.color}
+          color={PrimaryColor}
           size="large"
           type="submit"
           disabled={pristine}
