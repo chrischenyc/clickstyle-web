@@ -16,9 +16,11 @@ class Search extends Component {
       searching: false,
       error: '',
       stylists: [],
+      hasMore: false,
     };
 
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleLoadMore = this.handleLoadMore.bind(this);
   }
 
   componentDidMount() {
@@ -41,39 +43,43 @@ class Search extends Component {
     this.props.history.push(`/stylists/${ServiceNameToSEOName(service)}`);
   }
 
+  handleLoadMore() {
+    this.search(this.state.service, this.state.suburb);
+  }
+
   search(service, suburb) {
     this.setState({ searching: true });
 
     // TODO: GA tracking
 
-    Meteor.call('stylists.search', { service, suburb }, (error, stylists) => {
-      this.setState({ searching: false });
+    Meteor.call(
+      'stylists.search',
+      { service, suburb, offset: this.state.stylists.length },
+      (error, result) => {
+        this.setState({ searching: false });
 
-      if (error) {
-        this.setState({ error });
-      }
+        if (error) {
+          this.setState({ error });
+        } else if (result) {
+          const { stylists, hasMore } = result;
 
-      if (stylists) {
-        this.setState({ stylists });
-
-        if (stylists.length === 0) {
-          // TODO: display empty results page
+          this.setState({ stylists: [...this.state.stylists, ...stylists], hasMore });
         }
-      } else {
-        this.setState({ stylists: [] });
-      }
-    });
+      },
+    );
   }
 
   render() {
     return (
       <SearchPage
         onSearch={this.handleSearch}
+        onLoadMore={this.handleLoadMore}
         service={this.state.service}
         suburb={this.state.suburb}
         searching={this.state.searching}
         error={this.state.error}
         stylists={this.state.stylists}
+        hasMore={this.state.hasMore}
       />
     );
   }

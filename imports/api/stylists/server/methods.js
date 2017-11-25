@@ -8,6 +8,7 @@ import rateLimit from '../../../modules/server/rate-limit';
 import Stylists from '../stylists';
 import Addons from '../../addons/addons';
 import Profiles from '../../profiles/profiles';
+import { SearchLimit } from '../../../modules/server/constants';
 
 Meteor.methods({
   'stylists.update.services': function updateStylistsServices(services) {
@@ -80,11 +81,13 @@ Meteor.methods({
 
   'stylists.search': function searchStylists(data) {
     check(data, Object);
-    const { service, suburb } = data;
+
+    const { service, suburb, offset } = data;
     check(service, String);
     if (suburb) {
       check(suburb, String);
     }
+    check(offset, Number);
 
     try {
       // break down service name into words,
@@ -114,7 +117,8 @@ Meteor.methods({
 
       const stylists = Stylists.find(selector, {
         fields: { owner: 1, services: 1 },
-        limit: 20,
+        limit: SearchLimit,
+        skip: offset,
       }).fetch();
 
       const userIds = stylists.map(stylist => stylist.owner);
@@ -132,14 +136,17 @@ Meteor.methods({
         },
       ).fetch();
 
-      return stylists.map((stylist) => {
-        const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
+      return {
+        stylists: stylists.map((stylist) => {
+          const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
 
-        return {
-          ...stylist,
-          profile: filteredProfiles.length > 0 && filteredProfiles[0],
-        };
-      });
+          return {
+            ...stylist,
+            profile: filteredProfiles.length > 0 && filteredProfiles[0],
+          };
+        }),
+        hasMore: stylists.length >= SearchLimit,
+      };
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
