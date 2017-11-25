@@ -49,7 +49,7 @@ class SearchBar extends Component {
     return (
       <Grid stackable stretched {...rest}>
         <Grid.Row>
-          <Grid.Column width="5" style={{ padding: '0 2px' }}>
+          <Grid.Column width="5" style={{ padding: '0 1px' }}>
             <Popup
               trigger={
                 <Input
@@ -115,7 +115,7 @@ class SearchBar extends Component {
             </Popup>
           </Grid.Column>
 
-          <Grid.Column width="5" style={{ padding: '0 2px' }}>
+          <Grid.Column width="4" style={{ padding: '0 1px' }}>
             <SemanticGeoSuggest
               fluid
               size="large"
@@ -138,7 +138,7 @@ class SearchBar extends Component {
             />
           </Grid.Column>
 
-          <Grid.Column width="3" style={{ padding: '0 2px' }}>
+          <Grid.Column width="4" style={{ padding: '0 1px' }}>
             <Popup
               trigger={
                 <Button
@@ -156,7 +156,7 @@ class SearchBar extends Component {
             />
           </Grid.Column>
 
-          <Grid.Column width="3" style={{ padding: '0 2px' }}>
+          <Grid.Column width="3" style={{ padding: '0 1px' }}>
             <Button
               fluid
               color={Meteor.settings.public.semantic.color}

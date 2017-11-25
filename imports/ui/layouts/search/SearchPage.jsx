@@ -9,28 +9,14 @@ const SearchPage = ({
   onSearch, searching, stylists, service, suburb,
 }) => (
   <Container fluid style={{ marginTop: '51px', paddingTop: '1rem' }}>
-    {/* search bar, use different margins on tablets and computers */}
-    <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
-      <SearchBar
-        style={{ margin: '0 8px' }}
-        onSearch={onSearch}
-        searching={searching}
-        service={service}
-        suburb={suburb}
-      />
-    </Responsive>
-
-    <Responsive minWidth={Responsive.onlyTablet.maxWidth}>
-      <SearchBar
-        style={{ margin: '0 8rem' }}
-        onSearch={onSearch}
-        searching={searching}
-        service={service}
-        suburb={suburb}
-      />
-    </Responsive>
-
     <Container>
+      <SearchBar
+        onSearch={onSearch}
+        searching={searching}
+        service={service}
+        suburb={suburb}
+        style={{ margin: '0' }}
+      />
       <StylistsList stylists={stylists} />
     </Container>
   </Container>
