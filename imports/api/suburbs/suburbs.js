@@ -50,9 +50,11 @@ const SuburbsSchema = new SimpleSchema({
     type: Number,
     decimal: true,
   },
-  // true if the suburb has stylists providing services
   published: {
-    type: Boolean,
+    type: Boolean, // true if the suburb can be searched by customer
+  },
+  active: {
+    type: Boolean, // true if the suburb can be searched by customer and stylists
   },
 });
 

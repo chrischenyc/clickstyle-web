@@ -9,7 +9,7 @@ import StylistAvailableAreasPage from './StylistAvailableAreasPage';
 
 // platform-independent stateful container component
 // to handle edit stylist servicing areas
-class StylistAvailability extends Component {
+class StylistAvailableAreas extends Component {
   constructor(props) {
     super(props);
 
@@ -18,9 +18,15 @@ class StylistAvailability extends Component {
       saving: false,
       pristine: true,
       radius: null,
+      searchingSuburbs: false,
+      matchedSuburbs: [],
+      suburb: '',
+      selectedSuburb: null,
+      canTravel: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSelectSuburb = this.handleSelectSuburb.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -34,21 +40,31 @@ class StylistAvailability extends Component {
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
-    // const newOpenHours = this.state.openHours.map((openHour) => {
-    //   if (openHour.day === day) {
-    //     return _.set(openHour, name, value);
-    //   }
-    //   return openHour;
-    // });
-    // // validate
-    // const errors = validateStylistOpenHours(newOpenHours);
-    // this.setState({ errors });
-    // if (_.isEmpty(errors)) {
-    //   this.setState({
-    //     pristine: _.isEqual(this.props.stylist.openHours, newOpenHours),
-    //     openHours: newOpenHours,
-    //   });
-    // }
+
+    if (event.target.name === 'suburb') {
+      if (_.isEmpty(event.target.value)) {
+        this.setState({ searchingSuburbs: false, matchedSuburbs: [] });
+      } else if (event.target.value.length >= 2) {
+        this.setState({ searchingSuburbs: true });
+        Meteor.call('suburbs.search.all', event.target.value, (error, suburbs) => {
+          this.setState({ searchingSuburbs: false });
+          if (error) {
+            this.setState({ error: error.reason });
+          } else {
+            this.setState({
+              matchedSuburbs: suburbs.map(suburb => ({
+                ...suburb,
+                title: `${suburb.name} ${suburb.postcode}`,
+              })),
+            });
+          }
+        });
+      }
+    }
+  }
+
+  handleSelectSuburb(selectedSuburb) {
+    this.setState({ selectedSuburb, suburb: `${selectedSuburb.name} ${selectedSuburb.postcode}` });
   }
 
   handleSubmit(event) {
@@ -73,22 +89,27 @@ class StylistAvailability extends Component {
       <StylistAvailableAreasPage
         radius={this.state.radius}
         onChange={this.handleChange}
+        onSelectSuburb={this.handleSelectSuburb}
         onSubmit={this.handleSubmit}
         loading={this.props.loading}
         saving={this.state.saving}
         pristine={this.state.pristine}
         errors={this.state.errors}
+        searchingSuburbs={this.state.searchingSuburbs}
+        matchedSuburbs={this.state.matchedSuburbs}
+        suburb={this.state.suburb}
+        canTravel={this.state.canTravel}
       />
     );
   }
 }
 
-StylistAvailability.defaultProps = {
+StylistAvailableAreas.defaultProps = {
   loading: false,
   stylist: null,
 };
 
-StylistAvailability.propTypes = {
+StylistAvailableAreas.propTypes = {
   loading: PropTypes.bool,
   stylist: PropTypes.object,
 };
@@ -100,4 +121,4 @@ export default withTracker(() => {
     loading: !handleStylist.ready(),
     stylist: Stylists.findOne(),
   };
-})(StylistAvailability);
+})(StylistAvailableAreas);

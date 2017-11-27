@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
+import _ from 'lodash';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Suburbs from '../suburbs';
@@ -10,15 +11,16 @@ Meteor.methods({
     check(keyword, String);
 
     try {
-      return Suburbs.find(
-        {
-          published: true,
-          $or: [{ name: RegExp(keyword, 'i') }, { postcode: RegExp(`^${keyword}`, 'i') }],
-        },
-        {
-          fields: { name: 1, postcode: 1 },
-        },
-      ).fetch();
+      const nameSelector = { active: true, published: true, name: RegExp(`^${keyword}`, 'i') };
+      const postcodeSelector = {
+        active: true,
+        published: true,
+        postcode: RegExp(`^${keyword}`, 'i'),
+      };
+
+      return Suburbs.find(_.isNumber(keyword) ? postcodeSelector : nameSelector, {
+        fields: { name: 1, postcode: 1 },
+      }).fetch();
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -37,14 +39,15 @@ Meteor.methods({
     check(keyword, String);
 
     try {
-      return Suburbs.find(
-        {
-          $or: [{ name: RegExp(keyword, 'i') }, { postcode: RegExp(`^${keyword}`, 'i') }],
+      const nameSelector = { active: true, name: RegExp(`^${keyword}`, 'i') };
+      const postcodeSelector = { active: true, postcode: RegExp(`^${keyword}`, 'i') };
+
+      return Suburbs.find(_.isNumber(keyword) ? postcodeSelector : nameSelector, {
+        fields: {
+          name: 1,
+          postcode: 1,
         },
-        {
-          fields: { name: 1, postcode: 1 },
-        },
-      ).fetch();
+      }).fetch();
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
