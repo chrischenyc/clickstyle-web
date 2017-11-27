@@ -11,7 +11,6 @@ import {
   Icon,
   Divider,
 } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
 import SideMenuContainer from '../../../components/SideMenuContainer';
@@ -42,9 +41,6 @@ const EditProfilePage = ({
 }) => (
   <SideMenuContainer>
     <Container>
-      <Button color={PrimaryColor} as={Link} to={`/profiles/${profile._id}`}>
-        View profile
-      </Button>
       <Form
         onSubmit={onSubmit}
         loading={profile.fetching || saving}
