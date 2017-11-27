@@ -19,7 +19,7 @@ import HoursDropdown from '../../../components/HoursDropdown';
 import MinutesDropdown from '../../../components/MinutesDropdown';
 import { dayOfWeekAsString } from '../../../../modules/format-date';
 
-const StylistServicesPage = ({
+const StylistAvailableTimePage = ({
   openHours,
   onChange,
   onSubmit,
@@ -127,7 +127,7 @@ const StylistServicesPage = ({
   </SideMenuContainer>
 );
 
-StylistServicesPage.propTypes = {
+StylistAvailableTimePage.propTypes = {
   openHours: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired, // (day, name, value)
   onSubmit: PropTypes.func.isRequired,
@@ -137,4 +137,4 @@ StylistServicesPage.propTypes = {
   errors: PropTypes.object.isRequired,
 };
 
-export default StylistServicesPage;
+export default StylistAvailableTimePage;
