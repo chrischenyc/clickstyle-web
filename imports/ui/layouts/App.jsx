@@ -41,6 +41,7 @@ import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 import StylistsApplication from '../layouts/stylists/StylistsApplication';
 import StylistServices from '../layouts/stylists/StylistServices/StylistServices';
 import StylistAvailability from '../layouts/stylists/StylistAvailability/StylistAvailability';
+import StylistAvailableAreas from '../layouts/stylists/StylistAvailableAreas/StylistAvailableAreas';
 
 // scroll to page top when route changes
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-292711226
@@ -108,7 +109,8 @@ class App extends Component {
             <SecureRoute path="/join/application" component={StylistsApplication} />
 
             <SecureRoute path="/stylists/me/services" component={StylistServices} />
-            <SecureRoute path="/stylists/me/availability" component={StylistAvailability} />
+            <SecureRoute path="/stylists/me/available-time" component={StylistAvailability} />
+            <SecureRoute path="/stylists/me/available-areas" component={StylistAvailableAreas} />
 
             <Route path="/stylists/:service?/:suburb?" component={Search} />
 

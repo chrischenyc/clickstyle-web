@@ -57,8 +57,11 @@ const SideMenu = ({ profile, isStylist }) => (
           <Menu.Item as={NavLink} to="/stylists/me/services">
             Services &amp; Prices
           </Menu.Item>
-          <Menu.Item as={NavLink} to="/stylists/me/availability">
-            Availability
+          <Menu.Item as={NavLink} to="/stylists/me/available-time">
+            Available time
+          </Menu.Item>
+          <Menu.Item as={NavLink} to="/stylists/me/available-areas">
+            Available areas
           </Menu.Item>
         </Menu.Menu>
       </Menu.Item>
