@@ -8,7 +8,9 @@ import rateLimit from '../../../modules/server/rate-limit';
 import Stylists from '../stylists';
 import Addons from '../../addons/addons';
 import Profiles from '../../profiles/profiles';
+import Suburbs from '../../suburbs/suburbs';
 import { SearchLimit } from '../../../modules/server/constants';
+import coordinatesDistance from '../../../modules/server/coordinates-distance';
 
 Meteor.methods({
   'stylists.update.services': function updateStylistsServices(services) {
@@ -87,10 +89,18 @@ Meteor.methods({
     check(areas, Object);
 
     try {
-      Stylists.update({ owner: this.userId }, { $set: { areas } });
+      // calculate suburbs within reach
+      const selectedSuburb = Suburbs.findOne({ _id: areas.suburb._id });
+      const availableSuburbs = Suburbs.find({ active: true, state: selectedSuburb.state })
+        .fetch()
+        .filter(suburb =>
+          coordinatesDistance(selectedSuburb.lat, selectedSuburb.lon, suburb.lat, suburb.lon) <=
+            areas.radius);
+
+      Stylists.update({ owner: this.userId }, { $set: { areas: { ...areas, availableSuburbs } } });
 
       log.info(
-        'Meteor.methods: stylists.update.openHours',
+        'Meteor.methods: stylists.update.areas',
         `userId: ${this.userId}`,
         `param: ${JSON.stringify(areas)}`,
       );
