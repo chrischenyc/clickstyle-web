@@ -18,3 +18,5 @@ import '../../api/stylist_applications/server/hooks';
 
 import '../../api/stylists/server/publications';
 import '../../api/stylists/server/methods';
+
+import '../../api/suburbs/server/methods';

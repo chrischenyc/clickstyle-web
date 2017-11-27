@@ -10,9 +10,6 @@ import './email-templates';
 import '../slingshot-restrictions';
 import './slingshot-directives';
 import './cloudinary';
-
-import './fixtures/products';
-import './fixtures/services';
-// import './fixtures/demo_stylists';
+import './fixtures';
 
 WebApp.addHtmlAttributeHook(() => ({ lang: 'en' }));

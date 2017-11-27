@@ -1,7 +1,7 @@
+import { assert } from 'meteor/practicalmeteor:chai';
+
 import services from './services-addons.json';
 import { ServiceNameToSEOName, SEONameToServiceName } from './seo-name';
-
-const assert = require('assert');
 
 describe('ServiceNameToSEOName', () => {
   services.forEach((service) => {

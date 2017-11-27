@@ -4,7 +4,7 @@ import Addons from '../../../api/addons/addons';
 const services = require('../../../modules/services-addons.json');
 
 // seed Services and Addons data if database is empty
-if (Services.find().count() === 0) {
+if (Services.find().fetch().length === 0) {
   for (let index = 0; index < services.length; index += 1) {
     const service = services[index];
 
