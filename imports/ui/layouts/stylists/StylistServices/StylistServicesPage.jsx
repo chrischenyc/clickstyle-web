@@ -98,9 +98,9 @@ class StylistServicesPage extends Component {
       <SideMenuContainer>
         <Container>
           <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-            <p>TODO: write something to educate stylists what this page is about</p>
-
             <Divider horizontal>Services &amp; Prices</Divider>
+
+            <p>TODO: write something to educate stylists what this page is about</p>
 
             {selectedServices.map((service) => {
               const addons = publicAddons.filter(addon => addon.serviceId === service._id);

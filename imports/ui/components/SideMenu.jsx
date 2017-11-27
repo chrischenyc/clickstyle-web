@@ -37,7 +37,7 @@ const SideMenu = ({ profile, isStylist }) => (
       </Menu.Menu>
     </Menu.Item>
 
-    <Menu.Item>
+    {/* <Menu.Item>
       <Menu.Header>Bookings</Menu.Header>
       <Menu.Menu>
         <Menu.Item as={NavLink} to="/bookings">
@@ -48,7 +48,7 @@ const SideMenu = ({ profile, isStylist }) => (
           My Favourites
         </Menu.Item>
       </Menu.Menu>
-    </Menu.Item>
+    </Menu.Item> */}
 
     {isStylist && (
       <Menu.Item>

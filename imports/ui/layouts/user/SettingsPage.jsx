@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, List } from 'semantic-ui-react';
+import { Container, Header, List, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import SideMenuContainer from '../../components/SideMenuContainer';
@@ -7,8 +7,7 @@ import SideMenuContainer from '../../components/SideMenuContainer';
 const SettingsPage = () => (
   <SideMenuContainer>
     <Container>
-      <Header as="h2">Settings</Header>
-
+      <Divider horizontal>Password</Divider>
       <List>
         <List.Item>
           <Link to="/change-password">Change Password</Link>
