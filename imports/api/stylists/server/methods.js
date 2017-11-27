@@ -79,6 +79,29 @@ Meteor.methods({
     }
   },
 
+  'stylists.update.areas': function updateStylistsAreas(areas) {
+    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(areas, Object);
+
+    try {
+      Stylists.update({ owner: this.userId }, { $set: { areas } });
+
+      log.info(
+        'Meteor.methods: stylists.update.openHours',
+        `userId: ${this.userId}`,
+        `param: ${JSON.stringify(areas)}`,
+      );
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500');
+    }
+  },
+
   'stylists.search': function searchStylists(data) {
     check(data, Object);
 
@@ -157,7 +180,12 @@ Meteor.methods({
 });
 
 rateLimit({
-  methods: ['stylists.update.services', 'stylists.update.openHours', 'stylists.search'],
+  methods: [
+    'stylists.update.services',
+    'stylists.update.openHours',
+    'stylists.update.areas',
+    'stylists.search',
+  ],
   limit: 5,
   timeRange: 1000,
 });

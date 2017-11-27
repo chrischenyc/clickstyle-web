@@ -144,7 +144,7 @@ const StylistsSchema = new SimpleSchema({
     type: [OpenHour],
   },
   areas: {
-    type: [AreasSchema],
+    type: AreasSchema,
     optional: true,
   },
   public: {

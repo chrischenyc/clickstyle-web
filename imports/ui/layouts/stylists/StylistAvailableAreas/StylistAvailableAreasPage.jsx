@@ -14,7 +14,7 @@ const StylistAvailableAreasPage = ({
   loading,
   saving,
   pristine,
-  errors,
+  error,
   searchingSuburbs,
   matchedSuburbs,
   suburb,
@@ -22,7 +22,7 @@ const StylistAvailableAreasPage = ({
 }) => (
   <SideMenuContainer>
     <Container>
-      <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+      <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(error)}>
         <p>TODO: write something to educate stylists what this page is about</p>
 
         <Form.Field inline>
@@ -82,12 +82,12 @@ const StylistAvailableAreasPage = ({
           color={PrimaryColor}
           size="massive"
           type="submit"
-          disabled={pristine || !_.isEmpty(errors)}
+          disabled={pristine || !_.isEmpty(error)}
           loading={saving}
         >
           Save
         </Button>
-        {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+        {!_.isEmpty(error) && <Message error content={error} />}
       </Form>
     </Container>
   </SideMenuContainer>
@@ -104,7 +104,7 @@ StylistAvailableAreasPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   saving: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
+  error: PropTypes.string.isRequired,
   canTravel: PropTypes.bool.isRequired,
 };
 

@@ -14,15 +14,19 @@ class StylistAvailableAreas extends Component {
     super(props);
 
     this.state = {
-      errors: {},
+      error: '',
       saving: false,
       pristine: true,
-      radius: null,
       searchingSuburbs: false,
       matchedSuburbs: [],
-      suburb: '',
-      selectedSuburb: null,
-      canTravel: false,
+      suburb:
+        (props.areas &&
+          props.areas.suburb &&
+          `${props.areas.suburb.name} ${props.areas.suburb.postcode}`) ||
+        '',
+      selectedSuburb: (props.areas && props.areas.suburb) || null,
+      radius: (props.areas && props.areas.radius) || 0,
+      canTravel: (props.areas && props.areas.canTravel) || false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,22 +39,32 @@ class StylistAvailableAreas extends Component {
 
     this.setState({
       pristine: true,
+      suburb:
+        (nextProps.areas &&
+          nextProps.areas.suburb &&
+          `${nextProps.areas.suburb.name} ${nextProps.areas.suburb.postcode}`) ||
+        '',
+      selectedSuburb: (nextProps.areas && nextProps.areas.suburb) || null,
+      radius: (nextProps.areas && nextProps.areas.radius) || 0,
+      canTravel: (nextProps.areas && nextProps.areas.canTravel) || false,
     });
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value, pristine: false });
 
     if (event.target.name === 'suburb') {
+      // once user starts changing the search keyword
+      // we empty current selected suburb object
+      this.setState({ selectedSuburb: null });
+
       if (_.isEmpty(event.target.value)) {
         this.setState({ searchingSuburbs: false, matchedSuburbs: [] });
       } else if (event.target.value.length >= 2) {
         this.setState({ searchingSuburbs: true });
         Meteor.call('suburbs.search.all', event.target.value, (error, suburbs) => {
           this.setState({ searchingSuburbs: false });
-          if (error) {
-            this.setState({ error: error.reason });
-          } else {
+          if (!error) {
             this.setState({
               matchedSuburbs: suburbs.map(suburb => ({
                 ...suburb,
@@ -64,24 +78,36 @@ class StylistAvailableAreas extends Component {
   }
 
   handleSelectSuburb(selectedSuburb) {
-    this.setState({ selectedSuburb, suburb: `${selectedSuburb.name} ${selectedSuburb.postcode}` });
+    this.setState({
+      pristine: false,
+      selectedSuburb,
+      suburb: `${selectedSuburb.name} ${selectedSuburb.postcode}`,
+    });
   }
 
   handleSubmit(event) {
-    // this.setState({ errors: {} });
-    // event.preventDefault();
-    // const errors = validateStylistOpenHours(this.state.openHours);
-    // if (!_.isEmpty(errors)) {
-    //   this.setState({ errors });
-    // } else {
-    //   this.setState({ saving: true });
-    //   Meteor.call('stylists.update.openHours', this.state.openHours, (error) => {
-    //     this.setState({ saving: false, errors: {}, pristine: true });
-    //     if (error) {
-    //       this.setState({ errors: { message: error.reason } });
-    //     }
-    //   });
-    // }
+    this.setState({ error: '' });
+    event.preventDefault();
+
+    if (!this.state.selectedSuburb) {
+      this.setState({ error: 'please select a suburb' });
+    } else {
+      const { _id, name, postcode } = this.state.selectedSuburb;
+      const areas = {
+        suburb: { _id, name, postcode },
+        radius: this.state.radius,
+        canTravel: this.state.canTravel,
+      };
+
+      this.setState({ saving: true });
+      Meteor.call('stylists.update.areas', areas, (error) => {
+        this.setState({ saving: false, error: '', pristine: true });
+
+        if (error) {
+          this.setState({ error: error.reason });
+        }
+      });
+    }
   }
 
   render() {
@@ -94,7 +120,7 @@ class StylistAvailableAreas extends Component {
         loading={this.props.loading}
         saving={this.state.saving}
         pristine={this.state.pristine}
-        errors={this.state.errors}
+        error={this.state.error}
         searchingSuburbs={this.state.searchingSuburbs}
         matchedSuburbs={this.state.matchedSuburbs}
         suburb={this.state.suburb}
@@ -106,12 +132,12 @@ class StylistAvailableAreas extends Component {
 
 StylistAvailableAreas.defaultProps = {
   loading: false,
-  stylist: null,
+  areas: null,
 };
 
 StylistAvailableAreas.propTypes = {
   loading: PropTypes.bool,
-  stylist: PropTypes.object,
+  areas: PropTypes.object,
 };
 
 export default withTracker(() => {
@@ -119,6 +145,6 @@ export default withTracker(() => {
 
   return {
     loading: !handleStylist.ready(),
-    stylist: Stylists.findOne(),
+    areas: Stylists.findOne() && Stylists.findOne().areas,
   };
 })(StylistAvailableAreas);
