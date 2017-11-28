@@ -93,7 +93,7 @@ Meteor.methods({
 
       // calculate suburbs within reach
       Meteor.defer(() => {
-        const selectedSuburb = Suburbs.findOne({ _id: areas.suburb._id });
+        const selectedSuburb = Suburbs.findOne({ _id: areas.suburb._id, active: true });
         const availableSuburbs = Suburbs.find({ active: true, state: selectedSuburb.state })
           .fetch()
           .filter(suburb =>
