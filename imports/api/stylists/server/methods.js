@@ -89,15 +89,22 @@ Meteor.methods({
     check(areas, Object);
 
     try {
-      // calculate suburbs within reach
-      const selectedSuburb = Suburbs.findOne({ _id: areas.suburb._id });
-      const availableSuburbs = Suburbs.find({ active: true, state: selectedSuburb.state })
-        .fetch()
-        .filter(suburb =>
-          coordinatesDistance(selectedSuburb.lat, selectedSuburb.lon, suburb.lat, suburb.lon) <=
-            areas.radius);
+      Stylists.update({ owner: this.userId }, { $set: { areas } });
 
-      Stylists.update({ owner: this.userId }, { $set: { areas: { ...areas, availableSuburbs } } });
+      // calculate suburbs within reach
+      Meteor.defer(() => {
+        const selectedSuburb = Suburbs.findOne({ _id: areas.suburb._id });
+        const availableSuburbs = Suburbs.find({ active: true, state: selectedSuburb.state })
+          .fetch()
+          .filter(suburb =>
+            coordinatesDistance(selectedSuburb.lat, selectedSuburb.lon, suburb.lat, suburb.lon) <=
+              areas.radius);
+
+        Stylists.update(
+          { owner: this.userId },
+          { $set: { 'areas.availableSuburbs': availableSuburbs } },
+        );
+      });
 
       log.info(
         'Meteor.methods: stylists.update.areas',
