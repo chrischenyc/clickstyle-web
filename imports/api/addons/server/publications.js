@@ -3,21 +3,21 @@ import Addons from '../addons';
 
 Meteor.publish('addons', () =>
   Addons.find(
-    { public: true },
+    { published: true },
     {
       // hide fields in the return
       fields: {
         createdAt: 0,
         updatedAt: 0,
         createdBy: 0,
-        public: 0,
+        published: 0,
       },
     },
   ));
 
 Meteor.publish('addons.system.name', () =>
   Addons.find(
-    { public: true, createdBy: 'system' },
+    { published: true, createdBy: 'system' },
     {
       // hide fields in the return
       fields: {

@@ -103,7 +103,7 @@ const randomAddress = () => {
 
 // randomly generate 1-5 services and 1-3 subordinate addons
 const allServices = Services.find().fetch();
-const allAddons = Addons.find({ public: true, createdBy: 'system' }).fetch();
+const allAddons = Addons.find({ published: true, createdBy: 'system' }).fetch();
 const randomServices = () => {
   const services = [];
   const numberOfServices = _.random(1, 5);
@@ -179,7 +179,7 @@ names.forEach((name) => {
           owner: user._id,
           services: randomServices(),
           openHours,
-          public: true,
+          published: true,
         },
       },
     );

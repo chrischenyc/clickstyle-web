@@ -21,7 +21,7 @@ Meteor.methods({
     check(services, Array);
 
     try {
-      Stylists.update({ owner: this.userId }, { $set: { services, public: true } });
+      Stylists.update({ owner: this.userId }, { $set: { services, published: true } });
 
       // insert user-defined addons
       Meteor.defer(() => {
@@ -39,7 +39,7 @@ Meteor.methods({
               serviceId: service._id,
               name,
               createdBy: this.userId,
-              public: false,
+              published: false,
             });
           });
         });
@@ -151,7 +151,7 @@ Meteor.methods({
 
       // final compose
       const selector = {
-        public: true,
+        published: true,
         $or: [serviceNameSelector, addonNameSelector],
       };
 

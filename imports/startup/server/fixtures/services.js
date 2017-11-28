@@ -18,7 +18,7 @@ if (Services.find().fetch().length === 0) {
         serviceId,
         name: addon.name,
         createdBy: 'system',
-        public: true,
+        published: true,
       });
     });
   }
