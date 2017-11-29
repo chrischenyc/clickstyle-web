@@ -1,7 +1,12 @@
 import { assert } from 'meteor/practicalmeteor:chai';
 
 import services from './services-addons.json';
-import { ServiceNameToSEOName, SEONameToServiceName } from './seo-name';
+import {
+  ServiceNameToSEOName,
+  SEONameToServiceName,
+  SuburbNameToSEOName,
+  SEONameToSuburbName,
+} from './seo-name';
 
 describe('ServiceNameToSEOName', () => {
   services.forEach((service) => {
@@ -31,6 +36,27 @@ describe('SEONameToServiceName', () => {
           assert.equal(SEONameToServiceName(seoName), addon.name);
         });
       });
+    });
+  });
+});
+
+const suburbs = [
+  { name: 'South Yarra', seo: 'south-yarra' },
+  { name: 'Melbourne', seo: 'melbourne' },
+];
+
+describe('SuburbNameToSEOName', () => {
+  suburbs.forEach((suburb) => {
+    it(`should convert suburb name '${suburb.name}' -> '${suburb.seo}'`, () => {
+      assert.equal(SuburbNameToSEOName(suburb.name), suburb.seo);
+    });
+  });
+});
+
+describe('SEONameToSuburbName', () => {
+  suburbs.forEach((suburb) => {
+    it(`should convert suburb SEO name '${suburb.seo}' -> '${suburb.name}'`, () => {
+      assert.equal(SEONameToSuburbName(suburb.seo), suburb.name);
     });
   });
 });

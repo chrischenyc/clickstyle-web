@@ -143,10 +143,15 @@ Meteor.methods({
   'stylists.search': function searchStylists(data) {
     check(data, Object);
 
-    const { service, suburb, offset } = data;
+    const {
+      service, suburb: suburbName, postcode, offset,
+    } = data;
     check(service, String);
-    if (suburb) {
-      check(suburb, String);
+    if (suburbName) {
+      check(suburbName, String);
+    }
+    if (postcode) {
+      check(postcode, String);
     }
     check(offset, Number);
 
@@ -168,13 +173,25 @@ Meteor.methods({
         'services.addons.name': RegExp(regex, 'i'),
       };
 
-      // TODO: query by suburb
+      // query by suburb
+      let suburbSelector = { name: suburbName };
+      if (postcode && postcode !== undefined) {
+        suburbSelector.postcode = postcode;
+      }
+      if (suburbName) {
+        const suburbs = Suburbs.find(suburbSelector).fetch();
+        const suburbIds = suburbs.map(suburb => suburb._id);
+        suburbSelector = { 'areas.availableSuburbs': { $in: suburbIds } };
+      }
 
       // final compose
       const selector = {
         published: true,
         $or: [serviceNameSelector, addonNameSelector],
+        ...suburbSelector,
       };
+
+      console.log(selector);
 
       const stylists = Stylists.find(selector, {
         fields: { owner: 1, services: 1 },

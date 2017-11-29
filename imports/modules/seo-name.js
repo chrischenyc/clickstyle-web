@@ -90,3 +90,20 @@ export const SEONameToServiceName = (seoName) => {
 
   return originalName;
 };
+
+/**
+ * Convert suburb name to SEO friendly URL part
+ * e.g.: "South Yarra" -> "south-yarra"
+ *
+ * @param {name name} original name
+ */
+export const SuburbNameToSEOName = name => name.replace(/ /g, '-').toLowerCase();
+
+/**
+ * reverse the previous conversion
+ * e.g.: "south-yarra" -> "South Yarra"
+ *
+ * @param {seo seoName} seo name
+ */
+export const SEONameToSuburbName = seoName =>
+  seoName.replace(/-/g, ' ').replace(/(^| )(\w)/g, x => x.toUpperCase());

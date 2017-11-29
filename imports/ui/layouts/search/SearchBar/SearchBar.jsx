@@ -15,17 +15,21 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
 
+    const {
+      services, addons, suburb, postcode,
+    } = props;
+
     this.state = {
-      services: props.services.map(service => ({
+      services: services.map(service => ({
         ...service,
-        addons: props.addons.filter(addon => addon.serviceId === service._id),
+        addons: addons.filter(addon => addon.serviceId === service._id),
       })),
       service: props.service || '',
       isServicesListOpen: false,
       searchingSuburbs: false,
-      suburb: '',
+      suburb: (suburb && suburb + (postcode ? ` ${postcode}` : '')) || '',
       matchedSuburbs: [],
-      selectedSuburb: null,
+      selectedSuburb: (suburb && { name: suburb, postcode }) || null,
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
@@ -36,17 +40,17 @@ class SearchBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      !_.isEqual(this.props.services, nextProps.services) ||
-      !_.isEqual(this.props.addons, nextProps.addons)
-    ) {
-      this.setState({
-        services: nextProps.services.map(service => ({
-          ...service,
-          addons: nextProps.addons.filter(addon => addon.serviceId === service._id),
-        })),
-      });
-    }
+    const { suburb, postcode } = nextProps;
+
+    this.setState({
+      services: nextProps.services.map(service => ({
+        ...service,
+        addons: nextProps.addons.filter(addon => addon.serviceId === service._id),
+      })),
+      service: nextProps.service || '',
+      suburb: (suburb && suburb + (postcode ? ` ${postcode}` : '')) || '',
+      selectedSuburb: (suburb && { name: suburb, postcode }) || null,
+    });
   }
 
   handleServiceChange(service) {
@@ -58,14 +62,12 @@ class SearchBar extends Component {
 
   handleServiceSelection(service) {
     this.setState({ service, isServicesListOpen: false });
-    this.props.onSearch(service);
   }
 
   handleServiceInputKeyDown(event) {
     if (event.which === 13 && !_.isEmpty(this.state.service)) {
       // 'Enter'
       this.setState({ isServicesListOpen: false });
-      this.props.onSearch(this.state.service);
     }
   }
 
@@ -97,6 +99,16 @@ class SearchBar extends Component {
       selectedSuburb,
       suburb: `${selectedSuburb.name} ${selectedSuburb.postcode}`,
     });
+  }
+
+  handleSearch() {
+    if (!_.isEmpty(this.state.service) && this.state.selectedSuburb) {
+      this.props.onSearch(
+        this.state.service,
+        this.state.selectedSuburb.name,
+        this.state.selectedSuburb.postcode,
+      );
+    }
   }
 
   render() {
@@ -192,7 +204,7 @@ class SearchBar extends Component {
               color={PrimaryColor}
               size="large"
               onClick={() => {
-                onSearch(this.state.service);
+                this.handleSearch();
               }}
               loading={searching}
             >
@@ -215,6 +227,7 @@ SearchBar.propTypes = {
   loading: PropTypes.bool,
   service: PropTypes.string.isRequired,
   suburb: PropTypes.string.isRequired,
+  postcode: PropTypes.string.isRequired,
   searching: PropTypes.bool.isRequired,
   services: PropTypes.array,
   addons: PropTypes.array,

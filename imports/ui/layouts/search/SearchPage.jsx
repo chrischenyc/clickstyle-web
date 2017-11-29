@@ -18,6 +18,7 @@ const SearchPage = ({
   stylists,
   service,
   suburb,
+  postcode,
   hasMore,
   foundNothing,
 }) => (
@@ -28,6 +29,7 @@ const SearchPage = ({
         searching={searching}
         service={service}
         suburb={suburb}
+        postcode={postcode}
         style={{ margin: '0' }}
       />
 
@@ -79,6 +81,7 @@ SearchPage.propTypes = {
   onLoadMore: PropTypes.func.isRequired,
   service: PropTypes.string.isRequired,
   suburb: PropTypes.string.isRequired,
+  postcode: PropTypes.string.isRequired,
   searching: PropTypes.bool.isRequired,
   searched: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,

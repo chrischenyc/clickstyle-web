@@ -3,16 +3,23 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 import SearchPage from './SearchPage';
-import { ServiceNameToSEOName, SEONameToServiceName } from '../../../modules/seo-name';
+import {
+  ServiceNameToSEOName,
+  SEONameToServiceName,
+  SuburbNameToSEOName,
+  SEONameToSuburbName,
+} from '../../../modules/seo-name';
 
 class Search extends Component {
   constructor(props) {
     super(props);
 
+    const { service, suburb, postcode } = props.match.params;
+
     this.state = {
-      service:
-        (props.match.params.service && SEONameToServiceName(props.match.params.service)) || '',
-      suburb: props.match.params.suburb || '',
+      service: (service && SEONameToServiceName(service)) || '',
+      suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
+      postcode,
       searching: false,
       searched: false,
       error: '',
@@ -26,8 +33,8 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    if (this.state.service) {
-      this.search(this.state.service, this.state.suburb);
+    if (this.state.service && this.state.suburb) {
+      this.search(this.state.service, this.state.suburb, this.state.postcode);
     } else {
       // TODO: display empty page
     }
@@ -35,21 +42,36 @@ class Search extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(this.props.match.params, nextProps.match.params)) {
-      const { service, suburb } = nextProps.match.params;
+      const { service, suburb, postcode } = nextProps.match.params;
 
-      this.search(SEONameToServiceName(service), suburb);
+      if (service && suburb) {
+        this.search(SEONameToServiceName(service), SEONameToSuburbName(suburb), postcode);
+      }
     }
   }
 
-  handleSearch(service) {
-    this.props.history.push(`/stylists/${ServiceNameToSEOName(service)}`);
+  handleSearch(service, suburb, postcode) {
+    if (service && service !== undefined && suburb && suburb !== undefined) {
+      if (postcode && postcode !== undefined) {
+        this.setState({ service, suburb, postcode });
+        this.props.history.push(`/stylists/${ServiceNameToSEOName(service)}/${SuburbNameToSEOName(suburb)}/${postcode}`);
+      } else {
+        this.setState({ service, suburb });
+        this.props.history.push(`/stylists/${ServiceNameToSEOName(service)}/${SuburbNameToSEOName(suburb)}`);
+      }
+    }
   }
 
   handleLoadMore() {
-    this.search(this.state.service, this.state.suburb, this.state.stylists.length);
+    this.search(
+      this.state.service,
+      this.state.suburb,
+      this.state.postcode,
+      this.state.stylists.length,
+    );
   }
 
-  search(service, suburb, offset = 0) {
+  search(service, suburb, postcode, offset = 0) {
     this.setState({
       searching: true,
       searched: false,
@@ -65,22 +87,38 @@ class Search extends Component {
 
     // TODO: GA tracking
 
-    Meteor.call('stylists.search', { service, suburb, offset }, (error, result) => {
-      this.setState({ searching: false, searched: true });
-
-      if (error) {
-        this.setState({ error });
-      } else if (result) {
-        const { stylists, hasMore } = result;
-        const newStylists = [...this.state.stylists, ...stylists];
-
-        this.setState({
-          stylists: newStylists,
-          hasMore,
-          foundNothing: newStylists.length === 0 && !hasMore,
-        });
-      }
+    console.log({
+      service,
+      suburb,
+      postcode,
+      offset,
     });
+
+    Meteor.call(
+      'stylists.search',
+      {
+        service,
+        suburb,
+        postcode,
+        offset,
+      },
+      (error, result) => {
+        this.setState({ searching: false, searched: true });
+
+        if (error) {
+          this.setState({ error });
+        } else if (result) {
+          const { stylists, hasMore } = result;
+          const newStylists = [...this.state.stylists, ...stylists];
+
+          this.setState({
+            stylists: newStylists,
+            hasMore,
+            foundNothing: newStylists.length === 0 && !hasMore,
+          });
+        }
+      },
+    );
   }
 
   render() {
@@ -90,6 +128,7 @@ class Search extends Component {
         onLoadMore={this.handleLoadMore}
         service={this.state.service}
         suburb={this.state.suburb}
+        postcode={this.state.postcode}
         searching={this.state.searching}
         searched={this.state.searched}
         error={this.state.error}

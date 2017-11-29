@@ -112,7 +112,7 @@ class App extends Component {
             <SecureRoute path="/stylists/me/available-time" component={StylistAvailability} />
             <SecureRoute path="/stylists/me/available-areas" component={StylistAvailableAreas} />
 
-            <Route path="/stylists/:service?/:suburb?" component={Search} />
+            <Route path="/stylists/:service?/:suburb?/:postcode?" component={Search} />
 
             <Route component={NotFoundPage} />
           </Switch>
