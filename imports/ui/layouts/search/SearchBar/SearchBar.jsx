@@ -2,12 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Button, Popup, Grid } from 'semantic-ui-react';
+import { Input, Button, Popup, Grid, Search } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import Services from '../../../../api/services/services';
 import Addons from '../../../../api/addons/addons';
-import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ServicesList from './ServicesList';
 import servicesKeywordMatch from '../../../../modules/services-keyword-match';
 import { PrimaryColor } from '../../../../modules/client/constants';
@@ -23,11 +22,17 @@ class SearchBar extends Component {
       })),
       service: props.service || '',
       isServicesListOpen: false,
+      searchingSuburbs: false,
+      suburb: '',
+      matchedSuburbs: [],
+      selectedSuburb: null,
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
     this.handleServiceSelection = this.handleServiceSelection.bind(this);
     this.handleServiceInputKeyDown = this.handleServiceInputKeyDown.bind(this);
+    this.handleSuburbChange = this.handleSuburbChange.bind(this);
+    this.handleSelectSuburb = this.handleSelectSuburb.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,6 +67,36 @@ class SearchBar extends Component {
       this.setState({ isServicesListOpen: false });
       this.props.onSearch(this.state.service);
     }
+  }
+
+  handleSuburbChange(data) {
+    // once user starts changing the search keyword
+    // we empty current selected suburb object
+    this.setState({ suburb: data.value, selectedSuburb: null });
+
+    if (_.isEmpty(data.value)) {
+      this.setState({ searchingSuburbs: false, matchedSuburbs: [] });
+    } else if (data.value.length >= 2) {
+      this.setState({ searchingSuburbs: true });
+      Meteor.call('suburbs.search.published', data.value, (error, suburbs) => {
+        this.setState({ searchingSuburbs: false });
+        if (!error) {
+          this.setState({
+            matchedSuburbs: suburbs.map(suburb => ({
+              ...suburb,
+              title: `${suburb.name} ${suburb.postcode}`,
+            })),
+          });
+        }
+      });
+    }
+  }
+
+  handleSelectSuburb(selectedSuburb) {
+    this.setState({
+      selectedSuburb,
+      suburb: `${selectedSuburb.name} ${selectedSuburb.postcode}`,
+    });
   }
 
   render() {
@@ -112,25 +147,24 @@ class SearchBar extends Component {
           </Grid.Column>
 
           <Grid.Column width="4" style={{ padding: '0 1px' }}>
-            <SemanticGeoSuggest
-              fluid
-              size="large"
+            <Search
+              input={<Input fluid size="large" />}
+              name="suburb"
               placeholder="suburb, postcode"
-              country="au"
-              name="address.raw"
+              loading={this.state.searchingSuburbs}
               onFocus={() => {
                 this.setState({ isServicesListOpen: false });
               }}
-              onChange={(value) => {
-                // convert to generic onChange param
-                // onChange({ target: { name: 'address.raw', value } });
+              onResultSelect={(e, { result }) => {
+                this.handleSelectSuburb(result);
               }}
-              onSuggestSelect={(suggest) => {
-                // force onChange as well
-                // onChange({ target: { name: 'address.raw', value: suggest.label } });
-                // onAddressSuggest(suggest);
+              onSearchChange={(e, data) => {
+                this.handleSuburbChange(data);
               }}
-              style={{ width: '100%' }}
+              results={this.state.matchedSuburbs}
+              showNoResults={false}
+              value={this.state.suburb}
+              style={{ borderRadius: '.28571429rem' }}
             />
           </Grid.Column>
 
