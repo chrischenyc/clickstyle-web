@@ -19,6 +19,7 @@ Meteor.methods({
 
       return Suburbs.find(!isNaN(keyword) ? postcodeSelector : nameSelector, {
         fields: { name: 1, postcode: 1 },
+        sort: { postcode: 1 },
       }).fetch();
     } catch (exception) {
       /* eslint-disable no-console */
@@ -46,6 +47,7 @@ Meteor.methods({
           name: 1,
           postcode: 1,
         },
+        sort: { postcode: 1 },
       }).fetch();
     } catch (exception) {
       /* eslint-disable no-console */
