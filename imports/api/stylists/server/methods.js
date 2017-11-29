@@ -93,12 +93,33 @@ Meteor.methods({
 
       // calculate suburbs within reach
       Meteor.defer(() => {
+        let availableSuburbs = [];
         const selectedSuburb = Suburbs.findOne({ _id: areas.suburb._id, active: true });
-        const availableSuburbs = Suburbs.find({ active: true, state: selectedSuburb.state })
-          .fetch()
-          .filter(suburb =>
-            coordinatesDistance(selectedSuburb.lat, selectedSuburb.lon, suburb.lat, suburb.lon) <=
-              areas.radius);
+
+        if (areas.canTravel) {
+          availableSuburbs = Suburbs.find(
+            { active: true, state: selectedSuburb.state },
+            { fields: { _id: 1 } },
+          ).fetch();
+        } else {
+          availableSuburbs = Suburbs.find(
+            { active: true, state: selectedSuburb.state },
+            { fields: { lat: 1, lon: 1 } },
+          )
+            .fetch()
+            .filter((suburb) => {
+              const distance = coordinatesDistance(
+                selectedSuburb.lat,
+                selectedSuburb.lon,
+                suburb.lat,
+                suburb.lon,
+              );
+
+              return distance <= areas.radius;
+            });
+        }
+
+        availableSuburbs = availableSuburbs.map(suburb => suburb._id);
 
         Stylists.update(
           { owner: this.userId },
