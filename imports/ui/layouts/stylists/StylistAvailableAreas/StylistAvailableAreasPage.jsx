@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Button, Form, Message, Checkbox, Search, Dropdown } from 'semantic-ui-react';
+import {
+  Container,
+  Button,
+  Form,
+  Message,
+  Checkbox,
+  Search,
+  Dropdown,
+  Popup,
+  Icon,
+} from 'semantic-ui-react';
 import _ from 'lodash';
 
 import { PrimaryColor } from '../../../../modules/client/constants';
@@ -71,10 +81,14 @@ const StylistAvailableAreasPage = ({
           <Checkbox
             name="canTravel"
             checked={canTravel}
-            label="Willing to travel to further regions to provide my services at an additional cost"
+            label="I'm willing to travel to further regions to provide my services at an additional cost."
             onChange={(event, data) => {
               onChange({ target: { name: data.name, value: data.checked } });
             }}
+          />
+          <Popup
+            trigger={<Icon name="question circle" />}
+            content="checking this box will make you appears across all suburbs in your state"
           />
         </Form.Field>
 
