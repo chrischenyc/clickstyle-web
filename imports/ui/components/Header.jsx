@@ -116,13 +116,13 @@ const Header = props => (
 
               {props.isStylist && <Dropdown.Header>Stylist</Dropdown.Header>}
               {props.isStylist && (
-                <Dropdown.Item as={Link} to="/stylists/me/services" text="Services & Prices" />
+                <Dropdown.Item as={Link} to="/stylists/me/services" text="Service & Price List" />
               )}
               {props.isStylist && (
-                <Dropdown.Item as={Link} to="/stylists/me/available-time" text="Available time" />
+                <Dropdown.Item as={Link} to="/stylists/me/available-time" text="Calendar" />
               )}
               {props.isStylist && (
-                <Dropdown.Item as={Link} to="/stylists/me/available-areas" text="Available areas" />
+                <Dropdown.Item as={Link} to="/stylists/me/available-areas" text="Areas" />
               )}
               {props.isStylist && <Dropdown.Divider />}
 
