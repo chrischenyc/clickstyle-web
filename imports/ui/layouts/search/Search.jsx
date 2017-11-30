@@ -33,7 +33,7 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    if (this.state.service && this.state.suburb) {
+    if (this.state.service) {
       this.search(this.state.service, this.state.suburb, this.state.postcode);
     } else {
       // TODO: display empty page
@@ -44,21 +44,38 @@ class Search extends Component {
     if (!_.isEqual(this.props.match.params, nextProps.match.params)) {
       const { service, suburb, postcode } = nextProps.match.params;
 
-      if (service && suburb) {
+      if (service) {
         this.search(SEONameToServiceName(service), SEONameToSuburbName(suburb), postcode);
       }
     }
   }
 
-  handleSearch(service, suburb, postcode) {
-    if (service && service !== undefined && suburb && suburb !== undefined) {
-      if (postcode && postcode !== undefined) {
-        this.setState({ service, suburb, postcode });
-        this.props.history.push(`/stylists/${ServiceNameToSEOName(service)}/${SuburbNameToSEOName(suburb)}/${postcode}`);
-      } else {
-        this.setState({ service, suburb });
-        this.props.history.push(`/stylists/${ServiceNameToSEOName(service)}/${SuburbNameToSEOName(suburb)}`);
+  /**
+   * Input can be passed from children component, i.e.: SearchBar.jsx
+   * or from route url params, i.e.: /:service/:suburb?/:postcode?
+   *
+   * Depends on the available params, page wil be redirected to various search route
+   *
+   * @param {name of the service or addon, required} service
+   * @param {name of the suburb, optional} suburb
+   * @param {postcode, optional} postcode
+   */
+  handleSearch({ service, suburb, postcode }) {
+    if (!_.isNil(service)) {
+      this.setState({ service });
+      let searchUrl = `/stylists/${ServiceNameToSEOName(service)}`;
+
+      if (!_.isNil(suburb)) {
+        this.setState({ suburb });
+        searchUrl += `/${SuburbNameToSEOName(suburb)}`;
       }
+
+      if (!_.isNil(postcode)) {
+        this.setState({ postcode });
+        searchUrl += `/${postcode}`;
+      }
+
+      this.props.history.push(searchUrl);
     }
   }
 
@@ -86,13 +103,6 @@ class Search extends Component {
     }
 
     // TODO: GA tracking
-
-    console.log({
-      service,
-      suburb,
-      postcode,
-      offset,
-    });
 
     Meteor.call(
       'stylists.search',

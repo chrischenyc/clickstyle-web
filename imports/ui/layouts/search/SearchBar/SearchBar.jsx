@@ -102,12 +102,16 @@ class SearchBar extends Component {
   }
 
   handleSearch() {
-    if (!_.isEmpty(this.state.service) && this.state.selectedSuburb) {
-      this.props.onSearch(
-        this.state.service,
-        this.state.selectedSuburb.name,
-        this.state.selectedSuburb.postcode,
-      );
+    const { service, selectedSuburb } = this.state;
+
+    if (_.isEmpty(service)) {
+      // TODO: ask user to select a service
+    } else {
+      this.props.onSearch({
+        service,
+        suburb: selectedSuburb && selectedSuburb.name,
+        postcode: selectedSuburb && selectedSuburb.postcode,
+      });
     }
   }
 

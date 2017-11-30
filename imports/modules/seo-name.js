@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const services = require('./services-addons.json');
 
 /**
@@ -7,6 +9,10 @@ const services = require('./services-addons.json');
  * @param {name name} original name
  */
 export const ServiceNameToSEOName = (name) => {
+  if (_.isNil(name)) {
+    return name;
+  }
+
   // look for raw data table
   let seoName = null;
 
@@ -47,6 +53,10 @@ export const ServiceNameToSEOName = (name) => {
  * @param {seo seoName} seo name
  */
 export const SEONameToServiceName = (seoName) => {
+  if (_.isNil(seoName)) {
+    return seoName;
+  }
+
   // look for raw data table
   let originalName = null;
 
@@ -97,7 +107,13 @@ export const SEONameToServiceName = (seoName) => {
  *
  * @param {name name} original name
  */
-export const SuburbNameToSEOName = name => name.replace(/ /g, '-').toLowerCase();
+export const SuburbNameToSEOName = (name) => {
+  if (_.isNil(name)) {
+    return name;
+  }
+
+  return name.replace(/ /g, '-').toLowerCase();
+};
 
 /**
  * reverse the previous conversion
@@ -105,5 +121,10 @@ export const SuburbNameToSEOName = name => name.replace(/ /g, '-').toLowerCase()
  *
  * @param {seo seoName} seo name
  */
-export const SEONameToSuburbName = seoName =>
-  seoName.replace(/-/g, ' ').replace(/(^| )(\w)/g, x => x.toUpperCase());
+export const SEONameToSuburbName = (seoName) => {
+  if (_.isNil(seoName)) {
+    return seoName;
+  }
+
+  return seoName.replace(/-/g, ' ').replace(/(^| )(\w)/g, x => x.toUpperCase());
+};

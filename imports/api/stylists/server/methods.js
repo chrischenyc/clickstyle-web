@@ -156,58 +156,61 @@ Meteor.methods({
     check(offset, Number);
 
     try {
-      // break down service name into words,
-      // match with names of services and their subordinate addons
-      // sample conversion: "full-face-makeup" -> "/full.+face.+makeup/i"
-      const keywords = service.split('-').filter(word => word !== 'and');
-      let regex = '';
-      for (let index = 0; index < keywords.length; index += 1) {
-        regex += keywords[index];
-        if (index < keywords.length - 1) {
-          regex += '.+';
-        }
-      }
-
-      const serviceNameSelector = { 'services.name': RegExp(regex, 'i') };
-      const addonNameSelector = {
-        'services.addons.name': RegExp(regex, 'i'),
-      };
-
-      // query by suburb
-      let suburbSelector = { name: suburbName };
-      if (postcode && postcode !== undefined) {
-        suburbSelector.postcode = postcode;
-      }
-      if (suburbName) {
-        const suburbs = Suburbs.find(suburbSelector).fetch();
-        const suburbIds = suburbs.map(suburb => suburb._id);
-        suburbSelector = { 'areas.availableSuburbs': { $in: suburbIds } };
-      }
-
-      // final compose
-      const selector = {
+      // final query selector, only look for published stylists
+      let selector = {
         published: true,
-        $or: [serviceNameSelector, addonNameSelector],
-        ...suburbSelector,
       };
 
-      console.log(selector);
+      // add query selector by service/addon name
 
+      // a less precise search would be to break down service name into words,
+      // match with names of services and addons in the order of keywords
+      // sample conversion: "full face makeup" -> "/full.+face.+makeup/i"
+      // const keywords = service.split(' ').filter(word => word !== 'and');
+      // let regex = '';
+      // for (let index = 0; index < keywords.length; index += 1) {
+      //   regex += keywords[index];
+      //   if (index < keywords.length - 1) {
+      //     regex += '.+';
+      //   }
+      // }
+
+      const serviceNameSelector = { 'services.name': RegExp(service, 'i') };
+      const addonNameSelector = {
+        'services.addons.name': RegExp(service, 'i'),
+      };
+      selector = { ...selector, ...{ $or: [serviceNameSelector, addonNameSelector] } };
+
+      // add query selector by available suburbs
+      if (suburbName) {
+        const suburbsSelector = { name: RegExp(suburbName, 'i') };
+        if (postcode && postcode !== undefined) {
+          suburbsSelector.postcode = postcode;
+        }
+        const suburbIds = Suburbs.find(suburbsSelector)
+          .fetch()
+          .map(suburb => suburb._id);
+
+        selector = { ...selector, ...{ 'areas.availableSuburbs': { $in: suburbIds } } };
+      }
+
+      // query Stylists
       const stylists = Stylists.find(selector, {
         fields: { owner: 1, services: 1 },
         limit: SearchLimit,
         skip: offset,
       }).fetch();
 
+      // query Profiles
       const userIds = stylists.map(stylist => stylist.owner);
-
       const profiles = Profiles.find(
         { owner: { $in: userIds } },
         {
           fields: {
             owner: 1,
             name: 1,
-            address: 1,
+            'address.state': 1,
+            'address.suburb': 1,
             photo: 1,
             products: 1,
           },
