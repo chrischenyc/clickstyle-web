@@ -217,7 +217,7 @@ class StylistsApplicationPage extends Component {
               label={
                 <label htmlFor="agreement">
                   I confirm I am over 18 and I agree to&nbsp;
-                  {Meteor.settings.public.applicationName}&apos;s&nbsp;
+                  {Meteor.settings.public.appName}&apos;s&nbsp;
                   <Link to="/terms">Terms of Use</Link>&nbsp;and&nbsp;
                   <Link to="/privacy">Privacy Policy</Link>.
                 </label>

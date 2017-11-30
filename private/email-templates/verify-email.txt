@@ -9,12 +9,9 @@ Before we get started, we'll need to verify your email. (Just to make sure you a
 
 
 See you on the other side :D
-{{applicationName}} Family
+{{appName}} Family
 
 Before you go, here’s a cool fact:
 Hair is more elastic than you think! It can expand by up to 30% of its original length when wet.
 
-{{supportEmail}}
-{{facebookUrl}}
-{{twitterUrl}}
-{{instagramUrl}}
+{{{txtFooter}}}

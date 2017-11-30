@@ -4,19 +4,14 @@ import getPrivateFile from '../../modules/server/get-private-file';
 import templateToHTML from '../../modules/server/handlebars-email-to-html';
 import templateToText from '../../modules/server/handlebars-email-to-text';
 
+import { fromAddress, templateVars } from '../../modules/server/send-email';
+
 // override Meteor default Accounts email template
 
-const {
-  applicationName,
-  supportEmail,
-  facebookUrl,
-  twitterUrl,
-  instagramUrl,
-} = Meteor.settings.public;
-const fromAddress = `${applicationName} <${supportEmail}>`;
+const { appName } = templateVars;
 const { emailTemplates } = Accounts;
 
-emailTemplates.siteName = applicationName;
+emailTemplates.siteName = appName;
 emailTemplates.from = fromAddress;
 
 emailTemplates.verifyEmail = {
@@ -26,26 +21,18 @@ emailTemplates.verifyEmail = {
   html(user, url) {
     const urlWithoutHash = url.replace('#/', '');
     return templateToHTML(getPrivateFile('email-templates/verify-email.html'), {
-      applicationName,
       firstName: user.profile.name.first,
       verifyUrl: urlWithoutHash,
-      supportEmail,
-      facebookUrl,
-      twitterUrl,
-      instagramUrl,
+      ...templateVars,
     });
   },
   text(user, url) {
     const urlWithoutHash = url.replace('#/', '');
     if (Meteor.isDevelopment) console.info(`Verify Email Link: ${urlWithoutHash}`); // eslint-disable-line
     return templateToText(getPrivateFile('email-templates/verify-email.txt'), {
-      applicationName,
       firstName: user.profile.name.first,
       verifyUrl: urlWithoutHash,
-      supportEmail,
-      facebookUrl,
-      twitterUrl,
-      instagramUrl,
+      ...templateVars,
     });
   },
 };
@@ -58,13 +45,9 @@ emailTemplates.resetPassword = {
     const urlWithoutHash = url.replace('#/', '');
     return templateToHTML(getPrivateFile('email-templates/reset-password.html'), {
       firstName: user.profile.name.first,
-      applicationName,
       emailAddress: user.emails[0].address,
       resetUrl: urlWithoutHash,
-      supportEmail,
-      facebookUrl,
-      twitterUrl,
-      instagramUrl,
+      ...templateVars,
     });
   },
   text(user, url) {
@@ -72,13 +55,9 @@ emailTemplates.resetPassword = {
     if (Meteor.isDevelopment) console.info(`Reset Password Link: ${urlWithoutHash}`); // eslint-disable-line
     return templateToText(getPrivateFile('email-templates/reset-password.txt'), {
       firstName: user.profile.name.first,
-      applicationName,
       emailAddress: user.emails[0].address,
       resetUrl: urlWithoutHash,
-      supportEmail,
-      facebookUrl,
-      twitterUrl,
-      instagramUrl,
+      ...templateVars,
     });
   },
 };

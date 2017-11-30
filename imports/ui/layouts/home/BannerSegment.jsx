@@ -21,7 +21,7 @@ const BannerSegment = () => (
     <Container text>
       <Header
         as="h1"
-        content={Meteor.settings.public.applicationName}
+        content={Meteor.settings.public.appName}
         inverted
         style={{
           fontSize: '4rem',

@@ -39,76 +39,102 @@ const sendEmail = ({
   throw new Error("Please pass an HTML string, text, or template name to compile for your message's body.");
 };
 
-// helpers
+// retrieve constants from Meteor settings files
 const {
-  applicationName,
+  appName,
+  homeUrl,
+  helpUrl,
+  contactUrl,
+  searchUrl,
+  joinUrl,
+  privacyUrl,
+  termsUrl,
   supportEmail,
   facebookUrl,
   twitterUrl,
   instagramUrl,
 } = Meteor.settings.public;
-const fromAddress = `${applicationName} <${supportEmail}>`;
+
+export const fromAddress = `${appName} <${supportEmail}>`;
+
+// standard vars most email templates use
+const commonTemplateVars = {
+  appName,
+  homeUrl: Meteor.absoluteUrl(homeUrl),
+  helpUrl: Meteor.absoluteUrl(helpUrl),
+  contactUrl: Meteor.absoluteUrl(contactUrl),
+  searchUrl: Meteor.absoluteUrl(searchUrl),
+  joinUrl: Meteor.absoluteUrl(joinUrl),
+  privacyUrl: Meteor.absoluteUrl(privacyUrl),
+  termsUrl: Meteor.absoluteUrl(termsUrl),
+  supportEmail,
+  facebookUrl,
+  twitterUrl,
+  instagramUrl,
+};
+
+// add shared footers
+export const templateVars = {
+  ...commonTemplateVars,
+  txtFooter: templateToText(getPrivateFile('email-templates/footer.txt'), commonTemplateVars),
+  htmlFooter: templateToHTML(getPrivateFile('email-templates/footer.html'), commonTemplateVars),
+};
 
 export const sendWelcomeEmail = (userId) => {
   const profile = Profiles.findOne({ owner: userId });
 
-  sendEmail({
-    to: profile.email,
-    from: fromAddress,
-    subject: `Welcome to ${applicationName}!`,
-    template: 'welcome',
-    templateVars: {
-      firstName: profile.name.first,
-      applicationName,
-      welcomeUrl: Meteor.absoluteUrl(''),
-      supportEmail,
-      facebookUrl,
-      twitterUrl,
-      instagramUrl,
-    },
-  }).catch((error) => {
-    throw new Meteor.Error('500', `${error}`);
-  });
+  if (profile) {
+    sendEmail({
+      to: profile.email,
+      from: fromAddress,
+      subject: `Welcome to ${appName}!`,
+      template: 'welcome',
+      templateVars: {
+        firstName: profile.name.first,
+        ...templateVars,
+      },
+    }).catch((error) => {
+      throw new Meteor.Error('500', `${error}`);
+    });
+  }
 };
 
 export const sendPasswordChangedEmail = (userId) => {
   const profile = Profiles.findOne({ owner: userId });
 
-  sendEmail({
-    to: profile.email,
-    from: fromAddress,
-    subject: `Account alert: ${applicationName} password updated`,
-    template: 'password-changed',
-    templateVars: {
-      applicationName,
-      firstName: profile.name.first,
-      contactUrl: Meteor.absoluteUrl('/contact'),
-      supportEmail,
-      facebookUrl,
-      twitterUrl,
-      instagramUrl,
-    },
-  }).catch((error) => {
-    throw new Meteor.Error('500', `${error}`);
-  });
+  if (profile) {
+    sendEmail({
+      to: profile.email,
+      from: fromAddress,
+      subject: `Account alert: ${appName} password updated`,
+      template: 'password-changed',
+      templateVars: {
+        firstName: profile.name.first,
+        ...templateVars,
+      },
+    }).catch((error) => {
+      throw new Meteor.Error('500', `${error}`);
+    });
+  }
 };
 
 export const sendStylistJoinConfirmEmail = (userId) => {
   const profile = Profiles.findOne({ owner: userId });
 
-  sendEmail({
-    to: profile.email,
-    from: fromAddress,
-    subject: `We received your application to become a stylist on ${applicationName}`,
-    template: 'stylist-join-confirm',
-    templateVars: {
-      applicationName,
-      firstName: profile.name.first,
-      supportEmail,
-    },
-  }).catch((error) => {
-    throw new Meteor.Error('500', `${error}`);
-  });
+  if (profile) {
+    sendEmail({
+      to: profile.email,
+      from: fromAddress,
+      subject: `We received your application to become a stylist on ${appName}`,
+      template: 'stylist-join-confirm',
+      templateVars: {
+        firstName: profile.name.first,
+        ...templateVars,
+      },
+    }).catch((error) => {
+      throw new Meteor.Error('500', `${error}`);
+    });
+  }
 };
 
 export const sendAdminEmailStylistApplication = (applicationId) => {
@@ -127,9 +153,8 @@ export const sendAdminEmailStylistApplication = (applicationId) => {
         subject: 'New stylist join application',
         template: 'stylist-join-notify-admin',
         templateVars: {
-          applicationName,
           adminUrl,
-          supportEmail,
+          ...templateVars,
         },
       });
     });

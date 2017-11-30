@@ -68,7 +68,7 @@ const ResetPasswordPage = ({
               <p>
                 By clicking &quot;Save and continue&quot;, I confirm I am over 18 and I agree
                 to&nbsp;
-                {Meteor.settings.public.applicationName}&apos;s&nbsp;
+                {Meteor.settings.public.appName}&apos;s&nbsp;
                 <Link to="/terms">Terms of Use</Link>&nbsp;and&nbsp;
                 <Link to="/privacy">Privacy Policy</Link>.
               </p>

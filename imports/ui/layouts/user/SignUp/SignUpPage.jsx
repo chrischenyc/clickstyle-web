@@ -86,7 +86,7 @@ const SignUpPage = ({
         </Segment>
 
         <Message attached="bottom" size="large">
-          {`Already have a ${Meteor.settings.public.applicationName} account? `}
+          {`Already have a ${Meteor.settings.public.appName} account? `}
 
           {modal ? (
             <ModalLink
@@ -105,7 +105,7 @@ const SignUpPage = ({
           onChange={onAgreement}
           label={
             <label htmlFor="agreement">
-              I confirm I am over 18 and I agree to {Meteor.settings.public.applicationName}&apos;s&nbsp;
+              I confirm I am over 18 and I agree to {Meteor.settings.public.appName}&apos;s&nbsp;
               <Link to="/terms">Terms of Use</Link>&nbsp;and&nbsp;
               <Link to="/privacy">Privacy Policy</Link>.
             </label>

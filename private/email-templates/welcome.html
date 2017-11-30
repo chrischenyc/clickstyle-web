@@ -4,7 +4,7 @@
 <head>
   <meta name="viewport" content="width=device-width" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Welcome! | {{applicationName}}</title>
+  <title>Welcome! | {{appName}}</title>
   <style>
     /* -------------------------------------
     GLOBAL
@@ -288,8 +288,8 @@
                   </tr>
                   <tr>
                     <td class="content-block">
-                      Thanks heaps for jumping on board the {{applicationName}} bandwagon. Here’s a quick guide to how you can make your first
-                      booking and experience that royal like service at your time.
+                      Thanks heaps for jumping on board the {{appName}} bandwagon. Here’s a quick guide to how you can make your first booking
+                      and experience that royal like service at your time.
                     </td>
                   </tr>
                   <tr>
@@ -303,7 +303,7 @@
                   </tr>
                   <tr>
                     <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-                      <a href="{{welcomeUrl}}" class="btn-primary" itemprop="url">Get Started</a>
+                      <a href="{{homeUrl}}" class="btn-primary" itemprop="url">Get Started</a>
                     </td>
                   </tr>
                   <tr>
@@ -324,7 +324,7 @@
                   <tr>
                     <td class="content-block">
                       Warm Regards
-                      <br/>{{applicationName}} Family
+                      <br/>{{appName}} Family
                     </td>
                   </tr>
                   <tr>
@@ -338,18 +338,7 @@
               </td>
             </tr>
           </table>
-          <div class="footer">
-            <table width="100%">
-              <tr>
-                <td class="aligncenter content-block">
-                  <a href=mailto:{{supportEmail}}>email</a>
-                  <a href={{facebookUrl}}>facebook</a>&nbsp;
-                  <a href={{twitterUrl}}>twitter</a>&nbsp;
-                  <a href={{instagramUrl}}>instagram</a>&nbsp;
-                </td>
-              </tr>
-            </table>
-          </div>
+          {{{htmlFooter}}}
         </div>
       </td>
       <td></td>

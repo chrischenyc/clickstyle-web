@@ -24,7 +24,7 @@ const Header = props => (
     <Responsive minWidth={Responsive.onlyTablet.minWidth}>
       <Menu fixed="top" size="massive" inverted borderless stackable>
         <Menu.Item as={Link} to="/">
-          {Meteor.settings.public.applicationName}
+          {Meteor.settings.public.appName}
         </Menu.Item>
 
         {props.authenticated ? (
@@ -89,7 +89,7 @@ const Header = props => (
     <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
       <Menu fixed="top" size="massive" inverted borderless>
         <Menu.Item as={Link} to="/">
-          {Meteor.settings.public.applicationName}
+          {Meteor.settings.public.appName}
         </Menu.Item>
 
         <Menu.Menu position="right">

@@ -1,5 +1,5 @@
-Someone has applied to join as a stylist on {{applicationName}}.
+Someone has applied to join as a stylist on {{appName}}.
 Review the application: {{adminUrl}}
 
-You received this email because you are one of the admin users on {{applicationName}}.
+You received this email because you are one of the admin users on {{appName}}.
 
