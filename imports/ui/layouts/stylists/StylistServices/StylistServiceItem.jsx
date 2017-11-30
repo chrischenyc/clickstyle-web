@@ -1,6 +1,15 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Segment, Message, Confirm, List, Divider, Button, Responsive } from 'semantic-ui-react';
+import {
+  Segment,
+  Message,
+  Confirm,
+  List,
+  Divider,
+  Button,
+  Responsive,
+  Input,
+} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid from 'uuid/v1';
@@ -148,6 +157,18 @@ class StylistServiceItem extends Component {
                   style={{ marginTop: '0.2rem' }}
                 />
               </div>
+
+              <Input
+                fluid
+                name="basePriceDescription"
+                label="Description"
+                placeholder="what does the base price includes (optional)"
+                type="text"
+                maxLength="200"
+                style={{ marginTop: '0.2rem', marginBottom: '0.25rem' }}
+                value={service.basePriceDescription}
+                onChange={this.handleChange}
+              />
             </List.Item>
 
             <List.Item>

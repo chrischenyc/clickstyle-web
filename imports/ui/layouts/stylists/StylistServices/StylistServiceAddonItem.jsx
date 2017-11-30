@@ -112,7 +112,7 @@ class StylistServiceAddonItem extends Component {
                   name="description"
                   label="Description"
                   type="text"
-                  placeholder="optional"
+                  placeholder="what is this addon about (optional)"
                   maxLength="200"
                   value={addon.description}
                   onChange={onChange}
@@ -160,7 +160,7 @@ class StylistServiceAddonItem extends Component {
             name="description"
             label="Description"
             type="text"
-            placeholder="optional"
+            placeholder="what is this addon about (optional)"
             maxLength="200"
             style={{ marginBottom: '0.25rem' }}
             value={addon.description}
