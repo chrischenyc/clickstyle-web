@@ -1,12 +1,10 @@
 {
   "name": "stylesquad-web",
   "version": "0.1.0",
-  "description": "Stylesquad.com web/server app using meteor + react + semantic ",
+  "description": "stylesquad.com.au web/server app using meteor + react + semantic ",
   "private": true,
   "author": "Chris Chen",
-  "contributors": [
-    "Chris Chen <chrischen79@gmail.com>"
-  ],
+  "contributors": ["Chris Chen <chrischen79@gmail.com>"],
   "scripts": {
     "dev": "MONGO_URL=mongodb://localhost:27017/stylesquad meteor -s settings-development.json",
     "start": "meteor run",
