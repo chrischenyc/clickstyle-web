@@ -48,10 +48,15 @@ class StylistServices extends Component {
   }
 
   handleDeleteService(service) {
-    this.setState({
-      pristine: false,
-      selectedServices: this.state.selectedServices.filter(selectedService => selectedService._id !== service._id),
-    });
+    this.setState(
+      {
+        pristine: false,
+        selectedServices: this.state.selectedServices.filter(selectedService => selectedService._id !== service._id),
+      },
+      () => {
+        this.handleSubmit();
+      },
+    );
   }
 
   handleAddServices(services) {
@@ -75,7 +80,10 @@ class StylistServices extends Component {
 
   handleSubmit(event) {
     this.setState({ errors: {} });
-    event.preventDefault();
+
+    if (!_.isNil(event)) {
+      event.preventDefault();
+    }
 
     const errors = validateStylistServices(this.state.selectedServices);
 
