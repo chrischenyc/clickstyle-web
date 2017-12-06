@@ -17,121 +17,118 @@ const Header = (props) => {
   const { authenticated, firstName, photo } = props;
 
   return (
-    <div>
-      <header id="header-container">
-        <div id="header">
-          <div className="container">
-            {/* Start of left-side */}
-            <div className="left-side">
-              <div id="logo">
-                <Link to="/">
-                  <img src="images/logo.png" alt="stylesquad" />
-                </Link>
-              </div>
-
-              <div className="mmenu-trigger">
-                <button className="hamburger hamburger--collapse" type="button">
-                  <span className="hamburger-box">
-                    <span className="hamburger-inner" />
-                  </span>
-                </button>
-              </div>
-
-              {/* Start of nav menu, to be manipulated by mmenu */}
-              <nav id="navigation" className="style-1">
-                <ul id="responsive">
-                  {/* Join */}
-                  <li>
-                    <Link to="/join">Become a stylist</Link>
-                  </li>
-
-                  {/* Help */}
-                  <li>
-                    <Link to="/help">Help</Link>
-                  </li>
-                </ul>
-              </nav>
-              {/* End of nav menu */}
-
-              <div className="clearfix" />
+    <header id="header-container">
+      <div id="header">
+        <div className="container">
+          {/* Start of left-side */}
+          <div className="left-side">
+            <div id="logo">
+              <Link to="/">
+                <img src="images/logo.png" alt="stylesquad" />
+              </Link>
             </div>
-            {/* End of left-side */}
 
-            {/* Start of right-side */}
-            <div className="right-side">
-              <div className="header-widget">
-                {!authenticated && (
-                  <ModalLink
-                    className="sign-in"
-                    to="/signup"
-                    component={
-                      <SignUp
-                        modal
-                        onLoggedIn={() => {
-                          props.closeModal();
-                        }}
-                      />
-                    }
-                    title="Join us"
-                  >
-                    Sign Up
-                  </ModalLink>
-                )}
-
-                {!authenticated && (
-                  <ModalLink
-                    className="sign-in"
-                    to="/login"
-                    component={
-                      <Login
-                        modal
-                        onLoggedIn={() => {
-                          props.closeModal();
-                        }}
-                      />
-                    }
-                    title="Log in to continue"
-                  >
-                    Log In
-                  </ModalLink>
-                )}
-
-                {/* Start of user menu */}
-                {authenticated && (
-                  <div className="user-menu">
-                    <div className="user-name">
-                      <span>
-                        <img src={ScaledImageURL(photo, 'tiny')} alt="" />
-                      </span>
-                      {firstName}
-                    </div>
-                    <ul>
-                      <li>
-                        <Link to="/dashboard">Dashboard</Link>
-                      </li>
-
-                      <li>
-                        <a
-                          href="#logout"
-                          onClick={() => {
-                            Meteor.logout();
-                          }}
-                        >
-                          <i className="sl sl-icon-power" /> Logout
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-                {/* End of user menu */}
-              </div>
+            <div className="mmenu-trigger">
+              <button className="hamburger hamburger--collapse" type="button">
+                <span className="hamburger-box">
+                  <span className="hamburger-inner" />
+                </span>
+              </button>
             </div>
-            {/* End of right-side */}
+
+            {/* Start of nav menu, to be manipulated by mmenu */}
+            <nav id="navigation" className="style-1">
+              <ul id="responsive">
+                {/* Join */}
+                <li>
+                  <Link to="/join">Become a stylist</Link>
+                </li>
+
+                {/* Help */}
+                <li>
+                  <Link to="/help">Help</Link>
+                </li>
+              </ul>
+            </nav>
+            {/* End of nav menu */}
+
+            <div className="clearfix" />
           </div>
+          {/* End of left-side */}
+
+          {/* Start of right-side */}
+          <div className="right-side">
+            <div className="header-widget">
+              {!authenticated && (
+                <ModalLink
+                  className="sign-in"
+                  to="/signup"
+                  component={
+                    <SignUp
+                      modal
+                      onLoggedIn={() => {
+                        props.closeModal();
+                      }}
+                    />
+                  }
+                  title="Join us"
+                >
+                  Sign Up
+                </ModalLink>
+              )}
+
+              {!authenticated && (
+                <ModalLink
+                  className="sign-in"
+                  to="/login"
+                  component={
+                    <Login
+                      modal
+                      onLoggedIn={() => {
+                        props.closeModal();
+                      }}
+                    />
+                  }
+                  title="Log in to continue"
+                >
+                  Log In
+                </ModalLink>
+              )}
+
+              {/* Start of user menu */}
+              {authenticated && (
+                <div className="user-menu">
+                  <div className="user-name">
+                    <span>
+                      <img src={ScaledImageURL(photo, 'tiny')} alt="" />
+                    </span>
+                    {firstName}
+                  </div>
+                  <ul>
+                    <li>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </li>
+
+                    <li>
+                      <a
+                        href="#logout"
+                        onClick={() => {
+                          Meteor.logout();
+                        }}
+                      >
+                        <i className="sl sl-icon-power" /> Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
+              {/* End of user menu */}
+            </div>
+          </div>
+          {/* End of right-side */}
         </div>
-      </header>
-      <div className="clearfix" />
-    </div>
+      </div>
+    </header>
   );
 };
 
@@ -271,7 +268,6 @@ const Header = (props) => {
 // );
 
 Header.defaultProps = {
-  isStylist: false,
   firstName: '',
   photo: '',
 };
