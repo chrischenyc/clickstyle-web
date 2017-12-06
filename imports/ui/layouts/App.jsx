@@ -15,7 +15,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ModalContainer from '../components/ModalContainer';
 
-import HomePage from '../layouts/home/HomePage';
+import Home from '../layouts/home/Home';
 import NotFoundPage from '../layouts/NotFoundPage';
 
 import Profile from '../layouts/profiles/Profile';
@@ -80,7 +80,7 @@ class App extends Component {
           <Header />
 
           <Switch>
-            <Route exact path="/" component={HomePage} />
+            <Route exact path="/" component={Home} />
 
             <PublicRoute exact path="/login" component={Login} />
             <PublicRoute exact path="/signup" component={SignUp} />

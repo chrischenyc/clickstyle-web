@@ -1,24 +1,14 @@
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
 
-import BannerSegment from './BannerSegment';
-import HowItWorksSegment from './HowItWorksSegment';
-import ArticlesSegment from './ArticlesSegment';
+import HomeSearchBanner from './HomeSearchBanner';
 import BookingsList from '../bookings/BookingsList';
-
-import Bookings from '../../../api/bookings/bookings';
+import HomeJoinBanner from './HomeJoinBanner';
 
 const HomePage = props => (
-  <div style={{ marginTop: '51px' }}>
-    <BannerSegment />
-
-    <HowItWorksSegment />
-
-    <ArticlesSegment />
+  <div>
+    <HomeSearchBanner />
 
     <Segment
       textAlign="center"
@@ -29,19 +19,13 @@ const HomePage = props => (
     >
       <BookingsList bookings={props.bookings} />
     </Segment>
+
+    <HomeJoinBanner />
   </div>
 );
 
 HomePage.propTypes = {
-  bookingsLoading: PropTypes.bool.isRequired,
   bookings: PropTypes.array.isRequired,
 };
 
-export default withTracker(() => {
-  const handle = Meteor.subscribe('bookings');
-
-  return {
-    bookingsLoading: !handle.ready(),
-    bookings: Bookings.find({}).fetch(),
-  };
-})(HomePage);
+export default HomePage;
