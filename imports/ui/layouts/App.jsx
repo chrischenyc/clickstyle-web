@@ -13,6 +13,7 @@ import SecureRoute from '../components/SecureRoute';
 import PublicRoute from '../components/PublicRoute';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SlideMenu from '../components/SlideMenu';
 import ModalContainer from '../components/ModalContainer';
 
 import Home from '../layouts/home/Home';
@@ -75,51 +76,54 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
-          <Route component={ScrollToTop} />
-          <Header />
+        <div id="outer-container">
+          <SlideMenu />
 
-          <Switch>
-            <Route exact path="/" component={Home} />
+          <main id="page-wrap">
+            <Header />
 
-            <PublicRoute exact path="/login" component={Login} />
-            <PublicRoute exact path="/signup" component={SignUp} />
-            <Route path="/verify-email/:token" component={VerifyEmailPage} />
-            <Route exact path="/forgot-password" component={ForgotPassword} />
-            <Route path="/reset-password/:token" component={ResetPassword} />
+            <Switch>
+              <Route exact path="/" component={Home} />
 
-            <SecureRoute path="/users/:_id" component={Profile} />
+              <PublicRoute exact path="/login" component={Login} />
+              <PublicRoute exact path="/signup" component={SignUp} />
+              <Route path="/verify-email/:token" component={VerifyEmailPage} />
+              <Route exact path="/forgot-password" component={ForgotPassword} />
+              <Route path="/reset-password/:token" component={ResetPassword} />
 
-            <SecureRoute exact path="/dashboard" component={DashboardPage} />
-            <SecureRoute exact path="/profiles/edit" component={EditProfile} />
-            <SecureRoute exact path="/settings" component={SettingsPage} />
-            <SecureRoute exact path="/change-password" component={ChangePassword} />
-            <SecureRoute
-              exact
-              path="/reset-password"
-              component={props => <ForgotPassword {...props} embedded />}
-            />
-            <SecureRoute path="/inbox" component={InboxPage} />
+              <SecureRoute path="/users/:_id" component={Profile} />
 
-            <Route exact path="/bookings" component={BookingsPage} />
-            <SecureRoute exact path="/bookings/:_id" component={ViewBooking} />
-            <SecureRoute exact path="/bookings/:_id/edit" component={EditBooking} />
+              <SecureRoute exact path="/dashboard" component={DashboardPage} />
+              <SecureRoute exact path="/profiles/edit" component={EditProfile} />
+              <SecureRoute exact path="/settings" component={SettingsPage} />
+              <SecureRoute exact path="/change-password" component={ChangePassword} />
+              <SecureRoute
+                exact
+                path="/reset-password"
+                component={props => <ForgotPassword {...props} embedded />}
+              />
+              <SecureRoute path="/inbox" component={InboxPage} />
 
-            <Route exact path="/join" component={StylistsJoin} />
-            <SecureRoute path="/join/application" component={StylistsApplication} />
+              <Route exact path="/bookings" component={BookingsPage} />
+              <SecureRoute exact path="/bookings/:_id" component={ViewBooking} />
+              <SecureRoute exact path="/bookings/:_id/edit" component={EditBooking} />
 
-            <SecureRoute path="/stylists/me/services" component={StylistServices} />
-            <SecureRoute path="/stylists/me/available-time" component={StylistAvailability} />
-            <SecureRoute path="/stylists/me/available-areas" component={StylistAvailableAreas} />
+              <Route exact path="/join" component={StylistsJoin} />
+              <SecureRoute path="/join/application" component={StylistsApplication} />
 
-            <Route path="/stylists/:service?/:suburb?/:postcode?" component={Search} />
+              <SecureRoute path="/stylists/me/services" component={StylistServices} />
+              <SecureRoute path="/stylists/me/available-time" component={StylistAvailability} />
+              <SecureRoute path="/stylists/me/available-areas" component={StylistAvailableAreas} />
 
-            <Route component={NotFoundPage} />
-          </Switch>
+              <Route path="/stylists/:service?/:suburb?/:postcode?" component={Search} />
 
-          {this.props.modalOpen && <Route to="/modal" component={ModalContainer} />}
+              <Route component={NotFoundPage} />
+            </Switch>
 
-          <Footer />
+            {this.props.modalOpen && <Route to="/modal" component={ModalContainer} />}
+
+            <Footer />
+          </main>
         </div>
       </Router>
     );

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SideMenu from './SideMenu';
 
 const SideMenuContainer = props => (
-  <div style={{ marginTop: '51px', paddingTop: '1rem' }}>
+  <div style={{ paddingTop: '1rem' }}>
     <Responsive
       minWidth={Responsive.onlyTablet.minWidth}
       as={Grid}
