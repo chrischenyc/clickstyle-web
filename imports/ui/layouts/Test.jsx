@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
-import { Container, Dropdown, Image, Menu, Visibility } from 'semantic-ui-react';
+import {
+  Container,
+  Divider,
+  Dropdown,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  List,
+  Menu,
+  Segment,
+  Visibility,
+} from 'semantic-ui-react';
 
 const menuStyle = {
   border: 'none',
   borderRadius: 0,
   boxShadow: 'none',
   marginBottom: '1em',
+  marginTop: '4em',
   transition: 'box-shadow 0.5s ease, padding 0.5s ease',
 };
 
@@ -15,7 +28,7 @@ const fixedMenuStyle = {
   boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
 };
 
-export default class Header extends Component {
+export default class StickyLayout extends Component {
   constructor(props) {
     super(props);
 
@@ -24,17 +37,25 @@ export default class Header extends Component {
     };
   }
 
+  stickTopMenu = () => {
+    console.log('stick');
+
+    this.setState({ menuFixed: true });
+  };
+
+  unStickTopMenu = () => {
+    console.log('unStick');
+
+    this.setState({ menuFixed: false });
+  };
+
   render() {
     const { menuFixed } = this.state;
 
     return (
       <Visibility
-        onBottomPassed={() => {
-          this.setState({ menuFixed: true });
-        }}
-        onBottomVisible={() => {
-          this.setState({ menuFixed: false });
-        }}
+        onBottomPassed={this.stickTopMenu}
+        onBottomVisible={this.unStickTopMenu}
         once={false}
       >
         <Menu
@@ -42,10 +63,13 @@ export default class Header extends Component {
           fixed={menuFixed ? 'top' : null}
           style={menuFixed ? fixedMenuStyle : menuStyle}
         >
-          <Container>
-            <Menu.Item id="logo">
-              <Image src="images/logo.png" alt="logo" />
+          <Container text>
+            <Menu.Item>
+              <Image size="mini" src="/logo.png" />
             </Menu.Item>
+            <Menu.Item header>Project Name</Menu.Item>
+            <Menu.Item as="a">Blog</Menu.Item>
+            <Menu.Item as="a">Articles</Menu.Item>
 
             <Menu.Menu position="right">
               <Dropdown text="Dropdown" pointing className="link item">
