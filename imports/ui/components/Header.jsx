@@ -1,5 +1,24 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Container, Dropdown, Image, Menu, Visibility } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {
+  Container,
+  Dropdown,
+  Image,
+  Menu,
+  Visibility,
+  Responsive,
+  Button,
+} from 'semantic-ui-react';
+
+import { closeModal } from '../../modules/client/redux/modal';
+import { toggleSlideMenu } from '../../modules/client/redux/ui';
+import ModalLink from '../components/ModalLink';
+import Login from '../layouts/user/Login/Login';
+import SignUp from '../layouts/user/SignUp/SignUp';
+import ScaledImageURL from '../../modules/scaled-image-url';
 
 const menuStyle = {
   border: 'none',
@@ -15,7 +34,7 @@ const fixedMenuStyle = {
   boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
 };
 
-export default class Header extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
 
@@ -26,6 +45,7 @@ export default class Header extends Component {
 
   render() {
     const { menuFixed } = this.state;
+    const { authenticated, firstName, photo } = this.props;
 
     return (
       <Visibility
@@ -44,31 +64,111 @@ export default class Header extends Component {
         >
           <Container>
             <Menu.Item id="logo">
-              <Image src="images/logo.png" alt="logo" />
+              <Link to="/">
+                <Image src="images/logo.png" alt="logo" />
+              </Link>
             </Menu.Item>
 
-            <Menu.Menu position="right">
-              <Dropdown text="Dropdown" pointing className="link item">
-                <Dropdown.Menu>
-                  <Dropdown.Item>List Item</Dropdown.Item>
-                  <Dropdown.Item>List Item</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Header>Header Item</Dropdown.Header>
-                  <Dropdown.Item>
-                    <i className="dropdown icon" />
-                    <span className="text">Submenu</span>
-                    <Dropdown.Menu>
-                      <Dropdown.Item>List Item</Dropdown.Item>
-                      <Dropdown.Item>List Item</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown.Item>
-                  <Dropdown.Item>List Item</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Menu.Menu>
+            <Responsive maxWidth={1024} as={Menu.Item}>
+              <Button
+                icon="bars"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.props.toggleSlideMenu();
+                }}
+              />
+            </Responsive>
+
+            <Responsive minWidth={1025} as={Menu.Menu} position="right">
+              <Menu.Item>
+                <Link to="/join">Become a stylist</Link>
+              </Menu.Item>
+
+              <Menu.Item>
+                <Link to="/help">Help</Link>
+              </Menu.Item>
+
+              {!authenticated && (
+                <Menu.Item>
+                  <ModalLink
+                    className="sign-in"
+                    to="/signup"
+                    component={
+                      <SignUp
+                        modal
+                        onLoggedIn={() => {
+                          this.props.closeModal();
+                        }}
+                      />
+                    }
+                    title="Join us"
+                  >
+                    Sign Up
+                  </ModalLink>
+                </Menu.Item>
+              )}
+
+              {!authenticated && (
+                <Menu.Item>
+                  <ModalLink
+                    className="sign-in"
+                    to="/login"
+                    component={
+                      <Login
+                        modal
+                        onLoggedIn={() => {
+                          this.props.closeModal();
+                        }}
+                      />
+                    }
+                    title="Log in to continue"
+                  >
+                    Log In
+                  </ModalLink>
+                </Menu.Item>
+              )}
+
+              {authenticated && (
+                <Dropdown text={firstName || ''} className="item">
+                  <Dropdown.Menu>
+                    <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />
+                    <Dropdown.Item as={Link} to="/inbox" text="Inbox" />
+                    <Dropdown.Item as={Link} to="/profiles/edit" text="Profile" />
+                    <Dropdown.Item as={Link} to="/settings" text="Settings" />
+                    <Dropdown.Item
+                      text="Logout"
+                      onClick={() => {
+                        Meteor.logout();
+                      }}
+                    />
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
+            </Responsive>
           </Container>
         </Menu>
       </Visibility>
     );
   }
 }
+
+Header.defaultProps = {
+  firstName: '',
+  photo: '',
+};
+
+Header.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  toggleSlideMenu: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  firstName: PropTypes.string,
+  photo: PropTypes.string,
+};
+
+const mapStateToProps = state => ({
+  authenticated: state.user.authenticated,
+  firstName: state.profile && state.profile.name && state.profile.name.first,
+  photo: state.profile && state.profile.photo,
+});
+
+export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(Header);
