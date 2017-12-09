@@ -59,6 +59,7 @@ class Header extends Component {
       >
         <Menu
           borderless
+          size="massive"
           fixed={menuFixed ? 'top' : null}
           style={menuFixed ? fixedMenuStyle : menuStyle}
         >
@@ -80,51 +81,49 @@ class Header extends Component {
             </Responsive>
 
             <Responsive minWidth={1025} as={Menu.Menu} position="right">
-              <Menu.Item>
-                <Link to="/join">Become a stylist</Link>
+              <Menu.Item as={Link} to="/join">
+                Become a stylist
               </Menu.Item>
 
-              <Menu.Item>
-                <Link to="/help">Help</Link>
+              <Menu.Item as={Link} to="/help">
+                Help
               </Menu.Item>
 
               {!authenticated && (
-                <Menu.Item>
-                  <ModalLink
-                    className="sign-in"
-                    to="/signup"
-                    component={
-                      <SignUp
-                        modal
-                        onLoggedIn={() => {
-                          this.props.closeModal();
-                        }}
-                      />
-                    }
-                    title="Join us"
-                  >
-                    Sign Up
-                  </ModalLink>
+                <Menu.Item
+                  as={ModalLink}
+                  className="sign-in"
+                  to="/signup"
+                  component={
+                    <SignUp
+                      modal
+                      onLoggedIn={() => {
+                        this.props.closeModal();
+                      }}
+                    />
+                  }
+                  title="Join us"
+                >
+                  Sign Up
                 </Menu.Item>
               )}
 
               {!authenticated && (
-                <Menu.Item>
-                  <ModalLink
-                    className="sign-in"
-                    to="/login"
-                    component={
-                      <Login
-                        modal
-                        onLoggedIn={() => {
-                          this.props.closeModal();
-                        }}
-                      />
-                    }
-                    title="Log in to continue"
-                  >
-                    Log In
-                  </ModalLink>
+                <Menu.Item
+                  as={ModalLink}
+                  className="sign-in"
+                  to="/login"
+                  component={
+                    <Login
+                      modal
+                      onLoggedIn={() => {
+                        this.props.closeModal();
+                      }}
+                    />
+                  }
+                  title="Log in to continue"
+                >
+                  Log In
                 </Menu.Item>
               )}
 
