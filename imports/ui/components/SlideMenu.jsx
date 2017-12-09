@@ -11,6 +11,7 @@ import './SlideMenu.css';
 
 const SlideMenu = props => (
   <Menu
+    customBurgerIcon={false}
     isOpen={props.open}
     width="75%"
     pageWrapId="page-wrap"
