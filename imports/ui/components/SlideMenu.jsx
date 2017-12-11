@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { Divider } from 'semantic-ui-react';
 
 import { toggleSlideMenu } from '../../modules/client/redux/ui';
-import './SlideMenu.css';
+import './SlideMenu-style.css';
 
 const SlideMenu = props => (
   <Menu
