@@ -3,8 +3,8 @@ import Typist from 'react-typist';
 
 const HomeSearchBanner = () => (
   <div
-    className="main-search-container"
-    data-background-image="images/main-search-background-01.jpg"
+    className="main-search-container dark-overlay"
+    style={{ backgroundImage: "url('images/main-search-background.jpg')" }}
   >
     <div className="main-search-inner">
       <div className="container">

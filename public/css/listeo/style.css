@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+@import url("bootstrap-grid.css"); /* Default Reset, Typography, Forms, Responsive Grid etc. */
+@import url("icons.css"); /* Webfont Icons: FontAwesome, Line, Simple Line */
+@import url("plugins/revolutionslider.css"); /* Revolution Slider Style Sheets */
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:500,600,700");
+
+@import url("./02-layout-components.css");
+@import url("./03-shortcodes.css");
+@import url("./04-dashboard.css");
+@import url("./05-script-styles.css");
+@import url("./06-others.css");
+@import url("./07-media-queries.css");
