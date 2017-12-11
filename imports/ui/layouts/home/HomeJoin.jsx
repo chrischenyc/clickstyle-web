@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const HomeJoinBanner = () => (
+const HomeJoin = () => (
   <div
     className="parallax"
     data-background="images/slider-bg-02.jpg"
@@ -26,4 +26,4 @@ const HomeJoinBanner = () => (
   </div>
 );
 
-export default HomeJoinBanner;
+export default HomeJoin;

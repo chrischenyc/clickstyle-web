@@ -80,6 +80,7 @@ class App extends Component {
           <SlideMenu />
 
           <main id="page-wrap">
+            <ScrollToTop />
             <Header />
 
             <Switch>
