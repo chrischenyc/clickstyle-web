@@ -262,7 +262,7 @@ Meteor.methods({
 
       // query Stylists
       const stylists = Stylists.find(selector, {
-        fields: { owner: 1 },
+        fields: { owner: 1, 'services.name': 1 },
         limit: SearchLimit,
       }).fetch();
 

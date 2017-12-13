@@ -7,3 +7,29 @@
   background-position: 50%;
   z-index: 9;
 }
+
+/* override styles in 03-shortcodes.css */
+.listing-item {
+  border-radius: 0;
+}
+
+.listing-item:before {
+  border-radius: 0;
+}
+
+.listing-item img {
+  border-radius: 0;
+}
+
+.listing-item-content {
+  bottom: 12px;
+  padding: 0 12px;
+}
+
+/* override styles in 05-script-styles.css */
+.category-box-content {
+  bottom: 12px;
+  text-align: center;
+  left: 8px;
+  width: calc(100% - 16px);
+}
