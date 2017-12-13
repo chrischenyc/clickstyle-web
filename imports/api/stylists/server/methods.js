@@ -235,6 +235,67 @@ Meteor.methods({
       throw new Meteor.Error('500');
     }
   },
+
+  'stylists.search.featured': function searchStylists(data) {
+    check(data, Object);
+
+    const { suburb: suburbName } = data;
+    if (suburbName) {
+      check(suburbName, String);
+    }
+
+    try {
+      // final query selector, only look for published stylists
+      let selector = {
+        published: true,
+      };
+
+      // add query selector by available suburbs
+      if (suburbName) {
+        const suburbsSelector = { name: RegExp(suburbName, 'i') };
+        const suburbIds = Suburbs.find(suburbsSelector)
+          .fetch()
+          .map(suburb => suburb._id);
+
+        selector = { ...selector, ...{ 'areas.availableSuburbs': { $in: suburbIds } } };
+      }
+
+      // query Stylists
+      const stylists = Stylists.find(selector, {
+        fields: { owner: 1 },
+        limit: SearchLimit,
+      }).fetch();
+
+      // query Profiles
+      const userIds = stylists.map(stylist => stylist.owner);
+      const profiles = Profiles.find(
+        { owner: { $in: userIds } },
+        {
+          fields: {
+            owner: 1,
+            name: 1,
+            'address.state': 1,
+            'address.suburb': 1,
+            photo: 1,
+          },
+        },
+      ).fetch();
+
+      return stylists.map((stylist) => {
+        const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
+
+        return {
+          ...stylist,
+          profile: filteredProfiles.length > 0 && filteredProfiles[0],
+        };
+      });
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500');
+    }
+  },
 });
 
 rateLimit({
@@ -243,6 +304,7 @@ rateLimit({
     'stylists.update.openHours',
     'stylists.update.areas',
     'stylists.search',
+    'stylists.search.featured',
   ],
   limit: 5,
   timeRange: 1000,

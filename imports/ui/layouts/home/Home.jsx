@@ -1,12 +1,36 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import HomePage from './HomePage';
 import Services from '../../../api/services/services';
 
-const Home = props => <HomePage services={props.services} />;
+class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      stylists: [],
+    };
+  }
+
+  componentDidMount() {
+    Meteor.call('stylists.search.featured', {}, (error, stylists) => {
+      if (error) {
+        console.log('error', error);
+      }
+
+      if (stylists) {
+        this.setState({ stylists });
+      }
+    });
+  }
+
+  render() {
+    return <HomePage services={this.props.services} stylists={this.state.stylists} />;
+  }
+}
 
 Home.defaultProps = {
   services: [],
