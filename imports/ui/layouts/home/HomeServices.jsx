@@ -4,6 +4,7 @@ import Slick from 'react-slick';
 import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 
+import scaledImageURL from '../../../modules/scaled-image-url';
 import { ServiceNameToSEOName } from '../../../modules/seo-name';
 
 const PrevArrow = () => <Button basic circular icon="chevron left" color="teal" />;
@@ -56,22 +57,26 @@ const HomeServices = ({ services }) => (
       </div>
 
       <div className="row">
-        <Slick {...slickSettings} style={{ height: '450px' }}>
+        <Slick {...slickSettings}>
           {services.map(service => (
-            <div className="fw-carousel-item">
-              <div className="category-box-container">
-                <Link
-                  to={`/stylists/${ServiceNameToSEOName(service.name)}`}
-                  className="category-box"
-                  style={{ margin: '0 2px' }}
-                >
-                  <img src="images/category-box-03.jpg" alt="makeup" />
-                  <div className="category-box-content">
-                    <h3>{service.name}</h3>
-                  </div>
-                </Link>
+            <Link
+              to={`/stylists/${ServiceNameToSEOName(service.name)}`}
+              className="category-box"
+              style={{ margin: '0 2px' }}
+              key={service._id}
+            >
+              <img
+                src={
+                  service.photo
+                    ? scaledImageURL(service.photo, 'small')
+                    : 'images/service-placeholder.jpg'
+                }
+                alt={service.name}
+              />
+              <div className="category-box-content">
+                <h3>{service.name}</h3>
               </div>
-            </div>
+            </Link>
           ))}
         </Slick>
       </div>
