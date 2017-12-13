@@ -2,18 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Slick from 'react-slick';
 import { Link } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
 import { ServiceNameToSEOName } from '../../../modules/seo-name';
 
-const PrevArrow = () => <Button basic circular icon="chevron left" color="teal" />;
-const NextArrow = () => <Button basic circular icon="chevron right" color="teal" />;
-
 const slickSettings = {
   dots: false,
-  prevArrow: <PrevArrow />,
-  nextArrow: <NextArrow />,
   infinite: false,
   speed: 500,
   slidesToShow: 4,
@@ -45,24 +39,24 @@ const slickSettings = {
 };
 
 const HomeServices = ({ services }) => (
-  <div>
-    <div className="container">
-      <div className="row">
-        <div className="col-md-12">
-          <h3 className="headline margin-bottom-35 margin-top-70">
-            Services
-            <span>Browse stylists by service categories</span>
-          </h3>
-        </div>
+  <div className="container" style={{ margin: '8rem auto' }}>
+    <div className="row">
+      <div className="col-md-12">
+        <h3 className="headline margin-bottom-35">
+          Services
+          <span>Browse stylists by service categories</span>
+        </h3>
       </div>
+    </div>
 
-      <div className="row">
+    <div className="row">
+      <div>
         <Slick {...slickSettings}>
           {services.map(service => (
             <Link
               to={`/stylists/${ServiceNameToSEOName(service.name)}`}
               className="category-box"
-              style={{ margin: '0 2px' }}
+              style={{ margin: '0 2px', borderRadius: '0' }}
               key={service._id}
             >
               <img
