@@ -3,14 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const HomeJoin = () => (
-  <div
-    className="parallax"
-    data-background="images/slider-bg-02.jpg"
-    data-color="#36383e"
-    data-color-opacity="0.6"
-    data-img-width="800"
-    data-img-height="505"
-  >
+  <div className="main-join-container" style={{ backgroundImage: 'url(images/main-join-bg.jpg)' }}>
     <div className="text-content white-font">
       <div className="container">
         <div className="row">

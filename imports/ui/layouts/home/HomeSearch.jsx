@@ -1,10 +1,10 @@
 import React from 'react';
 import Typist from 'react-typist';
 
-const HomeSearchBanner = () => (
+const HomeSearch = () => (
   <div
     className="main-search-container dark-overlay"
-    style={{ backgroundImage: "url('images/main-search-background.jpg')" }}
+    style={{ backgroundImage: "url('images/main-search-bg.jpg')" }}
   >
     <div className="main-search-inner">
       <div className="container">
@@ -61,4 +61,4 @@ const HomeSearchBanner = () => (
   </div>
 );
 
-export default HomeSearchBanner;
+export default HomeSearch;

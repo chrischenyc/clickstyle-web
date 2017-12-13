@@ -1,0 +1,9 @@
+.main-join-container {
+  display: block;
+  width: 100%;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  z-index: 9;
+}
