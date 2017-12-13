@@ -4,22 +4,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import HomePage from './HomePage';
-import Bookings from '../../../api/bookings/bookings';
+import Services from '../../../api/services/services';
 
-const Home = props => <HomePage bookings={props.bookings} />;
+const Home = props => <HomePage services={props.services} />;
 
 Home.defaultProps = {
-  bookings: [],
+  services: [],
 };
 
 Home.propTypes = {
-  bookings: PropTypes.array,
+  services: PropTypes.array,
 };
 
 export default withTracker(() => {
-  Meteor.subscribe('bookings');
+  Meteor.subscribe('services');
 
   return {
-    bookings: Bookings.find().fetch(),
+    services: Services.find({}, { sort: { displayOrder: 1 } }).fetch(),
   };
 })(Home);

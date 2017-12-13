@@ -8,12 +8,14 @@ import HomeJoin from './HomeJoin';
 const HomePage = props => (
   <div>
     <HomeSearchBanner />
-    <HomeServices />
+    {props.services && props.services.length > 0 && <HomeServices services={props.services} />}
 
     <HomeJoin />
   </div>
 );
 
-HomePage.propTypes = {};
+HomePage.propTypes = {
+  services: PropTypes.array.isRequired,
+};
 
 export default HomePage;
