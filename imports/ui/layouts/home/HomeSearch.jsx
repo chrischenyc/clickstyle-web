@@ -4,6 +4,8 @@ import Typist from 'react-typist';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
 
+const animatedKeywords = ['hair stylist', 'makeup artist', 'wedding'];
+
 const HomeSearch = props => (
   <div
     className="main-search-container dark-overlay"
@@ -17,10 +19,12 @@ const HomeSearch = props => (
             <h4>
               <Typist>
                 Search here for&nbsp;
-                <span>hair stylist</span>
-                <Typist.Backspace count={12} delay={200} />
-                <span>makeup artist</span>
-                <Typist.Backspace count={13} delay={200} />
+                {animatedKeywords.map(keyword => (
+                  <span key={keyword}>
+                    {keyword}
+                    <Typist.Backspace count={keyword.length} delay={keyword.length * 50} />
+                  </span>
+                ))}
                 <span>my style!</span>
               </Typist>
             </h4>
