@@ -50,30 +50,28 @@ const HomeServices = ({ services }) => (
     </div>
 
     <div className="row">
-      <div>
-        <Slick {...slickSettings}>
-          {services.map(service => (
-            <Link
-              to={`/stylists/${ServiceNameToSEOName(service.name)}`}
-              className="category-box"
-              style={{ margin: '0 2px', borderRadius: '0' }}
-              key={service._id}
-            >
-              <img
-                src={
-                  service.photo
-                    ? scaledImageURL(service.photo, 'small')
-                    : 'images/service-placeholder.jpg'
-                }
-                alt={service.name}
-              />
-              <div className="category-box-content">
-                <h3>{service.name}</h3>
-              </div>
-            </Link>
-          ))}
-        </Slick>
-      </div>
+      <Slick {...slickSettings}>
+        {services.map(service => (
+          <Link
+            to={`/stylists/${ServiceNameToSEOName(service.name)}`}
+            className="category-box"
+            style={{ margin: '0 2px', borderRadius: '0' }}
+            key={service._id}
+          >
+            <img
+              src={
+                service.photo
+                  ? scaledImageURL(service.photo, 'small')
+                  : 'images/service-placeholder.jpg'
+              }
+              alt={service.name}
+            />
+            <div className="category-box-content">
+              <h3>{service.name}</h3>
+            </div>
+          </Link>
+        ))}
+      </Slick>
     </div>
   </div>
 );

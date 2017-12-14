@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Slick from 'react-slick';
-import { Link } from 'react-router-dom';
 
-import scaledImageURL from '../../../modules/scaled-image-url';
+import HomeStylistsItem from './HomeStylistsItem';
 
 const slickSettings = {
   dots: false,
@@ -49,40 +48,13 @@ const HomeStylists = ({ stylists }) => (
     </div>
 
     <div className="row">
-      <div>
-        <Slick {...slickSettings}>
-          {stylists.map(stylist => (
-            <Link
-              to={`/stylists/${stylist.owner}`}
-              className="listing-item-container"
-              style={{ margin: '0 2px' }}
-              key={stylist.owner}
-            >
-              <div className="listing-item">
-                <img
-                  src={
-                    stylist.profile.photo
-                      ? scaledImageURL(stylist.profile.photo, 'small')
-                      : 'images/service-placeholder.jpg'
-                  }
-                  alt={stylist.profile.name}
-                />
-
-                <div className="listing-item-content">
-                  <h3>{`${stylist.profile.name.first} ${stylist.profile.name.last}`}</h3>
-
-                  {stylist.services &&
-                    stylist.services.length && (
-                      <span style={{ fontSize: '1em' }}>
-                        {stylist.services.map(service => service.name).join(', ')}
-                      </span>
-                    )}
-                </div>
-              </div>
-            </Link>
-          ))}
-        </Slick>
-      </div>
+      <Slick {...slickSettings}>
+        {stylists.map(stylist => (
+          <div key={stylist.owner}>
+            <HomeStylistsItem stylist={stylist} />
+          </div>
+        ))}
+      </Slick>
     </div>
   </div>
 );
