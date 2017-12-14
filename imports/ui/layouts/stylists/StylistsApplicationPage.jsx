@@ -47,7 +47,7 @@ class StylistsApplicationPage extends Component {
 
             <p>
               Meanwhile, if you have any question, feel free to&nbsp;
-              <Link to="/contact-us">contact us</Link>.
+              <Link to="/contact">contact us</Link>.
             </p>
           </Container>
         );
@@ -64,7 +64,7 @@ class StylistsApplicationPage extends Component {
 
           <p>
             Meanwhile, if you have any question, feel free to&nbsp;
-            <Link to="/contact-us">contact us</Link>.
+            <Link to="/contact">contact us</Link>.
           </p>
         </Container>
       );

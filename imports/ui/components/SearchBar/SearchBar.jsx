@@ -9,25 +9,34 @@ import Addons from '../../../api/addons/addons';
 import ServicesList from './ServicesList';
 import servicesKeywordMatch from '../../../modules/services-keyword-match';
 
+const aggregateServiceAddons = (services, addons) =>
+  services.map(service => ({
+    ...service,
+    addons: addons.filter(addon => addon.serviceId === service._id),
+  }));
+
+const aggregateSuburbPostcode = (suburb, postcode) =>
+  (suburb && suburb + (postcode ? ` ${postcode}` : '')) || '';
+
+const suburbObject = (suburb, postcode) => (suburb && { name: suburb, postcode }) || null;
+
 class SearchBar extends Component {
   constructor(props) {
     super(props);
 
     const {
-      services, addons, suburb, postcode,
+      services, addons, service, suburb, postcode,
     } = props;
 
     this.state = {
-      services: services.map(service => ({
-        ...service,
-        addons: addons.filter(addon => addon.serviceId === service._id),
-      })),
-      service: props.service || '',
+      services: aggregateServiceAddons(services, addons),
+      service,
+      suburb,
+      postcode,
+      selectedSuburb: suburbObject(suburb, postcode),
       isServicesListOpen: false,
       searchingSuburbs: false,
-      suburb: (suburb && suburb + (postcode ? ` ${postcode}` : '')) || '',
       matchedSuburbs: [],
-      selectedSuburb: (suburb && { name: suburb, postcode }) || null,
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
@@ -38,16 +47,16 @@ class SearchBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { suburb, postcode } = nextProps;
+    const {
+      services, addons, service, suburb, postcode,
+    } = nextProps;
 
     this.setState({
-      services: nextProps.services.map(service => ({
-        ...service,
-        addons: nextProps.addons.filter(addon => addon.serviceId === service._id),
-      })),
-      service: nextProps.service || '',
-      suburb: (suburb && suburb + (postcode ? ` ${postcode}` : '')) || '',
-      selectedSuburb: (suburb && { name: suburb, postcode }) || null,
+      services: aggregateServiceAddons(services, addons),
+      service,
+      suburb,
+      postcode,
+      selectedSuburb: suburbObject(suburb, postcode),
     });
   }
 
@@ -115,8 +124,10 @@ class SearchBar extends Component {
 
   render() {
     const {
-      loading, services, addons, onSearch, searching,
+      loading, searching, services, addons, onSearch,
     } = this.props;
+
+    const { service, suburb, postcode } = this.state;
 
     return (
       <div className="main-search-input">
@@ -147,7 +158,13 @@ class SearchBar extends Component {
           </a>
         </div>
 
-        <button className="button" onClick={onSearch}>
+        <button
+          className="button"
+          disabled={searching}
+          onClick={() => {
+            onSearch(service, suburb, postcode);
+          }}
+        >
           Search
         </button>
       </div>
@@ -160,16 +177,19 @@ SearchBar.defaultProps = {
   searching: false,
   services: [],
   addons: [],
+  service: '',
+  suburb: '',
+  postcode: '',
 };
 
 SearchBar.propTypes = {
   loading: PropTypes.bool,
-  service: PropTypes.string.isRequired,
-  suburb: PropTypes.string.isRequired,
-  postcode: PropTypes.string.isRequired,
   searching: PropTypes.bool,
   services: PropTypes.array,
   addons: PropTypes.array,
+  service: PropTypes.string,
+  suburb: PropTypes.string,
+  postcode: PropTypes.string,
   onSearch: PropTypes.func.isRequired,
 };
 

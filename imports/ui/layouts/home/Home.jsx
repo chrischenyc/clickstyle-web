@@ -52,18 +52,18 @@ class Home extends Component {
    * @param {name of the suburb, optional} suburb
    * @param {postcode, optional} postcode
    */
-  handleSearch({ service, suburb, postcode }) {
+  handleSearch(service, suburb, postcode) {
     let searchUrl = '/stylists';
 
-    if (!_.isNil(service)) {
+    if (!_.isNil(service) && service.length > 0) {
       searchUrl += `/${ServiceNameToSEOName(service)}`;
     }
 
-    if (!_.isNil(suburb)) {
+    if (!_.isNil(suburb) && suburb.length > 0) {
       searchUrl += `/${SuburbNameToSEOName(suburb)}`;
     }
 
-    if (!_.isNil(postcode)) {
+    if (!_.isNil(postcode) && postcode.length > 0) {
       searchUrl += `/${postcode}`;
     }
 

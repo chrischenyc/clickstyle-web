@@ -19,7 +19,7 @@ class Search extends Component {
     this.state = {
       service: (service && SEONameToServiceName(service)) || '',
       suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
-      postcode,
+      postcode: postcode || '',
       searching: false,
       searched: false,
       error: '',
