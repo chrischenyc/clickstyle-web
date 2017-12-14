@@ -8,6 +8,11 @@
   z-index: 9;
 }
 
+/* override 02-layout-components.css */
+.main-search-input {
+  margin-top: 0px;
+}
+
 /* override styles in 03-shortcodes.css */
 .listing-item-container {
   border-radius: 0;

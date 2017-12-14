@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Container, Header, Button } from 'semantic-ui-react';
 
-import SearchBar from './SearchBar/SearchBar';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import StylistsList from './StylistsList';
 import LoadMore from '../../components/LoadMore';
 import Loading from '../../components/Loading';
 
-import { PrimaryColor } from '../../../modules/client/constants.js';
+import { PrimaryColor } from '../../../modules/client/constants';
 
 const SearchPage = ({
   onSearch,

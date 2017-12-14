@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typist from 'react-typist';
 
+import SearchBar from '../../components/SearchBar/SearchBar';
+
 const HomeSearch = props => (
   <div
     className="main-search-container dark-overlay"
@@ -22,39 +24,10 @@ const HomeSearch = props => (
                 <span>my style!</span>
               </Typist>
             </h4>
+          </div>
 
-            <div className="main-search-input">
-              <div className="main-search-input-item">
-                <input type="text" placeholder="Service e.g Makeup" value="" />
-              </div>
-
-              <div className="main-search-input-item location">
-                <input type="text" placeholder="Suburb" value="" />
-                <a href="#">
-                  <i className="fa fa-dot-circle-o" />
-                </a>
-              </div>
-
-              <div className="main-search-input-item location">
-                <input type="text" placeholder="Any date" data-option="value" id="date-picker" />
-
-                <a href="#">
-                  <i className="fa fa-calendar" />
-                </a>
-              </div>
-
-              <div className="main-search-input-item location">
-                <input type="text" placeholder="Any time" data-option="value" id="date-picker" />
-
-                <a href="#">
-                  <i className="fa fa-clock-o" />
-                </a>
-              </div>
-
-              <button className="button" onClick={props.onSearch}>
-                Search
-              </button>
-            </div>
+          <div className="col-md-12" style={{ marginTop: '50px' }}>
+            <SearchBar onSearch={props.onSearch} />
           </div>
         </div>
       </div>
