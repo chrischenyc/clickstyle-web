@@ -41,12 +41,10 @@ const slickSettings = {
 const HomeServices = ({ services }) => (
   <div className="container" style={{ margin: '8rem auto' }}>
     <div className="row">
-      <div className="col-md-12">
-        <h3 className="headline margin-bottom-35">
-          Services
-          <span>Browse stylists by service categories</span>
-        </h3>
-      </div>
+      <h3 className="headline margin-bottom-35">
+        Services
+        <span>Browse stylists by service categories</span>
+      </h3>
     </div>
 
     <div className="row">
