@@ -12,38 +12,51 @@ Meteor.methods({
   'featured.home.stylists': function searchFeaturedStylistsOnHome(data) {
     check(data, Object);
 
-    const { suburb: suburbName } = data;
-    if (suburbName) {
-      check(suburbName, String);
+    const { suburb } = data;
+    if (suburb) {
+      check(suburb, String);
+    }
+    let suburbName = suburb;
+
+    if (_.isNil(suburbName) && this.userId) {
+      const currentUserProfile = Profiles.findOne({ owner: this.userId });
+
+      suburbName = currentUserProfile.address && currentUserProfile.address.suburb;
     }
 
     try {
-      // final query selector, only look for published stylists
-      let selector = {
-        published: true,
-      };
+      let locationBased = false;
 
-      // add query selector by available suburbs
-      const homeFeaturedStylists = Featured.findOne().homeFeaturedStylists;
+      let stylists = [];
 
       if (suburbName) {
-        const suburbsSelector = { name: RegExp(suburbName, 'i') };
-        const suburbIds = Suburbs.find(suburbsSelector)
+        // query by available in suburb
+        const suburbIds = Suburbs.find({ name: RegExp(suburbName, 'i') })
           .fetch()
-          .map(suburb => suburb._id);
+          .map(s => s._id);
 
-        selector = { ...selector, ...{ 'areas.availableSuburbs': { $in: suburbIds } } };
-      } else {
-        // query home featured
-        const stylistIds = homeFeaturedStylists.map(stylist => stylist.owner);
-
-        selector = { ...selector, owner: { $in: stylistIds } };
+        stylists = Stylists.find(
+          { published: true, 'areas.availableSuburbs': { $in: suburbIds } },
+          {
+            fields: { owner: 1, 'services.name': 1 },
+          },
+        ).fetch();
       }
 
-      // query Stylists
-      const stylists = Stylists.find(selector, {
-        fields: { owner: 1, 'services.name': 1 },
-      }).fetch();
+      const homeFeaturedStylists = Featured.findOne().homeFeaturedStylists;
+      if (stylists.length > 0) {
+        locationBased = true;
+      } else {
+        // if not found nearby stylists, look for system featured stylists
+        const stylistIds = homeFeaturedStylists.map(stylist => stylist.owner);
+
+        stylists = Stylists.find(
+          { published: true, owner: { $in: stylistIds } },
+          {
+            fields: { owner: 1, 'services.name': 1 },
+          },
+        ).fetch();
+      }
 
       // query Profiles
       const userIds = stylists.map(stylist => stylist.owner);
@@ -60,17 +73,18 @@ Meteor.methods({
         },
       ).fetch();
 
-      const unsorted = stylists.map((stylist, index) => {
-        const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
-
+      // aggregate results
+      const merged = stylists.map((stylist, index) => {
         // insert display order
         let displayOrder = index;
         if (suburbName) {
-          // TODO: display order when search in suburb
+          // TODO: stylists sorting
           displayOrder = index;
         } else {
-          displayOrder = homeFeaturedStylists.filter(featured => featured.owner === stylist.owner)[0].displayOrder;
+          displayOrder = homeFeaturedStylists[index].displayOrder;
         }
+
+        const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
 
         return {
           ...stylist,
@@ -79,7 +93,10 @@ Meteor.methods({
         };
       });
 
-      return _.orderBy(unsorted, ['displayOrder']);
+      return {
+        stylists: _.orderBy(merged, ['displayOrder']),
+        locationBased,
+      };
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);

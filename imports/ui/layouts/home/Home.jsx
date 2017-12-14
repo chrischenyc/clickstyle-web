@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import HomePage from './HomePage';
 
@@ -11,17 +12,18 @@ class Home extends Component {
     this.state = {
       services: [],
       stylists: [],
+      isStylistsLocationBased: false,
     };
   }
 
   componentDidMount() {
-    Meteor.call('featured.home.stylists', {}, (error, stylists) => {
+    Meteor.call('featured.home.stylists', {}, (error, { stylists, locationBased }) => {
       if (error) {
         console.log('error', error);
       }
 
       if (stylists) {
-        this.setState({ stylists });
+        this.setState({ stylists, isStylistsLocationBased: locationBased });
       }
     });
 
@@ -37,12 +39,24 @@ class Home extends Component {
   }
 
   render() {
-    return <HomePage services={this.state.services} stylists={this.state.stylists} />;
+    return (
+      <HomePage
+        services={this.state.services}
+        stylists={this.state.stylists}
+        authenticated={this.props.authenticated}
+        isStylistsLocationBased={this.state.isStylistsLocationBased}
+      />
+    );
   }
 }
 
-Home.defaultProps = {};
+Home.propTypes = {
+  authenticated: PropTypes.bool.isRequired,
+};
 
-Home.propTypes = {};
+const mapStateToProps = state => ({
+  authenticated: state.user.authenticated,
+  id: state.user.id,
+});
 
-export default Home;
+export default connect(mapStateToProps)(Home);

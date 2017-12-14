@@ -77,8 +77,8 @@ class HomeStylists extends Component {
       <div className="container" style={{ margin: '8rem auto' }}>
         <div className="row">
           <h3 className="headline margin-bottom-35">
-            Stylists
-            <span>Browse stylists nearby</span>
+            {!this.props.locationBased && 'Stylists'}
+            {this.props.locationBased && 'Stylists near by'}
           </h3>
         </div>
 
@@ -100,6 +100,7 @@ class HomeStylists extends Component {
 
 HomeStylists.propTypes = {
   stylists: PropTypes.array.isRequired,
+  locationBased: PropTypes.bool.isRequired,
 };
 
 export default HomeStylists;

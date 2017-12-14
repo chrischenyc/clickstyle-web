@@ -10,9 +10,18 @@ const HomePage = props => (
   <div>
     <HomeSearch />
 
-    {props.services && props.services.length > 0 && <HomeServices services={props.services} />}
+    {props.services &&
+      props.services.length > 0 &&
+      !props.authenticated && <HomeServices services={props.services} />}
 
-    {props.stylists && props.stylists.length > 0 && <HomeStylists stylists={props.stylists} />}
+    {props.stylists &&
+      props.stylists.length > 0 && (
+        <HomeStylists stylists={props.stylists} locationBased={props.isStylistsLocationBased} />
+      )}
+
+    {props.services &&
+      props.services.length > 0 &&
+      props.authenticated && <HomeServices services={props.services} />}
 
     <HomeJoin />
   </div>
@@ -21,6 +30,8 @@ const HomePage = props => (
 HomePage.propTypes = {
   services: PropTypes.array.isRequired,
   stylists: PropTypes.array.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  isStylistsLocationBased: PropTypes.bool.isRequired,
 };
 
 export default HomePage;
