@@ -1,10 +1,10 @@
 Welcome, {{firstName}}
 
-Thanks heaps for jumping on board the {{appName}} bandwagon. Here’s a quick guide to how you can make your first booking and experience that royal like service at your time.
+Thanks heaps for jumping on board the {{appName}} bandwagon. Here’s a quick guide to how you can make your first booking and experience that royal like treatment at your comfort.
 
 * Search - Select when, where and what time suits you
 * Find & Book - Select a stylist from the list and select the service and book
-* Get pampered - Your selected stylist will arrive at your desired location and get your pampered
+* Get pampered - Your selected stylist will arrive at your desired location and get you pampered
 
 Get Started: {{homeUrl}}
 
