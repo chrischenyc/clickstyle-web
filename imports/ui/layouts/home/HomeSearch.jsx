@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Typist from 'react-typist';
 
-const HomeSearch = () => (
+const HomeSearch = props => (
   <div
     className="main-search-container dark-overlay"
     style={{ backgroundImage: "url('images/main-search-bg.jpg')" }}
@@ -50,7 +51,7 @@ const HomeSearch = () => (
                 </a>
               </div>
 
-              <button className="button" onClick={() => {}}>
+              <button className="button" onClick={props.onSearch}>
                 Search
               </button>
             </div>
@@ -60,5 +61,9 @@ const HomeSearch = () => (
     </div>
   </div>
 );
+
+HomeSearch.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+};
 
 export default HomeSearch;

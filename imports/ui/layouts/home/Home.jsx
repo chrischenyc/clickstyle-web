@@ -2,8 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import HomePage from './HomePage';
+import { ServiceNameToSEOName, SuburbNameToSEOName } from '../../../modules/seo-name';
 
 class Home extends Component {
   constructor(props) {
@@ -14,6 +16,8 @@ class Home extends Component {
       stylists: [],
       isStylistsLocationBased: false,
     };
+
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +42,34 @@ class Home extends Component {
     });
   }
 
+  /**
+   * Input can be passed from children component, i.e.: SearchBar.jsx
+   * or from route url params, i.e.: /:service/:suburb?/:postcode?
+   *
+   * Depends on the available params, page wil be redirected to various search route
+   *
+   * @param {name of the service or addon, required} service
+   * @param {name of the suburb, optional} suburb
+   * @param {postcode, optional} postcode
+   */
+  handleSearch({ service, suburb, postcode }) {
+    let searchUrl = '/stylists';
+
+    if (!_.isNil(service)) {
+      searchUrl += `/${ServiceNameToSEOName(service)}`;
+    }
+
+    if (!_.isNil(suburb)) {
+      searchUrl += `/${SuburbNameToSEOName(suburb)}`;
+    }
+
+    if (!_.isNil(postcode)) {
+      searchUrl += `/${postcode}`;
+    }
+
+    this.props.history.push(searchUrl);
+  }
+
   render() {
     return (
       <HomePage
@@ -45,6 +77,7 @@ class Home extends Component {
         stylists={this.state.stylists}
         authenticated={this.props.authenticated}
         isStylistsLocationBased={this.state.isStylistsLocationBased}
+        onSearch={this.handleSearch}
       />
     );
   }
