@@ -1,16 +1,15 @@
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import HomePage from './HomePage';
-import Services from '../../../api/services/services';
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      services: [],
       stylists: [],
     };
   }
@@ -25,25 +24,25 @@ class Home extends Component {
         this.setState({ stylists });
       }
     });
+
+    Meteor.call('featured.home.services', {}, (error, services) => {
+      if (error) {
+        console.log('error', error);
+      }
+
+      if (services) {
+        this.setState({ services });
+      }
+    });
   }
 
   render() {
-    return <HomePage services={this.props.services} stylists={this.state.stylists} />;
+    return <HomePage services={this.state.services} stylists={this.state.stylists} />;
   }
 }
 
-Home.defaultProps = {
-  services: [],
-};
+Home.defaultProps = {};
 
-Home.propTypes = {
-  services: PropTypes.array,
-};
+Home.propTypes = {};
 
-export default withTracker(() => {
-  Meteor.subscribe('services');
-
-  return {
-    services: Services.find({}, { sort: { displayOrder: 1 } }).fetch(),
-  };
-})(Home);
+export default Home;
