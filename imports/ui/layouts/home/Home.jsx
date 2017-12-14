@@ -16,7 +16,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    Meteor.call('stylists.search.featured', {}, (error, stylists) => {
+    Meteor.call('featured.home.stylists', {}, (error, stylists) => {
       if (error) {
         console.log('error', error);
       }
