@@ -4,6 +4,7 @@ import log from 'winston';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Profiles from '../profiles';
+import Stylists from '../../stylists/stylists';
 import Products from '../../products/products';
 import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
 
@@ -126,10 +127,48 @@ Meteor.methods({
       throw new Meteor.Error('500');
     }
   },
+
+  'users.profile': function usersProfile(owner) {
+    check(owner, String);
+
+    try {
+      const profile = Profiles.findOne(
+        { owner },
+        {
+          fields: {
+            address: 1,
+            name: 1,
+            photo: 1,
+            products: 1,
+            about: 1,
+          },
+        },
+      );
+      const stylist = Stylists.findOne(
+        { owner, published: true },
+        {
+          fields: {
+            openHours: 1,
+            services: 1,
+          },
+        },
+      );
+
+      return {
+        profile,
+        stylist,
+      };
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500');
+    }
+  },
 });
 
 rateLimit({
-  methods: ['profiles.update', 'profiles.photo.add', 'profiles.photo.remove'],
+  methods: ['profiles.update', 'profiles.photo.add', 'profiles.photo.remove', 'users.profile'],
   limit: 5,
   timeRange: 1000,
 });
