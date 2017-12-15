@@ -18,7 +18,6 @@ import { toggleSlideMenu } from '../../modules/client/redux/ui';
 import ModalLink from '../components/ModalLink';
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
-import ScaledImageURL from '../../modules/scaled-image-url';
 
 const menuStyle = {
   border: 'none',
@@ -45,7 +44,7 @@ class Header extends Component {
 
   render() {
     const { menuFixed } = this.state;
-    const { authenticated, firstName, photo } = this.props;
+    const { authenticated, firstName } = this.props;
 
     return (
       <Visibility
@@ -66,7 +65,7 @@ class Header extends Component {
           <Container>
             <Menu.Item id="logo">
               <Link to="/">
-                <Image src="images/logo.png" alt="logo" />
+                <Image src="/images/logo.png" alt="logo" />
               </Link>
             </Menu.Item>
 
