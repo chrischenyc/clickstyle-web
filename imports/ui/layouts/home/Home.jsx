@@ -21,16 +21,18 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    Meteor.call('featured.home.stylists', {}, (error, { stylists, locationBased }) => {
-      if (error) {
-        console.log('error', error);
-      }
+    this.loadStylists();
 
-      if (stylists) {
-        this.setState({ stylists, isStylistsLocationBased: locationBased });
-      }
-    });
+    this.loadServices();
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.authenticated !== this.props.authenticated) {
+      this.loadStylists();
+    }
+  }
+
+  loadServices() {
     Meteor.call('featured.home.services', {}, (error, services) => {
       if (error) {
         console.log('error', error);
@@ -38,6 +40,18 @@ class Home extends Component {
 
       if (services) {
         this.setState({ services });
+      }
+    });
+  }
+
+  loadStylists() {
+    Meteor.call('featured.home.stylists', {}, (error, { stylists, locationBased }) => {
+      if (error) {
+        console.log('error', error);
+      }
+
+      if (stylists) {
+        this.setState({ stylists, isStylistsLocationBased: locationBased });
       }
     });
   }
@@ -89,7 +103,6 @@ Home.propTypes = {
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
-  id: state.user.id,
 });
 
 export default connect(mapStateToProps)(Home);
