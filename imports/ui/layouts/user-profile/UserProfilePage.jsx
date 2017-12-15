@@ -43,6 +43,12 @@ const UserProfilePage = ({ user }) => {
                         </div>
                       </div>
                     )}
+
+                  {stylist && (
+                    <div>
+                      <button className="button">Book Now</button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -53,9 +59,7 @@ const UserProfilePage = ({ user }) => {
       <div className="container">
         <div className="row sticky-wrapper">
           <div className="col-lg-4 col-md-4 margin-top-0">
-            {stylist && <button className="button">Book Now</button>}
-
-            <div className="boxed-widget margin-top-30 margin-bottom-50">
+            <div className="boxed-widget margin-bottom-50">
               {profile &&
                 profile.products &&
                 profile.products.length > 0 && (
