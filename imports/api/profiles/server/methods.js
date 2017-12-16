@@ -5,6 +5,7 @@ import log from 'winston';
 import rateLimit from '../../../modules/server/rate-limit';
 import Profiles from '../profiles';
 import Stylists from '../../stylists/stylists';
+import Services from '../../services/services';
 import Products from '../../products/products';
 import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
 
@@ -153,6 +154,13 @@ Meteor.methods({
           },
         },
       );
+      if (stylist && stylist.services) {
+        stylist.services = stylist.services.map((stylistService) => {
+          const service = Services.findOne({ _id: stylistService._id });
+          const { photo } = service;
+          return { ...stylistService, photo };
+        });
+      }
 
       return {
         profile,

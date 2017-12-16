@@ -57,7 +57,7 @@ const HomeServices = ({ services }) => (
               src={
                 service.photo
                   ? scaledImageURL(service.photo, 'small')
-                  : 'images/service-placeholder.jpg'
+                  : '/images/placeholder-square.jpg'
               }
               alt={service.name}
             />

@@ -32,7 +32,7 @@ const StylistsJoinPage = props => (
         </div>
 
         <div className="col-lg-6 col-sm-6">
-          <img src="images/main-join-bg.jpg" alt="" />
+          <img src="images/placeholder-bg.jpg" alt="" />
         </div>
       </div>
     </div>
@@ -177,7 +177,7 @@ const StylistsJoinPage = props => (
     <div className="margin-top-80 margin-bottom-80">
       <div className="row vertical-align">
         <div className="col-lg-6 col-sm-6">
-          <img src="images/main-join-bg.jpg" alt="" />
+          <img src="images/placeholder-bg.jpg" alt="" />
         </div>
         <div className="col-lg-6 col-sm-6">
           <div className="centered-content">

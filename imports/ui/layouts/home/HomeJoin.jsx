@@ -3,7 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const HomeJoin = () => (
-  <div className="main-join-container" style={{ backgroundImage: 'url(images/main-join-bg.jpg)' }}>
+  <div
+    className="main-join-container"
+    style={{ backgroundImage: 'url(images/placeholder-bg.jpg)' }}
+  >
     <div className="text-content white-font">
       <div className="container">
         <div className="row">
