@@ -18,6 +18,7 @@ import ModalContainer from '../components/ModalContainer';
 
 import Home from '../layouts/home/Home';
 import NotFoundPage from '../layouts/NotFoundPage';
+import Contact from '../layouts/contact/Contact';
 
 import UserProfile from '../layouts/user-profile/UserProfile';
 
@@ -85,6 +86,7 @@ class App extends Component {
 
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/contact" component={Contact} />
 
               <PublicRoute exact path="/login" component={Login} />
               <PublicRoute exact path="/signup" component={SignUp} />
