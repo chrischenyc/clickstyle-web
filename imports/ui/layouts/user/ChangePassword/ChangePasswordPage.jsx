@@ -13,7 +13,7 @@ const ChangePasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
 }) => {
   if (redirect) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/users/dashboard" />;
   } else if (success) {
     return (
       <SideMenuContainer>

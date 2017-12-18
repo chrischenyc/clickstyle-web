@@ -34,10 +34,7 @@ import EditProfile from '../layouts/user/Profile/EditProfile';
 import SettingsPage from '../layouts/user/SettingsPage';
 import InboxPage from '../layouts/user/InboxPage';
 
-import BookingsPage from '../layouts/bookings/BookingsPage';
-import ViewBooking from '../layouts/bookings/ViewBooking';
 import Search from '../layouts/search/Search';
-import EditBooking from '../layouts/bookings/EditBooking';
 
 import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 import StylistsApplication from '../layouts/stylists/StylistsApplication';
@@ -86,39 +83,26 @@ class App extends Component {
 
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/contact" component={Contact} />
+              <Route path="/stylists/:service?/:suburb?/:postcode?" component={Search} />
+              <Route path="/users/show/:_id" component={UserProfile} />
+              <Route path="/contact" component={Contact} />
+              <Route path="/join" component={StylistsJoin} />
 
-              <PublicRoute exact path="/login" component={Login} />
-              <PublicRoute exact path="/signup" component={SignUp} />
+              <PublicRoute path="/login" component={Login} />
+              <PublicRoute path="/signup" component={SignUp} />
               <Route path="/verify-email/:token" component={VerifyEmailPage} />
-              <Route exact path="/forgot-password" component={ForgotPassword} />
+              <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/reset-password/:token" component={ResetPassword} />
 
-              <Route path="/users/:_id" component={UserProfile} />
-
-              <SecureRoute exact path="/dashboard" component={DashboardPage} />
-              <SecureRoute exact path="/profiles/edit" component={EditProfile} />
-              <SecureRoute exact path="/settings" component={SettingsPage} />
-              <SecureRoute exact path="/change-password" component={ChangePassword} />
-              <SecureRoute
-                exact
-                path="/reset-password"
-                component={props => <ForgotPassword {...props} embedded />}
-              />
-              <SecureRoute path="/inbox" component={InboxPage} />
-
-              <Route exact path="/bookings" component={BookingsPage} />
-              <SecureRoute exact path="/bookings/:_id" component={ViewBooking} />
-              <SecureRoute exact path="/bookings/:_id/edit" component={EditBooking} />
-
-              <Route exact path="/join" component={StylistsJoin} />
-              <SecureRoute path="/join/application" component={StylistsApplication} />
-
-              <SecureRoute path="/stylists/me/services" component={StylistServices} />
-              <SecureRoute path="/stylists/me/available-time" component={StylistAvailability} />
-              <SecureRoute path="/stylists/me/available-areas" component={StylistAvailableAreas} />
-
-              <Route path="/stylists/:service?/:suburb?/:postcode?" component={Search} />
+              <SecureRoute path="/users/dashboard" component={DashboardPage} />
+              <SecureRoute path="/users/profile" component={EditProfile} />
+              <SecureRoute path="/users/inbox" component={InboxPage} />
+              <SecureRoute path="/users/settings" component={SettingsPage} />
+              <SecureRoute path="/users/settings/change-password" component={ChangePassword} />
+              <SecureRoute path="/users/stylist/application" component={StylistsApplication} />
+              <SecureRoute path="/users/stylist/services" component={StylistServices} />
+              <SecureRoute path="/users/stylist/calendar" component={StylistAvailability} />
+              <SecureRoute path="/users/stylist/areas" component={StylistAvailableAreas} />
 
               <Route component={NotFoundPage} />
             </Switch>

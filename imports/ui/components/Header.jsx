@@ -129,10 +129,10 @@ class Header extends Component {
               {authenticated && (
                 <Dropdown text={firstName || ''} className="item">
                   <Dropdown.Menu>
-                    <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />
-                    <Dropdown.Item as={Link} to="/inbox" text="Inbox" />
-                    <Dropdown.Item as={Link} to="/profiles/edit" text="Profile" />
-                    <Dropdown.Item as={Link} to="/settings" text="Settings" />
+                    <Dropdown.Item as={Link} to="/users/dashboard" text="Dashboard" />
+                    <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
+                    <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
+                    <Dropdown.Item as={Link} to="/users/settings" text="Settings" />
                     <Dropdown.Item
                       text="Logout"
                       onClick={() => {

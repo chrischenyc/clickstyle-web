@@ -77,7 +77,7 @@ const SlideMenu = props => (
           <ul>
             <li>
               <Link
-                to="/dashboard"
+                to="/users/dashboard"
                 onClick={() => {
                   props.toggleSlideMenu();
                 }}
@@ -88,7 +88,7 @@ const SlideMenu = props => (
 
             <li>
               <Link
-                to="/inbox"
+                to="/users/inbox"
                 onClick={() => {
                   props.toggleSlideMenu();
                 }}
@@ -98,7 +98,7 @@ const SlideMenu = props => (
             </li>
             <li>
               <Link
-                to="/profiles/edit"
+                to="/users/profile"
                 onClick={() => {
                   props.toggleSlideMenu();
                 }}
@@ -108,7 +108,7 @@ const SlideMenu = props => (
             </li>
             <li>
               <Link
-                to="/settings"
+                to="/users/settings"
                 onClick={() => {
                   props.toggleSlideMenu();
                 }}
@@ -127,7 +127,7 @@ const SlideMenu = props => (
           <ul>
             <li>
               <Link
-                to="/stylists/me/services"
+                to="/users/stylist/services"
                 onClick={() => {
                   props.toggleSlideMenu();
                 }}
@@ -137,7 +137,7 @@ const SlideMenu = props => (
             </li>
             <li>
               <Link
-                to="/stylists/me/available-time"
+                to="/users/stylist/calendar"
                 onClick={() => {
                   props.toggleSlideMenu();
                 }}
@@ -147,7 +147,7 @@ const SlideMenu = props => (
             </li>
             <li>
               <Link
-                to="/stylists/me/available-areas"
+                to="/users/stylist/areas"
                 onClick={() => {
                   props.toggleSlideMenu();
                 }}

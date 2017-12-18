@@ -10,10 +10,10 @@ const SettingsPage = () => (
       <Divider horizontal>Password</Divider>
       <List>
         <List.Item>
-          <Link to="/change-password">Change Password</Link>
+          <Link to="/users/settings/change-password">Change Password</Link>
         </List.Item>
         <List.Item>
-          <Link to="/reset-password">Reset password</Link>
+          <Link to="/users/settings/reset-password">Reset password</Link>
         </List.Item>
       </List>
     </Container>

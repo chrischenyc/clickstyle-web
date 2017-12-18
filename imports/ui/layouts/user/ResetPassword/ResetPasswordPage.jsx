@@ -12,7 +12,7 @@ const ResetPasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
 }) => {
   if (redirect) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/users/dashboard" />;
   } else if (success) {
     return (
       <Container text style={{ marginTop: '51px', padding: '4rem 0' }}>

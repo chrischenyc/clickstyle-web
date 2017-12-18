@@ -19,19 +19,19 @@ const SideMenu = ({ profile, isStylist }) => (
     <Menu.Item>
       <Menu.Header>Account</Menu.Header>
       <Menu.Menu>
-        <Menu.Item as={NavLink} to="/dashboard">
+        <Menu.Item as={NavLink} to="/users/dashboard">
           Dashboard
         </Menu.Item>
 
-        <Menu.Item as={NavLink} to="/inbox">
+        <Menu.Item as={NavLink} to="/users/inbox">
           Inbox
         </Menu.Item>
 
-        <Menu.Item as={NavLink} to="/profiles/edit">
+        <Menu.Item as={NavLink} to="/users/profile">
           Profile
         </Menu.Item>
 
-        <Menu.Item as={NavLink} to="/settings">
+        <Menu.Item as={NavLink} to="/users/settings">
           Settings
         </Menu.Item>
       </Menu.Menu>
@@ -54,13 +54,13 @@ const SideMenu = ({ profile, isStylist }) => (
       <Menu.Item>
         <Menu.Header>Stylist</Menu.Header>
         <Menu.Menu>
-          <Menu.Item as={NavLink} to="/stylists/me/services">
+          <Menu.Item as={NavLink} to="/users/stylist/services">
             Service &amp; Price List
           </Menu.Item>
-          <Menu.Item as={NavLink} to="/stylists/me/available-time">
+          <Menu.Item as={NavLink} to="/users/stylist/calendar">
             Calendar
           </Menu.Item>
-          <Menu.Item as={NavLink} to="/stylists/me/available-areas">
+          <Menu.Item as={NavLink} to="/users/stylist/areas">
             Areas
           </Menu.Item>
         </Menu.Menu>

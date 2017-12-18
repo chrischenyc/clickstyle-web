@@ -20,10 +20,10 @@ const StylistsJoinPage = props => (
             <SecureLink
               className="button border"
               history={props.history}
-              to="/join/application"
+              to="/users/stylist/application"
               onLoggedIn={() => {
                 props.closeModal();
-                props.history.push('/join/application');
+                props.history.push('/users/stylist/application');
               }}
             >
               Get Started
@@ -185,10 +185,10 @@ const StylistsJoinPage = props => (
             <SecureLink
               className="button border"
               history={props.history}
-              to="/join/application"
+              to="/users/stylist/application"
               onLoggedIn={() => {
                 props.closeModal();
-                props.history.push('/join/application');
+                props.history.push('/users/stylist/application');
               }}
             >
               Get Started
