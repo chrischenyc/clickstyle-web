@@ -75,6 +75,13 @@
   padding: 0 12px;
 }
 
+/* 03-shortcodes.css override */
+#not-found i {
+  font-size: 14px;
+  top: 0px;
+  position: relative;
+}
+
 /* 04-dashboard.css override */
 .dashboard-content {
   padding: 0 0 40px 0;
