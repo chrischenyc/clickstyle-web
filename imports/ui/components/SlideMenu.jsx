@@ -132,7 +132,7 @@ const SlideMenu = props => (
                   props.toggleSlideMenu();
                 }}
               >
-                Service & Price List
+                Services
               </Link>
             </li>
             <li>

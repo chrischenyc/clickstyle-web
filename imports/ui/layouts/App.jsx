@@ -31,8 +31,8 @@ import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 import Dashboard from '../layouts/user/DashboardPage';
 import EditProfile from '../layouts/user/Profile/EditProfile';
 import SettingsPage from '../layouts/user/SettingsPage';
-import InboxPage from '../layouts/user/InboxPage';
 import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
+import InboxPage from '../layouts/user/InboxPage';
 
 import StylistsApplication from '../layouts/stylists/StylistsApplication';
 import StylistServices from '../layouts/stylists/StylistServices/StylistServices';
@@ -97,10 +97,8 @@ class App extends Component {
               <SecureRoute path="/users/profile" component={withSideMenu(EditProfile)} />
               <SecureRoute path="/users/inbox" component={withSideMenu(InboxPage)} />
               <SecureRoute path="/users/settings" component={withSideMenu(SettingsPage)} />
-              <SecureRoute
-                path="/users/settings/change-password"
-                component={withSideMenu(ChangePassword)}
-              />
+              <SecureRoute path="/users/change-password" component={withSideMenu(ChangePassword)} />
+              <SecureRoute path="/users/reset-password" component={withSideMenu(ForgotPassword)} />
               <SecureRoute
                 path="/users/stylist/application"
                 component={withSideMenu(StylistsApplication)}
