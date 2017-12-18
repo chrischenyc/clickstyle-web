@@ -1,3 +1,12 @@
 .ui.search .prompt {
   border-radius: 0.28571429rem;
 }
+
+.ui.link.menu .item:hover,
+.ui.menu .dropdown.item:hover,
+.ui.menu .link.item:hover,
+.ui.menu a.item:hover {
+  cursor: pointer;
+  background: none;
+  color: #00aca4;
+}
