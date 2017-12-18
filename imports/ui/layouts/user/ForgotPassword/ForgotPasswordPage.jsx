@@ -5,24 +5,16 @@ import { Container, Button, Form, Grid, Message, Header, Icon } from 'semantic-u
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
-import SideMenuContainer from '../../../components/SideMenuContainer';
 import { PrimaryColor } from '../../../../modules/client/constants';
 
 const ForgotPasswordPage = ({
-  onSubmit,
-  onChange,
-  loading,
-  errors,
-  success,
-  redirect,
-  modal,
-  embedded,
+  onSubmit, onChange, loading, errors, success, redirect, modal,
 }) => {
   if (redirect) {
     return <Redirect to="/" />;
   } else if (success) {
     return (
-      <Container text style={{ marginTop: modal || embedded ? '0' : '51px', padding: '2rem 0' }}>
+      <Container text style={{ marginTop: modal ? '0' : '51px', padding: '2rem 0' }}>
         <Grid textAlign="left" verticalAlign="middle">
           <Message icon success>
             <Icon name="checkmark" />
@@ -35,7 +27,7 @@ const ForgotPasswordPage = ({
   }
 
   const form = (
-    <Container text style={{ marginTop: modal || embedded ? '0' : '51px', padding: '2rem 0' }}>
+    <Container text style={{ marginTop: modal ? '0' : '51px', padding: '2rem 0' }}>
       <Grid textAlign="left" verticalAlign="middle">
         <Grid.Row style={{ maxWidth: 450 }}>
           <Grid.Column>
@@ -71,15 +63,11 @@ const ForgotPasswordPage = ({
     </Container>
   );
 
-  if (embedded) {
-    return <SideMenuContainer>{form}</SideMenuContainer>;
-  }
   return form;
 };
 
 ForgotPasswordPage.defaultProps = {
   modal: false,
-  embedded: false,
 };
 
 ForgotPasswordPage.propTypes = {
@@ -90,7 +78,6 @@ ForgotPasswordPage.propTypes = {
   success: PropTypes.bool.isRequired,
   redirect: PropTypes.bool.isRequired,
   modal: PropTypes.bool,
-  embedded: PropTypes.bool,
 };
 
 export default ForgotPasswordPage;

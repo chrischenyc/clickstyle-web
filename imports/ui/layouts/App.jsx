@@ -9,34 +9,31 @@ import Profiles from '../../api/profiles/profiles';
 import { userSignedIn, userSignedOut } from '../../modules/client/redux/user';
 import { fetchProfile } from '../../modules/client/redux/profile';
 
-import SecureRoute from '../components/SecureRoute';
 import PublicRoute from '../components/PublicRoute';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import SecureRoute from '../components/SecureRoute';
+
 import SlideMenu from '../components/SlideMenu';
+import { withHeaderFooter, withSideMenu } from '../components/HOC';
 import ModalContainer from '../components/ModalContainer';
+import NotFoundPage from '../layouts/NotFoundPage';
 
 import Home from '../layouts/home/Home';
-import NotFoundPage from '../layouts/NotFoundPage';
 import Contact from '../layouts/contact/Contact';
-
 import UserProfile from '../layouts/user-profile/UserProfile';
-
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
 import VerifyEmailPage from '../layouts/user/VerifyEmailPage';
 import ForgotPassword from '../layouts/user/ForgotPassword/ForgotPassword';
 import ResetPassword from '../layouts/user/ResetPassword/ResetPassword';
-import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
+import Search from '../layouts/search/Search';
+import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 
-import DashboardPage from '../layouts/user/DashboardPage';
+import Dashboard from '../layouts/user/DashboardPage';
 import EditProfile from '../layouts/user/Profile/EditProfile';
 import SettingsPage from '../layouts/user/SettingsPage';
 import InboxPage from '../layouts/user/InboxPage';
+import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
 
-import Search from '../layouts/search/Search';
-
-import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 import StylistsApplication from '../layouts/stylists/StylistsApplication';
 import StylistServices from '../layouts/stylists/StylistServices/StylistServices';
 import StylistAvailability from '../layouts/stylists/StylistAvailability/StylistAvailability';
@@ -79,37 +76,52 @@ class App extends Component {
 
           <main id="page-wrap">
             <ScrollToTop />
-            <Header />
 
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/stylists/:service?/:suburb?/:postcode?" component={Search} />
-              <Route path="/users/show/:_id" component={UserProfile} />
-              <Route path="/contact" component={Contact} />
-              <Route path="/join" component={StylistsJoin} />
+              <Route exact path="/" component={withHeaderFooter(Home)} />
+              <Route
+                path="/stylists/:service?/:suburb?/:postcode?"
+                component={withHeaderFooter(Search)}
+              />
+              <Route path="/users/show/:_id" component={withHeaderFooter(UserProfile)} />
+              <Route path="/contact" component={withHeaderFooter(Contact)} />
+              <Route path="/join" component={withHeaderFooter(StylistsJoin)} />
 
-              <PublicRoute path="/login" component={Login} />
-              <PublicRoute path="/signup" component={SignUp} />
-              <Route path="/verify-email/:token" component={VerifyEmailPage} />
-              <Route path="/forgot-password" component={ForgotPassword} />
-              <Route path="/reset-password/:token" component={ResetPassword} />
+              <PublicRoute path="/login" component={withHeaderFooter(Login)} />
+              <PublicRoute path="/signup" component={withHeaderFooter(SignUp)} />
+              <Route path="/verify-email/:token" component={withHeaderFooter(VerifyEmailPage)} />
+              <Route path="/forgot-password" component={withHeaderFooter(ForgotPassword)} />
+              <Route path="/reset-password/:token" component={withHeaderFooter(ResetPassword)} />
 
-              <SecureRoute path="/users/dashboard" component={DashboardPage} />
-              <SecureRoute path="/users/profile" component={EditProfile} />
-              <SecureRoute path="/users/inbox" component={InboxPage} />
-              <SecureRoute path="/users/settings" component={SettingsPage} />
-              <SecureRoute path="/users/settings/change-password" component={ChangePassword} />
-              <SecureRoute path="/users/stylist/application" component={StylistsApplication} />
-              <SecureRoute path="/users/stylist/services" component={StylistServices} />
-              <SecureRoute path="/users/stylist/calendar" component={StylistAvailability} />
-              <SecureRoute path="/users/stylist/areas" component={StylistAvailableAreas} />
+              <SecureRoute path="/users/dashboard" component={withSideMenu(Dashboard)} />
+              <SecureRoute path="/users/profile" component={withSideMenu(EditProfile)} />
+              <SecureRoute path="/users/inbox" component={withSideMenu(InboxPage)} />
+              <SecureRoute path="/users/settings" component={withSideMenu(SettingsPage)} />
+              <SecureRoute
+                path="/users/settings/change-password"
+                component={withSideMenu(ChangePassword)}
+              />
+              <SecureRoute
+                path="/users/stylist/application"
+                component={withSideMenu(StylistsApplication)}
+              />
+              <SecureRoute
+                path="/users/stylist/services"
+                component={withSideMenu(StylistServices)}
+              />
+              <SecureRoute
+                path="/users/stylist/calendar"
+                component={withSideMenu(StylistAvailability)}
+              />
+              <SecureRoute
+                path="/users/stylist/areas"
+                component={withSideMenu(StylistAvailableAreas)}
+              />
 
-              <Route component={NotFoundPage} />
+              <Route component={withHeaderFooter(NotFoundPage)} />
             </Switch>
 
             {this.props.modalOpen && <Route to="/modal" component={ModalContainer} />}
-
-            <Footer />
           </main>
         </div>
       </Router>

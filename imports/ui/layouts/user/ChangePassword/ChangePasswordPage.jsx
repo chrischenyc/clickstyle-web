@@ -5,7 +5,6 @@ import { Container, Button, Form, Grid, Message, Header, Icon } from 'semantic-u
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
-import SideMenuContainer from '../../../components/SideMenuContainer';
 import { FormInputField } from '../../../components/FormInputField';
 import { PrimaryColor } from '../../../../modules/client/constants';
 
@@ -16,76 +15,72 @@ const ChangePasswordPage = ({
     return <Redirect to="/users/dashboard" />;
   } else if (success) {
     return (
-      <SideMenuContainer>
-        <Container text style={{ padding: '2rem 0' }}>
-          <Grid textAlign="left" verticalAlign="middle">
-            <Message icon success>
-              <Icon name="checkmark" />
+      <Container text style={{ padding: '2rem 0' }}>
+        <Grid textAlign="left" verticalAlign="middle">
+          <Message icon success>
+            <Icon name="checkmark" />
 
-              <Message.Content>Password has been changed, thanks!</Message.Content>
-            </Message>
-          </Grid>
-        </Container>
-      </SideMenuContainer>
+            <Message.Content>Password has been changed, thanks!</Message.Content>
+          </Message>
+        </Grid>
+      </Container>
     );
   }
 
   return (
-    <SideMenuContainer>
-      <Container text style={{ padding: '2rem 0' }}>
-        <Grid textAlign="left" verticalAlign="middle">
-          <Grid.Row style={{ maxWidth: 450 }}>
-            <Grid.Column>
-              <Header as="h1">Change Your Password</Header>
+    <Container text style={{ padding: '2rem 0' }}>
+      <Grid textAlign="left" verticalAlign="middle">
+        <Grid.Row style={{ maxWidth: 450 }}>
+          <Grid.Column>
+            <Header as="h1">Change Your Password</Header>
 
-              <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-                <FormInputField
-                  fluid
-                  icon="lock"
-                  iconPosition="left"
-                  placeholder="Old password"
-                  type="password"
-                  name="oldPassword"
-                  size="huge"
-                  onChange={onChange}
-                  errors={errors}
-                />
+            <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+              <FormInputField
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="Old password"
+                type="password"
+                name="oldPassword"
+                size="huge"
+                onChange={onChange}
+                errors={errors}
+              />
 
-                <FormInputField
-                  fluid
-                  icon="lock"
-                  iconPosition="left"
-                  placeholder="New password"
-                  type="password"
-                  name="password"
-                  size="huge"
-                  onChange={onChange}
-                  errors={errors}
-                />
+              <FormInputField
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="New password"
+                type="password"
+                name="password"
+                size="huge"
+                onChange={onChange}
+                errors={errors}
+              />
 
-                <FormInputField
-                  fluid
-                  icon="lock"
-                  iconPosition="left"
-                  placeholder="Confirm password"
-                  type="password"
-                  name="confirm"
-                  size="huge"
-                  onChange={onChange}
-                  errors={errors}
-                />
+              <FormInputField
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="Confirm password"
+                type="password"
+                name="confirm"
+                size="huge"
+                onChange={onChange}
+                errors={errors}
+              />
 
-                {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+              {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
 
-                <Button color={PrimaryColor} size="huge" type="submit">
-                  Change password
-                </Button>
-              </Form>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Container>
-    </SideMenuContainer>
+              <Button color={PrimaryColor} size="huge" type="submit">
+                Change password
+              </Button>
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Container>
   );
 };
 

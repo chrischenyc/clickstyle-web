@@ -13,6 +13,12 @@
   margin-top: 0px;
 }
 
+#side-logo img {
+  max-height: 38px;
+  width: auto;
+  transform: translate3d(0, 0, 0);
+}
+
 /* override styles in 03-shortcodes.css */
 .listing-item-container {
   border-radius: 0;
@@ -67,6 +73,11 @@
 .listing-item-content {
   bottom: 12px;
   padding: 0 12px;
+}
+
+/* 04-dashboard.css override */
+.dashboard-content {
+  padding: 0;
 }
 
 /* override styles in 05-script-styles.css */

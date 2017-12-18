@@ -44,7 +44,7 @@ class Header extends Component {
 
   render() {
     const { menuFixed } = this.state;
-    const { authenticated, firstName } = this.props;
+    const { authenticated, firstName, fullContent } = this.props;
 
     return (
       <Visibility
@@ -63,11 +63,13 @@ class Header extends Component {
           style={menuFixed ? fixedMenuStyle : menuStyle}
         >
           <Container>
-            <Menu.Item id="logo">
-              <Link to="/">
-                <Image src="/images/logo.png" alt="logo" />
-              </Link>
-            </Menu.Item>
+            {fullContent && (
+              <Menu.Item id="logo">
+                <Link to="/">
+                  <Image src="/images/logo.png" alt="logo" />
+                </Link>
+              </Menu.Item>
+            )}
 
             <Responsive maxWidth={1024} as={Menu.Item}>
               <Button
@@ -80,13 +82,17 @@ class Header extends Component {
             </Responsive>
 
             <Responsive minWidth={1025} as={Menu.Menu} position="right">
-              <Menu.Item as={Link} to="/join">
-                Become a stylist
-              </Menu.Item>
+              {fullContent && (
+                <Menu.Item as={Link} to="/join">
+                  Become a stylist
+                </Menu.Item>
+              )}
 
-              <Menu.Item as={Link} to="/help">
-                Help
-              </Menu.Item>
+              {fullContent && (
+                <Menu.Item as={Link} to="/help">
+                  Help
+                </Menu.Item>
+              )}
 
               {!authenticated && (
                 <Menu.Item
@@ -153,6 +159,7 @@ class Header extends Component {
 Header.defaultProps = {
   firstName: '',
   photo: '',
+  fullContent: true,
 };
 
 Header.propTypes = {
@@ -161,6 +168,7 @@ Header.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   firstName: PropTypes.string,
   photo: PropTypes.string,
+  fullContent: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({

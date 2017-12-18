@@ -2,74 +2,98 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Menu, Image } from 'semantic-ui-react';
+import { Link, NavLink } from 'react-router-dom';
 
-import ScaledImageURL from '../../modules/scaled-image-url';
-import { PrimaryColor } from '../../modules/client/constants';
+const SideMenu = ({ isStylist }) => (
+  <div className="dashboard-nav">
+    <div className="dashboard-nav-inner">
+      <ul>
+        <li>
+          <Link to="/" id="side-logo">
+            <img src="/images/logo.png" alt="logo" />
+          </Link>
+        </li>
+      </ul>
 
-const SideMenu = ({ profile, isStylist }) => (
-  <Menu secondary vertical color={PrimaryColor} size="massive" stackable>
-    {profile.photoURL && (
-      <Menu.Item>
-        <Image src={ScaledImageURL(profile.photoURL, 'tiny')} size="tiny" avatar />
-      </Menu.Item>
-    )}
+      <ul data-submenu-title="Account">
+        <li>
+          <NavLink to="/users/dashboard">
+            <i className="im im-icon-Home" /> Dashboard
+          </NavLink>
+        </li>
 
-    <Menu.Item>
-      <Menu.Header>Account</Menu.Header>
-      <Menu.Menu>
-        <Menu.Item as={NavLink} to="/users/dashboard">
-          Dashboard
-        </Menu.Item>
+        <li>
+          <NavLink to="/users/inbox">
+            <i className="im im-icon-Email" /> Inbox
+          </NavLink>
+        </li>
 
-        <Menu.Item as={NavLink} to="/users/inbox">
-          Inbox
-        </Menu.Item>
+        <li>
+          <NavLink to="/users/profile">
+            <i className="im im-icon-Profile" /> Profile
+          </NavLink>
+        </li>
 
-        <Menu.Item as={NavLink} to="/users/profile">
-          Profile
-        </Menu.Item>
+        <li>
+          <NavLink to="/users/settings">
+            <i className="im im-icon-Gear" /> Settings
+          </NavLink>
+        </li>
+      </ul>
 
-        <Menu.Item as={NavLink} to="/users/settings">
-          Settings
-        </Menu.Item>
-      </Menu.Menu>
-    </Menu.Item>
+      {isStylist && (
+        <ul data-submenu-title="Stylist">
+          <li>
+            <NavLink to="/users/stylist/services">
+              <i className="im im-icon-Pricing" /> Service &amp; Price List
+            </NavLink>
+          </li>
 
-    {/* <Menu.Item>
-      <Menu.Header>Bookings</Menu.Header>
-      <Menu.Menu>
-        <Menu.Item as={NavLink} to="/bookings">
-          My Bookings
-        </Menu.Item>
+          <li>
+            <NavLink to="/users/stylist/calendar">
+              <i className="im im-icon-Calendar-3" /> Calendar
+            </NavLink>
+          </li>
 
-        <Menu.Item as={NavLink} to="/favourites">
-          My Favourites
-        </Menu.Item>
-      </Menu.Menu>
-    </Menu.Item> */}
+          <li>
+            <NavLink to="/users/stylist/areas">
+              <i className="im im-icon-Location-2" /> Areas
+            </NavLink>
+          </li>
+        </ul>
+      )}
 
-    {isStylist && (
-      <Menu.Item>
-        <Menu.Header>Stylist</Menu.Header>
-        <Menu.Menu>
-          <Menu.Item as={NavLink} to="/users/stylist/services">
-            Service &amp; Price List
-          </Menu.Item>
-          <Menu.Item as={NavLink} to="/users/stylist/calendar">
-            Calendar
-          </Menu.Item>
-          <Menu.Item as={NavLink} to="/users/stylist/areas">
-            Areas
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu.Item>
-    )}
-  </Menu>
+      <ul data-submenu-title="">
+        {isStylist && (
+          <li>
+            <NavLink to="/join">
+              <i className="im im-icon-Business-ManWoman" /> Become a stylist
+            </NavLink>
+          </li>
+        )}
+        <li>
+          <NavLink to="/help">
+            <i className="im im-icon-Information" /> Help
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to="/logout"
+            onClick={(e) => {
+              e.preventDefault();
+              Meteor.logout();
+            }}
+          >
+            <i className="im im-icon-Power-2" /> Logout
+          </NavLink>
+        </li>
+      </ul>
+    </div>
+  </div>
 );
 
-SideMenu.propTypes = {
+SideMenu.defaultProps = {
   isStylist: false,
 };
 
