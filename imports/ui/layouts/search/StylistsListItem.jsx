@@ -28,7 +28,7 @@ const dummyBanners = [
 ];
 
 const StylistsListItem = ({ stylist }) => (
-  <Card fluid as={Link} to={`/stylists/${stylist._id}`} style={{ color: '#212121' }}>
+  <Card fluid as={Link} to={`/users/show/${stylist.owner}`} style={{ color: '#212121' }}>
     <Grid stackable>
       <Grid.Row>
         <Grid.Column width="4" textAlign="center" verticalAlign="top">
