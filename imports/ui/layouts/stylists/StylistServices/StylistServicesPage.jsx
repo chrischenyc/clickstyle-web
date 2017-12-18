@@ -96,8 +96,6 @@ class StylistServicesPage extends Component {
     return (
       <Container>
         <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-          <Divider horizontal>Services &amp; Prices</Divider>
-
           <p>TODO: write something to educate stylists what this page is about</p>
 
           {selectedServices.map((service) => {

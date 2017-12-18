@@ -1,10 +1,9 @@
 import React from 'react';
-import { Container, List, Divider } from 'semantic-ui-react';
+import { Container, List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 const SettingsPage = () => (
   <Container>
-    <Divider horizontal>Password</Divider>
     <List>
       <List.Item>
         <Link to="/users/settings/change-password">Change Password</Link>

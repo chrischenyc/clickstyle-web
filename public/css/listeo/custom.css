@@ -77,7 +77,7 @@
 
 /* 04-dashboard.css override */
 .dashboard-content {
-  padding: 0;
+  padding: 0 0 40px 0;
 }
 
 /* override styles in 05-script-styles.css */

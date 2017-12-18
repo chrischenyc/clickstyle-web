@@ -29,8 +29,6 @@ const StylistAvailableTimePage = ({
 }) => (
   <Container>
     <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-      <Divider horizontal>regular available hours</Divider>
-
       <p>TODO: write something to educate stylists what this page is about</p>
 
       <Table celled selectable>
