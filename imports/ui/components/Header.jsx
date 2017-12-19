@@ -137,7 +137,7 @@ class Header extends Component {
               )}
 
               {authenticated && (
-                <Dropdown text={firstName || ''} className="item">
+                <Dropdown text={firstName || ''} className="item" style={{ zIndex: '999' }}>
                   <Dropdown.Menu>
                     <Dropdown.Item as={Link} to="/users/dashboard" text="Dashboard" />
                     <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
