@@ -1,12 +1,9 @@
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+
 import _ from 'lodash';
 
-import Services from '../../../api/services/services';
-import Addons from '../../../api/addons/addons';
 import ServicesList from './ServicesList';
 import servicesKeywordMatch from '../../../modules/services-keyword-match';
 import {
@@ -15,12 +12,6 @@ import {
   SuburbNameToSEOName,
   SEONameToSuburbName,
 } from '../../../modules/seo-name';
-
-const aggregateServiceAddons = (services, addons) =>
-  services.map(service => ({
-    ...service,
-    addons: addons.filter(addon => addon.serviceId === service._id),
-  }));
 
 const aggregateSuburbPostcode = (suburb, postcode) =>
   (suburb && suburb + (postcode ? ` ${postcode}` : '')) || '';
@@ -31,18 +22,17 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    const { services, addons } = props;
     const { service, suburb, postcode } = props.match.params;
 
     this.state = {
-      services: aggregateServiceAddons(services, addons),
       service: (service && SEONameToServiceName(service)) || '',
       suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
       postcode: postcode || '',
-      selectedSuburb: suburbObject(suburb, postcode),
+      services: null,
       isServicesListOpen: false,
       searchingSuburbs: false,
       matchedSuburbs: [],
+      selectedSuburb: suburbObject(suburb, postcode),
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
@@ -52,13 +42,21 @@ class SearchBar extends Component {
     this.handleSelectSuburb = this.handleSelectSuburb.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { services, addons } = nextProps;
+  componentDidMount() {
+    Meteor.call('services.and.addons', {}, (error, services) => {
+      if (error) {
+        console.log('error', error);
+      }
+      if (services) {
+        this.setState({ services });
+      }
+    });
+  }
 
+  componentWillReceiveProps(nextProps) {
     const { service, suburb, postcode } = nextProps.match.params;
 
     this.setState({
-      services: aggregateServiceAddons(services, addons),
       service: (service && SEONameToServiceName(service)) || '',
       suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
       postcode: postcode || '',
@@ -154,10 +152,15 @@ class SearchBar extends Component {
 
   render() {
     const {
-      loading, services, addons, history,
-    } = this.props;
-
-    const { service, suburb, postcode } = this.state;
+      service,
+      suburb,
+      postcode,
+      services,
+      isServicesListOpen,
+      searchingSuburbs,
+      matchedSuburbs,
+      selectedSuburb,
+    } = this.state;
 
     return (
       <div className="main-search-input">
@@ -201,31 +204,4 @@ class SearchBar extends Component {
   }
 }
 
-SearchBar.defaultProps = {
-  loading: false,
-  services: [],
-  addons: [],
-};
-
-SearchBar.propTypes = {
-  loading: PropTypes.bool,
-  services: PropTypes.array,
-  addons: PropTypes.array,
-};
-
-// TODO: replace subscription with method
-export default withTracker(() => {
-  const handleServices = Meteor.subscribe('services');
-  const handleAddons = Meteor.subscribe('addons.system.name');
-
-  return {
-    loading: !handleServices.ready() || !handleAddons.ready(),
-    services: Services.find(
-      {},
-      {
-        sort: { displayOrder: 1 },
-      },
-    ).fetch(),
-    addons: Addons.find().fetch(),
-  };
-})(withRouter(SearchBar));
+export default withRouter(SearchBar);
