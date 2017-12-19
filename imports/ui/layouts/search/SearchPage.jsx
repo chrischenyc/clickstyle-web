@@ -11,28 +11,12 @@ import Loading from '../../components/Loading';
 import { PrimaryColor } from '../../../modules/client/constants';
 
 const SearchPage = ({
-  onSearch,
-  onLoadMore,
-  searching,
-  searched,
-  stylists,
-  service,
-  suburb,
-  postcode,
-  hasMore,
-  foundNothing,
+  onLoadMore, searching, searched, stylists, hasMore, foundNothing,
 }) => (
   <div className="container">
     <Responsive maxWidth={1024} className="row margin-bottom-10">
       <div className="col-md-12">
-        <SearchBar
-          onSearch={onSearch}
-          searching={searching}
-          service={service}
-          suburb={suburb}
-          postcode={postcode}
-          style={{ margin: '0' }}
-        />
+        <SearchBar />
       </div>
     </Responsive>
 
@@ -79,11 +63,7 @@ const SearchPage = ({
 );
 
 SearchPage.propTypes = {
-  onSearch: PropTypes.func.isRequired,
   onLoadMore: PropTypes.func.isRequired,
-  service: PropTypes.string.isRequired,
-  suburb: PropTypes.string.isRequired,
-  postcode: PropTypes.string.isRequired,
   searching: PropTypes.bool.isRequired,
   searched: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,

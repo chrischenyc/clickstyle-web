@@ -8,7 +8,7 @@ import HomeJoin from './HomeJoin';
 
 const HomePage = props => (
   <div>
-    <HomeSearch onSearch={props.onSearch} />
+    <HomeSearch />
 
     {props.services &&
       props.services.length > 0 &&
@@ -32,7 +32,6 @@ HomePage.propTypes = {
   stylists: PropTypes.array.isRequired,
   authenticated: PropTypes.bool.isRequired,
   isStylistsLocationBased: PropTypes.bool.isRequired,
-  onSearch: PropTypes.func.isRequired,
 };
 
 export default HomePage;

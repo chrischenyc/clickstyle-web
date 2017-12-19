@@ -3,12 +3,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 import SearchPage from './SearchPage';
-import {
-  ServiceNameToSEOName,
-  SEONameToServiceName,
-  SuburbNameToSEOName,
-  SEONameToSuburbName,
-} from '../../../modules/seo-name';
+import { SEONameToServiceName, SEONameToSuburbName } from '../../../modules/seo-name';
 
 class Search extends Component {
   constructor(props) {
@@ -28,15 +23,12 @@ class Search extends Component {
       foundNothing: false,
     };
 
-    this.handleSearch = this.handleSearch.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
   }
 
   componentDidMount() {
     if (this.state.service) {
       this.search(this.state.service, this.state.suburb, this.state.postcode);
-    } else {
-      // TODO: display empty page
     }
   }
 
@@ -47,35 +39,6 @@ class Search extends Component {
       if (service) {
         this.search(SEONameToServiceName(service), SEONameToSuburbName(suburb), postcode);
       }
-    }
-  }
-
-  /**
-   * Input can be passed from children component, i.e.: SearchBar.jsx
-   * or from route url params, i.e.: /:service/:suburb?/:postcode?
-   *
-   * Depends on the available params, page wil be redirected to various search route
-   *
-   * @param {name of the service or addon, required} service
-   * @param {name of the suburb, optional} suburb
-   * @param {postcode, optional} postcode
-   */
-  handleSearch({ service, suburb, postcode }) {
-    if (!_.isNil(service)) {
-      this.setState({ service });
-      let searchUrl = `/stylists/${ServiceNameToSEOName(service)}`;
-
-      if (!_.isNil(suburb)) {
-        this.setState({ suburb });
-        searchUrl += `/${SuburbNameToSEOName(suburb)}`;
-      }
-
-      if (!_.isNil(postcode)) {
-        this.setState({ postcode });
-        searchUrl += `/${postcode}`;
-      }
-
-      this.props.history.push(searchUrl);
     }
   }
 
@@ -134,11 +97,7 @@ class Search extends Component {
   render() {
     return (
       <SearchPage
-        onSearch={this.handleSearch}
         onLoadMore={this.handleLoadMore}
-        service={this.state.service}
-        suburb={this.state.suburb}
-        postcode={this.state.postcode}
         searching={this.state.searching}
         searched={this.state.searched}
         error={this.state.error}

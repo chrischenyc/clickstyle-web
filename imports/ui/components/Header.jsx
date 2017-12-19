@@ -168,7 +168,6 @@ class Header extends Component {
 
 Header.defaultProps = {
   firstName: '',
-  photo: '',
   fullContent: true,
   searchBar: false,
 };
@@ -178,7 +177,6 @@ Header.propTypes = {
   toggleSlideMenu: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
   firstName: PropTypes.string,
-  photo: PropTypes.string,
   fullContent: PropTypes.bool, // if false, header links only contain user menu
   searchBar: PropTypes.bool,
 };
@@ -186,7 +184,6 @@ Header.propTypes = {
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
   firstName: state.profile && state.profile.name && state.profile.name.first,
-  photo: state.profile && state.profile.photo,
 });
 
 export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(Header);

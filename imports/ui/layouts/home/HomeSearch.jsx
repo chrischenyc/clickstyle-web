@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Typist from 'react-typist';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
 
 const animatedKeywords = ['hair stylist', 'makeup artist', 'wedding'];
 
-const HomeSearch = props => (
+const HomeSearch = () => (
   <div
     className="main-search-container dark-overlay"
     style={{ backgroundImage: "url('images/main-search-bg.jpg')" }}
@@ -31,16 +30,12 @@ const HomeSearch = props => (
           </div>
 
           <div className="col-md-12" style={{ marginTop: '50px' }}>
-            <SearchBar onSearch={props.onSearch} />
+            <SearchBar />
           </div>
         </div>
       </div>
     </div>
   </div>
 );
-
-HomeSearch.propTypes = {
-  onSearch: PropTypes.func.isRequired,
-};
 
 export default HomeSearch;

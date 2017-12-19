@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -8,6 +9,12 @@ import Services from '../../../api/services/services';
 import Addons from '../../../api/addons/addons';
 import ServicesList from './ServicesList';
 import servicesKeywordMatch from '../../../modules/services-keyword-match';
+import {
+  ServiceNameToSEOName,
+  SEONameToServiceName,
+  SuburbNameToSEOName,
+  SEONameToSuburbName,
+} from '../../../modules/seo-name';
 
 const aggregateServiceAddons = (services, addons) =>
   services.map(service => ({
@@ -24,15 +31,14 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    const {
-      services, addons, service, suburb, postcode,
-    } = props;
+    const { services, addons } = props;
+    const { service, suburb, postcode } = props.match.params;
 
     this.state = {
       services: aggregateServiceAddons(services, addons),
-      service,
-      suburb,
-      postcode,
+      service: (service && SEONameToServiceName(service)) || '',
+      suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
+      postcode: postcode || '',
       selectedSuburb: suburbObject(suburb, postcode),
       isServicesListOpen: false,
       searchingSuburbs: false,
@@ -47,15 +53,15 @@ class SearchBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-      services, addons, service, suburb, postcode,
-    } = nextProps;
+    const { services, addons } = nextProps;
+
+    const { service, suburb, postcode } = nextProps.match.params;
 
     this.setState({
       services: aggregateServiceAddons(services, addons),
-      service,
-      suburb,
-      postcode,
+      service: (service && SEONameToServiceName(service)) || '',
+      suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
+      postcode: postcode || '',
       selectedSuburb: suburbObject(suburb, postcode),
     });
   }
@@ -111,20 +117,44 @@ class SearchBar extends Component {
   handleSearch() {
     const { service, selectedSuburb } = this.state;
 
-    if (_.isEmpty(service)) {
-      // TODO: ask user to select a service
-    } else {
-      this.props.onSearch({
-        service,
-        suburb: selectedSuburb && selectedSuburb.name,
-        postcode: selectedSuburb && selectedSuburb.postcode,
-      });
+    this.redirectToSearch(
+      service,
+      selectedSuburb && selectedSuburb.name,
+      selectedSuburb && selectedSuburb.postcode,
+    );
+  }
+
+  /**
+   * Input can be passed from children component, i.e.: SearchBar.jsx
+   * or from route url params, i.e.: /:service/:suburb?/:postcode?
+   *
+   * Depends on the available params, page wil be redirected to various search route
+   *
+   * @param {name of the service or addon, required} service
+   * @param {name of the suburb, optional} suburb
+   * @param {postcode, optional} postcode
+   */
+  redirectToSearch(service, suburb, postcode) {
+    let searchUrl = '/stylists';
+
+    if (!_.isNil(service) && service.length > 0) {
+      searchUrl += `/${ServiceNameToSEOName(service)}`;
     }
+
+    if (!_.isNil(suburb) && suburb.length > 0) {
+      searchUrl += `/${SuburbNameToSEOName(suburb)}`;
+    }
+
+    if (!_.isNil(postcode) && postcode.length > 0) {
+      searchUrl += `/${postcode}`;
+    }
+
+    this.props.history.push(searchUrl);
   }
 
   render() {
     const {
-      loading, searching, services, addons, onSearch,
+      loading, services, addons, history,
     } = this.props;
 
     const { service, suburb, postcode } = this.state;
@@ -132,7 +162,7 @@ class SearchBar extends Component {
     return (
       <div className="main-search-input">
         <div className="main-search-input-item">
-          <input type="text" placeholder="Service e.g Makeup" value="" />
+          <input type="text" placeholder="Service e.g Makeup" value={service} />
         </div>
 
         <div className="main-search-input-item location">
@@ -160,9 +190,8 @@ class SearchBar extends Component {
 
         <button
           className="button"
-          disabled={searching}
           onClick={() => {
-            onSearch(service, suburb, postcode);
+            this.handleSearch();
           }}
         >
           Search
@@ -174,25 +203,17 @@ class SearchBar extends Component {
 
 SearchBar.defaultProps = {
   loading: false,
-  searching: false,
   services: [],
   addons: [],
-  service: '',
-  suburb: '',
-  postcode: '',
 };
 
 SearchBar.propTypes = {
   loading: PropTypes.bool,
-  searching: PropTypes.bool,
   services: PropTypes.array,
   addons: PropTypes.array,
-  service: PropTypes.string,
-  suburb: PropTypes.string,
-  postcode: PropTypes.string,
-  onSearch: PropTypes.func.isRequired,
 };
 
+// TODO: replace subscription with method
 export default withTracker(() => {
   const handleServices = Meteor.subscribe('services');
   const handleAddons = Meteor.subscribe('addons.system.name');
@@ -207,4 +228,4 @@ export default withTracker(() => {
     ).fetch(),
     addons: Addons.find().fetch(),
   };
-})(SearchBar);
+})(withRouter(SearchBar));
