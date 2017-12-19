@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { Image } from 'semantic-ui-react';
 
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
@@ -14,8 +15,6 @@ const UserProfilePage = ({ user }) => {
   }
 
   const { profile, stylist } = user;
-
-  const photo = profile.photo || Meteor.settings.public.image.defaultProfilePhoto;
 
   return (
     <div>
@@ -52,6 +51,14 @@ const UserProfilePage = ({ user }) => {
             {/* <!-- Titlebar --> */}
             <div id="titlebar" className="listing-titlebar">
               <div className="listing-titlebar-title">
+                <Image
+                  size="tiny"
+                  circular
+                  src={ScaledImageURL(
+                    profile.photo || Meteor.settings.public.image.defaultProfilePhoto,
+                    'tiny',
+                  )}
+                />
                 <h2>{`${profile.name.first} ${profile.name.last}`}</h2>
                 <span>
                   <div className="listing-address">
@@ -91,7 +98,7 @@ const UserProfilePage = ({ user }) => {
               <div className="pricing-list-container">
                 {stylist.services &&
                   stylist.services.map(service => (
-                    <div>
+                    <div key={service._id}>
                       <h4>{service.name}</h4>
                       <ul>
                         <li>
@@ -101,7 +108,7 @@ const UserProfilePage = ({ user }) => {
                         </li>
                         {service.addons &&
                           service.addons.map(addon => (
-                            <li>
+                            <li key={addon._id}>
                               <h5>{addon.name}</h5>
                               <p>{addon.description}</p>
                               <span>${addon.price}</span>
@@ -207,7 +214,7 @@ const UserProfilePage = ({ user }) => {
               <ul>
                 {stylist.openHours &&
                   stylist.openHours.map(openHour => (
-                    <li>
+                    <li key={openHour.day}>
                       {dayOfWeekAsString(openHour.day)}
                       <span>{OpenHourString(openHour)}</span>
                     </li>
