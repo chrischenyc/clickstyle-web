@@ -2,7 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import _ from 'lodash';
 
+import Loading from '../../components/Loading';
 import UserProfilePage from './UserProfilePage';
+import StylistProfilePage from './StylistProfilePage';
 
 class UserProfile extends Component {
   constructor(props) {
@@ -35,6 +37,11 @@ class UserProfile extends Component {
   }
 
   render() {
+    if (_.isNil(this.state.user)) {
+      return <Loading />;
+    } else if (this.state.user.stylist) {
+      return <StylistProfilePage user={this.state.user} />;
+    }
     return <UserProfilePage user={this.state.user} />;
   }
 }
