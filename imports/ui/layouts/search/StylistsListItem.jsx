@@ -15,6 +15,14 @@ const dummyBanners = [
   'http://res.cloudinary.com/stylesquard/image/upload/v1511499198/banner5_u7lgpc',
 ];
 
+const limitedArray = (objects, size) => {
+  if (objects.length >= size) {
+    return objects.slice(0, size);
+  }
+
+  return objects;
+};
+
 const StylistsListItem = ({ stylist }) => (
   <div className="col-lg-4 col-md-6 margin-bottom-20">
     <Link to={`/users/show/${stylist.owner}`} className="listing-item-container">
@@ -37,9 +45,12 @@ const StylistsListItem = ({ stylist }) => (
 
       <div className="listing-item-info">
         <div className="services-blurb">
-          {stylist.services.map(service => service.name).join(', ')}
+          {_.truncate(stylist.services.map(service => service.name).join(', '), {
+            length: 60,
+            separator: ', ',
+          })}
         </div>
-        {stylist.services.map(service => (
+        {limitedArray(stylist.services, 3).map(service => (
           <div key={service._id}>{`${service.name} from $${service.basePrice}`}</div>
         ))}
       </div>
