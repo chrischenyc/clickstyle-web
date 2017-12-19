@@ -2,11 +2,13 @@ import { createStore, combineReducers } from 'redux';
 import user from './user';
 import profile from './profile';
 import modal from './modal';
+import ui from './ui';
 
 const reducer = combineReducers({
   user,
   profile,
   modal,
+  ui,
 });
 
 /* eslint-disable no-underscore-dangle */

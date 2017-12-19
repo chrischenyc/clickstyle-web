@@ -13,7 +13,6 @@ import {
 } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import SideMenuContainer from '../../../components/SideMenuContainer';
 import StylistServiceItem from './StylistServiceItem';
 import { PrimaryColor } from '../../../../modules/client/constants';
 
@@ -95,62 +94,58 @@ class StylistServicesPage extends Component {
     );
 
     return (
-      <SideMenuContainer>
-        <Container>
-          <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-            <Divider horizontal>Services &amp; Prices</Divider>
+      <Container>
+        <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+          <p>TODO: write something to educate stylists what this page is about</p>
 
-            <p>TODO: write something to educate stylists what this page is about</p>
+          {selectedServices.map((service) => {
+            const addons = publicAddons.filter(addon => addon.serviceId === service._id);
 
-            {selectedServices.map((service) => {
-              const addons = publicAddons.filter(addon => addon.serviceId === service._id);
+            return (
+              <StylistServiceItem
+                key={service._id}
+                service={{ ...service, publicAddons: addons }}
+                onDelete={() => {
+                  onDeleteService(service);
+                }}
+                onChange={onChangeService}
+                errors={errors[service._id]}
+              />
+            );
+          })}
 
-              return (
-                <StylistServiceItem
-                  key={service._id}
-                  service={{ ...service, publicAddons: addons }}
-                  onDelete={() => {
-                    onDeleteService(service);
-                  }}
-                  onChange={onChangeService}
-                  errors={errors[service._id]}
-                />
-              );
-            })}
+          {availableServices.length > 0 && (
+            <p>
+              <Button
+                basic
+                color={PrimaryColor}
+                size="large"
+                content="Add more services"
+                icon="add circle"
+                type="button"
+                labelPosition="right"
+                onClick={() => {
+                  this.setState({ showAvailableServicesModal: true });
+                }}
+              />
+            </p>
+          )}
 
-            {availableServices.length > 0 && (
-              <p>
-                <Button
-                  basic
-                  color={PrimaryColor}
-                  size="large"
-                  content="Add more services"
-                  icon="add circle"
-                  type="button"
-                  labelPosition="right"
-                  onClick={() => {
-                    this.setState({ showAvailableServicesModal: true });
-                  }}
-                />
-              </p>
-            )}
+          <Button
+            color={PrimaryColor}
+            size="massive"
+            type="submit"
+            disabled={pristine}
+            loading={saving}
+          >
+            Save
+          </Button>
 
-            <Button
-              color={PrimaryColor}
-              size="massive"
-              type="submit"
-              disabled={pristine}
-              loading={saving}
-            >
-              Save
-            </Button>
+          {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+        </Form>
 
-            {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
-          </Form>
-
-          {availableServicesModal}
-        </Container>
-      </SideMenuContainer>
+        {availableServicesModal}
+      </Container>
     );
   }
 }

@@ -5,7 +5,6 @@ import { Container, Button, Form, Message, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
-import SideMenuContainer from '../../../components/SideMenuContainer';
 import { PrimaryColor } from '../../../../modules/client/constants';
 import EditPhotoPage from './EditPhotoPage';
 
@@ -23,44 +22,36 @@ const StylistPhotosPage = ({
   pristine,
   errors,
 }) => (
-  <SideMenuContainer>
-    <Container>
-      <Button color={PrimaryColor} as={Link} to={`/profiles/${profile._id}`}>
-        View stylist profile
+  <Container>
+    <Button color={PrimaryColor} as={Link} to={`/profiles/${profile._id}`}>
+      View stylist profile
+    </Button>
+    <Form
+      onSubmit={onSubmit}
+      loading={profile.fetching || saving}
+      error={!_.isEmpty(errors) || !_.isEmpty(photoError)}
+    >
+      <Divider horizontal>Banner image</Divider>
+
+      <EditPhotoPage
+        photo={photo}
+        onPhotoSelected={onPhotoSelected}
+        onPhotoUpload={onPhotoUpload}
+        onPhotoRemove={onPhotoRemove}
+        photoUploading={photoUploading}
+        photoPristine={photoPristine}
+        photoError={photoError}
+      />
+
+      <Divider horizontal>Portfolio images</Divider>
+
+      <Button color={PrimaryColor} size="large" type="submit" disabled={pristine} loading={saving}>
+        Save
       </Button>
-      <Form
-        onSubmit={onSubmit}
-        loading={profile.fetching || saving}
-        error={!_.isEmpty(errors) || !_.isEmpty(photoError)}
-      >
-        <Divider horizontal>Banner image</Divider>
 
-        <EditPhotoPage
-          photo={photo}
-          onPhotoSelected={onPhotoSelected}
-          onPhotoUpload={onPhotoUpload}
-          onPhotoRemove={onPhotoRemove}
-          photoUploading={photoUploading}
-          photoPristine={photoPristine}
-          photoError={photoError}
-        />
-
-        <Divider horizontal>Portfolio images</Divider>
-
-        <Button
-          color={PrimaryColor}
-          size="large"
-          type="submit"
-          disabled={pristine}
-          loading={saving}
-        >
-          Save
-        </Button>
-
-        {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
-      </Form>
-    </Container>
-  </SideMenuContainer>
+      {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+    </Form>
+  </Container>
 );
 
 StylistPhotosPage.defaultProps = {

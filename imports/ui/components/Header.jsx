@@ -1,175 +1,189 @@
 import { Meteor } from 'meteor/meteor';
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Menu, Dropdown, Responsive } from 'semantic-ui-react';
+import {
+  Container,
+  Dropdown,
+  Image,
+  Menu,
+  Visibility,
+  Responsive,
+  Button,
+} from 'semantic-ui-react';
 
 import { closeModal } from '../../modules/client/redux/modal';
-import ModalLink from '../components/ModalLink';
+import { toggleSlideMenu } from '../../modules/client/redux/ui';
+import ModalLink from './ModalLink';
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
+import SearchBar from './SearchBar/SearchBar';
 
-const StylistLandingPageLink = () => (
-  <Menu.Item as={Link} to="/join">
-    Are you a stylist?
-  </Menu.Item>
-);
+const menuStyle = {
+  border: 'none',
+  borderRadius: 0,
+  boxShadow: 'none',
+  transition: 'box-shadow 0.5s ease, padding 0.5s ease',
+  display: 'block',
+};
 
-/**
- * Header has a desktop/tablet version and a mobile phone version
- */
-const Header = props => (
-  <div>
-    <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-      <Menu fixed="top" size="massive" inverted borderless stackable>
-        <Menu.Item as={Link} to="/">
-          {Meteor.settings.public.appName}
-        </Menu.Item>
+const fixedMenuStyle = {
+  backgroundColor: '#fff',
+  border: '1px solid #ddd',
+  boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
+  display: 'block',
+};
 
-        {props.authenticated ? (
-          <Menu.Menu position="right">
-            {!props.isStylist && <StylistLandingPageLink />}
+class Header extends Component {
+  constructor(props) {
+    super(props);
 
-            <Dropdown text={props.firstName || 'Account'} className="item">
-              <Dropdown.Menu>
-                <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />
-                <Dropdown.Item as={Link} to="/inbox" text="Inbox" />
-                <Dropdown.Item as={Link} to="/profiles/edit" text="Profile" />
-                <Dropdown.Item as={Link} to="/settings" text="Settings" />
-                <Dropdown.Item
-                  text="Logout"
-                  onClick={() => {
-                    Meteor.logout();
-                  }}
-                />
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu.Menu>
-        ) : (
-          <Menu.Menu position="right">
-            {!props.isStylist && <StylistLandingPageLink />}
+    this.state = {
+      menuFixed: false,
+    };
+  }
 
-            <Menu.Item
-              as={ModalLink}
-              to="/signup"
-              component={
-                <SignUp
-                  modal
-                  onLoggedIn={() => {
-                    props.closeModal();
-                  }}
-                />
-              }
-              title="Join us"
-            >
-              Sign Up
-            </Menu.Item>
+  render() {
+    const { menuFixed } = this.state;
+    const {
+      authenticated, firstName, fullContent, searchBar,
+    } = this.props;
 
-            <Menu.Item
-              as={ModalLink}
-              to="/login"
-              component={
-                <Login
-                  modal
-                  onLoggedIn={() => {
-                    props.closeModal();
-                  }}
-                />
-              }
-              title="Log in to continue"
-            >
-              Log In
-            </Menu.Item>
-          </Menu.Menu>
-        )}
-      </Menu>
-    </Responsive>
+    return (
+      <Visibility
+        onBottomPassed={() => {
+          this.setState({ menuFixed: true });
+        }}
+        onBottomVisible={() => {
+          this.setState({ menuFixed: false });
+        }}
+        once={false}
+      >
+        <Menu
+          borderless
+          size="massive"
+          fixed={menuFixed ? 'top' : null}
+          style={menuFixed ? fixedMenuStyle : menuStyle}
+        >
+          <Container>
+            {fullContent && (
+              <Menu.Item id="logo">
+                <Link to="/">
+                  <Image src="/images/logo.png" alt="logo" />
+                </Link>
+              </Menu.Item>
+            )}
 
-    <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
-      <Menu fixed="top" size="massive" inverted borderless>
-        <Menu.Item as={Link} to="/">
-          {Meteor.settings.public.appName}
-        </Menu.Item>
+            <Responsive maxWidth={1024} as={Menu.Item}>
+              <Button
+                icon="bars"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.props.toggleSlideMenu();
+                }}
+              />
+            </Responsive>
 
-        <Menu.Menu position="right">
-          <Dropdown icon="content" className="item">
-            <Dropdown.Menu>
-              {!props.isStylist && <Dropdown.Item as={Link} to="/join" text="Are you a stylist?" />}
-              <Dropdown.Divider />
-
-              {props.authenticated && <Dropdown.Header>Account</Dropdown.Header>}
-              {props.authenticated && <Dropdown.Item as={Link} to="/dashboard" text="Dashboard" />}
-              {props.authenticated && <Dropdown.Item as={Link} to="/inbox" text="Inbox" />}
-              {props.authenticated && (
-                <Dropdown.Item as={Link} to="/profiles/edit" text="Profile" />
-              )}
-              {props.authenticated && <Dropdown.Item as={Link} to="/settings" text="Settings" />}
-              {props.authenticated && <Dropdown.Divider />}
-
-              {/* {props.authenticated && <Dropdown.Header>My Bookings</Dropdown.Header>}
-              {props.authenticated && <Dropdown.Item as={Link} to="/bookings" text="Bookings" />}
-              {props.authenticated && (
-                <Dropdown.Item as={Link} to="/favourites" text="My Favourites" />
-              )}
-              {props.authenticated && <Dropdown.Divider />} */}
-
-              {props.isStylist && <Dropdown.Header>Stylist</Dropdown.Header>}
-              {props.isStylist && (
-                <Dropdown.Item as={Link} to="/stylists/me/services" text="Service & Price List" />
-              )}
-              {props.isStylist && (
-                <Dropdown.Item as={Link} to="/stylists/me/available-time" text="Calendar" />
-              )}
-              {props.isStylist && (
-                <Dropdown.Item as={Link} to="/stylists/me/available-areas" text="Areas" />
-              )}
-              {props.isStylist && <Dropdown.Divider />}
-
-              {props.authenticated && (
-                <Dropdown.Item
-                  text="Logout"
-                  onClick={() => {
-                    Meteor.logout();
-                  }}
-                />
+            <Responsive minWidth={1025} as={Menu.Menu} position="right">
+              {fullContent && (
+                <Menu.Item as={Link} to="/join">
+                  Become a stylist
+                </Menu.Item>
               )}
 
-              {!props.authenticated && (
-                <Dropdown.Item as={Link} to="/signup">
-                  Sign up
-                </Dropdown.Item>
+              {fullContent && (
+                <Menu.Item as={Link} to="/help">
+                  Help
+                </Menu.Item>
               )}
 
-              {!props.authenticated && (
-                <Dropdown.Item as={Link} to="/login">
-                  Log in
-                </Dropdown.Item>
+              {!authenticated && (
+                <Menu.Item
+                  as={ModalLink}
+                  className="sign-in"
+                  to="/signup"
+                  component={
+                    <SignUp
+                      modal
+                      onLoggedIn={() => {
+                        this.props.closeModal();
+                      }}
+                    />
+                  }
+                  title="Join us"
+                >
+                  Sign Up
+                </Menu.Item>
               )}
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Menu>
-      </Menu>
-    </Responsive>
-  </div>
-);
+
+              {!authenticated && (
+                <Menu.Item
+                  as={ModalLink}
+                  className="sign-in"
+                  to="/login"
+                  component={
+                    <Login
+                      modal
+                      onLoggedIn={() => {
+                        this.props.closeModal();
+                      }}
+                    />
+                  }
+                  title="Log in to continue"
+                >
+                  Log In
+                </Menu.Item>
+              )}
+
+              {authenticated && (
+                <Dropdown text={firstName || ''} className="item" style={{ zIndex: '999' }}>
+                  <Dropdown.Menu>
+                    <Dropdown.Item as={Link} to="/users/dashboard" text="Dashboard" />
+                    <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
+                    <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
+                    <Dropdown.Item as={Link} to="/users/settings" text="Settings" />
+                    <Dropdown.Item
+                      text="Logout"
+                      onClick={() => {
+                        Meteor.logout();
+                      }}
+                    />
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
+            </Responsive>
+          </Container>
+
+          {searchBar && (
+            <Responsive minWidth={1025} className="container margin-bottom-10">
+              <SearchBar />
+            </Responsive>
+          )}
+        </Menu>
+      </Visibility>
+    );
+  }
+}
 
 Header.defaultProps = {
-  isStylist: false,
-  firstName: null,
+  firstName: '',
+  fullContent: true,
+  searchBar: false,
 };
 
 Header.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
-  isStylist: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
+  toggleSlideMenu: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
   firstName: PropTypes.string,
+  fullContent: PropTypes.bool, // if false, header links only contain user menu
+  searchBar: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
-  isStylist: state.user.isStylist,
-  firstName: state.profile.name && state.profile.name.first,
+  firstName: state.profile && state.profile.name && state.profile.name.first,
 });
 
-export default connect(mapStateToProps, { closeModal })(Header);
+export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(Header);

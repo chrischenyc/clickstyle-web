@@ -1,47 +1,37 @@
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment } from 'semantic-ui-react';
 
-import BannerSegment from './BannerSegment';
-import HowItWorksSegment from './HowItWorksSegment';
-import ArticlesSegment from './ArticlesSegment';
-import BookingsList from '../bookings/BookingsList';
-
-import Bookings from '../../../api/bookings/bookings';
+import HomeSearch from './HomeSearch';
+import HomeServices from './HomeServices';
+import HomeStylists from './HomeStylists';
+import HomeJoin from './HomeJoin';
 
 const HomePage = props => (
-  <div style={{ marginTop: '51px' }}>
-    <BannerSegment />
+  <div>
+    <HomeSearch />
 
-    <HowItWorksSegment />
+    {props.services &&
+      props.services.length > 0 &&
+      !props.authenticated && <HomeServices services={props.services} />}
 
-    <ArticlesSegment />
+    {props.stylists &&
+      props.stylists.length > 0 && (
+        <HomeStylists stylists={props.stylists} locationBased={props.isStylistsLocationBased} />
+      )}
 
-    <Segment
-      textAlign="center"
-      style={{
-        padding: '2rem 0',
-      }}
-      vertical
-    >
-      <BookingsList bookings={props.bookings} />
-    </Segment>
+    {props.services &&
+      props.services.length > 0 &&
+      props.authenticated && <HomeServices services={props.services} />}
+
+    <HomeJoin />
   </div>
 );
 
 HomePage.propTypes = {
-  bookingsLoading: PropTypes.bool.isRequired,
-  bookings: PropTypes.array.isRequired,
+  services: PropTypes.array.isRequired,
+  stylists: PropTypes.array.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  isStylistsLocationBased: PropTypes.bool.isRequired,
 };
 
-export default withTracker(() => {
-  const handle = Meteor.subscribe('bookings');
-
-  return {
-    bookingsLoading: !handle.ready(),
-    bookings: Bookings.find({}).fetch(),
-  };
-})(HomePage);
+export default HomePage;

@@ -9,35 +9,35 @@ import Profiles from '../../api/profiles/profiles';
 import { userSignedIn, userSignedOut } from '../../modules/client/redux/user';
 import { fetchProfile } from '../../modules/client/redux/profile';
 
-import SecureRoute from '../components/SecureRoute';
 import PublicRoute from '../components/PublicRoute';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import ModalContainer from '../components/ModalContainer';
+import SecureRoute from '../components/SecureRoute';
 
-import HomePage from '../layouts/home/HomePage';
+import SlideMenu from '../components/SlideMenu';
+import {
+  withHeaderAndFooter,
+  withSearchHeaderAndFooter,
+  withSideMenuAndHeader,
+} from '../components/HOC';
+import ModalContainer from '../components/ModalContainer';
 import NotFoundPage from '../layouts/NotFoundPage';
 
-import Profile from '../layouts/profiles/Profile';
-
+import Home from '../layouts/home/Home';
+import Contact from '../layouts/contact/Contact';
+import UserProfile from '../layouts/user-profile/UserProfile';
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
 import VerifyEmailPage from '../layouts/user/VerifyEmailPage';
 import ForgotPassword from '../layouts/user/ForgotPassword/ForgotPassword';
 import ResetPassword from '../layouts/user/ResetPassword/ResetPassword';
-import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
+import Search from '../layouts/search/Search';
+import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 
-import DashboardPage from '../layouts/user/DashboardPage';
+import Dashboard from '../layouts/user/DashboardPage';
 import EditProfile from '../layouts/user/Profile/EditProfile';
 import SettingsPage from '../layouts/user/SettingsPage';
+import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
 import InboxPage from '../layouts/user/InboxPage';
 
-import BookingsPage from '../layouts/bookings/BookingsPage';
-import ViewBooking from '../layouts/bookings/ViewBooking';
-import Search from '../layouts/search/Search';
-import EditBooking from '../layouts/bookings/EditBooking';
-
-import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 import StylistsApplication from '../layouts/stylists/StylistsApplication';
 import StylistServices from '../layouts/stylists/StylistServices/StylistServices';
 import StylistAvailability from '../layouts/stylists/StylistAvailability/StylistAvailability';
@@ -75,51 +75,62 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
-          <Route component={ScrollToTop} />
-          <Header />
+        <div id="outer-container">
+          <SlideMenu />
 
-          <Switch>
-            <Route exact path="/" component={HomePage} />
+          <main id="page-wrap">
+            <ScrollToTop />
 
-            <PublicRoute exact path="/login" component={Login} />
-            <PublicRoute exact path="/signup" component={SignUp} />
-            <Route path="/verify-email/:token" component={VerifyEmailPage} />
-            <Route exact path="/forgot-password" component={ForgotPassword} />
-            <Route path="/reset-password/:token" component={ResetPassword} />
+            <Switch>
+              <Route exact path="/" component={withHeaderAndFooter(Home)} />
+              <Route
+                path="/stylists/:service?/:suburb?/:postcode?"
+                component={withSearchHeaderAndFooter(Search)}
+              />
+              <Route path="/users/show/:_id" component={withHeaderAndFooter(UserProfile)} />
+              <Route path="/contact" component={withHeaderAndFooter(Contact)} />
+              <Route path="/join" component={withHeaderAndFooter(StylistsJoin)} />
 
-            <SecureRoute path="/users/:_id" component={Profile} />
+              <PublicRoute path="/login" component={withHeaderAndFooter(Login)} />
+              <PublicRoute path="/signup" component={withHeaderAndFooter(SignUp)} />
+              <Route path="/verify-email/:token" component={withHeaderAndFooter(VerifyEmailPage)} />
+              <Route path="/forgot-password" component={withHeaderAndFooter(ForgotPassword)} />
+              <Route path="/reset-password/:token" component={withHeaderAndFooter(ResetPassword)} />
 
-            <SecureRoute exact path="/dashboard" component={DashboardPage} />
-            <SecureRoute exact path="/profiles/edit" component={EditProfile} />
-            <SecureRoute exact path="/settings" component={SettingsPage} />
-            <SecureRoute exact path="/change-password" component={ChangePassword} />
-            <SecureRoute
-              exact
-              path="/reset-password"
-              component={props => <ForgotPassword {...props} embedded />}
-            />
-            <SecureRoute path="/inbox" component={InboxPage} />
+              <SecureRoute path="/users/dashboard" component={withSideMenuAndHeader(Dashboard)} />
+              <SecureRoute path="/users/profile" component={withSideMenuAndHeader(EditProfile)} />
+              <SecureRoute path="/users/inbox" component={withSideMenuAndHeader(InboxPage)} />
+              <SecureRoute path="/users/settings" component={withSideMenuAndHeader(SettingsPage)} />
+              <SecureRoute
+                path="/users/change-password"
+                component={withSideMenuAndHeader(ChangePassword)}
+              />
+              <SecureRoute
+                path="/users/reset-password"
+                component={withSideMenuAndHeader(ForgotPassword)}
+              />
+              <SecureRoute
+                path="/users/stylist/application"
+                component={withSideMenuAndHeader(StylistsApplication)}
+              />
+              <SecureRoute
+                path="/users/stylist/services"
+                component={withSideMenuAndHeader(StylistServices)}
+              />
+              <SecureRoute
+                path="/users/stylist/calendar"
+                component={withSideMenuAndHeader(StylistAvailability)}
+              />
+              <SecureRoute
+                path="/users/stylist/areas"
+                component={withSideMenuAndHeader(StylistAvailableAreas)}
+              />
 
-            <Route exact path="/bookings" component={BookingsPage} />
-            <SecureRoute exact path="/bookings/:_id" component={ViewBooking} />
-            <SecureRoute exact path="/bookings/:_id/edit" component={EditBooking} />
+              <Route component={withHeaderAndFooter(NotFoundPage)} />
+            </Switch>
 
-            <Route exact path="/join" component={StylistsJoin} />
-            <SecureRoute path="/join/application" component={StylistsApplication} />
-
-            <SecureRoute path="/stylists/me/services" component={StylistServices} />
-            <SecureRoute path="/stylists/me/available-time" component={StylistAvailability} />
-            <SecureRoute path="/stylists/me/available-areas" component={StylistAvailableAreas} />
-
-            <Route path="/stylists/:service?/:suburb?/:postcode?" component={Search} />
-
-            <Route component={NotFoundPage} />
-          </Switch>
-
-          {this.props.modalOpen && <Route to="/modal" component={ModalContainer} />}
-
-          <Footer />
+            {this.props.modalOpen && <Route to="/modal" component={ModalContainer} />}
+          </main>
         </div>
       </Router>
     );

@@ -1,0 +1,28 @@
+/* General sidebar styles */
+.bm-menu {
+  background: #ffffff;
+  padding: 2.5em 0.5em 0 0.5em;
+  font-size: 1.15em;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #333333;
+}
+
+.bm-menu a {
+  color: #333333;
+}
+.bm-menu a:hover,
+.bm-menu a:focus {
+  color: #00aca4;
+}
+
+.bm-item-list ul {
+  list-style: none;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,17 @@
+@media (max-width: 1024px) {
+  .slick-prev {
+    left: 10px;
+  }
+  [dir="rtl"] .slick-prev {
+    right: 10px;
+    left: auto;
+  }
+
+  .slick-next {
+    right: 10px;
+  }
+  [dir="rtl"] .slick-next {
+    right: auto;
+    left: 10px;
+  }
+}

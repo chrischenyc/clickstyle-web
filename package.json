@@ -9,7 +9,7 @@
     "dev": "MONGO_URL=mongodb://localhost:27017/stylesquad meteor -s settings-development.json",
     "start": "meteor run",
     "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001",
-    "cloc": "cloc imports client server public private --exclude-ext=json"
+    "cloc": "cloc imports client server private --exclude-ext=json"
   },
   "dependencies": {
     "@navjobs/upload": "^3.1.1",
@@ -27,11 +27,14 @@
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
     "react-avatar-editor": "^10.3.0",
+    "react-burger-menu": "^2.1.11",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-slick": "^0.16.0",
+    "react-typist": "^2.0.4",
     "redux": "^3.7.2",
-    "semantic-ui-react": "^0.76.0",
+    "semantic-ui-react": "^0.77.0",
     "uuid": "^3.1.0",
     "validator": "^9.0.0",
     "winston": "^2.4.0"

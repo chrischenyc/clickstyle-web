@@ -1,87 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Container, Header, Button } from 'semantic-ui-react';
+import { Responsive, Button } from 'semantic-ui-react';
 
-import SearchBar from './SearchBar/SearchBar';
-import StylistsList from './StylistsList';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import StylistsListItem from './StylistsListItem';
 import LoadMore from '../../components/LoadMore';
 import Loading from '../../components/Loading';
 
-import { PrimaryColor } from '../../../modules/client/constants.js';
+import { PrimaryColor } from '../../../modules/client/constants';
 
 const SearchPage = ({
-  onSearch,
-  onLoadMore,
-  searching,
-  searched,
-  stylists,
-  service,
-  suburb,
-  postcode,
-  hasMore,
-  foundNothing,
+  onLoadMore, searching, searched, stylists, hasMore, foundNothing,
 }) => (
-  <Container fluid style={{ marginTop: '51px', paddingTop: '1rem' }}>
-    <Container>
-      <SearchBar
-        onSearch={onSearch}
-        searching={searching}
-        service={service}
-        suburb={suburb}
-        postcode={postcode}
-        style={{ margin: '0' }}
-      />
+  <div className="container">
+    <Responsive maxWidth={1024} className="row margin-bottom-10">
+      <div className="col-md-12">
+        <SearchBar />
+      </div>
+    </Responsive>
 
-      <StylistsList stylists={stylists} />
+    <div className="row margin-top-20">
+      <div className="col-md-12">{searching && <Loading />}</div>
 
-      {!searched &&
-        !searching && <p>TODO: we need to display something on the empty search page</p>}
-    </Container>
+      {stylists.map(stylist => <StylistsListItem key={stylist._id} stylist={stylist} />)}
+    </div>
 
-    {searching && (
-      <Container>
-        <Loading />
-      </Container>
-    )}
+    <div className="row margin-top-50 margin-bottom-50">
+      <div className="col-md-12 centered-content">
+        {!searched &&
+          !searching && <p>TODO: we need to display something on the empty search page</p>}
 
-    {hasMore && (
-      <Container textAlign="center" style={{ margin: '1rem 0' }}>
-        <LoadMore searching={searching} onLoadMore={onLoadMore} />
-      </Container>
-    )}
+        {hasMore && (
+          <div>
+            <LoadMore searching={searching} onLoadMore={onLoadMore} />
+          </div>
+        )}
 
-    {foundNothing && (
-      <Container textAlign="center" style={{ margin: '1rem 0' }}>
-        <p style={{ fontSize: '1.5rem' }}>
-          Sorry, there are no providers that offer what you are looking for in area you selected.
-        </p>
-      </Container>
-    )}
+        {foundNothing && (
+          <h4>
+            Sorry, there are no providers that offer what you are looking for in area you selected.
+          </h4>
+        )}
 
-    {searched &&
-      !hasMore && (
-        <Container textAlign="center" style={{ margin: '1rem 0' }}>
-          <Header>Are we missing a stylist?</Header>
+        {searched &&
+          !hasMore && (
+            <div className="margin-top-25">
+              <h3>Are we missing a stylist?</h3>
 
-          <Button.Group size="large">
-            <Button>Suggest a stylist</Button>
-            <Button.Or />
-            <Button color={PrimaryColor} as={Link} to="/join">
-              Join as a stylist
-            </Button>
-          </Button.Group>
-        </Container>
-      )}
-  </Container>
+              <Button.Group size="large">
+                <Button>Suggest a stylist</Button>
+                <Button.Or />
+                <Button color={PrimaryColor} as={Link} to="/join">
+                  Join as a stylist
+                </Button>
+              </Button.Group>
+            </div>
+          )}
+      </div>
+    </div>
+  </div>
 );
 
 SearchPage.propTypes = {
-  onSearch: PropTypes.func.isRequired,
   onLoadMore: PropTypes.func.isRequired,
-  service: PropTypes.string.isRequired,
-  suburb: PropTypes.string.isRequired,
-  postcode: PropTypes.string.isRequired,
   searching: PropTypes.bool.isRequired,
   searched: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,

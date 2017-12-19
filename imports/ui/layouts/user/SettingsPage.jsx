@@ -1,23 +1,18 @@
 import React from 'react';
-import { Container, Header, List, Divider } from 'semantic-ui-react';
+import { Container, List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-import SideMenuContainer from '../../components/SideMenuContainer';
-
 const SettingsPage = () => (
-  <SideMenuContainer>
-    <Container>
-      <Divider horizontal>Password</Divider>
-      <List>
-        <List.Item>
-          <Link to="/change-password">Change Password</Link>
-        </List.Item>
-        <List.Item>
-          <Link to="/reset-password">Reset password</Link>
-        </List.Item>
-      </List>
-    </Container>
-  </SideMenuContainer>
+  <Container>
+    <List>
+      <List.Item>
+        <Link to="/users/change-password">Change Password</Link>
+      </List.Item>
+      <List.Item>
+        <Link to="/users/reset-password">Reset password</Link>
+      </List.Item>
+    </List>
+  </Container>
 );
 
 export default SettingsPage;

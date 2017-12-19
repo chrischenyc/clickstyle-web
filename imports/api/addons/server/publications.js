@@ -14,15 +14,3 @@ Meteor.publish('addons', () =>
       },
     },
   ));
-
-Meteor.publish('addons.system.name', () =>
-  Addons.find(
-    { published: true, createdBy: 'system' },
-    {
-      // hide fields in the return
-      fields: {
-        name: 1,
-        serviceId: 1,
-      },
-    },
-  ));
