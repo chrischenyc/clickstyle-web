@@ -13,8 +13,19 @@ import {
   SEONameToSuburbName,
 } from '../../../modules/seo-name';
 
-const aggregateSuburbPostcode = (suburb, postcode) =>
-  (suburb && suburb + (postcode ? ` ${postcode}` : '')) || '';
+const suburbString = (suburbObject) => {
+  if (!_.isNil(suburbObject) && !_.isNil(suburbObject.name)) {
+    let returnString = suburbObject.name;
+
+    if (!_.isNil(suburbObject.postcode)) {
+      returnString += ` ${suburbObject.postcode}`;
+    }
+
+    return returnString;
+  }
+
+  return '';
+};
 
 const suburbObject = (suburb, postcode) => (suburb && { name: suburb, postcode }) || null;
 
@@ -32,7 +43,7 @@ class SearchBar extends Component {
       isServicesListOpen: false,
       searchingSuburbs: false,
       matchedSuburbs: [],
-      selectedSuburb: suburbObject(suburb, postcode),
+      selectedSuburb: suburbObject(SEONameToSuburbName(suburb), postcode),
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
@@ -60,7 +71,7 @@ class SearchBar extends Component {
       service: (service && SEONameToServiceName(service)) || '',
       suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
       postcode: postcode || '',
-      selectedSuburb: suburbObject(suburb, postcode),
+      selectedSuburb: suburbObject(SEONameToSuburbName(suburb), postcode),
     });
   }
 
@@ -108,7 +119,6 @@ class SearchBar extends Component {
   handleSelectSuburb(selectedSuburb) {
     this.setState({
       selectedSuburb,
-      suburb: `${selectedSuburb.name} ${selectedSuburb.postcode}`,
     });
   }
 
@@ -169,7 +179,7 @@ class SearchBar extends Component {
         </div>
 
         <div className="main-search-input-item location">
-          <input type="text" placeholder="Suburb" value="" />
+          <input type="text" placeholder="Suburb" value={suburbString(selectedSuburb)} />
           <a href="#">
             <i className="fa fa-dot-circle-o" />
           </a>
