@@ -47,12 +47,8 @@ const HomeServices = ({ services }) => (
     <div className="row">
       <Slick {...slickSettings}>
         {services.map(service => (
-          <div style={{ padding: '0 4px' }}>
-            <Link
-              to={`/stylists/${ServiceNameToSEOName(service.name)}`}
-              className="category-box"
-              key={service._id}
-            >
+          <div key={service._id} style={{ padding: '0 4px' }}>
+            <Link to={`/stylists/${ServiceNameToSEOName(service.name)}`} className="category-box">
               <img
                 src={
                   service.photo
