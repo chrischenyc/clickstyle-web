@@ -196,7 +196,12 @@ Meteor.methods({
 
       // query Stylists
       const stylists = Stylists.find(selector, {
-        fields: { owner: 1, services: 1 },
+        fields: {
+          owner: 1,
+          'services._id': 1,
+          'services.basePrice': 1,
+          'services.name': 1,
+        },
         limit: SearchLimit,
         skip: offset,
       }).fetch();
@@ -212,7 +217,6 @@ Meteor.methods({
             'address.state': 1,
             'address.suburb': 1,
             photo: 1,
-            products: 1,
           },
         },
       ).fetch();

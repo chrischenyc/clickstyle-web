@@ -82,6 +82,17 @@
   position: relative;
 }
 
+.listing-item-container .listing-item-info {
+  padding: 8px;
+  color: #606060;
+  font-size: 15px;
+}
+
+.listing-item-container .listing-item-info .services-blurb {
+  color: #909090;
+  font-size: 12px;
+}
+
 /* 04-dashboard.css override */
 .dashboard-content {
   padding: 0 0 40px 0;

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Responsive, Button } from 'semantic-ui-react';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
-import StylistsList from './StylistsList';
+import StylistsListItem from './StylistsListItem';
 import LoadMore from '../../components/LoadMore';
 import Loading from '../../components/Loading';
 
@@ -37,11 +37,9 @@ const SearchPage = ({
     </Responsive>
 
     <div className="row margin-top-20">
-      <div className="col-md-12">
-        {searching && <Loading />}
+      <div className="col-md-12">{searching && <Loading />}</div>
 
-        <StylistsList stylists={stylists} />
-      </div>
+      {stylists.map(stylist => <StylistsListItem key={stylist._id} stylist={stylist} />)}
     </div>
 
     <div className="row margin-top-50 margin-bottom-50">

@@ -4,7 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import SideMenu from './SideMenu';
 
-export const withHeaderFooter = WrappedComponent => props => (
+export const withHeaderAndFooter = WrappedComponent => props => (
   <div>
     <Header />
     <WrappedComponent {...props} />
@@ -12,7 +12,15 @@ export const withHeaderFooter = WrappedComponent => props => (
   </div>
 );
 
-export const withSideMenu = WrappedComponent => props => (
+export const withSearchHeaderAndFooter = WrappedComponent => props => (
+  <div>
+    <Header searchBar />
+    <WrappedComponent {...props} />
+    <Footer />
+  </div>
+);
+
+export const withSideMenuAndHeader = WrappedComponent => props => (
   <div>
     <SideMenu />
     <div className="dashboard-content">

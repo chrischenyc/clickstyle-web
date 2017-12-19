@@ -155,7 +155,7 @@ class Header extends Component {
             </Responsive>
           </Container>
 
-          {!searchBar && (
+          {searchBar && (
             <Responsive minWidth={1025} className="container margin-bottom-10">
               <SearchBar />
             </Responsive>

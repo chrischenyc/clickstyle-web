@@ -13,7 +13,11 @@ import PublicRoute from '../components/PublicRoute';
 import SecureRoute from '../components/SecureRoute';
 
 import SlideMenu from '../components/SlideMenu';
-import { withHeaderFooter, withSideMenu } from '../components/HOC';
+import {
+  withHeaderAndFooter,
+  withSearchHeaderAndFooter,
+  withSideMenuAndHeader,
+} from '../components/HOC';
 import ModalContainer from '../components/ModalContainer';
 import NotFoundPage from '../layouts/NotFoundPage';
 
@@ -78,45 +82,51 @@ class App extends Component {
             <ScrollToTop />
 
             <Switch>
-              <Route exact path="/" component={withHeaderFooter(Home)} />
+              <Route exact path="/" component={withHeaderAndFooter(Home)} />
               <Route
                 path="/stylists/:service?/:suburb?/:postcode?"
-                component={withHeaderFooter(Search)}
+                component={withSearchHeaderAndFooter(Search)}
               />
-              <Route path="/users/show/:_id" component={withHeaderFooter(UserProfile)} />
-              <Route path="/contact" component={withHeaderFooter(Contact)} />
-              <Route path="/join" component={withHeaderFooter(StylistsJoin)} />
+              <Route path="/users/show/:_id" component={withHeaderAndFooter(UserProfile)} />
+              <Route path="/contact" component={withHeaderAndFooter(Contact)} />
+              <Route path="/join" component={withHeaderAndFooter(StylistsJoin)} />
 
-              <PublicRoute path="/login" component={withHeaderFooter(Login)} />
-              <PublicRoute path="/signup" component={withHeaderFooter(SignUp)} />
-              <Route path="/verify-email/:token" component={withHeaderFooter(VerifyEmailPage)} />
-              <Route path="/forgot-password" component={withHeaderFooter(ForgotPassword)} />
-              <Route path="/reset-password/:token" component={withHeaderFooter(ResetPassword)} />
+              <PublicRoute path="/login" component={withHeaderAndFooter(Login)} />
+              <PublicRoute path="/signup" component={withHeaderAndFooter(SignUp)} />
+              <Route path="/verify-email/:token" component={withHeaderAndFooter(VerifyEmailPage)} />
+              <Route path="/forgot-password" component={withHeaderAndFooter(ForgotPassword)} />
+              <Route path="/reset-password/:token" component={withHeaderAndFooter(ResetPassword)} />
 
-              <SecureRoute path="/users/dashboard" component={withSideMenu(Dashboard)} />
-              <SecureRoute path="/users/profile" component={withSideMenu(EditProfile)} />
-              <SecureRoute path="/users/inbox" component={withSideMenu(InboxPage)} />
-              <SecureRoute path="/users/settings" component={withSideMenu(SettingsPage)} />
-              <SecureRoute path="/users/change-password" component={withSideMenu(ChangePassword)} />
-              <SecureRoute path="/users/reset-password" component={withSideMenu(ForgotPassword)} />
+              <SecureRoute path="/users/dashboard" component={withSideMenuAndHeader(Dashboard)} />
+              <SecureRoute path="/users/profile" component={withSideMenuAndHeader(EditProfile)} />
+              <SecureRoute path="/users/inbox" component={withSideMenuAndHeader(InboxPage)} />
+              <SecureRoute path="/users/settings" component={withSideMenuAndHeader(SettingsPage)} />
+              <SecureRoute
+                path="/users/change-password"
+                component={withSideMenuAndHeader(ChangePassword)}
+              />
+              <SecureRoute
+                path="/users/reset-password"
+                component={withSideMenuAndHeader(ForgotPassword)}
+              />
               <SecureRoute
                 path="/users/stylist/application"
-                component={withSideMenu(StylistsApplication)}
+                component={withSideMenuAndHeader(StylistsApplication)}
               />
               <SecureRoute
                 path="/users/stylist/services"
-                component={withSideMenu(StylistServices)}
+                component={withSideMenuAndHeader(StylistServices)}
               />
               <SecureRoute
                 path="/users/stylist/calendar"
-                component={withSideMenu(StylistAvailability)}
+                component={withSideMenuAndHeader(StylistAvailability)}
               />
               <SecureRoute
                 path="/users/stylist/areas"
-                component={withSideMenu(StylistAvailableAreas)}
+                component={withSideMenuAndHeader(StylistAvailableAreas)}
               />
 
-              <Route component={withHeaderFooter(NotFoundPage)} />
+              <Route component={withHeaderAndFooter(NotFoundPage)} />
             </Switch>
 
             {this.props.modalOpen && <Route to="/modal" component={ModalContainer} />}
