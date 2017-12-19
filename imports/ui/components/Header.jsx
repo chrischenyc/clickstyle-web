@@ -15,21 +15,24 @@ import {
 
 import { closeModal } from '../../modules/client/redux/modal';
 import { toggleSlideMenu } from '../../modules/client/redux/ui';
-import ModalLink from '../components/ModalLink';
+import ModalLink from './ModalLink';
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
+import SearchBar from './SearchBar/SearchBar';
 
 const menuStyle = {
   border: 'none',
   borderRadius: 0,
   boxShadow: 'none',
   transition: 'box-shadow 0.5s ease, padding 0.5s ease',
+  display: 'block',
 };
 
 const fixedMenuStyle = {
   backgroundColor: '#fff',
   border: '1px solid #ddd',
   boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
+  display: 'block',
 };
 
 class Header extends Component {
@@ -43,7 +46,9 @@ class Header extends Component {
 
   render() {
     const { menuFixed } = this.state;
-    const { authenticated, firstName, fullContent } = this.props;
+    const {
+      authenticated, firstName, fullContent, searchBar,
+    } = this.props;
 
     return (
       <Visibility
@@ -149,6 +154,12 @@ class Header extends Component {
               )}
             </Responsive>
           </Container>
+
+          {!searchBar && (
+            <Responsive minWidth={1025} className="container margin-bottom-10">
+              <SearchBar />
+            </Responsive>
+          )}
         </Menu>
       </Visibility>
     );
@@ -159,6 +170,7 @@ Header.defaultProps = {
   firstName: '',
   photo: '',
   fullContent: true,
+  searchBar: false,
 };
 
 Header.propTypes = {
@@ -167,7 +179,8 @@ Header.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   firstName: PropTypes.string,
   photo: PropTypes.string,
-  fullContent: PropTypes.bool,
+  fullContent: PropTypes.bool, // if false, header links only contain user menu
+  searchBar: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({

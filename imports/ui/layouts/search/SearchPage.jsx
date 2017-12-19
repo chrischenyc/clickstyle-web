@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Container, Header, Button } from 'semantic-ui-react';
+import { Responsive, Button } from 'semantic-ui-react';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
 import StylistsList from './StylistsList';
@@ -23,7 +23,7 @@ const SearchPage = ({
   foundNothing,
 }) => (
   <div className="container">
-    <div className="row">
+    <Responsive maxWidth={1024} className="row margin-bottom-10">
       <div className="col-md-12">
         <SearchBar
           onSearch={onSearch}
@@ -34,7 +34,7 @@ const SearchPage = ({
           style={{ margin: '0' }}
         />
       </div>
-    </div>
+    </Responsive>
 
     <div className="row margin-top-20">
       <div className="col-md-12">
