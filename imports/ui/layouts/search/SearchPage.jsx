@@ -22,58 +22,62 @@ const SearchPage = ({
   hasMore,
   foundNothing,
 }) => (
-  <Container fluid style={{ marginTop: '51px', paddingTop: '1rem' }}>
-    <Container>
-      <SearchBar
-        onSearch={onSearch}
-        searching={searching}
-        service={service}
-        suburb={suburb}
-        postcode={postcode}
-        style={{ margin: '0' }}
-      />
+  <div className="container">
+    <div className="row">
+      <div className="col-md-12">
+        <SearchBar
+          onSearch={onSearch}
+          searching={searching}
+          service={service}
+          suburb={suburb}
+          postcode={postcode}
+          style={{ margin: '0' }}
+        />
+      </div>
+    </div>
 
-      <StylistsList stylists={stylists} />
+    <div className="row margin-top-20">
+      <div className="col-md-12">
+        {searching && <Loading />}
 
-      {!searched &&
-        !searching && <p>TODO: we need to display something on the empty search page</p>}
-    </Container>
+        <StylistsList stylists={stylists} />
+      </div>
+    </div>
 
-    {searching && (
-      <Container>
-        <Loading />
-      </Container>
-    )}
+    <div className="row margin-top-50 margin-bottom-50">
+      <div className="col-md-12 centered-content">
+        {!searched &&
+          !searching && <p>TODO: we need to display something on the empty search page</p>}
 
-    {hasMore && (
-      <Container textAlign="center" style={{ margin: '1rem 0' }}>
-        <LoadMore searching={searching} onLoadMore={onLoadMore} />
-      </Container>
-    )}
+        {hasMore && (
+          <div>
+            <LoadMore searching={searching} onLoadMore={onLoadMore} />
+          </div>
+        )}
 
-    {foundNothing && (
-      <Container textAlign="center" style={{ margin: '1rem 0' }}>
-        <p style={{ fontSize: '1.5rem' }}>
-          Sorry, there are no providers that offer what you are looking for in area you selected.
-        </p>
-      </Container>
-    )}
+        {foundNothing && (
+          <h4>
+            Sorry, there are no providers that offer what you are looking for in area you selected.
+          </h4>
+        )}
 
-    {searched &&
-      !hasMore && (
-        <Container textAlign="center" style={{ margin: '1rem 0' }}>
-          <Header>Are we missing a stylist?</Header>
+        {searched &&
+          !hasMore && (
+            <div className="margin-top-25">
+              <h3>Are we missing a stylist?</h3>
 
-          <Button.Group size="large">
-            <Button>Suggest a stylist</Button>
-            <Button.Or />
-            <Button color={PrimaryColor} as={Link} to="/join">
-              Join as a stylist
-            </Button>
-          </Button.Group>
-        </Container>
-      )}
-  </Container>
+              <Button.Group size="large">
+                <Button>Suggest a stylist</Button>
+                <Button.Or />
+                <Button color={PrimaryColor} as={Link} to="/join">
+                  Join as a stylist
+                </Button>
+              </Button.Group>
+            </div>
+          )}
+      </div>
+    </div>
+  </div>
 );
 
 SearchPage.propTypes = {
