@@ -18,37 +18,13 @@ const UserProfilePage = ({ user }) => {
 
   return (
     <div>
-      <div className="listing-slider mfp-gallery-container margin-bottom-0">
-        <a
-          href="images/single-listing-01.jpg"
-          data-background-image="images/single-listing-01.jpg"
-          className="item mfp-gallery"
-          title="Title 1"
-        />
-        <a
-          href="images/single-listing-02.jpg"
-          data-background-image="images/single-listing-02.jpg"
-          className="item mfp-gallery"
-          title="Title 3"
-        />
-        <a
-          href="images/single-listing-03.jpg"
-          data-background-image="images/single-listing-03.jpg"
-          className="item mfp-gallery"
-          title="Title 2"
-        />
-        <a
-          href="images/single-listing-04.jpg"
-          data-background-image="images/single-listing-04.jpg"
-          className="item mfp-gallery"
-          title="Title 4"
-        />
-      </div>
+      {/* TODO: add stylist portfolio carousal */}
 
       <div className="container">
         <div className="row sticky-wrapper">
+          {/* -- Content -- */}
           <div className="col-lg-8 col-md-8 padding-right-30">
-            {/* <!-- Titlebar --> */}
+            {/* <!-- Title bar --> */}
             <div id="titlebar" className="listing-titlebar">
               <div className="listing-titlebar-title">
                 <Image
@@ -168,6 +144,7 @@ const UserProfilePage = ({ user }) => {
               </section>
             </div>
           </div>
+          {/* -- Content / End -- */}
 
           {/* <!-- Sidebar --> */}
           <div className="col-lg-4 col-md-4 margin-top-75 sticky">
@@ -251,7 +228,6 @@ const UserProfilePage = ({ user }) => {
               <div className="clearfix" />
             </div>
           </div>
-
           {/* <!-- Sidebar / End --> */}
         </div>
       </div>
