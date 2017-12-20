@@ -79,9 +79,8 @@ Meteor.methods({
         let displayOrder = index;
         if (suburbName) {
           // TODO: stylists sorting
-          displayOrder = index;
         } else {
-          displayOrder = homeFeaturedStylists[index].displayOrder;
+          displayOrder = homeFeaturedStylists.filter(featuredStylist => featuredStylist.owner === stylist.owner)[0].displayOrder;
         }
 
         const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
