@@ -10,9 +10,9 @@ import SecureLink from '../../components/SecureLink';
 const StylistsJoinPage = props => (
   <div className="container">
     <div className="margin-top-80">
-      <div className="row vertical-align">
-        <div className="col-lg-6 col-sm-6">
-          <div className="centered-content">
+      <div className="row">
+        <div className="col-lg-6 col-sm-12">
+          <div className="centered-content margin-top-50 margin-bottom-50">
             <h2 className="headline">
               Become a stylist and start your business on {Meteor.settings.public.appName}
             </h2>
@@ -31,7 +31,7 @@ const StylistsJoinPage = props => (
           </div>
         </div>
 
-        <div className="col-lg-6 col-sm-6">
+        <div className="col-lg-6 col-sm-12">
           <img src="images/placeholder-bg.jpg" alt="" />
         </div>
       </div>
@@ -175,12 +175,12 @@ const StylistsJoinPage = props => (
     </div>
 
     <div className="margin-top-80 margin-bottom-80">
-      <div className="row vertical-align">
-        <div className="col-lg-6 col-sm-6">
+      <div className="row">
+        <div className="col-lg-6 col-sm-12">
           <img src="images/placeholder-bg.jpg" alt="" />
         </div>
-        <div className="col-lg-6 col-sm-6">
-          <div className="centered-content">
+        <div className="col-lg-6 col-sm-12">
+          <div className="centered-content margin-top-60 margin-bottom-60">
             <h2 className="headline">Start your journey here</h2>
             <SecureLink
               className="button border"

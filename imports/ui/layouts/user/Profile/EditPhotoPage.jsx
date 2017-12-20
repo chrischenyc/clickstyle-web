@@ -124,7 +124,7 @@ class EditPhotoPage extends Component {
         ) : (
           <div>
             <Image
-              src={ScaledImageURL(displayPhotoUrl, 'small')}
+              src={ScaledImageURL(displayPhotoUrl, 'medium')}
               width={ImageSize}
               height={ImageSize}
             />
