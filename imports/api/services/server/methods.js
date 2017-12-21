@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+import _ from 'lodash';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Services from '../services';
@@ -29,13 +30,13 @@ Meteor.methods({
       throw new Meteor.Error('500');
     }
   },
-  'services.and.addons': function servicesAndAddons(data) {
+  'services.keywords': function servicesAndAddons(data) {
     check(data, Object);
 
     try {
       const services = Services.find(
         {},
-        { sort: { displayOrder: 1 }, fields: { name: 1, photo: 1 } },
+        { sort: { displayOrder: 1 }, fields: { name: 1 } },
       ).fetch();
 
       const systemAddons = Addons.find(
@@ -48,10 +49,21 @@ Meteor.methods({
         },
       ).fetch();
 
-      return services.map(service => ({
-        ...service,
-        addons: systemAddons.filter(addon => addon.serviceId === service._id),
-      }));
+      const names = [];
+
+      services.forEach((service) => {
+        if (!_.includes(names, service.name)) {
+          names.push(service.name);
+        }
+
+        systemAddons.filter(addon => addon.serviceId === service._id).forEach((addon) => {
+          if (!_.includes(names, addon.name)) {
+            names.push(addon.name);
+          }
+        });
+      });
+
+      return names;
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -62,7 +74,7 @@ Meteor.methods({
 });
 
 rateLimit({
-  methods: ['featured.home.services', 'services.and.addons'],
+  methods: ['featured.home.services', 'services.keywords'],
   limit: 5,
   timeRange: 1000,
 });

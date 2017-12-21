@@ -10,3 +10,8 @@
   background: none;
   color: #00aca4;
 }
+
+.search .results {
+  overflow-y: auto;
+  max-height: 300px;
+}

@@ -1,11 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Search } from 'semantic-ui-react';
 
 import _ from 'lodash';
 
-import ServicesList from './ServicesList';
-import servicesKeywordMatch from '../../../modules/services-keyword-match';
 import {
   ServiceNameToSEOName,
   SEONameToServiceName,
@@ -36,30 +35,30 @@ class SearchBar extends Component {
     const { service, suburb, postcode } = props.match.params;
 
     this.state = {
-      service: (service && SEONameToServiceName(service)) || '',
-      suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
-      postcode: postcode || '',
-      services: null,
-      isServicesListOpen: false,
-      searchingSuburbs: false,
+      service: (service && SEONameToServiceName(service)) || '', // value of service input
+      services: [], // services/addons keywords search data source
+      matchedServices: [],
+      suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '', // value of suburb input
+      searchingSuburb: false,
       matchedSuburbs: [],
       selectedSuburb: suburbObject(SEONameToSuburbName(suburb), postcode),
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
     this.handleServiceSelection = this.handleServiceSelection.bind(this);
-    this.handleServiceInputKeyDown = this.handleServiceInputKeyDown.bind(this);
+
     this.handleSuburbChange = this.handleSuburbChange.bind(this);
-    this.handleSelectSuburb = this.handleSelectSuburb.bind(this);
+    this.handleSuburbSelection = this.handleSuburbSelection.bind(this);
   }
 
   componentDidMount() {
-    Meteor.call('services.and.addons', {}, (error, services) => {
-      if (error) {
-        console.log('error', error);
-      }
+    Meteor.call('services.keywords', {}, (error, services) => {
       if (services) {
-        this.setState({ services });
+        this.setState({
+          services: services.map(service => ({
+            title: service,
+          })),
+        });
       }
     });
   }
@@ -70,27 +69,19 @@ class SearchBar extends Component {
     this.setState({
       service: (service && SEONameToServiceName(service)) || '',
       suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
-      postcode: postcode || '',
       selectedSuburb: suburbObject(SEONameToSuburbName(suburb), postcode),
     });
   }
 
-  handleServiceChange(service) {
+  handleServiceChange(data) {
     this.setState({
-      service,
-      isServicesListOpen: servicesKeywordMatch(this.state.services, service).length > 0,
+      service: data.value,
+      matchedServices: this.state.services.filter(service => service.title.toLowerCase().indexOf(data.value.toLowerCase()) !== -1),
     });
   }
 
   handleServiceSelection(service) {
-    this.setState({ service, isServicesListOpen: false });
-  }
-
-  handleServiceInputKeyDown(event) {
-    if (event.which === 13 && !_.isEmpty(this.state.service)) {
-      // 'Enter'
-      this.setState({ isServicesListOpen: false });
-    }
+    this.setState({ service: service.title });
   }
 
   handleSuburbChange(data) {
@@ -99,11 +90,11 @@ class SearchBar extends Component {
     this.setState({ suburb: data.value, selectedSuburb: null });
 
     if (_.isEmpty(data.value)) {
-      this.setState({ searchingSuburbs: false, matchedSuburbs: [] });
-    } else if (data.value.length >= 2) {
-      this.setState({ searchingSuburbs: true });
+      this.setState({ searchingSuburb: false, matchedSuburbs: [] });
+    } else {
+      this.setState({ searchingSuburb: true });
       Meteor.call('suburbs.search.published', data.value, (error, suburbs) => {
-        this.setState({ searchingSuburbs: false });
+        this.setState({ searchingSuburb: false });
         if (!error) {
           this.setState({
             matchedSuburbs: suburbs.map(suburb => ({
@@ -116,20 +107,25 @@ class SearchBar extends Component {
     }
   }
 
-  handleSelectSuburb(selectedSuburb) {
+  handleSuburbSelection(selectedSuburb) {
     this.setState({
       selectedSuburb,
+      suburb: suburbString(selectedSuburb),
     });
   }
 
   handleSearch() {
     const { service, selectedSuburb } = this.state;
 
-    this.redirectToSearch(
-      service,
-      selectedSuburb && selectedSuburb.name,
-      selectedSuburb && selectedSuburb.postcode,
-    );
+    if (!_.isEmpty(service)) {
+      this.redirectToSearch(
+        service,
+        selectedSuburb && selectedSuburb.name,
+        selectedSuburb && selectedSuburb.postcode,
+      );
+    } else {
+      // TODO: prompt user to select service
+    }
   }
 
   /**
@@ -162,24 +158,46 @@ class SearchBar extends Component {
 
   render() {
     const {
-      service,
-      suburb,
-      postcode,
-      services,
-      isServicesListOpen,
-      searchingSuburbs,
-      matchedSuburbs,
-      selectedSuburb,
+      service, matchedServices, suburb, searchingSuburb, matchedSuburbs,
     } = this.state;
 
     return (
       <div className="main-search-input">
         <div className="main-search-input-item">
-          <input type="text" placeholder="Service e.g Makeup" value={service} />
+          <Search
+            input={<input type="text" />}
+            name="service"
+            placeholder="Service e.g Makeup"
+            value={service}
+            onResultSelect={(e, { result }) => {
+              this.handleServiceSelection(result);
+            }}
+            onSearchChange={(e, data) => {
+              this.handleServiceChange(data);
+            }}
+            results={matchedServices}
+            showNoResults={false}
+          />
         </div>
 
         <div className="main-search-input-item location">
-          <input type="text" placeholder="Suburb" value={suburbString(selectedSuburb)} />
+          <Search
+            input={<input type="text" />}
+            name="suburb"
+            placeholder="Suburb"
+            value={suburb}
+            minCharacters={2}
+            loading={searchingSuburb}
+            onResultSelect={(e, { result }) => {
+              this.handleSuburbSelection(result);
+            }}
+            onSearchChange={(e, data) => {
+              this.handleSuburbChange(data);
+            }}
+            results={matchedSuburbs}
+            showNoResults={false}
+          />
+
           <a href="#">
             <i className="fa fa-dot-circle-o" />
           </a>
