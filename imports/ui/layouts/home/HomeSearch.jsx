@@ -29,7 +29,7 @@ const HomeSearch = () => (
             </h4>
           </div>
 
-          <div className="col-md-12" style={{ marginTop: '50px' }}>
+          <div className="col-md-12 margin-top-20">
             <SearchBar />
           </div>
         </div>
