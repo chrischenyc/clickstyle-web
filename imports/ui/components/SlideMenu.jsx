@@ -73,7 +73,7 @@ const SlideMenu = props => (
 
       {props.authenticated && (
         <li>
-          Accounts
+          <p>Accounts</p>
           <ul>
             <li>
               <Link
@@ -123,7 +123,7 @@ const SlideMenu = props => (
 
       {props.isStylist && (
         <li>
-          Stylist
+          <p>Stylist</p>
           <ul>
             <li>
               <Link

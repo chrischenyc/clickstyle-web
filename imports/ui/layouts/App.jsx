@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Responsive } from 'semantic-ui-react';
 
 import Profiles from '../../api/profiles/profiles';
 import { userSignedIn, userSignedOut } from '../../modules/client/redux/user';
@@ -76,7 +77,7 @@ class App extends Component {
     return (
       <Router>
         <div id="outer-container">
-          <SlideMenu />
+          <Responsive maxWidth={1024} as={SlideMenu} />
 
           <main id="page-wrap">
             <ScrollToTop />

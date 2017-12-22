@@ -2,7 +2,7 @@
 .bm-menu {
   background: #ffffff;
   padding: 2.5em 0.5em 0 0.5em;
-  font-size: 1.15em;
+  font-size: 1.5em;
 }
 
 /* Color/shape of close button cross */
@@ -20,6 +20,10 @@
 
 .bm-item-list ul {
   list-style: none;
+}
+
+.bm-item-list ul li {
+  padding: 0.5em 0;
 }
 
 /* Styling of overlay */
