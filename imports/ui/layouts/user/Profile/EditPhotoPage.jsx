@@ -59,27 +59,35 @@ class EditPhotoPage extends Component {
 
             <p>Your photo will appear on your public profile</p>
 
-            <span>Zoom&nbsp;</span>
-            <input
-              type="range"
-              min="100"
-              max="300"
-              defaultValue="100"
-              disabled={photoUploading}
-              onChange={(event) => {
-                this.setState({ scale: event.target.value / 100.0 });
+            <div
+              style={{
+                display: 'table-cell',
+                verticalAlign: 'middle',
               }}
-            />
+            >
+              <span>Zoom&nbsp;</span>
+              <input
+                type="range"
+                min="100"
+                max="300"
+                defaultValue="100"
+                disabled={photoUploading}
+                onChange={(event) => {
+                  this.setState({ scale: event.target.value / 100.0 });
+                }}
+                style={{ width: '200px', display: 'inline-block', height: '100%' }}
+              />
 
-            <span>&nbsp;&nbsp;Rotate&nbsp;</span>
+              <span>&nbsp;&nbsp;Rotate&nbsp;</span>
 
-            <Button
-              icon="repeat"
-              onClick={(event) => {
-                event.preventDefault();
-                this.setState({ rotate: rotate + 90 });
-              }}
-            />
+              <Button
+                icon="repeat"
+                onClick={(event) => {
+                  event.preventDefault();
+                  this.setState({ rotate: rotate + 90 });
+                }}
+              />
+            </div>
 
             <div>
               <Button.Group>

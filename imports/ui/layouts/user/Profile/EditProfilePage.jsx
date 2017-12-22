@@ -44,8 +44,6 @@ const EditProfilePage = ({
       loading={profile.fetching || saving}
       error={!_.isEmpty(errors) || !_.isEmpty(photoError)}
     >
-      <Divider horizontal>Photo</Divider>
-
       <EditPhotoPage
         photo={photo}
         onPhotoSelected={onPhotoSelected}
