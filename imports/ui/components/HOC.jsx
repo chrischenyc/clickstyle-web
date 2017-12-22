@@ -34,17 +34,7 @@ export const withSideMenuAndHeader = WrappedComponent => props => (
 );
 
 export const withLoading = (WrappedComponent) => {
-  const hoc = props => (
-    <WrappedComponent
-      {...props}
-      showLoading={() => {
-        props.showLoading();
-      }}
-      hideLoading={() => {
-        props.hideLoading();
-      }}
-    />
-  );
+  const hoc = props => <WrappedComponent {...props} />;
 
   hoc.propTypes = {
     showLoading: PropTypes.func.isRequired,
