@@ -3,16 +3,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  Container,
-  Dropdown,
-  Image,
-  Menu,
-  Visibility,
-  Responsive,
-  Button,
-} from 'semantic-ui-react';
+import { Container, Dropdown, Image, Menu, Responsive, Button } from 'semantic-ui-react';
 import Sticky from 'react-stickynode';
+import LoadingBar from 'react-redux-loading-bar';
 
 import { closeModal } from '../../modules/client/redux/modal';
 import { toggleSlideMenu } from '../../modules/client/redux/ui';
@@ -59,6 +52,7 @@ class Header extends Component {
         innerZ={999}
       >
         <Menu borderless size="massive" style={menuFixed ? fixedMenuStyle : menuStyle}>
+          <LoadingBar style={{ backgroundColor: '#00aca4' }} />
           <Container>
             {fullContent && (
               <Menu.Item id="logo">

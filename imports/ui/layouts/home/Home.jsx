@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
 import HomePage from './HomePage';
 
@@ -18,38 +18,41 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.loadStylists();
-
-    this.loadServices();
+    this.loadData();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.authenticated !== this.props.authenticated) {
-      this.loadStylists();
+      this.loadData();
     }
   }
 
-  loadServices() {
-    Meteor.call('featured.home.services', {}, (error, services) => {
-      if (error) {
-        console.log('error', error);
-      }
+  loadData() {
+    this.props.showLoading();
 
-      if (services) {
-        this.setState({ services });
-      }
-    });
-  }
-
-  loadStylists() {
-    Meteor.call('featured.home.stylists', {}, (error, { stylists, locationBased }) => {
-      if (error) {
-        console.log('error', error);
-      }
-
-      if (stylists) {
-        this.setState({ stylists, isStylistsLocationBased: locationBased });
-      }
+    Promise.all([
+      new Promise((resolve, reject) => {
+        Meteor.call('featured.home.services', {}, (error, services) => {
+          if (error) {
+            reject(error);
+          } else {
+            this.setState({ services });
+            resolve();
+          }
+        });
+      }),
+      new Promise((resolve, reject) => {
+        Meteor.call('featured.home.stylists', {}, (error, { stylists, locationBased }) => {
+          if (error) {
+            reject(error);
+          } else {
+            this.setState({ stylists, isStylistsLocationBased: locationBased });
+            resolve();
+          }
+        });
+      }),
+    ]).then(() => {
+      this.props.hideLoading();
     });
   }
 
@@ -67,10 +70,12 @@ class Home extends Component {
 
 Home.propTypes = {
   authenticated: PropTypes.bool.isRequired,
+  showLoading: PropTypes.func.isRequired,
+  hideLoading: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
 });
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, { showLoading, hideLoading })(Home);

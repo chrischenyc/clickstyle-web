@@ -3,12 +3,14 @@ import user from './user';
 import profile from './profile';
 import modal from './modal';
 import ui from './ui';
+import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
 
 const reducer = combineReducers({
   user,
   profile,
   modal,
   ui,
+  loadingBar,
 });
 
 /* eslint-disable no-underscore-dangle */
