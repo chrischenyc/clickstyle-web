@@ -79,17 +79,17 @@ const Footer = () => {
 
             <ul className="social-icons margin-top-20">
               <li>
-                <a className="facebook" href={facebookUrl}>
+                <a className="facebook" href={facebookUrl} target="_blank">
                   <i className="icon-facebook" />
                 </a>
               </li>
               <li>
-                <a className="twitter" href={twitterUrl}>
+                <a className="twitter" href={twitterUrl} target="_blank">
                   <i className="icon-twitter" />
                 </a>
               </li>
               <li>
-                <a className="instagram" href={instagramUrl}>
+                <a className="instagram" href={instagramUrl} target="_blank">
                   <i className="icon-instagram" />
                 </a>
               </li>
@@ -111,7 +111,7 @@ const Footer = () => {
             <div className="copyrights">
               Made with lots of&nbsp;<span role="img" aria-label="love">
                 ❤️
-                                     </span>&nbsp;&nbsp;in Melbourne
+              </span>&nbsp;&nbsp;in Melbourne
             </div>
           </div>
         </div>
