@@ -111,9 +111,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-12">
             <div className="copyrights">
-              Made with lots of&nbsp;<span role="img" aria-label="love">
-                ❤️
-              </span>&nbsp;&nbsp;in Melbourne
+              Made with lots of&nbsp;<img src="/images/heart.png" alt="" />&nbsp;in Melbourne
             </div>
           </div>
         </div>
