@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
 import { userSignedIn } from '../../modules/client/redux/user';
 
@@ -35,7 +35,6 @@ const SocialLoginButtons = props => (
         );
       }}
     >
-      <Icon name="facebook f" />
       {props.isSignUp ? 'Sign up with Facebook' : 'Log in with Facebook'}
     </Button>
 
@@ -68,7 +67,6 @@ const SocialLoginButtons = props => (
         );
       }}
     >
-      <Icon name="google" color="red" />
       {props.isSignUp ? 'Sign up with Google' : 'Log in with Google'}
     </Button>
   </div>
