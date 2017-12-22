@@ -81,7 +81,7 @@ class Search extends Component {
       },
       (error, result) => {
         this.props.hideLoading();
-        this.setState({ searching: false, searched: true });
+        // this.setState({ searching: false, searched: true });
 
         if (error) {
           this.setState({ error });

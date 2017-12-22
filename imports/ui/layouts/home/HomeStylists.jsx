@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Slick from 'react-slick';
+import LoadingBubbles from '../../components/LoadingBubbles';
 
 import HomeStylistsItem from './HomeStylistsItem';
 
@@ -83,15 +84,19 @@ class HomeStylists extends Component {
         </div>
 
         <div className="row">
-          <Slick {...slickSettings}>
-            {stylistsPairs.map(stylistPair => (
-              <div key={stylistPair[0].owner} style={{ padding: '0 4px' }}>
-                <HomeStylistsItem stylist={stylistPair[0]} />
-                <div style={{ padding: '4px 0' }} />
-                {stylistPair.length === 2 && <HomeStylistsItem stylist={stylistPair[1]} />}
-              </div>
-            ))}
-          </Slick>
+          {stylistsPairs.length === 0 && <LoadingBubbles />}
+
+          {stylistsPairs.length > 0 && (
+            <Slick {...slickSettings}>
+              {stylistsPairs.map(stylistPair => (
+                <div key={stylistPair[0].owner} style={{ padding: '0 4px' }}>
+                  <HomeStylistsItem stylist={stylistPair[0]} />
+                  <div style={{ padding: '4px 0' }} />
+                  {stylistPair.length === 2 && <HomeStylistsItem stylist={stylistPair[1]} />}
+                </div>
+              ))}
+            </Slick>
+          )}
         </div>
       </div>
     );

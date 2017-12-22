@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
 import { ServiceNameToSEOName } from '../../../modules/seo-name';
+import LoadingBubbles from '../../components/LoadingBubbles';
 
 const slickSettings = {
   dots: false,
@@ -45,25 +46,29 @@ const HomeServices = ({ services }) => (
     </div>
 
     <div className="row">
-      <Slick {...slickSettings}>
-        {services.map(service => (
-          <div key={service._id} style={{ padding: '0 4px' }}>
-            <Link to={`/stylists/${ServiceNameToSEOName(service.name)}`} className="category-box">
-              <img
-                src={
-                  service.photo
-                    ? scaledImageURL(service.photo, 'small')
-                    : '/images/placeholder-square.jpg'
-                }
-                alt={service.name}
-              />
-              <div className="category-box-content">
-                <h3>{service.name}</h3>
-              </div>
-            </Link>
-          </div>
-        ))}
-      </Slick>
+      {services.length === 0 && <LoadingBubbles />}
+
+      {services.length > 0 && (
+        <Slick {...slickSettings}>
+          {services.map(service => (
+            <div key={service._id} style={{ padding: '0 4px' }}>
+              <Link to={`/stylists/${ServiceNameToSEOName(service.name)}`} className="category-box">
+                <img
+                  src={
+                    service.photo
+                      ? scaledImageURL(service.photo, 'small')
+                      : '/images/placeholder-square.jpg'
+                  }
+                  alt={service.name}
+                />
+                <div className="category-box-content">
+                  <h3>{service.name}</h3>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </Slick>
+      )}
     </div>
   </div>
 );
