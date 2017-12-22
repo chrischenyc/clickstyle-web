@@ -40,9 +40,9 @@ const slickSettings = {
 };
 
 const HomeServices = ({ services }) => (
-  <div className="container" style={{ margin: '8rem auto' }}>
+  <div className="container carousel-container">
     <div className="row">
-      <h3 className="headline margin-bottom-35">Services</h3>
+      <h3 className="headline margin-bottom-10">Services</h3>
     </div>
 
     <div className="row">
@@ -51,12 +51,12 @@ const HomeServices = ({ services }) => (
       {services.length > 0 && (
         <Slick {...slickSettings}>
           {services.map(service => (
-            <div key={service._id} style={{ padding: '0 4px' }}>
+            <div key={service._id} className="carousel-item-container">
               <Link to={`/stylists/${ServiceNameToSEOName(service.name)}`} className="category-box">
                 <img
                   src={
                     service.photo
-                      ? scaledImageURL(service.photo, 'small')
+                      ? scaledImageURL(service.photo, 'medium')
                       : '/images/placeholder-square.jpg'
                   }
                   alt={service.name}

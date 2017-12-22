@@ -1,0 +1,38 @@
+/* self defined style */
+.vertical-centered {
+  display: flex;
+  align-items: center;
+}
+
+.carousel-container {
+  margin-top: 60px;
+}
+
+.carousel-item-container {
+  padding: 0 4px;
+}
+
+.main-join-container {
+  margin-top: 60px;
+  display: block;
+  width: 100%;
+  position: relative;
+  background-image: url("/images/placeholder-bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    margin-top: 20px;
+  }
+
+  .carousel-item-container {
+    padding: 0 0;
+  }
+
+  .main-join-container {
+    margin-top: 20px;
+  }
+}

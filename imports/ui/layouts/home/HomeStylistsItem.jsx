@@ -10,7 +10,7 @@ const HomeStylistsItem = ({ stylist }) => (
       <img
         src={
           stylist.profile.photo
-            ? scaledImageURL(stylist.profile.photo, 'small')
+            ? scaledImageURL(stylist.profile.photo, 'medium')
             : '/images/placeholder-square.jpg'
         }
         alt={stylist.profile.name}

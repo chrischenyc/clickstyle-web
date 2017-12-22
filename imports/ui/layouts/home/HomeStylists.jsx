@@ -75,9 +75,9 @@ class HomeStylists extends Component {
     const { stylistsPairs } = this.state;
 
     return (
-      <div className="container" style={{ margin: '8rem auto' }}>
+      <div className="container carousel-container">
         <div className="row">
-          <h3 className="headline margin-bottom-35">
+          <h3 className="headline margin-bottom-10">
             {!this.props.locationBased && 'Stylists'}
             {this.props.locationBased && 'Stylists near by'}
           </h3>
@@ -89,7 +89,7 @@ class HomeStylists extends Component {
           {stylistsPairs.length > 0 && (
             <Slick {...slickSettings}>
               {stylistsPairs.map(stylistPair => (
-                <div key={stylistPair[0].owner} style={{ padding: '0 4px' }}>
+                <div key={stylistPair[0].owner} className="carousel-item-container">
                   <HomeStylistsItem stylist={stylistPair[0]} />
                   <div style={{ padding: '4px 0' }} />
                   {stylistPair.length === 2 && <HomeStylistsItem stylist={stylistPair[1]} />}
