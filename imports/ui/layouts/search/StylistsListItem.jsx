@@ -29,8 +29,9 @@ const StylistsListItem = ({ stylist }) => (
       <div className="listing-item">
         <img src={_.sample(dummyBanners)} alt="" />
 
-        <div className="listing-item-content">
+        <div className="listing-item-content vertical-centered">
           <Image
+            id="avatar"
             size="mini"
             circular
             src={ScaledImageURL(
@@ -38,8 +39,10 @@ const StylistsListItem = ({ stylist }) => (
               'tiny',
             )}
           />
-          <h3>{`${stylist.profile.name.first} ${stylist.profile.name.last}`}</h3>
-          <span>{`${stylist.profile.address.suburb}, ${stylist.profile.address.state}`}</span>
+          <div>
+            <h3>{`${stylist.profile.name.first} ${stylist.profile.name.last}`}</h3>
+            <span>{`${stylist.profile.address.suburb}, ${stylist.profile.address.state}`}</span>
+          </div>
         </div>
       </div>
 

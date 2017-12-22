@@ -75,6 +75,11 @@
   padding: 0 12px;
 }
 
+.listing-item-content #avatar {
+  float: left;
+  margin-right: 8px;
+}
+
 /* 03-shortcodes.css override */
 #not-found i {
   font-size: 14px;
@@ -140,16 +145,8 @@
   width: calc(100% - 16px);
 }
 
-/* bootstrap grid hacks */
-.vertical-align {
-  display: flex;
-  flex-direction: row;
-}
-
-.vertical-align > [class^="col-"],
-.vertical-align > [class*=" col-"] {
+/* self defined style */
+.vertical-centered {
   display: flex;
   align-items: center;
-  justify-content: center; /* Optional, to align inner items 
-                              horizontally inside the column */
 }
