@@ -2,9 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
 import HomePage from './HomePage';
+import { withLoading } from '../../components/HOC';
 
 class Home extends Component {
   constructor(props) {
@@ -78,4 +78,4 @@ const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
 });
 
-export default connect(mapStateToProps, { showLoading, hideLoading })(Home);
+export default withLoading(connect(mapStateToProps)(Home));

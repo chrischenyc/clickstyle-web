@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { withLoading } from '../../components/HOC';
 import Loading from '../../components/Loading';
 import UserProfilePage from './UserProfilePage';
 import StylistProfilePage from './StylistProfilePage';
@@ -22,10 +24,9 @@ class UserProfile extends Component {
       return;
     }
 
+    this.props.showLoading();
     Meteor.call('users.profile', _id, (error, user) => {
-      if (error) {
-        console.log('error', error);
-      }
+      this.props.hideLoading();
       if (user) {
         if (_.isNil(user.profile)) {
           this.props.history.push('/');
@@ -46,4 +47,9 @@ class UserProfile extends Component {
   }
 }
 
-export default UserProfile;
+UserProfile.propTypes = {
+  showLoading: PropTypes.func.isRequired,
+  hideLoading: PropTypes.func.isRequired,
+};
+
+export default withLoading(UserProfile);

@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -29,3 +32,24 @@ export const withSideMenuAndHeader = WrappedComponent => props => (
     </div>
   </div>
 );
+
+export const withLoading = (WrappedComponent) => {
+  const hoc = props => (
+    <WrappedComponent
+      {...props}
+      showLoading={() => {
+        props.showLoading();
+      }}
+      hideLoading={() => {
+        props.hideLoading();
+      }}
+    />
+  );
+
+  hoc.propTypes = {
+    showLoading: PropTypes.func.isRequired,
+    hideLoading: PropTypes.func.isRequired,
+  };
+
+  return connect(null, { showLoading, hideLoading })(hoc);
+};

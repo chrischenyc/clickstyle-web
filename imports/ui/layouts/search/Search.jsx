@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { withLoading } from '../../components/HOC';
 import SearchPage from './SearchPage';
 import { SEONameToServiceName, SEONameToSuburbName } from '../../../modules/seo-name';
 
@@ -67,6 +69,8 @@ class Search extends Component {
 
     // TODO: GA tracking
 
+    this.props.showLoading();
+
     Meteor.call(
       'stylists.search',
       {
@@ -76,6 +80,7 @@ class Search extends Component {
         offset,
       },
       (error, result) => {
+        this.props.hideLoading();
         this.setState({ searching: false, searched: true });
 
         if (error) {
@@ -109,4 +114,9 @@ class Search extends Component {
   }
 }
 
-export default Search;
+Search.propTypes = {
+  showLoading: PropTypes.func.isRequired,
+  hideLoading: PropTypes.func.isRequired,
+};
+
+export default withLoading(Search);
