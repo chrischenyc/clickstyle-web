@@ -94,6 +94,8 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
+
+            <div className="clearfix" />
           </div>
 
           <div className="col-md-3 col-sm-12">
