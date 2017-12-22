@@ -12,6 +12,7 @@ import {
   Responsive,
   Button,
 } from 'semantic-ui-react';
+import Sticky from 'react-stickynode';
 
 import { closeModal } from '../../modules/client/redux/modal';
 import { toggleSlideMenu } from '../../modules/client/redux/ui';
@@ -51,21 +52,13 @@ class Header extends Component {
     } = this.props;
 
     return (
-      <Visibility
-        onBottomPassed={() => {
-          this.setState({ menuFixed: true });
+      <Sticky
+        onStateChange={(status) => {
+          this.setState({ menuFixed: status.status === Sticky.STATUS_FIXED });
         }}
-        onBottomVisible={() => {
-          this.setState({ menuFixed: false });
-        }}
-        once={false}
+        innerZ={999}
       >
-        <Menu
-          borderless
-          size="massive"
-          fixed={menuFixed ? 'top' : null}
-          style={menuFixed ? fixedMenuStyle : menuStyle}
-        >
+        <Menu borderless size="massive" style={menuFixed ? fixedMenuStyle : menuStyle}>
           <Container>
             {fullContent && (
               <Menu.Item id="logo">
@@ -75,7 +68,7 @@ class Header extends Component {
               </Menu.Item>
             )}
 
-            <Responsive maxWidth={1024} as={Menu.Item}>
+            <Responsive maxWidth={1024} as={Menu.Item} style={{ paddingLeft: '0' }}>
               <Button
                 icon="bars"
                 onClick={(e) => {
@@ -137,7 +130,7 @@ class Header extends Component {
               )}
 
               {authenticated && (
-                <Dropdown text={firstName || ''} className="item" style={{ zIndex: '999' }}>
+                <Dropdown text={firstName || ''} className="item">
                   <Dropdown.Menu>
                     <Dropdown.Item as={Link} to="/users/dashboard" text="Dashboard" />
                     <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
@@ -161,7 +154,7 @@ class Header extends Component {
             </Responsive>
           )}
         </Menu>
-      </Visibility>
+      </Sticky>
     );
   }
 }
