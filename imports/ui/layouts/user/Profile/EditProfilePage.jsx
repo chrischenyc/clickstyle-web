@@ -83,9 +83,7 @@ const EditProfilePage = ({
         onChange={onChange}
         errors={errors}
         value={_.has(profile, 'mobile') ? profile.mobile : ''}
-        note={`This is not on your public profile. This is only shared with another ${
-          Meteor.settings.public.appName
-        } user once you two have a confirmed booking .`}
+        note="This is not on your public profile. This information is only shared with your stylist once you have a confirmed booking."
       />
 
       <Form.Field>
@@ -108,9 +106,8 @@ const EditProfilePage = ({
         />
 
         <p style={{ marginTop: '0.25rem', marginBottom: '1rem', color: '#aaa' }}>
-          {`This is not on your public profile. This is only shared with another ${
-            Meteor.settings.public.appName
-          } user once you two have a confirmed booking .`}
+          This is not on your public profile. This information is only shared with your stylist once
+          you have a confirmed booking.
         </p>
       </Form.Field>
 
