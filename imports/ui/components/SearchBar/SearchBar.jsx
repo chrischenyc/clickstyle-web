@@ -74,9 +74,14 @@ class SearchBar extends Component {
   }
 
   handleServiceChange(data) {
+    let matchedServices = this.state.services.filter(service => service.title.toLowerCase().indexOf(data.value.toLowerCase()) !== -1);
+    if (_.isEmpty(data.value)) {
+      matchedServices = this.state.services;
+    }
+
     this.setState({
       service: data.value,
-      matchedServices: this.state.services.filter(service => service.title.toLowerCase().indexOf(data.value.toLowerCase()) !== -1),
+      matchedServices,
     });
   }
 
@@ -165,10 +170,18 @@ class SearchBar extends Component {
       <div className="main-search-input">
         <div className="main-search-input-item">
           <Search
-            input={<input type="text" />}
+            input={
+              <input
+                type="text"
+                onFocus={(e) => {
+                  this.handleServiceChange(e.target);
+                }}
+              />
+            }
             name="service"
             placeholder="Service e.g Makeup"
             value={service}
+            minCharacters={0}
             onResultSelect={(e, { result }) => {
               this.handleServiceSelection(result);
             }}
