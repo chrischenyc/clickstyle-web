@@ -80,10 +80,10 @@ const StylistsJoinPage = props => (
 
         <div className="col-md-3">
           <div className="icon-box-2">
-            <i className="im im-icon-Handshake" />
+            <i className="im im-icon-Pie-Chart2" />
             <h3>
-              Get paid for no show, after all time is money.
-              <Link to="/terms"> Terms &amp; Conditions </Link> apply
+              Beauty service industry in Australia is worth $4.8 billion and growing. How much of
+              that share is yours?
             </h3>
           </div>
         </div>
@@ -93,16 +93,6 @@ const StylistsJoinPage = props => (
             <i className="im im-icon-Bar-Chart" />
             <h3>
               Strong level of support from us to grow your business and brand locally and nationally
-            </h3>
-          </div>
-        </div>
-
-        <div className="col-md-offset-4 col-md-4">
-          <div className="icon-box-2">
-            <i className="im im-icon-Pie-Chart2" />
-            <h3>
-              Beauty service industry in Australia is worth $4.8 billion and growing. How much of
-              that share is yours?
             </h3>
           </div>
         </div>
