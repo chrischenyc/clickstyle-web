@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import FavouredStylistsPage from './FavouredStylistsPage';
+import { withLoading } from '../../../components/HOC';
 
 class FavouredStylists extends Component {
   constructor(props) {
@@ -19,7 +21,10 @@ class FavouredStylists extends Component {
   }
 
   loadStylists() {
+    this.props.showLoading();
+
     Meteor.call('stylists.favoured', {}, (error, stylists) => {
+      this.props.hideLoading();
       this.setState({ stylists });
     });
   }
@@ -49,4 +54,9 @@ class FavouredStylists extends Component {
   }
 }
 
-export default FavouredStylists;
+FavouredStylists.propTypes = {
+  showLoading: PropTypes.func.isRequired,
+  hideLoading: PropTypes.func.isRequired,
+};
+
+export default withLoading(FavouredStylists);
