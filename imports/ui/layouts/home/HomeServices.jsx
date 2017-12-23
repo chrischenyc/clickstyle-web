@@ -9,7 +9,8 @@ import LoadingBubbles from '../../components/LoadingBubbles';
 
 const slickSettings = {
   dots: false,
-  infinite: false,
+  infinite: true,
+  autoplay: true,
   speed: 500,
   slidesToShow: 4,
   slidesToScroll: 4,
