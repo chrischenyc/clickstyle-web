@@ -39,6 +39,8 @@ import SettingsPage from '../layouts/user/SettingsPage';
 import ChangePassword from '../layouts/user/ChangePassword/ChangePassword';
 import InboxPage from '../layouts/user/InboxPage';
 
+import FavouredStylists from '../layouts/user/FavouredStylists/FavouredStylists';
+
 import StylistsApplication from '../layouts/stylists/StylistsApplication';
 import StylistServices from '../layouts/stylists/StylistServices/StylistServices';
 import StylistAvailability from '../layouts/stylists/StylistAvailability/StylistAvailability';
@@ -109,6 +111,10 @@ class App extends Component {
               <SecureRoute
                 path="/users/reset-password"
                 component={withSideMenuAndHeader(ForgotPassword)}
+              />
+              <SecureRoute
+                path="/users/booking/stylists"
+                component={withSideMenuAndHeader(FavouredStylists)}
               />
               <SecureRoute
                 path="/users/stylist/application"

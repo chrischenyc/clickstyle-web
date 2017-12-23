@@ -240,30 +240,89 @@ Meteor.methods({
     }
   },
 
-  'stylists.favorite': function favoriteStylist(data) {
+  'stylists.favourite': function favouriteStylist(data) {
     if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
       throw new Meteor.Error(403, 'unauthorized');
     }
 
     check(data, Object);
-    const { owner, favorite } = data;
+    const { owner, favourite } = data;
     check(owner, String);
-    check(favorite, Boolean);
+    check(favourite, Boolean);
 
     try {
-      if (favorite) {
-        Stylists.update({ owner }, { $inc: { favorites: 1 } });
+      if (favourite) {
+        Stylists.update({ owner }, { $inc: { favourites: 1 } });
         Profiles.update({ owner: this.userId }, { $addToSet: { favouredStylists: owner } });
       } else {
-        Stylists.update({ owner }, { $inc: { favorites: -1 } });
+        Stylists.update({ owner }, { $inc: { favourites: -1 } });
         Profiles.update({ owner: this.userId }, { $pull: { favouredStylists: owner } });
       }
 
       log.info(
-        'Meteor.methods: stylists.favorite',
+        'Meteor.methods: stylists.favourite',
         `userId: ${this.userId}`,
         `param: ${JSON.stringify(data)}`,
       );
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500');
+    }
+  },
+
+  'stylists.favoured': function favouredStylist(data) {
+    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(data, Object);
+
+    try {
+      const { favouredStylists } = Profiles.findOne(
+        { owner: this.userId },
+        { fields: { favouredStylists: 1 } },
+      );
+
+      if (_.isEmpty(favouredStylists)) {
+        return [];
+      }
+
+      // query Stylists
+      const stylists = Stylists.find(
+        { owner: { $in: favouredStylists } },
+        {
+          fields: {
+            owner: 1,
+
+            'services.name': 1,
+          },
+        },
+      ).fetch();
+
+      // query Profiles
+      const profiles = Profiles.find(
+        { owner: { $in: favouredStylists } },
+        {
+          fields: {
+            owner: 1,
+            name: 1,
+            'address.state': 1,
+            'address.suburb': 1,
+            photo: 1,
+          },
+        },
+      ).fetch();
+
+      return stylists.map((stylist) => {
+        const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
+
+        return {
+          ...stylist,
+          profile: filteredProfiles.length > 0 && filteredProfiles[0],
+        };
+      });
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -279,7 +338,8 @@ rateLimit({
     'stylists.update.openHours',
     'stylists.update.areas',
     'stylists.search',
-    'stylists.favorite',
+    'stylists.favourite',
+    'stylists.favoured',
   ],
   limit: 5,
   timeRange: 1000,

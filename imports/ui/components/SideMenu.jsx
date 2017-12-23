@@ -41,6 +41,14 @@ const SideMenu = ({ isStylist }) => (
         </li>
       </ul>
 
+      <ul data-submenu-title="Booking">
+        <li>
+          <NavLink to="/users/booking/stylists">
+            <i className="im im-icon-Bookmark" /> Favoured stylists
+          </NavLink>
+        </li>
+      </ul>
+
       {isStylist && (
         <ul data-submenu-title="Stylist">
           <li>

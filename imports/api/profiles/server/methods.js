@@ -151,7 +151,7 @@ Meteor.methods({
           fields: {
             openHours: 1,
             services: 1,
-            favorites: 1,
+            favourites: 1,
           },
         },
       );

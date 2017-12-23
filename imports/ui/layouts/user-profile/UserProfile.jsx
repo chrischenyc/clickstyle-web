@@ -48,10 +48,10 @@ class UserProfile extends Component {
     const { _id } = this.props.match.params;
 
     Meteor.call(
-      'stylists.favorite',
+      'stylists.favourite',
       {
         owner: _id,
-        favorite: !this.state.user.stylist.favoured,
+        favourite: !this.state.user.stylist.favoured,
       },
       (error) => {
         if (!error) {

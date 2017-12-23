@@ -28,6 +28,7 @@ export const withSideMenuAndHeader = WrappedComponent => props => (
     <SideMenu />
     <div className="dashboard-content">
       <Header fullContent={false} />
+
       <WrappedComponent {...props} />
     </div>
   </div>

@@ -121,6 +121,25 @@ const SlideMenu = props => (
       )}
       {props.authenticated && <Divider />}
 
+      {props.authenticated && (
+        <li>
+          <p>Booking</p>
+          <ul>
+            <li>
+              <Link
+                to="/users/booking/stylists"
+                onClick={() => {
+                  props.toggleSlideMenu();
+                }}
+              >
+                Favoured stylists
+              </Link>
+            </li>
+          </ul>
+        </li>
+      )}
+      {props.authenticated && <Divider />}
+
       {props.isStylist && (
         <li>
           <p>Stylist</p>
