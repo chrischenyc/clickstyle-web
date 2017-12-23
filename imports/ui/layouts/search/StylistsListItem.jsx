@@ -25,7 +25,12 @@ const limitedArray = (objects, size) => {
 
 const StylistsListItem = ({ stylist }) => (
   <div className="col-lg-4 col-md-6 margin-bottom-20">
-    <Link to={`/users/show/${stylist.owner}`} className="listing-item-container">
+    <Link
+      to={`/users/show/${
+        stylist.owner
+      }/${stylist.profile.name.first.toLowerCase()}${stylist.profile.name.last.toLowerCase()}`}
+      className="listing-item-container"
+    >
       <div className="listing-item">
         <img src={_.sample(dummyBanners)} alt="" />
 

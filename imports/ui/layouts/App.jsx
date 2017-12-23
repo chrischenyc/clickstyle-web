@@ -90,7 +90,7 @@ class App extends Component {
                 path="/stylists/:service?/:suburb?/:postcode?"
                 component={withSearchHeaderAndFooter(Search)}
               />
-              <Route path="/users/show/:_id" component={withHeaderAndFooter(UserProfile)} />
+              <Route path="/users/show/:_id/:name?" component={withHeaderAndFooter(UserProfile)} />
               <Route path="/contact" component={withHeaderAndFooter(Contact)} />
               <Route path="/join" component={withHeaderAndFooter(StylistsJoin)} />
 

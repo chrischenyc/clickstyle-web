@@ -5,7 +5,12 @@ import { Link } from 'react-router-dom';
 import scaledImageURL from '../../../modules/scaled-image-url';
 
 const HomeStylistsItem = ({ stylist }) => (
-  <Link to={`/users/show/${stylist.owner}`} className="listing-item-container">
+  <Link
+    to={`/users/show/${
+      stylist.owner
+    }/${stylist.profile.name.first.toLowerCase()}${stylist.profile.name.last.toLowerCase()}`}
+    className="listing-item-container"
+  >
     <div className="listing-item">
       <img
         src={
@@ -13,7 +18,7 @@ const HomeStylistsItem = ({ stylist }) => (
             ? scaledImageURL(stylist.profile.photo, 'medium')
             : '/images/placeholder-square.jpg'
         }
-        alt={stylist.profile.name}
+        alt=""
       />
 
       <div className="listing-item-content">

@@ -17,7 +17,11 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
               <li key={stylist.owner}>
                 <div className="list-box-listing">
                   <div className="list-box-listing-img">
-                    <Link to={`/users/show/${stylist.owner}`}>
+                    <Link
+                      to={`/users/show/${
+                        stylist.owner
+                      }/${stylist.profile.name.first.toLowerCase()}${stylist.profile.name.last.toLowerCase()}`}
+                    >
                       <Image
                         size="tiny"
                         circular
