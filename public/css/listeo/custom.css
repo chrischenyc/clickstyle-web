@@ -53,7 +53,7 @@ textarea:focus {
 }
 
 .listing-item {
-  border-radius: 0;
+  border-radius: 3px;
 }
 
 .listing-item:before {
@@ -85,12 +85,12 @@ textarea:focus {
     rgba(0, 0, 0, 0) 100%
   );
   background-color: rgba(35, 35, 37, 0.2);
-  border-radius: 0;
+  border-radius: 3px;
   opacity: 1;
 }
 
 .listing-item img {
-  border-radius: 0;
+  border-radius: 3px;
 }
 
 .listing-item-content {
@@ -132,7 +132,7 @@ textarea:focus {
 
 /* 05-script-styles.css override */
 .category-box {
-  border-radius: 0px;
+  border-radius: 3px;
   margin-bottom: 0px;
 }
 
