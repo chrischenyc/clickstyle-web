@@ -46,7 +46,10 @@ const StylistsListItem = ({ stylist }) => (
           />
           <div>
             <h3>{`${stylist.profile.name.first} ${stylist.profile.name.last}`}</h3>
-            <span>{`${stylist.profile.address.suburb}, ${stylist.profile.address.state}`}</span>
+            <span>
+              {stylist.profile.address.suburb &&
+                `${stylist.profile.address.suburb}, ${stylist.profile.address.state}`}
+            </span>
           </div>
         </div>
       </div>
