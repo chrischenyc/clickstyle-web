@@ -46,6 +46,10 @@ import StylistServices from '../layouts/stylists/StylistServices/StylistServices
 import StylistAvailability from '../layouts/stylists/StylistAvailability/StylistAvailability';
 import StylistAvailableAreas from '../layouts/stylists/StylistAvailableAreas/StylistAvailableAreas';
 
+import TermsPage from '../layouts/static/TermsPage';
+import PrivacyPage from '../layouts/static/PrivacyPage';
+import HelpPage from '../layouts/static/HelpPage';
+
 // scroll to page top when route changes
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-292711226
 const ScrollToTop = () => {
@@ -93,6 +97,9 @@ class App extends Component {
               <Route path="/users/show/:_id/:name?" component={withHeaderAndFooter(UserProfile)} />
               <Route path="/contact" component={withHeaderAndFooter(Contact)} />
               <Route path="/join" component={withHeaderAndFooter(StylistsJoin)} />
+              <Route path="/terms" component={withHeaderAndFooter(TermsPage)} />
+              <Route path="/privacy" component={withHeaderAndFooter(PrivacyPage)} />
+              <Route path="/help" component={withHeaderAndFooter(HelpPage)} />
 
               <PublicRoute path="/login" component={withHeaderAndFooter(Login)} />
               <PublicRoute path="/signup" component={withHeaderAndFooter(SignUp)} />
