@@ -49,7 +49,7 @@ class Header extends Component {
         onStateChange={(status) => {
           this.setState({ menuFixed: status.status === Sticky.STATUS_FIXED });
         }}
-        innerZ={999}
+        innerZ={9999}
       >
         <Menu borderless size="massive" style={menuFixed ? fixedMenuStyle : menuStyle}>
           <LoadingBar style={{ backgroundColor: '#00aca4' }} />
