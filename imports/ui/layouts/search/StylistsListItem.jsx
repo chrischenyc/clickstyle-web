@@ -28,7 +28,7 @@ const StylistsListItem = ({ stylist }) => (
     <Link
       to={`/users/show/${
         stylist.owner
-      }/${stylist.profile.name.first.toLowerCase()}${stylist.profile.name.last.toLowerCase()}`}
+      }/${stylist.name.first.toLowerCase()}${stylist.name.last.toLowerCase()}`}
       className="listing-item-container"
     >
       <div className="listing-item">
@@ -40,15 +40,14 @@ const StylistsListItem = ({ stylist }) => (
             size="mini"
             circular
             src={ScaledImageURL(
-              stylist.profile.photo || Meteor.settings.public.image.defaultProfilePhoto,
+              stylist.photo || Meteor.settings.public.image.defaultProfilePhoto,
               'tiny',
             )}
           />
           <div>
-            <h3>{`${stylist.profile.name.first} ${stylist.profile.name.last}`}</h3>
+            <h3>{`${stylist.name.first} ${stylist.name.last}`}</h3>
             <span>
-              {stylist.profile.address.suburb &&
-                `${stylist.profile.address.suburb}, ${stylist.profile.address.state}`}
+              {stylist.address.suburb && `${stylist.address.suburb}, ${stylist.address.state}`}
             </span>
           </div>
         </div>

@@ -20,13 +20,13 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
                     <Link
                       to={`/users/show/${
                         stylist.owner
-                      }/${stylist.profile.name.first.toLowerCase()}${stylist.profile.name.last.toLowerCase()}`}
+                      }/${stylist.name.first.toLowerCase()}${stylist.name.last.toLowerCase()}`}
                     >
                       <Image
                         size="tiny"
                         circular
                         src={ScaledImageURL(
-                          stylist.profile.photo || Meteor.settings.public.image.defaultProfilePhoto,
+                          stylist.photo || Meteor.settings.public.image.defaultProfilePhoto,
                           'tiny',
                         )}
                       />
@@ -34,10 +34,10 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
                   </div>
                   <div className="list-box-listing-content">
                     <div className="inner">
-                      <h3>{`${stylist.profile.name.first} ${stylist.profile.name.last}`}</h3>
+                      <h3>{`${stylist.name.first} ${stylist.name.last}`}</h3>
                       <span>
-                        {stylist.profile.address.suburb &&
-                          `${stylist.profile.address.suburb}, ${stylist.profile.address.state}`}
+                        {stylist.address.suburb &&
+                          `${stylist.address.suburb}, ${stylist.address.state}`}
                         <br />
                         {stylist.services.map(service => service.name).join(', ')}
                       </span>

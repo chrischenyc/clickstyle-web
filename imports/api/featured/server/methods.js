@@ -53,25 +53,17 @@ Meteor.methods({
         stylists = Stylists.find(
           { published: true, owner: { $in: stylistIds } },
           {
-            fields: { owner: 1, 'services.name': 1 },
+            fields: {
+              owner: 1,
+              'services.name': 1,
+              name: 1,
+              'address.state': 1,
+              'address.suburb': 1,
+              photo: 1,
+            },
           },
         ).fetch();
       }
-
-      // query Profiles
-      const userIds = stylists.map(stylist => stylist.owner);
-      const profiles = Profiles.find(
-        { owner: { $in: userIds } },
-        {
-          fields: {
-            owner: 1,
-            name: 1,
-            'address.state': 1,
-            'address.suburb': 1,
-            photo: 1,
-          },
-        },
-      ).fetch();
 
       // aggregate results
       const merged = stylists.map((stylist, index) => {
@@ -83,12 +75,9 @@ Meteor.methods({
           displayOrder = homeFeaturedStylists.filter(featuredStylist => featuredStylist.owner === stylist.owner)[0].displayOrder;
         }
 
-        const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
-
         return {
           ...stylist,
           displayOrder,
-          profile: filteredProfiles.length > 0 && filteredProfiles[0],
         };
       });
 

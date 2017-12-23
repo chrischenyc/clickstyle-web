@@ -8,21 +8,19 @@ const HomeStylistsItem = ({ stylist }) => (
   <Link
     to={`/users/show/${
       stylist.owner
-    }/${stylist.profile.name.first.toLowerCase()}${stylist.profile.name.last.toLowerCase()}`}
+    }/${stylist.name.first.toLowerCase()}${stylist.name.last.toLowerCase()}`}
     className="listing-item-container"
   >
     <div className="listing-item">
       <img
         src={
-          stylist.profile.photo
-            ? scaledImageURL(stylist.profile.photo, 'medium')
-            : '/images/placeholder-square.jpg'
+          stylist.photo ? scaledImageURL(stylist.photo, 'medium') : '/images/placeholder-square.jpg'
         }
         alt=""
       />
 
       <div className="listing-item-content">
-        <h3>{`${stylist.profile.name.first} ${stylist.profile.name.last}`}</h3>
+        <h3>{`${stylist.name.first} ${stylist.name.last}`}</h3>
 
         {stylist.services &&
           stylist.services.length && (

@@ -218,35 +218,17 @@ Meteor.methods({
           'services._id': 1,
           'services.basePrice': 1,
           'services.name': 1,
+          name: 1,
+          'address.state': 1,
+          'address.suburb': 1,
+          photo: 1,
         },
         limit: SearchLimit,
         skip: offset,
       }).fetch();
 
-      // query Profiles
-      const userIds = stylists.map(stylist => stylist.owner);
-      const profiles = Profiles.find(
-        { owner: { $in: userIds } },
-        {
-          fields: {
-            owner: 1,
-            name: 1,
-            'address.state': 1,
-            'address.suburb': 1,
-            photo: 1,
-          },
-        },
-      ).fetch();
-
       return {
-        stylists: stylists.map((stylist) => {
-          const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
-
-          return {
-            ...stylist,
-            profile: filteredProfiles.length > 0 && filteredProfiles[0],
-          };
-        }),
+        stylists,
         hasMore: stylists.length >= SearchLimit,
       };
     } catch (exception) {
@@ -307,23 +289,12 @@ Meteor.methods({
       }
 
       // query Stylists
-      const stylists = Stylists.find(
+      return Stylists.find(
         { owner: { $in: favouredStylists } },
         {
           fields: {
             owner: 1,
-
             'services.name': 1,
-          },
-        },
-      ).fetch();
-
-      // query Profiles
-      const profiles = Profiles.find(
-        { owner: { $in: favouredStylists } },
-        {
-          fields: {
-            owner: 1,
             name: 1,
             'address.state': 1,
             'address.suburb': 1,
@@ -331,15 +302,6 @@ Meteor.methods({
           },
         },
       ).fetch();
-
-      return stylists.map((stylist) => {
-        const filteredProfiles = profiles.filter(profile => profile.owner === stylist.owner);
-
-        return {
-          ...stylist,
-          profile: filteredProfiles.length > 0 && filteredProfiles[0],
-        };
-      });
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);

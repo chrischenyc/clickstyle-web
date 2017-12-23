@@ -11,6 +11,6 @@ import Profiles from '../../../api/profiles/profiles';
 const stylists = Stylists.find().fetch();
 stylists.forEach((stylist) => {
   const { owner } = stylist;
-  const { name } = Profiles.findOne({ owner });
-  Stylists.update({ owner }, { $set: { name } });
+  const { name, photo, address } = Profiles.findOne({ owner });
+  Stylists.update({ owner }, { $set: { name, photo, address } });
 });
