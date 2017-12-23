@@ -179,7 +179,24 @@ Meteor.methods({
       const addonNameSelector = {
         'services.addons.name': RegExp(service, 'i'),
       };
-      selector = { ...selector, ...{ $or: [serviceNameSelector, addonNameSelector] } };
+
+      const keywords = service.split(' ');
+      let nameSelector = {
+        $or: [{ 'name.first': RegExp(service, 'i') }, { 'name.last': RegExp(service, 'i') }],
+      };
+      if (keywords.length > 1) {
+        nameSelector = {
+          $and: [
+            { 'name.first': RegExp(keywords[0], 'i') },
+            { 'name.last': RegExp(keywords[1], 'i') },
+          ],
+        };
+      }
+
+      selector = {
+        ...selector,
+        ...{ $or: [serviceNameSelector, addonNameSelector, nameSelector] },
+      };
 
       // add query selector by available suburbs
       if (suburbName) {

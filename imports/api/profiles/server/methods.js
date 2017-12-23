@@ -50,6 +50,12 @@ Meteor.methods({
 
       Profiles.update({ owner: this.userId }, { $set: profileToUpdate });
 
+      // normalise data
+      const { name } = profileToUpdate;
+      if (name) {
+        Stylists.update({ owner: this.userId }, { $set: { name } });
+      }
+
       log.info(
         'Meteor.methods: profiles.update',
         `userId: ${this.userId}`,
