@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Image } from 'semantic-ui-react';
 
+import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
 import { dayOfWeekAsString } from '../../../modules/format-date';
@@ -35,7 +36,7 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                     'tiny',
                   )}
                 />
-                <h2>{`${profile.name.first} ${profile.name.last}`}</h2>
+                <h2>{userNameWithGreeting(profile.name)}</h2>
                 <span>
                   {profile.address.suburb && (
                     <div className="listing-address">
