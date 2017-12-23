@@ -49,6 +49,7 @@ import StylistAvailableAreas from '../layouts/stylists/StylistAvailableAreas/Sty
 import TermsPage from '../layouts/static/TermsPage';
 import PrivacyPage from '../layouts/static/PrivacyPage';
 import HelpPage from '../layouts/static/HelpPage';
+import AboutPage from '../layouts/static/AboutPage';
 
 // scroll to page top when route changes
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-292711226
@@ -100,6 +101,7 @@ class App extends Component {
               <Route path="/terms" component={withHeaderAndFooter(TermsPage)} />
               <Route path="/privacy" component={withHeaderAndFooter(PrivacyPage)} />
               <Route path="/help" component={withHeaderAndFooter(HelpPage)} />
+              <Route path="/about" component={withHeaderAndFooter(AboutPage)} />
 
               <PublicRoute path="/login" component={withHeaderAndFooter(Login)} />
               <PublicRoute path="/signup" component={withHeaderAndFooter(SignUp)} />
