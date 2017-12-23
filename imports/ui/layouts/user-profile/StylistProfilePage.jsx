@@ -236,7 +236,7 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                     title="check this stylist I found"
                     via={Meteor.settings.public.twitterId}
                   >
-                    <a className="twitter-share" href="#">
+                    <a className="twitter-share" href="./share-twitter">
                       <i className="fa fa-twitter" /> Tweet
                     </a>
                   </TwitterShareButton>
