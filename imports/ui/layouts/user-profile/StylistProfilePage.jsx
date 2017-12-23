@@ -37,10 +37,12 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                 />
                 <h2>{`${profile.name.first} ${profile.name.last}`}</h2>
                 <span>
-                  <div className="listing-address">
-                    <i className="fa fa-map-marker" />
-                    &nbsp;{`${profile.address.suburb}, ${profile.address.state}`}
-                  </div>
+                  {profile.address.suburb && (
+                    <div className="listing-address">
+                      <i className="fa fa-map-marker" />
+                      &nbsp;{`${profile.address.suburb}, ${profile.address.state}`}
+                    </div>
+                  )}
                 </span>
               </div>
             </div>
