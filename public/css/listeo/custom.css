@@ -22,6 +22,16 @@ textarea:focus {
   margin-top: 0px;
 }
 
+.main-search-input-item.location i {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  padding: 10px;
+  background: #fff;
+}
+
 #side-logo img {
   max-height: 38px;
   width: auto;

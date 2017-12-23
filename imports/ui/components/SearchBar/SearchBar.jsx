@@ -179,7 +179,7 @@ class SearchBar extends Component {
               />
             }
             name="service"
-            placeholder="Service e.g Makeup"
+            placeholder="Service e.g Makeup, stylist name"
             value={service}
             minCharacters={0}
             onResultSelect={(e, { result }) => {
@@ -197,7 +197,7 @@ class SearchBar extends Component {
           <Search
             input={<input type="text" />}
             name="suburb"
-            placeholder="Suburb"
+            placeholder="Suburb, postcode"
             value={suburb}
             minCharacters={2}
             loading={searchingSuburb}
@@ -211,25 +211,18 @@ class SearchBar extends Component {
             showNoResults={false}
           />
 
-          <a href="#">
-            <i className="fa fa-dot-circle-o" />
-          </a>
+          <i className="fa fa-map-marker" />
         </div>
 
         <div className="main-search-input-item location">
-          <input type="text" placeholder="Any date" data-option="value" id="date-picker" />
+          <input
+            type="text"
+            placeholder="Any date, any time"
+            data-option="value"
+            id="date-picker"
+          />
 
-          <a href="#">
-            <i className="fa fa-calendar" />
-          </a>
-        </div>
-
-        <div className="main-search-input-item location">
-          <input type="text" placeholder="Any time" data-option="value" id="date-picker" />
-
-          <a href="#">
-            <i className="fa fa-clock-o" />
-          </a>
+          <i className="fa fa-calendar" />
         </div>
 
         <button
