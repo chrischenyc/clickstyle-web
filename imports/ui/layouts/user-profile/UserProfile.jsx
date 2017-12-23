@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -14,9 +15,15 @@ class UserProfile extends Component {
     this.state = {
       user: null,
     };
+
+    this.handleFavourStylist = this.handleFavourStylist.bind(this);
   }
 
   componentDidMount() {
+    this.loadUser();
+  }
+
+  loadUser() {
     const { _id } = this.props.match.params;
 
     if (_.isNil(_id)) {
@@ -37,11 +44,34 @@ class UserProfile extends Component {
     });
   }
 
+  handleFavourStylist() {
+    const { _id } = this.props.match.params;
+
+    Meteor.call(
+      'stylists.favorite',
+      {
+        owner: _id,
+        favorite: !this.state.user.stylist.favoured,
+      },
+      (error) => {
+        if (!error) {
+          this.loadUser();
+        }
+      },
+    );
+  }
+
   render() {
     if (_.isNil(this.state.user)) {
       return <Loading />;
     } else if (this.state.user.stylist) {
-      return <StylistProfilePage user={this.state.user} />;
+      return (
+        <StylistProfilePage
+          user={this.state.user}
+          favourStylist={this.handleFavourStylist}
+          authenticated={this.props.authenticated}
+        />
+      );
     }
     return <UserProfilePage user={this.state.user} />;
   }
@@ -50,6 +80,11 @@ class UserProfile extends Component {
 UserProfile.propTypes = {
   showLoading: PropTypes.func.isRequired,
   hideLoading: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
 };
 
-export default withLoading(UserProfile);
+const mapStateToProps = state => ({
+  authenticated: state.user.authenticated,
+});
+
+export default withLoading(connect(mapStateToProps)(UserProfile));

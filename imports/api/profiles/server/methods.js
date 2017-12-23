@@ -145,12 +145,13 @@ Meteor.methods({
           },
         },
       );
-      const stylist = Stylists.findOne(
+      let stylist = Stylists.findOne(
         { owner, published: true },
         {
           fields: {
             openHours: 1,
             services: 1,
+            favorites: 1,
           },
         },
       );
@@ -160,6 +161,15 @@ Meteor.methods({
           const { photo } = service;
           return { ...stylistService, photo };
         });
+      }
+
+      if (this.userId) {
+        const { favouredStylists } = Profiles.findOne({ owner: this.userId });
+
+        stylist = {
+          ...stylist,
+          favoured: favouredStylists && favouredStylists.indexOf(owner) !== -1,
+        };
       }
 
       return {

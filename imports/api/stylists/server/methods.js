@@ -239,6 +239,38 @@ Meteor.methods({
       throw new Meteor.Error('500');
     }
   },
+
+  'stylists.favorite': function favoriteStylist(data) {
+    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(data, Object);
+    const { owner, favorite } = data;
+    check(owner, String);
+    check(favorite, Boolean);
+
+    try {
+      if (favorite) {
+        Stylists.update({ owner }, { $inc: { favorites: 1 } });
+        Profiles.update({ owner: this.userId }, { $addToSet: { favouredStylists: owner } });
+      } else {
+        Stylists.update({ owner }, { $inc: { favorites: -1 } });
+        Profiles.update({ owner: this.userId }, { $pull: { favouredStylists: owner } });
+      }
+
+      log.info(
+        'Meteor.methods: stylists.favorite',
+        `userId: ${this.userId}`,
+        `param: ${JSON.stringify(data)}`,
+      );
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500');
+    }
+  },
 });
 
 rateLimit({
@@ -247,6 +279,7 @@ rateLimit({
     'stylists.update.openHours',
     'stylists.update.areas',
     'stylists.search',
+    'stylists.favorite',
   ],
   limit: 5,
   timeRange: 1000,

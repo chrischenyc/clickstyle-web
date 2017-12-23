@@ -9,7 +9,7 @@ import Loading from '../../components/Loading';
 import { dayOfWeekAsString } from '../../../modules/format-date';
 import OpenHourString from '../../../modules/client/OpenHourString';
 
-const UserProfilePage = ({ user }) => {
+const UserProfilePage = ({ user, favourStylist, authenticated }) => {
   if (_.isNil(user)) {
     return <Loading />;
   }
@@ -202,10 +202,16 @@ const UserProfilePage = ({ user }) => {
 
             {/* <!-- Share / Like --> */}
             <div className="listing-share margin-top-40 margin-bottom-40 no-border">
-              <button className="like-button">
-                <span className="like-icon" /> Bookmark this stylist
-              </button>
-              <span>159 people bookmarked this place</span>
+              {authenticated && (
+                <button className="like-button" onClick={favourStylist}>
+                  <span className="like-icon" /> {stylist.favoured ? 'Un-bookmark' : 'Bookmark'}{' '}
+                  this stylist
+                </button>
+              )}
+              {stylist.favorites &&
+                stylist.favorites > 0 && (
+                  <span>{stylist.favorites} people bookmarked this stylist</span>
+                )}
 
               {/* <!-- Share Buttons --> */}
               <ul className="share-buttons margin-top-40 margin-bottom-0">
@@ -241,6 +247,8 @@ UserProfilePage.defaultProps = {
 
 UserProfilePage.propTypes = {
   user: PropTypes.object,
+  favourStylist: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
 };
 
 export default UserProfilePage;

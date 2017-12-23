@@ -153,6 +153,7 @@ const StylistsSchema = new SimpleSchema({
   published: {
     type: Boolean, // only published stylist can be discovered by customers
   },
+  favorites: SimpleSchema.Integer,
 });
 
 Stylists.attachSchema(StylistsSchema);
