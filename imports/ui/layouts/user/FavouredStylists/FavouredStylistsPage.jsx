@@ -32,7 +32,8 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
                     <div className="inner">
                       <h3>{`${stylist.profile.name.first} ${stylist.profile.name.last}`}</h3>
                       <span>
-                        {`${stylist.profile.address.suburb}, ${stylist.profile.address.state}`}
+                        {stylist.profile.address.suburb &&
+                          `${stylist.profile.address.suburb}, ${stylist.profile.address.state}`}
                         <br />
                         {stylist.services.map(service => service.name).join(', ')}
                       </span>
