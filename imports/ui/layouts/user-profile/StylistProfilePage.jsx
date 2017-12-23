@@ -223,7 +223,7 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                 <li>
                   <FacebookShareButton
                     url={window.location.href}
-                    quote={`check this stylist I found on @${Meteor.settings.public.facebookId}`}
+                    quote={`check this stylist I found on ${Meteor.settings.public.facebookUrl}`}
                   >
                     <a className="fb-share" href="./share-facebook">
                       <i className="fa fa-facebook" /> Share
