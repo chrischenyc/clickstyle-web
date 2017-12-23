@@ -3,12 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Image } from 'semantic-ui-react';
+import { ShareButtons } from 'react-share';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
 import { dayOfWeekAsString } from '../../../modules/format-date';
 import OpenHourString from '../../../modules/client/OpenHourString';
+
+const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
 const UserProfilePage = ({ user, favourStylist, authenticated }) => {
   if (_.isNil(user)) {
@@ -218,19 +221,25 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
               {/* <!-- Share Buttons --> */}
               <ul className="share-buttons margin-top-40 margin-bottom-0">
                 <li>
-                  <a className="fb-share" href="#">
-                    <i className="fa fa-facebook" /> Share
-                  </a>
+                  <FacebookShareButton
+                    url={window.location.href}
+                    quote={`check this stylist I found on ${Meteor.settings.public.facebookId}`}
+                  >
+                    <a className="fb-share" href="./share-facebook">
+                      <i className="fa fa-facebook" /> Share
+                    </a>
+                  </FacebookShareButton>
                 </li>
                 <li>
-                  <a className="twitter-share" href="#">
-                    <i className="fa fa-twitter" /> Tweet
-                  </a>
-                </li>
-                <li>
-                  <a className="gplus-share" href="#">
-                    <i className="fa fa-google-plus" /> Share
-                  </a>
+                  <TwitterShareButton
+                    url={window.location.href}
+                    title="check this stylist I found"
+                    via={Meteor.settings.public.twitterId}
+                  >
+                    <a className="twitter-share" href="#">
+                      <i className="fa fa-twitter" /> Tweet
+                    </a>
+                  </TwitterShareButton>
                 </li>
               </ul>
               <div className="clearfix" />
