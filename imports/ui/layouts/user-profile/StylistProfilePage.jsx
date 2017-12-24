@@ -181,7 +181,7 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
             </div>
 
             {/* -- Share / Like -- */}
-            <div className="listing-share margin-top-40 margin-bottom-35 no-border">
+            <div className="listing-share margin-top-35 margin-bottom-35 no-border">
               {authenticated && (
                 <button className="like-button" onClick={favourStylist}>
                   <span className="like-icon" /> {stylist.favoured ? 'Un-favourite' : 'Favourite'}&nbsp;this
