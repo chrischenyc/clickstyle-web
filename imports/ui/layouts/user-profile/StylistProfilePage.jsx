@@ -49,34 +49,21 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
       </div>
 
       <div className="container">
-        <div className="row sticky-wrapper">
+        <div className="row">
           {/* -- Content -- */}
-          <div className="col-lg-8 col-md-8 padding-right-30 margin-top-75">
-            {/* <!-- Listing Nav --> */}
-            <div id="listing-nav" className="listing-nav-container">
-              <ul className="listing-nav">
-                <li>
-                  <a href="#listing-overview" className="active">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#listing-pricing-list">Services</a>
-                </li>
-                <li>
-                  <a href="#listing-reviews">Reviews</a>
-                </li>
-              </ul>
-            </div>
+          <div className="col-lg-8 col-md-8 margin-top-70">
+            {/* -- About -- */}
+            {!_.isEmpty(profile.about) && (
+              <div id="stylist-profile-overview" className="listing-section margin-bottom-50">
+                <h3 className="listing-desc-headline">About me</h3>
 
-            {/* <!-- Overview --> */}
-            <div id="listing-overview" className="listing-section">
-              <p>{profile.about}</p>
-            </div>
+                <p>{profile.about}</p>
+              </div>
+            )}
 
-            {/* <!-- Services --> */}
-            <div id="listing-pricing-list" className="listing-section">
-              <h3 className="listing-desc-headline margin-top-70 margin-bottom-30">Services</h3>
+            {/* -- Services -- */}
+            <div id="stylist-profile-pricing-list" className="listing-section margin-bottom-50">
+              <h3 className="listing-desc-headline">Services</h3>
 
               <div className="pricing-list-container">
                 {stylist.services &&
@@ -86,14 +73,16 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                       <ul>
                         <li>
                           <h5>Base price</h5>
-                          <p>{service.basePriceDescription}</p>
+                          {!_.isEmpty(service.basePriceDescription) && (
+                            <p>{service.basePriceDescription}</p>
+                          )}
                           <span>${service.basePrice}</span>
                         </li>
                         {service.addons &&
                           service.addons.map(addon => (
                             <li key={addon._id}>
                               <h5>{addon.name}</h5>
-                              <p>{addon.description}</p>
+                              {!_.isEmpty(addon.description) && <p>{addon.description}</p>}
                               <span>${addon.price}</span>
                             </li>
                           ))}
@@ -102,18 +91,14 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                   ))}
               </div>
             </div>
-            {/* <!-- Services / End --> */}
 
-            {/* <!-- Reviews --> */}
-            <div id="listing-reviews" className="listing-section">
-              <h3 className="listing-desc-headline margin-top-75 margin-bottom-20">
-                Reviews
-                <span>(12)</span>
+            {/* -- Reviews -- */}
+            <div id="stylist-profile-reviews" className="listing-section margin-bottom-50">
+              <h3 className="listing-desc-headline">
+                Reviews&nbsp;<span>(12)</span>
               </h3>
 
-              <div className="clearfix" />
-
-              {/* <!-- Reviews --> */}
+              {/* -- Reviews -- */}
               <section className="comments listing-reviews">
                 <ul>
                   <li>
@@ -141,27 +126,22 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                           <img src="images/review-image-01.jpg" alt="" />
                         </a>
                       </div>
-                      <a href="#" className="rate-review">
-                        <i className="sl sl-icon-like" /> Helpful Review
-                        <span>12</span>
-                      </a>
                     </div>
                   </li>
                 </ul>
               </section>
             </div>
           </div>
-          {/* -- Content / End -- */}
 
-          {/* <!-- Sidebar --> */}
-          <div className="col-lg-4 col-md-4 margin-top-75 sticky">
-            {/* <!-- Book Now --> */}
-            <div className="boxed-widget booking-widget margin-top-35">
+          {/* -- Sidebar -- */}
+          <div className="col-lg-4 col-md-4 margin-top-70">
+            {/* -- Book Now -- */}
+            <div className="boxed-widget booking-widget">
               <h3>
                 <i className="fa fa-calendar-check-o " /> Make a booking
               </h3>
               <div className="row with-forms  margin-top-0">
-                {/* <!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker --> */}
+                {/* -- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -- */}
                 <div className="col-lg-6 col-md-12">
                   <input
                     type="text"
@@ -175,7 +155,7 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                   />
                 </div>
 
-                {/* <!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker --> */}
+                {/* -- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -- */}
                 <div className="col-lg-6 col-md-12">
                   <input type="text" id="booking-time" value="9:00 am" />
                 </div>
@@ -183,14 +163,13 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                 {/* TODO: add selected service/addon */}
               </div>
 
-              {/* <!-- progress button animation handled via custom.js --> */}
+              {/* -- progress button animation handled via custom.js -- */}
               <a href="pages-booking.html" className="button book-now fullwidth margin-top-5">
                 Book Now
               </a>
             </div>
-            {/* <!-- Book Now / End --> */}
 
-            {/* <!-- Opening Hours --> */}
+            {/* -- Opening Hours -- */}
             <div className="boxed-widget opening-hours margin-top-35">
               <h3>
                 <i className="sl sl-icon-clock" /> Opening Hours
@@ -205,10 +184,9 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                   ))}
               </ul>
             </div>
-            {/* <!-- Opening Hours / End --> */}
 
-            {/* <!-- Share / Like --> */}
-            <div className="listing-share margin-top-40 margin-bottom-40 no-border">
+            {/* -- Share / Like -- */}
+            <div className="listing-share margin-top-40 margin-bottom-35 no-border">
               {authenticated && (
                 <button className="like-button" onClick={favourStylist}>
                   <span className="like-icon" /> {stylist.favoured ? 'Un-favourite' : 'Favourite'}&nbsp;this
@@ -217,8 +195,8 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
               )}
               {stylist.favourites > 0 && <span>{stylist.favourites} favourites</span>}
 
-              {/* <!-- Share Buttons --> */}
-              <ul className="share-buttons margin-top-40 margin-bottom-0">
+              {/* -- Share Buttons -- */}
+              <ul className="share-buttons margin-top-20 margin-bottom-0">
                 <li>
                   <FacebookShareButton
                     url={window.location.href}
@@ -244,7 +222,6 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
               <div className="clearfix" />
             </div>
           </div>
-          {/* <!-- Sidebar / End --> */}
         </div>
       </div>
     </div>
