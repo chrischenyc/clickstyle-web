@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import log from 'winston';
+import _ from 'lodash';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Profiles from '../profiles';
@@ -161,21 +162,24 @@ Meteor.methods({
           },
         },
       );
-      if (stylist && stylist.services) {
-        stylist.services = stylist.services.map((stylistService) => {
-          const service = Services.findOne({ _id: stylistService._id });
-          const { photo } = service;
-          return { ...stylistService, photo };
-        });
-      }
 
-      if (this.userId) {
-        const { favouredStylists } = Profiles.findOne({ owner: this.userId });
+      if (!_.isEmpty(stylist)) {
+        if (stylist.services) {
+          stylist.services = stylist.services.map((stylistService) => {
+            const service = Services.findOne({ _id: stylistService._id });
+            const { photo } = service;
+            return { ...stylistService, photo };
+          });
+        }
 
-        stylist = {
-          ...stylist,
-          favoured: favouredStylists && favouredStylists.indexOf(owner) !== -1,
-        };
+        if (this.userId) {
+          const { favouredStylists } = Profiles.findOne({ owner: this.userId });
+
+          stylist = {
+            ...stylist,
+            favoured: favouredStylists && favouredStylists.indexOf(owner) !== -1,
+          };
+        }
       }
 
       return {
