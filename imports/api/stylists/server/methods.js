@@ -240,7 +240,7 @@ Meteor.methods({
   },
 
   'stylists.favourite': function favouriteStylist(data) {
-    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+    if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
 
@@ -257,12 +257,6 @@ Meteor.methods({
         Stylists.update({ owner }, { $inc: { favourites: -1 } });
         Profiles.update({ owner: this.userId }, { $pull: { favouredStylists: owner } });
       }
-
-      log.info(
-        'Meteor.methods: stylists.favourite',
-        `userId: ${this.userId}`,
-        `param: ${JSON.stringify(data)}`,
-      );
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -272,7 +266,7 @@ Meteor.methods({
   },
 
   'stylists.favoured': function favouredStylist(data) {
-    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+    if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
 
