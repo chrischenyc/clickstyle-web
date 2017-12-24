@@ -61,7 +61,6 @@ class Home extends Component {
       <HomePage
         services={this.state.services}
         stylists={this.state.stylists}
-        authenticated={this.props.authenticated}
         isStylistsLocationBased={this.state.isStylistsLocationBased}
       />
     );

@@ -10,11 +10,11 @@ const HomePage = props => (
   <div>
     <HomeSearch />
 
-    {!props.authenticated && <HomeServices services={props.services} />}
+    {!props.isStylistsLocationBased && <HomeServices services={props.services} />}
 
     <HomeStylists stylists={props.stylists} locationBased={props.isStylistsLocationBased} />
 
-    {props.authenticated && <HomeServices services={props.services} />}
+    {props.isStylistsLocationBased && <HomeServices services={props.services} />}
 
     <HomeJoin />
   </div>
@@ -23,7 +23,6 @@ const HomePage = props => (
 HomePage.propTypes = {
   services: PropTypes.array.isRequired,
   stylists: PropTypes.array.isRequired,
-  authenticated: PropTypes.bool.isRequired,
   isStylistsLocationBased: PropTypes.bool.isRequired,
 };
 
