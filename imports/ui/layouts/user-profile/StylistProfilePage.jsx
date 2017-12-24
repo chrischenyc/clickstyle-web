@@ -3,12 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { ShareButtons } from 'react-share';
+import { Collapse } from 'react-collapse';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
 import { dayOfWeekAsString, formatMonthYear } from '../../../modules/format-date';
 import OpenHourString from '../../../modules/client/OpenHourString';
+import StylistServiceSection from './StylistServiceSection';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
@@ -68,26 +70,7 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
               <div className="pricing-list-container">
                 {stylist.services &&
                   stylist.services.map(service => (
-                    <div key={service._id}>
-                      <h4>{service.name}</h4>
-                      <ul>
-                        <li>
-                          <h5>Base price</h5>
-                          {!_.isEmpty(service.basePriceDescription) && (
-                            <p>{service.basePriceDescription}</p>
-                          )}
-                          <span>${service.basePrice}</span>
-                        </li>
-                        {service.addons &&
-                          service.addons.map(addon => (
-                            <li key={addon._id}>
-                              <h5>{addon.name}</h5>
-                              {!_.isEmpty(addon.description) && <p>{addon.description}</p>}
-                              <span>${addon.price}</span>
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
+                    <StylistServiceSection key={service._id} service={service} />
                   ))}
               </div>
             </div>
