@@ -119,6 +119,10 @@ textarea:focus {
 .listing-item-container .listing-item-info .services-blurb {
   color: #909090;
   font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 4px;
 }
 
 /* 04-dashboard.css override */

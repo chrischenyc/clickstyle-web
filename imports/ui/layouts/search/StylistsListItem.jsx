@@ -55,10 +55,7 @@ const StylistsListItem = ({ stylist }) => (
 
       <div className="listing-item-info">
         <div className="services-blurb">
-          {_.truncate(stylist.services.map(service => service.name).join(', '), {
-            length: 60,
-            separator: ', ',
-          })}
+          {stylist.services.map(service => service.name).join(', ')}
         </div>
         {limitedArray(stylist.services, 3).map(service => (
           <div key={service._id}>{`${service.name} from $${service.basePrice}`}</div>
