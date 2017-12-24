@@ -5,39 +5,6 @@ import LoadingBubbles from '../../components/LoadingBubbles';
 
 import HomeStylistsItem from './HomeStylistsItem';
 
-const slickSettings = {
-  dots: false,
-  infinite: true,
-  autoplay: true,
-  speed: 500,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  initialSlide: 0,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
-
 /**
  * convert [s1, s2, s3, ...] to [[s1, s2], [s3, s4]...]
  * @param {an array of stylist objects} stylists
@@ -74,6 +41,40 @@ class HomeStylists extends Component {
 
   render() {
     const { stylistsPairs } = this.state;
+
+    // carousel config, disable auto-scroll and arrows if elements are too few
+    const slickSettings = {
+      slidesToShow: 4,
+      slidesToScroll: 4,
+      dots: false,
+      arrows: stylistsPairs.length > 4,
+      infinite: stylistsPairs.length > 4,
+      autoplay: stylistsPairs.length > 4,
+      speed: 500,
+      initialSlide: 0,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            arrows: stylistsPairs.length > 3,
+            infinite: stylistsPairs.length > 3,
+            autoplay: stylistsPairs.length > 3,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: stylistsPairs.length > 1,
+            infinite: stylistsPairs.length > 1,
+            autoplay: stylistsPairs.length > 1,
+          },
+        },
+      ],
+    };
 
     return (
       <div className="container carousel-container">

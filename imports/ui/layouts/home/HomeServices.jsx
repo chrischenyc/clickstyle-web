@@ -7,72 +7,78 @@ import scaledImageURL from '../../../modules/scaled-image-url';
 import { ServiceNameToSEOName } from '../../../modules/seo-name';
 import LoadingBubbles from '../../components/LoadingBubbles';
 
-const slickSettings = {
-  dots: false,
-  infinite: true,
-  autoplay: true,
-  speed: 500,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  initialSlide: 0,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
+const HomeServices = ({ services }) => {
+  // carousel config, disable auto-scroll and arrows if elements are too few
+  const slickSettings = {
+    slidesToShow: 6,
+    slidesToScroll: 6,
+    dots: false,
+    arrows: services.length > 6,
+    infinite: services.length > 6,
+    autoplay: services.length > 6,
+    speed: 500,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          arrows: services.length > 4,
+          infinite: services.length > 4,
+          autoplay: services.length > 4,
+        },
       },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: services.length > 1,
+          infinite: services.length > 1,
+          autoplay: services.length > 1,
+        },
       },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
+    ],
+  };
+
+  return (
+    <div className="container carousel-container">
+      <div className="row">
+        <h3 className="headline margin-bottom-10">Services</h3>
+      </div>
+
+      <div className="row">
+        {services.length === 0 && <LoadingBubbles />}
+
+        {services.length > 0 && (
+          <Slick {...slickSettings}>
+            {services.map(service => (
+              <div key={service._id} className="carousel-item-container">
+                <Link
+                  to={`/stylists/${ServiceNameToSEOName(service.name)}`}
+                  className="category-box"
+                >
+                  <img
+                    src={
+                      service.photo
+                        ? scaledImageURL(service.photo, 'medium')
+                        : '/images/placeholder-square.jpg'
+                    }
+                    alt={service.name}
+                  />
+                  <div className="category-box-content">
+                    <h3>{service.name}</h3>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </Slick>
+        )}
+      </div>
+    </div>
+  );
 };
-
-const HomeServices = ({ services }) => (
-  <div className="container carousel-container">
-    <div className="row">
-      <h3 className="headline margin-bottom-10">Services</h3>
-    </div>
-
-    <div className="row">
-      {services.length === 0 && <LoadingBubbles />}
-
-      {services.length > 0 && (
-        <Slick {...slickSettings}>
-          {services.map(service => (
-            <div key={service._id} className="carousel-item-container">
-              <Link to={`/stylists/${ServiceNameToSEOName(service.name)}`} className="category-box">
-                <img
-                  src={
-                    service.photo
-                      ? scaledImageURL(service.photo, 'medium')
-                      : '/images/placeholder-square.jpg'
-                  }
-                  alt={service.name}
-                />
-                <div className="category-box-content">
-                  <h3>{service.name}</h3>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </Slick>
-      )}
-    </div>
-  </div>
-);
 
 HomeServices.propTypes = {
   services: PropTypes.array.isRequired,
