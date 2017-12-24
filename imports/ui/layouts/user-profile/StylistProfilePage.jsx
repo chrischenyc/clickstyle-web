@@ -42,8 +42,11 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
           <h2 className="title">{userNameWithGreeting(profile.name)}</h2>
 
           <div className="desc">
-            {profile.address.suburb && `${profile.address.suburb}, ${profile.address.state}`}
-            {profile.address.suburb &&
+            {profile.address &&
+              profile.address.suburb &&
+              `${profile.address.suburb}, ${profile.address.state}`}
+            {profile.address &&
+              profile.address.suburb &&
               profile.createdAt && <span style={{ padding: '0 8px' }}>&middot;</span>}
             {profile.createdAt && <span>Joined in {formatMonthYear(profile.createdAt)}</span>}
           </div>
