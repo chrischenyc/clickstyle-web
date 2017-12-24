@@ -5,6 +5,7 @@ import { Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import ScaledImageURL from '../../../../modules/scaled-image-url';
+import userProfileLink from '../../../../modules/user-profile-link';
 
 const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
   <div className="container">
@@ -17,11 +18,7 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
               <li key={stylist.owner}>
                 <div className="list-box-listing">
                   <div className="list-box-listing-img">
-                    <Link
-                      to={`/users/show/${
-                        stylist.owner
-                      }/${stylist.name.first.toLowerCase()}${stylist.name.last.toLowerCase()}`}
-                    >
+                    <Link to={userProfileLink(stylist)}>
                       <Image
                         size="tiny"
                         circular

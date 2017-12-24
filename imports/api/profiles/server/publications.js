@@ -10,7 +10,7 @@ Meteor.publish('profiles.owner', function profilesOwner() {
     { owner: this.userId },
     {
       // hide fields in the return
-      fields: { owner: 0, createdAt: 0, updatedAt: 0 },
+      fields: { createdAt: 0, updatedAt: 0 },
     },
   );
 });

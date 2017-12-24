@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   Container,
   Button,
@@ -17,6 +18,7 @@ import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticG
 import { FormInputField } from '../../../components/FormInputField';
 import EditPhotoPage from './EditPhotoPage';
 import { PrimaryColor } from '../../../../modules/client/constants';
+import userProfileLink from '../../../../modules/user-profile-link';
 
 const EditProfilePage = ({
   photo,
@@ -39,6 +41,9 @@ const EditProfilePage = ({
   errors,
 }) => (
   <Container>
+    <Link to={userProfileLink(profile)} target="_blank" class="button margin-bottom-35">
+      View my public profile
+    </Link>
     <Form
       onSubmit={onSubmit}
       loading={profile.fetching || saving}

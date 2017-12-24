@@ -6,6 +6,7 @@ import { Image } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import ScaledImageURL from '../../../modules/scaled-image-url';
+import userProfileLink from '../../../modules/user-profile-link';
 
 const dummyBanners = [
   'http://res.cloudinary.com/stylesquard/image/upload/v1511498808/banner1_wahqwj',
@@ -25,12 +26,7 @@ const limitedArray = (objects, size) => {
 
 const StylistsListItem = ({ stylist }) => (
   <div className="col-lg-4 col-md-6 margin-bottom-20">
-    <Link
-      to={`/users/show/${
-        stylist.owner
-      }/${stylist.name.first.toLowerCase()}${stylist.name.last.toLowerCase()}`}
-      className="listing-item-container"
-    >
+    <Link to={userProfileLink(stylist)} className="listing-item-container">
       <div className="listing-item">
         <img src={_.sample(dummyBanners)} alt="" />
 

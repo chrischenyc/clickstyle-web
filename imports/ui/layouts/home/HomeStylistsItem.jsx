@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
+import userProfileLink from '../../../modules/user-profile-link';
 
 const HomeStylistsItem = ({ stylist }) => (
-  <Link
-    to={`/users/show/${
-      stylist.owner
-    }/${stylist.name.first.toLowerCase()}${stylist.name.last.toLowerCase()}`}
-    className="listing-item-container"
-  >
+  <Link to={userProfileLink(stylist)} className="listing-item-container">
     <div className="listing-item">
       <img
         src={
