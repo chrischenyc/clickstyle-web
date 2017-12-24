@@ -188,7 +188,10 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                   stylist
                 </button>
               )}
-              {stylist.favourites > 0 && <span>{stylist.favourites} favourites</span>}
+              {stylist.favourites &&
+                stylist.favourites.length > 0 && (
+                  <span>{stylist.favourites.length} favourites</span>
+                )}
 
               {/* -- Share Buttons -- */}
               <ul className="share-buttons margin-top-20 margin-bottom-0">

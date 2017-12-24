@@ -251,10 +251,10 @@ Meteor.methods({
 
     try {
       if (favourite) {
-        Stylists.update({ owner }, { $inc: { favourites: 1 } });
+        Stylists.update({ owner }, { $addToSet: { favourites: this.userId } });
         Profiles.update({ owner: this.userId }, { $addToSet: { favouredStylists: owner } });
       } else {
-        Stylists.update({ owner }, { $inc: { favourites: -1 } });
+        Stylists.update({ owner }, { $pull: { favourites: this.userId } });
         Profiles.update({ owner: this.userId }, { $pull: { favouredStylists: owner } });
       }
     } catch (exception) {

@@ -199,7 +199,8 @@ const StylistsSchema = new SimpleSchema({
   published: {
     type: Boolean, // only published stylist can be discovered by customers
   },
-  favourites: SimpleSchema.Integer,
+  favourites: Array,
+  'favourites.$': String,
   // ------------------------------
   // normalised data from Profiles
   name: NameSchema,

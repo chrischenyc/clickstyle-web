@@ -41,9 +41,13 @@ const EditProfilePage = ({
   errors,
 }) => (
   <Container>
-    <Link to={userProfileLink(profile)} target="_blank" class="button margin-bottom-35">
-      View my public profile
-    </Link>
+    {profile &&
+      profile.owner &&
+      profile.name && (
+        <Link to={userProfileLink(profile)} target="_blank" class="button margin-bottom-35">
+          View my public profile
+        </Link>
+      )}
     <Form
       onSubmit={onSubmit}
       loading={profile.fetching || saving}
