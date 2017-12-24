@@ -11,7 +11,7 @@ Accounts.onCreateUser((options, user) => {
   // only leave minimal foot print in Meteor.users collection
   const normalizedProfile = normalizeProfile(options, user);
   if (normalizedProfile) {
-    Profiles.upsert({ owner: normalizedProfile.owner }, { $set: normalizedProfile });
+    Profiles.insert(normalizedProfile);
 
     userToCreate.profile = { name: normalizedProfile.name };
 

@@ -5,58 +5,66 @@ import _ from 'lodash';
 
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
+import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
+import { formatMonthYear } from '../../../modules/format-date';
 
-const UserProfilePage = ({ user }) => {
-  if (_.isNil(user)) {
+const UserProfilePage = ({ profile }) => {
+  if (_.isNil(profile)) {
     return <Loading />;
   }
 
-  const { profile } = user;
-
-  const photo = profile.photo || Meteor.settings.public.image.defaultProfilePhoto;
-
   return (
     <div>
-      <div id="titlebar" className="gradient">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="user-profile-titlebar">
-                <div className="user-profile-avatar">
-                  <img src={ScaledImageURL(photo, 'tiny')} alt="" />
-                </div>
+      <div className="profile-header">
+        <div className="profile-header-bg" />
 
-                <div className="user-profile-name">
-                  <h2>{`${profile.name.first} ${profile.name.last}`}</h2>
+        <div className="profile-header-avatar">
+          <img
+            alt=""
+            src={ScaledImageURL(
+              profile.photo || Meteor.settings.public.image.defaultProfilePhoto,
+              'tiny',
+            )}
+          />
+        </div>
 
-                  {profile && profile.about && <p>{profile.about}</p>}
-                </div>
-              </div>
-            </div>
+        <div className="profile-header-info">
+          <h2 className="title">{userNameWithGreeting(profile.name)}</h2>
+
+          <div className="desc">
+            {profile.address.suburb && `${profile.address.suburb}, ${profile.address.state}`}
+            {profile.address.suburb &&
+              profile.createdAt && <span style={{ padding: '0 8px' }}>&middot;</span>}
+            {profile.createdAt && <span>Joined in {formatMonthYear(profile.createdAt)}</span>}
           </div>
         </div>
       </div>
 
-      <div className="container">
-        <div className="row sticky-wrapper">
-          <div className="col-lg-12 col-md-12 margin-top-0">
-            <div className="boxed-widget margin-bottom-50">
-              {profile &&
-                profile.products &&
-                profile.products.length > 0 && (
-                  <div>
-                    <h3>Products used</h3>
-                    <ul className="listing-details-sidebar">
-                      {profile.products.map(product => (
-                        <li key={product.productId} style={{ display: 'inline', float: 'left' }}>
-                          {product.name}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="clearfix" />
-                  </div>
-                )}
-            </div>
+      <div className="container margin-top-60 margin-bottom-60">
+        <div className="row">
+          <div className="col-12">
+            {!_.isEmpty(profile.about) && (
+              <div className="boxed-widget margin-bottom-10">
+                <h3>About me</h3>
+                <ul className="listing-details-sidebar">{profile.about}</ul>
+                <div className="clearfix" />
+              </div>
+            )}
+
+            {profile.products &&
+              profile.products.length > 0 && (
+                <div className="boxed-widget margin-bottom-10">
+                  <h3>Products used</h3>
+                  <ul className="listing-details-sidebar">
+                    {profile.products.map(product => (
+                      <li key={product.productId} style={{ display: 'inline', float: 'left' }}>
+                        {product.name}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="clearfix" />
+                </div>
+              )}
           </div>
         </div>
       </div>
@@ -64,12 +72,8 @@ const UserProfilePage = ({ user }) => {
   );
 };
 
-UserProfilePage.defaultProps = {
-  user: null,
-};
-
 UserProfilePage.propTypes = {
-  user: PropTypes.object,
+  profile: PropTypes.object.isRequired,
 };
 
 export default UserProfilePage;

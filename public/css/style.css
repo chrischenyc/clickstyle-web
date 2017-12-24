@@ -36,3 +36,46 @@
     margin-top: 20px;
   }
 }
+
+/* profile page header */
+
+.profile-header {
+  text-align: center;
+}
+
+.profile-header .profile-header-bg {
+  background: url("https://images.unsplash.com/photo-1496715976403-7e36dc43f17b?auto=format&fit=crop&w=1280&q=60");
+  background-size: cover;
+  background-color: #333;
+  height: 300px;
+}
+
+.profile-header .profile-header-avatar {
+  position: relative;
+  top: -60px;
+  margin-bottom: -60px;
+}
+
+.profile-header .profile-header-avatar img {
+  width: 160px;
+  height: 160px;
+  max-width: 160px;
+  max-height: 160px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.profile-header .profile-header-info {
+  padding-top: 8px;
+}
+
+.profile-header .profile-header-info .title {
+  font-size: 28px;
+}
+
+.profile-header .profile-header-info .desc {
+  font-size: 17px;
+  color: #888;
+}

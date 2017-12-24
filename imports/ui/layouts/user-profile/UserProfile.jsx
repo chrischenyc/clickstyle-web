@@ -73,7 +73,7 @@ class UserProfile extends Component {
         />
       );
     }
-    return <UserProfilePage user={this.state.user} />;
+    return <UserProfilePage profile={this.state.user.profile} />;
   }
 }
 

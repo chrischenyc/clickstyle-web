@@ -147,6 +147,7 @@ Meteor.methods({
             photo: 1,
             products: 1,
             about: 1,
+            createdAt: 1,
           },
         },
       );

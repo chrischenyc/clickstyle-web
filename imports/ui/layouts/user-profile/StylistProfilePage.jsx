@@ -2,13 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Image } from 'semantic-ui-react';
 import { ShareButtons } from 'react-share';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
-import { dayOfWeekAsString } from '../../../modules/format-date';
+import { dayOfWeekAsString, formatMonthYear } from '../../../modules/format-date';
 import OpenHourString from '../../../modules/client/OpenHourString';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
@@ -24,33 +23,35 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
     <div>
       {/* TODO: add stylist portfolio carousal */}
 
+      <div className="profile-header">
+        <div className="profile-header-bg" />
+
+        <div className="profile-header-avatar">
+          <img
+            alt=""
+            src={ScaledImageURL(
+              profile.photo || Meteor.settings.public.image.defaultProfilePhoto,
+              'tiny',
+            )}
+          />
+        </div>
+
+        <div className="profile-header-info">
+          <h2 className="title">{userNameWithGreeting(profile.name)}</h2>
+
+          <div className="desc">
+            {profile.address.suburb && `${profile.address.suburb}, ${profile.address.state}`}
+            {profile.address.suburb &&
+              profile.createdAt && <span style={{ padding: '0 8px' }}>&middot;</span>}
+            {profile.createdAt && <span>Joined in {formatMonthYear(profile.createdAt)}</span>}
+          </div>
+        </div>
+      </div>
+
       <div className="container">
         <div className="row sticky-wrapper">
           {/* -- Content -- */}
-          <div className="col-lg-8 col-md-8 padding-right-30">
-            {/* <!-- Title bar --> */}
-            <div id="titlebar" className="listing-titlebar">
-              <div className="listing-titlebar-title">
-                <Image
-                  size="tiny"
-                  circular
-                  src={ScaledImageURL(
-                    profile.photo || Meteor.settings.public.image.defaultProfilePhoto,
-                    'tiny',
-                  )}
-                />
-                <h2>{userNameWithGreeting(profile.name)}</h2>
-                <span>
-                  {profile.address.suburb && (
-                    <div className="listing-address">
-                      <i className="fa fa-map-marker" />
-                      &nbsp;{`${profile.address.suburb}, ${profile.address.state}`}
-                    </div>
-                  )}
-                </span>
-              </div>
-            </div>
-
+          <div className="col-lg-8 col-md-8 padding-right-30 margin-top-75">
             {/* <!-- Listing Nav --> */}
             <div id="listing-nav" className="listing-nav-container">
               <ul className="listing-nav">
