@@ -210,13 +210,11 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
             <div className="listing-share margin-top-40 margin-bottom-40 no-border">
               {authenticated && (
                 <button className="like-button" onClick={favourStylist}>
-                  <span className="like-icon" /> {stylist.favoured ? 'Un-bookmark' : 'Bookmark'}&nbsp;this
+                  <span className="like-icon" /> {stylist.favoured ? 'Un-favourite' : 'Favourite'}&nbsp;this
                   stylist
                 </button>
               )}
-              {stylist.favourites > 0 && (
-                <span>{stylist.favourites} people bookmarked this stylist</span>
-              )}
+              {stylist.favourites > 0 && <span>{stylist.favourites} favourites</span>}
 
               {/* <!-- Share Buttons --> */}
               <ul className="share-buttons margin-top-40 margin-bottom-0">
