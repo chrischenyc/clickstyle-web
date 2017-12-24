@@ -29,6 +29,15 @@ Meteor.methods({
 
       let stylists = [];
 
+      const fields = {
+        owner: 1,
+        'services.name': 1,
+        name: 1,
+        'address.state': 1,
+        'address.suburb': 1,
+        photo: 1,
+      };
+
       if (suburbName) {
         // query by available in suburb
         const suburbIds = Suburbs.find({ name: RegExp(suburbName, 'i') })
@@ -38,7 +47,7 @@ Meteor.methods({
         stylists = Stylists.find(
           { published: true, 'areas.availableSuburbs': { $in: suburbIds } },
           {
-            fields: { owner: 1, 'services.name': 1 },
+            fields,
           },
         ).fetch();
       }
@@ -53,14 +62,7 @@ Meteor.methods({
         stylists = Stylists.find(
           { published: true, owner: { $in: stylistIds } },
           {
-            fields: {
-              owner: 1,
-              'services.name': 1,
-              name: 1,
-              'address.state': 1,
-              'address.suburb': 1,
-              photo: 1,
-            },
+            fields,
           },
         ).fetch();
       }
