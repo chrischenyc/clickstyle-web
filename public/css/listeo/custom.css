@@ -19,7 +19,7 @@ textarea:focus {
 }
 
 .main-search-input {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .main-search-input-item.location i {
@@ -45,14 +45,14 @@ textarea:focus {
   background-color: #00aca4;
   border-bottom: none;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 1em 2em;
   border-radius: 0;
   position: relative;
   z-index: 10;
-  margin: 5px 0 0 0;
+  margin: 0;
   display: block;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.5em;
 }
 
 .pricing-list-container h4:after {
@@ -78,7 +78,7 @@ textarea:focus {
 }
 
 .pricing-list-container ul li {
-  padding: 1em 3rem;
+  padding: 1em 3em;
   position: relative;
 }
 
