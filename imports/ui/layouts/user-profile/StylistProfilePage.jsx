@@ -66,6 +66,15 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
               </div>
             )}
 
+            {/* -- Products -- */}
+            {!_.isEmpty(profile.products) && (
+              <div id="stylist-profile-overview" className="listing-section margin-bottom-50">
+                <h3 className="listing-desc-headline">Products used</h3>
+
+                <p>{profile.products.map(product => product.name).join(', ')}</p>
+              </div>
+            )}
+
             {/* -- Services -- */}
             <div id="stylist-profile-pricing-list" className="listing-section margin-bottom-50">
               <h3 className="listing-desc-headline">Services</h3>
