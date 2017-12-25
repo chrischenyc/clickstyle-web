@@ -14,7 +14,6 @@
   min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
-  padding-top: 80px;
 }
 
 /* Flexbox Adjustments */
@@ -180,7 +179,7 @@ a.dashboard-responsive-nav-trigger {
 /* Nav Tag */
 .dashboard-nav ul li span.nav-tag {
   background-color: rgba(255, 255, 255, 0.2);
-  font-family: "Open Sans";
+  font-family: "Lato";
   font-weight: 600;
   display: inline-block;
   font-size: 11px;
@@ -336,7 +335,7 @@ a.dashboard-responsive-nav-trigger {
   padding: 0;
   margin: 0;
   color: #fff;
-  font-family: "Open Sans";
+  font-family: "Lato";
   letter-spacing: -1px;
 }
 

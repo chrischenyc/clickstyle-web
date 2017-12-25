@@ -19,13 +19,11 @@ const menuStyle = {
   border: 'none',
   borderRadius: 0,
   boxShadow: 'none',
-  transition: 'box-shadow 0.5s ease, padding 0.5s ease',
   display: 'block',
 };
 
 const fixedMenuStyle = {
-  backgroundColor: '#fff',
-  border: '1px solid #ddd',
+  border: 'none',
   borderRadius: 0,
   boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
   display: 'block',
@@ -53,7 +51,11 @@ class Header extends Component {
         }}
         innerZ={9999}
       >
-        <Menu borderless size="massive" style={menuFixed ? fixedMenuStyle : menuStyle}>
+        <Menu
+          borderless
+          size="massive"
+          style={menuFixed || !fullContent ? fixedMenuStyle : menuStyle}
+        >
           <LoadingBar style={{ backgroundColor: '#00aca4' }} />
           <div className="container">
             {fullContent && (

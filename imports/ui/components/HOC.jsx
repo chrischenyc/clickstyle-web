@@ -24,12 +24,14 @@ export const withSearchHeaderAndFooter = WrappedComponent => props => (
 );
 
 export const withSideMenuAndHeader = WrappedComponent => props => (
-  <div>
+  <div id="dashboard">
     <SideMenu />
     <div className="dashboard-content">
       <Header fullContent={false} />
 
-      <WrappedComponent {...props} />
+      <div className="margin-top-50">
+        <WrappedComponent {...props} />
+      </div>
     </div>
   </div>
 );

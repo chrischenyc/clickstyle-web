@@ -100,15 +100,6 @@
     max-height: 40px;
     transform: translate3d(0, 0, 0);
   }
-
-  .user-menu {
-    margin: 0 25px 0 25px;
-  }
-
-  .user-menu ul {
-    left: -25px;
-    right: auto;
-  }
 }
 
 /* Smaller than standard 1180 (devices and browsers) */
@@ -903,12 +894,6 @@
 
   .about-description {
     margin: 0;
-  }
-
-  .user-menu {
-    margin: 10px 0 -10px 25px;
-    top: 0;
-    display: inline-block;
   }
 
   .dashboard-list-box .sort-by .sort-by-select {
