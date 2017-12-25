@@ -22,7 +22,8 @@ const menuStyle = {
 };
 
 const fixedMenuStyle = {
-  border: 'none',
+  backgroundColor: '#fff',
+  border: '1px solid #ddd',
   borderRadius: 0,
   boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
   display: 'block',
