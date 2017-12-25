@@ -10,12 +10,12 @@ import LoadingBubbles from '../../components/LoadingBubbles';
 const HomeServices = ({ services }) => {
   // carousel config, disable auto-scroll and arrows if elements are too few
   const slickSettings = {
-    slidesToShow: 6,
-    slidesToScroll: 6,
+    slidesToShow: 5,
+    slidesToScroll: 5,
     dots: false,
-    arrows: services.length > 6,
-    infinite: services.length > 6,
-    autoplay: services.length > 6,
+    arrows: services.length > 5,
+    infinite: services.length > 5,
+    autoplay: services.length > 5,
     speed: 500,
     initialSlide: 0,
     responsive: [
