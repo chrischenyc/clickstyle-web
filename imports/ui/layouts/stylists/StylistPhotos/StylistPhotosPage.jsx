@@ -5,7 +5,6 @@ import { Button, Form, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
-import { PrimaryColor } from '../../../../modules/client/constants';
 import EditPhotoPage from './EditPhotoPage';
 
 const StylistPhotosPage = ({
@@ -23,7 +22,7 @@ const StylistPhotosPage = ({
   errors,
 }) => (
   <div className="container">
-    <Button color={PrimaryColor} as={Link} to={`/profiles/${profile._id}`}>
+    <Button color="teal" as={Link} to={`/profiles/${profile._id}`}>
       View stylist profile
     </Button>
     <Form
@@ -45,7 +44,7 @@ const StylistPhotosPage = ({
 
       <Divider horizontal>Portfolio images</Divider>
 
-      <Button color={PrimaryColor} size="large" type="submit" disabled={pristine} loading={saving}>
+      <Button color="teal" size="large" type="submit" disabled={pristine} loading={saving}>
         Save
       </Button>
 

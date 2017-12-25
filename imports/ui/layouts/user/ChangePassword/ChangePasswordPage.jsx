@@ -6,7 +6,6 @@ import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
 import { FormInputField } from '../../../components/FormInputField';
-import { PrimaryColor } from '../../../../modules/client/constants';
 
 const ChangePasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
@@ -73,7 +72,7 @@ const ChangePasswordPage = ({
             <div className="notification error"> {errors.message} </div>
           )}
 
-          <Button color={PrimaryColor} size="huge" type="submit">
+          <Button color="teal" size="huge" type="submit">
             Change password
           </Button>
         </Form>

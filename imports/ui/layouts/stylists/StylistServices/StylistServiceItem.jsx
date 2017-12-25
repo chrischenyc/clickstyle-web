@@ -16,7 +16,6 @@ import uuid from 'uuid/v1';
 
 import StylistServiceAddonItem from './StylistServiceAddonItem';
 import { PriceField, FormFieldErrorMessage } from '../../../components/FormInputField';
-import { PrimaryColor } from '../../../../modules/client/constants';
 
 const normalizeService = (service) => {
   const cloneService = _.cloneDeep(service);
@@ -196,7 +195,7 @@ class StylistServiceItem extends Component {
               <Button
                 basic
                 type="button"
-                color={PrimaryColor}
+                color="teal"
                 content="Add an add-on"
                 icon="add circle"
                 labelPosition="right"

@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Message, Checkbox, Search, Dropdown, Popup, Icon } from 'semantic-ui-react';
+import { Button, Form, Checkbox, Search, Dropdown, Popup, Icon } from 'semantic-ui-react';
 import _ from 'lodash';
-
-import { PrimaryColor } from '../../../../modules/client/constants';
 
 const StylistAvailableAreasPage = ({
   radius,
@@ -81,7 +79,7 @@ const StylistAvailableAreasPage = ({
       </Form.Field>
 
       <Button
-        color={PrimaryColor}
+        color="teal"
         size="massive"
         type="submit"
         disabled={pristine || !_.isEmpty(error)}

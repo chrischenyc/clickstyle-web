@@ -8,8 +8,6 @@ import StylistsListItem from './StylistsListItem';
 import LoadMore from '../../components/LoadMore';
 import Loading from '../../components/Loading';
 
-import { PrimaryColor } from '../../../modules/client/constants';
-
 const SearchPage = ({
   onLoadMore, searching, searched, stylists, hasMore, foundNothing,
 }) => (
@@ -51,7 +49,7 @@ const SearchPage = ({
               <Button.Group size="large">
                 <Button>Suggest a stylist</Button>
                 <Button.Or />
-                <Button color={PrimaryColor} as={Link} to="/join">
+                <Button color="teal" as={Link} to="/join">
                   Join as a stylist
                 </Button>
               </Button.Group>

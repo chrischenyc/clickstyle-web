@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, Form, Grid, Message, Segment, Divider } from 'semantic-ui-react';
+import { Button, Form, Grid, Segment, Divider } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import ModalLink from '../../../components/ModalLink';
@@ -10,7 +10,6 @@ import { FormInputField } from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
 import SignUp from '../SignUp/SignUp';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
-import { PrimaryColor } from '../../../../modules/client/constants';
 
 // web version of the login form, stateless component
 const LoginPage = ({
@@ -49,7 +48,7 @@ const LoginPage = ({
               errors={errors}
             />
 
-            <Button color={PrimaryColor} fluid size="huge" type="submit">
+            <Button color="teal" fluid size="huge" type="submit">
               Login
             </Button>
 

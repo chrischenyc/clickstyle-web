@@ -8,7 +8,6 @@ import _ from 'lodash';
 import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import { FormInputField } from '../../../components/FormInputField';
 import EditPhotoPage from './EditPhotoPage';
-import { PrimaryColor } from '../../../../modules/client/constants';
 import userProfileLink from '../../../../modules/user-profile-link';
 
 const EditProfilePage = ({
@@ -148,7 +147,7 @@ const EditProfilePage = ({
                 size="large"
                 as="a"
                 key={product.name}
-                color={PrimaryColor}
+                color="teal"
                 basic
                 style={{ marginBottom: '0.25rem' }}
                 onClick={() => {
@@ -169,7 +168,7 @@ const EditProfilePage = ({
               <Label
                 size="large"
                 key={product.name}
-                color={PrimaryColor}
+                color="teal"
                 style={{ marginBottom: '0.25rem' }}
               >
                 {product.name}
@@ -185,7 +184,7 @@ const EditProfilePage = ({
         )}
       </Form.Field>
 
-      <Button color={PrimaryColor} size="huge" type="submit" disabled={pristine} loading={saving}>
+      <Button color="teal" size="huge" type="submit" disabled={pristine} loading={saving}>
         Save
       </Button>
 

@@ -5,8 +5,6 @@ import { Button, Form } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
-import { PrimaryColor } from '../../../../modules/client/constants';
-
 const ForgotPasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
 }) => {
@@ -48,7 +46,7 @@ const ForgotPasswordPage = ({
 
         {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
 
-        <Button color={PrimaryColor} size="huge" type="submit">
+        <Button color="teal" size="huge" type="submit">
           Send reset link
         </Button>
       </Form>

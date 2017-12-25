@@ -5,7 +5,6 @@ import { Button, Form, Modal, List, Checkbox } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import StylistServiceItem from './StylistServiceItem';
-import { PrimaryColor } from '../../../../modules/client/constants';
 
 class StylistServicesPage extends Component {
   constructor(props) {
@@ -72,7 +71,7 @@ class StylistServicesPage extends Component {
             Cancel
           </Button>
           <Button
-            color={PrimaryColor}
+            color="teal"
             onClick={() => {
               onAddServices(this.state.servicesToAdd);
               this.setState({ showAvailableServicesModal: false, servicesToAdd: [] });
@@ -109,7 +108,7 @@ class StylistServicesPage extends Component {
             <p>
               <Button
                 basic
-                color={PrimaryColor}
+                color="teal"
                 size="large"
                 content="Add more services"
                 icon="add circle"
@@ -122,13 +121,7 @@ class StylistServicesPage extends Component {
             </p>
           )}
 
-          <Button
-            color={PrimaryColor}
-            size="massive"
-            type="submit"
-            disabled={pristine}
-            loading={saving}
-          >
+          <Button color="teal" size="massive" type="submit" disabled={pristine} loading={saving}>
             Save
           </Button>
 

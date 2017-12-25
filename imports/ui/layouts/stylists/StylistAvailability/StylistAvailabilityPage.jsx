@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Button, Form, Table, Checkbox, Icon } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import { PrimaryColor } from '../../../../modules/client/constants';
 import HoursDropdown from '../../../components/HoursDropdown';
 import MinutesDropdown from '../../../components/MinutesDropdown';
 import { dayOfWeekAsString } from '../../../../modules/format-date';
@@ -99,7 +98,7 @@ const StylistAvailableTimePage = ({
       </Table>
 
       <Button
-        color={PrimaryColor}
+        color="teal"
         size="massive"
         type="submit"
         disabled={pristine || !_.isEmpty(errors)}

@@ -3,12 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
 
-import { PrimaryColor } from '../../modules/client/constants';
-
 const LoadMore = ({ onLoadMore, searching }) => (
   <Button
     basic
-    color={PrimaryColor}
+    color="teal"
     content="Load More"
     onClick={onLoadMore}
     loading={searching}

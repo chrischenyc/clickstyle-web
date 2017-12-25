@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import { FormInputField } from '../../components/FormInputField';
 import { formatDate } from '../../../modules/format-date';
-import { PrimaryColor } from '../../../modules/client/constants';
 
 class StylistsApplicationPage extends Component {
   constructor(props) {
@@ -183,7 +182,7 @@ class StylistsApplicationPage extends Component {
                   accept: '.jpg,.jpeg,.png,.pdf,.doc,.docx,.dot',
                 }}
               >
-                <Button color={PrimaryColor} loading={false}>
+                <Button color="teal" loading={false}>
                   Upload file
                 </Button>
                 <span>
@@ -229,12 +228,7 @@ class StylistsApplicationPage extends Component {
             />
           </Form.Field>
 
-          <Button
-            color={PrimaryColor}
-            size="huge"
-            type="submit"
-            disabled={!this.state.agreementChecked}
-          >
+          <Button color="teal" size="huge" type="submit" disabled={!this.state.agreementChecked}>
             Join
           </Button>
         </Form>
