@@ -1,11 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Divider } from 'semantic-ui-react';
+import { Form, Divider, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
-import { Button } from '../../../components/elements';
 import EditPhotoPage from './EditPhotoPage';
 
 const StylistPhotosPage = ({

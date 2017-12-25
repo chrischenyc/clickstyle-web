@@ -1,12 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Confirm } from 'semantic-ui-react';
+import { Confirm, Button } from 'semantic-ui-react';
 import _ from 'lodash';
 import { UploadField as FileField } from '@navjobs/upload';
 import AvatarEditor from 'react-avatar-editor';
 
-import { Button } from '../../../components/elements';
 import ScaledImageURL from '../../../../modules/scaled-image-url';
 
 const ImageSize = 280;

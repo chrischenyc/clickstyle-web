@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Checkbox, Search, Dropdown, Popup } from 'semantic-ui-react';
+import { Form, Checkbox, Search, Dropdown, Popup, Button } from 'semantic-ui-react';
 import _ from 'lodash';
-
-import { Button } from '../../../components/elements';
 
 const StylistAvailableAreasPage = ({
   radius,

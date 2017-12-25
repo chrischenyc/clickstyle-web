@@ -1,10 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Modal, List, Checkbox } from 'semantic-ui-react';
+import { Form, Modal, List, Checkbox, Button } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import { Button } from '../../../components/elements';
 import StylistServiceItem from './StylistServiceItem';
 
 class StylistServicesPage extends Component {

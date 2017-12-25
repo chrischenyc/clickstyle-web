@@ -3,11 +3,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Dropdown, Menu, Responsive } from 'semantic-ui-react';
+import { Dropdown, Menu, Responsive, Button } from 'semantic-ui-react';
 import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
 
-import { Button } from '../components/elements';
 import { closeModal } from '../../modules/client/redux/modal';
 import { toggleSlideMenu } from '../../modules/client/redux/ui';
 import ModalLink from './ModalLink';

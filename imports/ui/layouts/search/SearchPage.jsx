@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Responsive } from 'semantic-ui-react';
 
-import { Button } from '../../components/elements';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import StylistsListItem from './StylistsListItem';
 import LoadMore from '../../components/LoadMore';

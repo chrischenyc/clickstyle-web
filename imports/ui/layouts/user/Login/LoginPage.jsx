@@ -2,10 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Form, Grid, Segment, Divider } from 'semantic-ui-react';
+import { Form, Grid, Segment, Divider, Button } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import { Button } from '../../../components/elements';
 import ModalLink from '../../../components/ModalLink';
 import { FormInputField } from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
