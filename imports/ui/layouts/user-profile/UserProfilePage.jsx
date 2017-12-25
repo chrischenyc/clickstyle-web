@@ -21,10 +21,7 @@ const UserProfilePage = ({ profile }) => {
         <div className="large-avatar">
           <img
             alt=""
-            src={ScaledImageURL(
-              profile.photo || Meteor.settings.public.image.defaultProfilePhoto,
-              'tiny',
-            )}
+            src={ScaledImageURL(profile.photo || Meteor.settings.public.defaultAvatar, 'tiny')}
           />
         </div>
 

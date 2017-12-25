@@ -32,10 +32,7 @@ const StylistsListItem = ({ stylist }) => (
         <div className="listing-item-content vertical-centered">
           <div id="avatar" className="small-avatar">
             <img
-              src={ScaledImageURL(
-                stylist.photo || Meteor.settings.public.image.defaultProfilePhoto,
-                'tiny',
-              )}
+              src={ScaledImageURL(stylist.photo || Meteor.settings.public.defaultAvatar, 'tiny')}
               alt=""
             />
           </div>

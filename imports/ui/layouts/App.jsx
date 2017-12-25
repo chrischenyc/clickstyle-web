@@ -45,6 +45,7 @@ import StylistsApplication from '../layouts/stylists/StylistsApplication';
 import StylistServices from '../layouts/stylists/StylistServices/StylistServices';
 import StylistAvailability from '../layouts/stylists/StylistAvailability/StylistAvailability';
 import StylistAvailableAreas from '../layouts/stylists/StylistAvailableAreas/StylistAvailableAreas';
+import StylistPortfolio from '../layouts/stylists/StylistPortfolio/StylistPortfolio';
 
 import TermsPage from '../layouts/static/TermsPage';
 import PrivacyPage from '../layouts/static/PrivacyPage';
@@ -140,6 +141,10 @@ class App extends Component {
               <SecureRoute
                 path="/users/stylist/areas"
                 component={withSideMenuAndHeader(StylistAvailableAreas)}
+              />
+              <SecureRoute
+                path="/users/stylist/portfolio"
+                component={withSideMenuAndHeader(StylistPortfolio)}
               />
 
               <Route component={withHeaderAndFooter(NotFoundPage)} />

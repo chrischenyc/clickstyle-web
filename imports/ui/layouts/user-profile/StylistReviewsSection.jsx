@@ -22,7 +22,7 @@ const StylistReviewsSection = ({ reviews }) => (
               <Link to={userProfileLink(review.reviewer)}>
                 <img
                   src={ScaledImageURL(
-                    review.reviewer.photo || Meteor.settings.public.image.defaultProfilePhoto,
+                    review.reviewer.photo || Meteor.settings.public.defaultAvatar,
                     'tiny',
                   )}
                   alt=""

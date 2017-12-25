@@ -37,7 +37,7 @@ class EditPhotoPage extends Component {
       file, scale, rotate, openRemoveConfirm,
     } = this.state;
 
-    const displayPhotoUrl = photo || Meteor.settings.public.image.defaultProfilePhoto;
+    const displayPhotoUrl = photo || Meteor.settings.public.defaultAvatar;
 
     // if file selected, show photo editor UI
     return (
@@ -156,9 +156,7 @@ class EditPhotoPage extends Component {
               <Button color="teal" loading={photoUploading}>
                 Upload photo
               </Button>
-              <span>
-                &nbsp;maximum image file size: {Meteor.settings.public.image.maxFileSize}MB
-              </span>
+              <span>&nbsp;maximum image file size: {Meteor.settings.public.maxPhotoSize}MB</span>
             </FileField>
 
             <Confirm

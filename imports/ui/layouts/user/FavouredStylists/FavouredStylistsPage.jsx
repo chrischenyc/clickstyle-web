@@ -20,7 +20,7 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
                     <div className="medium-avatar">
                       <img
                         src={ScaledImageURL(
-                          stylist.photo || Meteor.settings.public.image.defaultProfilePhoto,
+                          stylist.photo || Meteor.settings.public.defaultAvatar,
                           'tiny',
                         )}
                         alt=""
