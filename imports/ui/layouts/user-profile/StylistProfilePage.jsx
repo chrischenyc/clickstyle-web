@@ -29,7 +29,7 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
       <div className="profile-header">
         <div className="profile-header-bg" />
 
-        <div className="profile-header-avatar">
+        <div className="large-avatar">
           <img
             alt=""
             src={ScaledImageURL(

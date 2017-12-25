@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
 
+import { Button } from '../components/elements';
 import { userSignedIn } from '../../modules/client/redux/user';
 
 const SocialLoginButtons = props => (

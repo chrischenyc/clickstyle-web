@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Responsive, Button } from 'semantic-ui-react';
+import { Responsive } from 'semantic-ui-react';
 
+import { Button } from '../../components/elements';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import StylistsListItem from './StylistsListItem';
 import LoadMore from '../../components/LoadMore';
@@ -43,16 +44,16 @@ const SearchPage = ({
 
         {searched &&
           !hasMore && (
-            <div className="margin-top-25">
+            <div className="margin-top-50 margin-bottom-50">
               <h3>Are we missing a stylist?</h3>
 
-              <Button.Group size="large">
-                <Button>Suggest a stylist</Button>
-                <Button.Or />
-                <Button color="teal" as={Link} to="/join">
-                  Join as a stylist
-                </Button>
-              </Button.Group>
+              <Link to="/suggest" className="button border">
+                Suggest a stylist
+              </Link>
+
+              <Link to="/join" className="button">
+                Join as a stylist
+              </Link>
             </div>
           )}
       </div>

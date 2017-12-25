@@ -2,9 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, Form, TextArea, Label, Icon, Divider } from 'semantic-ui-react';
+import { Form, TextArea, Label, Icon, Divider } from 'semantic-ui-react';
 import _ from 'lodash';
 
+import { Button } from '../../../components/elements';
 import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import { FormInputField } from '../../../components/FormInputField';
 import EditPhotoPage from './EditPhotoPage';
@@ -34,7 +35,7 @@ const EditProfilePage = ({
     {profile &&
       profile.owner &&
       profile.name && (
-        <Link to={userProfileLink(profile)} target="_blank" class="button margin-bottom-35">
+        <Link to={userProfileLink(profile)} target="_blank" className="button margin-bottom-35">
           View my public profile
         </Link>
       )}

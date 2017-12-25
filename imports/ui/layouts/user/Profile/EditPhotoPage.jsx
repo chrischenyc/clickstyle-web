@@ -1,11 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Image, Button, Confirm } from 'semantic-ui-react';
+import { Confirm } from 'semantic-ui-react';
 import _ from 'lodash';
 import { UploadField as FileField } from '@navjobs/upload';
 import AvatarEditor from 'react-avatar-editor';
 
+import { Button } from '../../../components/elements';
 import ScaledImageURL from '../../../../modules/scaled-image-url';
 
 const ImageSize = 280;
@@ -89,52 +90,46 @@ class EditPhotoPage extends Component {
             </div>
 
             <div>
-              <Button.Group>
-                <Button
-                  onClick={(event) => {
-                    event.preventDefault();
+              <Button
+                onClick={(event) => {
+                  event.preventDefault();
 
-                    this.setState({
-                      file: null,
-                      scale: 1.0,
-                    });
-                  }}
-                  disabled={photoUploading}
-                >
-                  Cancel
-                </Button>
-                <Button.Or />
-                <Button
-                  positive
-                  onClick={(event) => {
-                    event.preventDefault();
+                  this.setState({
+                    file: null,
+                    scale: 1.0,
+                  });
+                }}
+                disabled={photoUploading}
+              >
+                Cancel
+              </Button>
 
-                    const canvas = this.editor.getImage();
+              <Button
+                positive
+                onClick={(event) => {
+                  event.preventDefault();
 
-                    // convert to jpeg format
-                    // rename file name to photo.jpeg
-                    canvas.toBlob(
-                      (blob) => {
-                        onPhotoUpload(blob);
-                      },
-                      'image/jpeg',
-                      1,
-                    );
-                  }}
-                  loading={photoUploading}
-                >
-                  Save
-                </Button>
-              </Button.Group>
+                  const canvas = this.editor.getImage();
+
+                  // convert to jpeg format
+                  // rename file name to photo.jpeg
+                  canvas.toBlob(
+                    (blob) => {
+                      onPhotoUpload(blob);
+                    },
+                    'image/jpeg',
+                    1,
+                  );
+                }}
+                loading={photoUploading}
+              >
+                Save
+              </Button>
             </div>
           </div>
         ) : (
           <div>
-            <Image
-              src={ScaledImageURL(displayPhotoUrl, 'medium')}
-              width={ImageSize}
-              height={ImageSize}
-            />
+            <img src={ScaledImageURL(displayPhotoUrl, 'medium')} width={ImageSize} alt="" />
 
             <p>Your photo will appear on your public profile</p>
 

@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import ScaledImageURL from '../../../../modules/scaled-image-url';
@@ -17,18 +16,18 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
             {stylists.map(stylist => (
               <li key={stylist.owner}>
                 <div className="list-box-listing">
-                  <div className="list-box-listing-img">
-                    <Link to={userProfileLink(stylist)}>
-                      <Image
-                        size="tiny"
-                        circular
+                  <Link to={userProfileLink(stylist)}>
+                    <div className="medium-avatar">
+                      <img
                         src={ScaledImageURL(
                           stylist.photo || Meteor.settings.public.image.defaultProfilePhoto,
                           'tiny',
                         )}
+                        alt=""
                       />
-                    </Link>
-                  </div>
+                    </div>
+                  </Link>
+
                   <div className="list-box-listing-content">
                     <div className="inner">
                       <h3>{`${stylist.name.first} ${stylist.name.last}`}</h3>

@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'semantic-ui-react';
 import _ from 'lodash';
+
+import { Button } from '../../../components/elements';
 
 const EmailVerificationAlertPage = ({
   onSubmit, error, success, loading,

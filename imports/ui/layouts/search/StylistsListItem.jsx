@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Image } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import ScaledImageURL from '../../../modules/scaled-image-url';
@@ -31,15 +30,15 @@ const StylistsListItem = ({ stylist }) => (
         <img src={_.sample(dummyBanners)} alt="" />
 
         <div className="listing-item-content vertical-centered">
-          <Image
-            id="avatar"
-            size="mini"
-            circular
-            src={ScaledImageURL(
-              stylist.photo || Meteor.settings.public.image.defaultProfilePhoto,
-              'tiny',
-            )}
-          />
+          <div id="avatar" className="small-avatar">
+            <img
+              src={ScaledImageURL(
+                stylist.photo || Meteor.settings.public.image.defaultProfilePhoto,
+                'tiny',
+              )}
+              alt=""
+            />
+          </div>
           <div>
             <h3>{`${stylist.name.first} ${stylist.name.last}`}</h3>
             <span>

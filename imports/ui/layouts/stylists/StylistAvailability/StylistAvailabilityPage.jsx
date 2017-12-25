@@ -1,9 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Table, Checkbox, Icon } from 'semantic-ui-react';
+import { Form, Table, Checkbox, Icon } from 'semantic-ui-react';
 import _ from 'lodash';
 
+import { Button } from '../../../components/elements';
 import HoursDropdown from '../../../components/HoursDropdown';
 import MinutesDropdown from '../../../components/MinutesDropdown';
 import { dayOfWeekAsString } from '../../../../modules/format-date';

@@ -1,9 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
+
+import { Button } from '../../../components/elements';
 
 const ForgotPasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,

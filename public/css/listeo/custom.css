@@ -201,10 +201,6 @@ textarea:focus {
   padding: 0 0 40px 0;
 }
 
-.list-box-listing-img a:before {
-  content: none;
-}
-
 /* 05-script-styles.css override */
 .category-box {
   border-radius: 3px;

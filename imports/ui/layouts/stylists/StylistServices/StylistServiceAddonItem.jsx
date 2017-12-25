@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Input, Grid, Button, Responsive, Search } from 'semantic-ui-react';
+import { Input, Grid, Responsive, Search } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
+import { Button } from '../../../components/elements';
 import { PriceField, FormFieldErrorMessage } from '../../../components/FormInputField';
 
 class StylistServiceAddonItem extends Component {
