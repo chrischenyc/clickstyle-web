@@ -159,16 +159,29 @@ Meteor.methods({
             openHours: 1,
             services: 1,
             favourites: 1,
+            reviews: 1,
+            averageRating: 1,
           },
         },
       );
 
       if (!_.isEmpty(stylist)) {
+        // normalise data
         if (stylist.services) {
           stylist.services = stylist.services.map((stylistService) => {
             const service = Services.findOne({ _id: stylistService._id });
             const { photo } = service;
             return { ...stylistService, photo };
+          });
+        }
+
+        if (stylist.reviews) {
+          stylist.reviews = stylist.reviews.map((review) => {
+            const reviewer = Profiles.findOne(
+              { owner: review.reviewer },
+              { fields: { owner: 1, name: 1, photo: 1 } },
+            );
+            return { ...review, reviewer };
           });
         }
 

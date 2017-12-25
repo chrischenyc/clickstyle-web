@@ -20,12 +20,16 @@ class UserProfile extends Component {
   }
 
   componentDidMount() {
-    this.loadUser();
+    this.loadUser(this.props.match.params._id);
   }
 
-  loadUser() {
-    const { _id } = this.props.match.params;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params._id !== this.props.match.params._id) {
+      this.loadUser(nextProps.match.params._id);
+    }
+  }
 
+  loadUser(_id) {
     if (_.isNil(_id)) {
       this.props.history.push('/');
       return;
@@ -55,7 +59,7 @@ class UserProfile extends Component {
       },
       (error) => {
         if (!error) {
-          this.loadUser();
+          this.loadUser(this.props.match.params._id);
         }
       },
     );

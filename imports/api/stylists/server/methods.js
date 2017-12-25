@@ -222,6 +222,7 @@ Meteor.methods({
           'address.state': 1,
           'address.suburb': 1,
           photo: 1,
+          averageRating: 1,
         },
         limit: SearchLimit,
         skip: offset,
@@ -293,6 +294,7 @@ Meteor.methods({
             'address.state': 1,
             'address.suburb': 1,
             photo: 1,
+            averageRating: 1,
           },
         },
       ).fetch();

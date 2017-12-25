@@ -3,14 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { ShareButtons } from 'react-share';
-import { Collapse } from 'react-collapse';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
 import { dayOfWeekAsString, formatMonthYear } from '../../../modules/format-date';
 import OpenHourString from '../../../modules/client/OpenHourString';
+
 import StylistServiceSection from './StylistServiceSection';
+import StylistReviewsSection from './StylistReviewsSection';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
@@ -87,45 +88,8 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
               </div>
             </div>
 
-            {/* -- Reviews -- */}
-            <div id="stylist-profile-reviews" className="listing-section margin-bottom-50">
-              <h3 className="listing-desc-headline">
-                Reviews&nbsp;<span>(12)</span>
-              </h3>
-
-              {/* -- Reviews -- */}
-              <section className="comments listing-reviews">
-                <ul>
-                  <li>
-                    <div className="avatar">
-                      <img
-                        src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
-                        alt=""
-                      />
-                    </div>
-                    <div className="comment-content">
-                      <div className="arrow-comment" />
-                      <div className="comment-by">
-                        Kathy Brown
-                        <span className="date">June 2017</span>
-                        <div className="star-rating" data-rating="5" />
-                      </div>
-                      <p>
-                        Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere
-                        tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque
-                        non metus
-                      </p>
-
-                      <div className="review-images mfp-gallery-container">
-                        <a href="images/review-image-01.jpg" className="mfp-gallery">
-                          <img src="images/review-image-01.jpg" alt="" />
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </section>
-            </div>
+            {stylist.reviews &&
+              stylist.reviews.length > 0 && <StylistReviewsSection reviews={stylist.reviews} />}
           </div>
 
           {/* -- Sidebar -- */}
