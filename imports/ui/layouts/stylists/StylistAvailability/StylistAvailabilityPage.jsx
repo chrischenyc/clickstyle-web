@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Table, Checkbox, Icon } from 'semantic-ui-react';
+import { Form, Table, Checkbox } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import { Button } from '../../../components/elements';
@@ -57,12 +57,7 @@ const StylistAvailableTimePage = ({
                       }}
                       disabled={!openHour.open}
                     />
-                    {!_.isEmpty(error) && (
-                      <div>
-                        <Icon name="attention" />
-                        {error}
-                      </div>
-                    )}
+                    {!_.isEmpty(error) && <div>{error}</div>}
                   </Table.Cell>
 
                   <Table.Cell>

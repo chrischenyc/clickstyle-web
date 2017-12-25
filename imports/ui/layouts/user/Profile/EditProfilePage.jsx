@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Form, TextArea, Label, Icon, Divider } from 'semantic-ui-react';
+import { Form, TextArea, Label, Divider } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import { Button } from '../../../components/elements';
@@ -155,8 +155,7 @@ const EditProfilePage = ({
                   onSelectProduct(product);
                 }}
               >
-                <Icon name="add" />
-                {product.name}
+                <i className="fa fa-plus" />&nbsp;{product.name}
               </Label>
             ))}
           </div>
@@ -172,13 +171,15 @@ const EditProfilePage = ({
                 color="teal"
                 style={{ marginBottom: '0.25rem' }}
               >
-                {product.name}
-                <Icon
-                  name="delete"
-                  onClick={() => {
+                {product.name}&nbsp;<a
+                  href="./#delete"
+                  onClick={(e) => {
+                    e.preventDefault();
                     onDeselectProduct(product);
                   }}
-                />
+                >
+                  <i className="fa fa-remove" />
+                </a>
               </Label>
             ))}
           </div>

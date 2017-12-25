@@ -1,20 +1,6 @@
 /* ------------------------------------------------------------------- */
 /* Color #00aca4
 ---------------------------------------------------------------------- */
-div.datedropper:before,
-div.datedropper .pick-submit,
-div.datedropper .pick-lg-b .pick-sl:before,
-div.datedropper .pick-m,
-div.datedropper .pick-lg-h {
-  background-color: #00aca4 !important;
-}
-
-div.datedropper .pick-y.pick-jump,
-div.datedropper .pick li span,
-div.datedropper .pick-lg-b .pick-wke,
-div.datedropper .pick-btn {
-  color: #00aca4 !important;
-}
 
 .comment-by-listing a:hover,
 .browse-all-user-listings a i,

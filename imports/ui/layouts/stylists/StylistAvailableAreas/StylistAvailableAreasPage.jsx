@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Checkbox, Search, Dropdown, Popup, Icon } from 'semantic-ui-react';
+import { Form, Checkbox, Search, Dropdown, Popup } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import { Button } from '../../../components/elements';
@@ -75,7 +75,7 @@ const StylistAvailableAreasPage = ({
           }}
         />
         <Popup
-          trigger={<Icon name="question circle" />}
+          trigger={<i className="fa fa-question-circle" />}
           content="checking this box will make you appears across all suburbs in your state"
         />
       </Form.Field>
