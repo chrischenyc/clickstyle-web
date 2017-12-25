@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Message, Input } from 'semantic-ui-react';
+import { Form, Input } from 'semantic-ui-react';
 import _ from 'lodash';
 
 export const FormFieldNote = ({ note }) => {
@@ -20,7 +20,11 @@ export const FormFieldErrorMessage = ({ message, ...rest }) => {
     return '';
   }
 
-  return <Message error content={message} {...rest} />;
+  return (
+    <div className="notification error" {...rest}>
+      {message}
+    </div>
+  );
 };
 
 FormFieldErrorMessage.defaultProps = {

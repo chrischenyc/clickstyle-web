@@ -53,7 +53,9 @@ const LoginPage = ({
               Login
             </Button>
 
-            {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+            {!_.isEmpty(errors.message) && (
+              <div className="notification error"> {errors.message} </div>
+            )}
           </Form>
 
           {modal ? (
@@ -67,8 +69,8 @@ const LoginPage = ({
           )}
         </Segment>
 
-        <Message attached="bottom" size="large">
-          {"Don't have an account? "}
+        <div className="notification notice margin-top-10">
+          <span>Don&apos;t have an account? </span>
           {modal ? (
             <ModalLink
               to="/signup"
@@ -80,7 +82,7 @@ const LoginPage = ({
           ) : (
             <Link to="/signup">Sign up</Link>
           )}
-        </Message>
+        </div>
       </Grid.Column>
     </Grid.Row>
   </Grid>

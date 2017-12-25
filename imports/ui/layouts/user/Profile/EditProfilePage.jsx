@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, Form, Message, TextArea, Label, Icon, Divider } from 'semantic-ui-react';
+import { Button, Form, TextArea, Label, Icon, Divider } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
@@ -189,7 +189,7 @@ const EditProfilePage = ({
         Save
       </Button>
 
-      {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+      {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
     </Form>
   </div>
 );

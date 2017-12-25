@@ -37,7 +37,7 @@ class StylistsApplicationPage extends Component {
     if (application) {
       if (application.approved) {
         return (
-          <div className="container">
+          <div className="container margin-top-35 margin-bottom-35">
             <h2>Welcome to the club!</h2>
 
             <p>
@@ -54,7 +54,7 @@ class StylistsApplicationPage extends Component {
       }
 
       return (
-        <div className="container">
+        <div className="container margin-top-35 margin-bottom-35">
           <h2>Relax and sit tight</h2>
 
           <p>
@@ -71,7 +71,7 @@ class StylistsApplicationPage extends Component {
     }
 
     return (
-      <div className="container">
+      <div className="container margin-top-35 margin-bottom-35">
         <h2>Tell us something about you</h2>
 
         <p>

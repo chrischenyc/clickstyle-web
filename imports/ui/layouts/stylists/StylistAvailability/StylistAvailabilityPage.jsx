@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Message, Table, Checkbox, Icon } from 'semantic-ui-react';
+import { Button, Form, Table, Checkbox, Icon } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import { PrimaryColor } from '../../../../modules/client/constants';
@@ -108,7 +108,7 @@ const StylistAvailableTimePage = ({
         Save
       </Button>
 
-      {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+      {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
     </Form>
   </div>
 );

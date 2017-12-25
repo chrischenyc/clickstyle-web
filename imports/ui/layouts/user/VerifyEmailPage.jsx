@@ -1,7 +1,6 @@
 import { Accounts } from 'meteor/accounts-base';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Message, Icon } from 'semantic-ui-react';
 
 class VerifyEmailPage extends React.Component {
   constructor(props) {
@@ -29,28 +28,28 @@ class VerifyEmailPage extends React.Component {
   renderMessage() {
     if (this.state.loading) {
       return (
-        <Message icon>
-          <Icon name="spinner" loading />
-
-          <Message.Content>Just one second, we are verifying your email...</Message.Content>
-        </Message>
+        <div className="notification notice">
+          <p>
+            <span>Just one second,</span> we are verifying your email..
+          </p>
+        </div>
       );
     } else if (this.state.error) {
       return (
-        <Message icon error>
-          <Icon name="warning" />
-
-          <Message.Content>{this.state.error}</Message.Content>
-        </Message>
+        <div className="notification error">
+          <p>
+            <span>Error!</span> {this.state.error}
+          </p>
+        </div>
       );
     }
 
     return (
-      <Message icon success>
-        <Icon name="checkmark" />
-
-        <Message.Content>All set, thank! Sending you to Dashboard...</Message.Content>
-      </Message>
+      <div className="notification success">
+        <p>
+          <span>All set, thank!</span> Sending you to Dashboard...
+        </p>
+      </div>
     );
   }
 

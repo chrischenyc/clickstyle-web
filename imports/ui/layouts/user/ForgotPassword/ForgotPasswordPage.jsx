@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Message, Icon } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -15,11 +15,11 @@ const ForgotPasswordPage = ({
   } else if (success) {
     return (
       <div className="container centered-content" style={{ maxWidth: 450 }}>
-        <Message icon success>
-          <Icon name="checkmark" />
-
-          <Message.Content>All set, check your email for a reset link!</Message.Content>
-        </Message>
+        <div className="notification success">
+          <p>
+            <span>All set</span> check your email for a reset link!
+          </p>
+        </div>
       </div>
     );
   }
@@ -44,9 +44,9 @@ const ForgotPasswordPage = ({
           onChange={onChange}
           error={!_.isEmpty(errors.email)}
         />
-        {!_.isEmpty(errors.email) && <Message error content={errors.email} />}
+        {!_.isEmpty(errors.email) && <div className="notification error"> {errors.email} </div>}
 
-        {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+        {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
 
         <Button color={PrimaryColor} size="huge" type="submit">
           Send reset link

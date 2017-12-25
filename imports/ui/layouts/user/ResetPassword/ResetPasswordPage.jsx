@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Message, Icon } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -19,11 +19,11 @@ const ResetPasswordPage = ({
         className="container centered-content margin-top-70 margin-bottom-70"
         style={{ maxWidth: 450 }}
       >
-        <Message icon success>
-          <Icon name="checkmark" />
-
-          <Message.Content>All set, thanks!</Message.Content>
-        </Message>
+        <div className="notification success">
+          <p>
+            <span>All set,</span> thanks!
+          </p>
+        </div>
       </div>
     );
   }
@@ -60,7 +60,7 @@ const ResetPasswordPage = ({
           errors={errors}
         />
 
-        {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+        {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
 
         <Button color={PrimaryColor} size="huge" type="submit">
           Save and continue

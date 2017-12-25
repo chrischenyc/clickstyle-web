@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Message, Icon } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -17,11 +17,11 @@ const ChangePasswordPage = ({
     return (
       <div className="container centered-content">
         <div className="col-md-offset-3 col-md-6">
-          <Message icon success>
-            <Icon name="checkmark" />
-
-            <Message.Content>Password has been changed, thanks!</Message.Content>
-          </Message>
+          <div className="notification success">
+            <p>
+              <span>Success!</span> Password has been changed, thanks!
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -69,7 +69,9 @@ const ChangePasswordPage = ({
             errors={errors}
           />
 
-          {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+          {!_.isEmpty(errors.message) && (
+            <div className="notification error"> {errors.message} </div>
+          )}
 
           <Button color={PrimaryColor} size="huge" type="submit">
             Change password

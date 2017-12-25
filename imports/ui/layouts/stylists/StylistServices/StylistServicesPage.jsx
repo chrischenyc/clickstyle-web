@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Message, Modal, List, Checkbox } from 'semantic-ui-react';
+import { Button, Form, Modal, List, Checkbox } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import StylistServiceItem from './StylistServiceItem';
@@ -132,7 +132,9 @@ class StylistServicesPage extends Component {
             Save
           </Button>
 
-          {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+          {!_.isEmpty(errors.message) && (
+            <div className="notification error"> {errors.message} </div>
+          )}
         </Form>
 
         {availableServicesModal}

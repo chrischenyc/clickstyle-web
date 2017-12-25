@@ -89,7 +89,7 @@ const StylistAvailableAreasPage = ({
       >
         Save
       </Button>
-      {!_.isEmpty(error) && <Message error content={error} />}
+      {!_.isEmpty(error) && <div className="notification error"> {error} </div>}
     </Form>
   </div>
 );

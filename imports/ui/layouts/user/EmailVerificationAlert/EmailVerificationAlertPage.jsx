@@ -1,13 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Message, Button } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import _ from 'lodash';
 
 const EmailVerificationAlertPage = ({
   onSubmit, error, success, loading,
 }) => (
-  <Message warning compact>
+  <div className="notification warning">
     <p>
       <b>You account email has not been verified.</b>
     </p>
@@ -25,7 +25,7 @@ const EmailVerificationAlertPage = ({
     {!_.isEmpty(error) && <p>{error}</p>}
 
     {success && <p>verification email sent, please check your inbox!</p>}
-  </Message>
+  </div>
 );
 
 EmailVerificationAlertPage.propTypes = {

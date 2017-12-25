@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Message, Divider } from 'semantic-ui-react';
+import { Button, Form, Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -49,7 +49,7 @@ const StylistPhotosPage = ({
         Save
       </Button>
 
-      {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+      {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
     </Form>
   </div>
 );

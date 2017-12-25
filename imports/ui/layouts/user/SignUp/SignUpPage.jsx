@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, Form, Grid, Message, Segment, Divider, Checkbox } from 'semantic-ui-react';
+import { Button, Form, Grid, Segment, Divider, Checkbox } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import ModalLink from '../../../components/ModalLink';
@@ -81,25 +81,27 @@ const SignUpPage = ({
               Sign up
             </Button>
 
-            {!_.isEmpty(errors.message) && <Message error content={errors.message} />}
+            {!_.isEmpty(errors.message) && (
+              <div className="notification error"> {errors.message} </div>
+            )}
           </Form>
         </Segment>
 
-        <Message attached="bottom" size="large">
-          {`Already have a ${Meteor.settings.public.appName} account? `}
-
+        <div className="notification notice margin-top-10">
+          <span>{`Already have a ${Meteor.settings.public.appName} account? `}</span>
           {modal ? (
             <ModalLink
               to="/login"
               component={<Login modal onLoggedIn={onLoggedIn} />}
               title="Log in to continue"
             >
-              Log in
+              Log in here
             </ModalLink>
           ) : (
             <Link to="/login">Log in</Link>
           )}
-        </Message>
+        </div>
+
         <Checkbox
           defaultChecked
           onChange={onAgreement}
