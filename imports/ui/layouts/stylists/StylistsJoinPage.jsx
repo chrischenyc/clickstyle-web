@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { closeModal } from '../../../modules/client/redux/modal';
 import SecureLink from '../../components/SecureLink';

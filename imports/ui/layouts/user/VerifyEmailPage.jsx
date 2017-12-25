@@ -1,7 +1,7 @@
 import { Accounts } from 'meteor/accounts-base';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Message, Icon } from 'semantic-ui-react';
+import { Message, Icon } from 'semantic-ui-react';
 
 class VerifyEmailPage extends React.Component {
   constructor(props) {
@@ -55,11 +55,7 @@ class VerifyEmailPage extends React.Component {
   }
 
   render() {
-    return (
-      <Container text textAlign="center" style={{ marginTop: '51px', padding: '8rem 0' }}>
-        {this.renderMessage()}
-      </Container>
-    );
+    return <div className="container centered-content">{this.renderMessage()}</div>;
   }
 }
 

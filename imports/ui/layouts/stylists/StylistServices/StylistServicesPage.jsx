@@ -1,16 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Container,
-  Button,
-  Form,
-  Message,
-  Modal,
-  Divider,
-  List,
-  Checkbox,
-} from 'semantic-ui-react';
+import { Button, Form, Message, Modal, List, Checkbox } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import StylistServiceItem from './StylistServiceItem';
@@ -94,7 +85,7 @@ class StylistServicesPage extends Component {
     );
 
     return (
-      <Container>
+      <div className="container">
         <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
           <p>TODO: write something to educate stylists what this page is about</p>
 
@@ -145,7 +136,7 @@ class StylistServicesPage extends Component {
         </Form>
 
         {availableServicesModal}
-      </Container>
+      </div>
     );
   }
 }

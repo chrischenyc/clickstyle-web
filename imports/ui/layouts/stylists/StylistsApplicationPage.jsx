@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Container, Header, Button, Form, Checkbox, List, Message } from 'semantic-ui-react';
+import { Button, Form, Checkbox, List, Message } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { UploadField as FileField } from '@navjobs/upload';
@@ -37,8 +37,8 @@ class StylistsApplicationPage extends Component {
     if (application) {
       if (application.approved) {
         return (
-          <Container text style={{ padding: '8rem 0' }}>
-            <Header as="h1">Welcome to the club!</Header>
+          <div className="container">
+            <h2>Welcome to the club!</h2>
 
             <p>
               Your application was approved on {formatDate(application.approvedAt)}. Thanks for
@@ -49,13 +49,13 @@ class StylistsApplicationPage extends Component {
               Meanwhile, if you have any question, feel free to&nbsp;
               <Link to="/contact">contact us</Link>.
             </p>
-          </Container>
+          </div>
         );
       }
 
       return (
-        <Container text style={{ padding: '8rem 0' }}>
-          <Header as="h1">Relax and sit tight</Header>
+        <div className="container">
+          <h2>Relax and sit tight</h2>
 
           <p>
             Your previous application submitted on {formatDate(application.createdAt)} is under
@@ -66,13 +66,13 @@ class StylistsApplicationPage extends Component {
             Meanwhile, if you have any question, feel free to&nbsp;
             <Link to="/contact">contact us</Link>.
           </p>
-        </Container>
+        </div>
       );
     }
 
     return (
-      <Container text style={{ padding: '8rem 0' }}>
-        <Header as="h1">Tell us something about you</Header>
+      <div className="container">
+        <h2>Tell us something about you</h2>
 
         <p>
           We need a bit extra information about you and the services you can provide... ducimus
@@ -82,7 +82,7 @@ class StylistsApplicationPage extends Component {
 
         <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)} size="large">
           <FormInputField
-            label={<Header>Mobile number</Header>}
+            label={<h3>Mobile number</h3>}
             placeholder="Mobile number"
             name="mobile"
             onChange={onChange}
@@ -93,7 +93,7 @@ class StylistsApplicationPage extends Component {
 
           <Form.Field>
             <label>
-              <Header>Your address</Header>
+              <h3>Your address</h3>
             </label>
 
             <SemanticGeoSuggest
@@ -134,7 +134,7 @@ class StylistsApplicationPage extends Component {
 
           <Form.Field>
             <label>
-              <Header>Services</Header>
+              <h3>Services</h3>
             </label>
             <List>
               {services.map(service => (
@@ -161,7 +161,7 @@ class StylistsApplicationPage extends Component {
 
           <Form.Field>
             <label>
-              <Header>Qualifications</Header>
+              <h3>Qualifications</h3>
             </label>
 
             {qualificationFile ? (
@@ -204,7 +204,7 @@ class StylistsApplicationPage extends Component {
           <FormInputField
             fluid
             placeholder="Please provide a link to view your work e.g Facebook, Instagram or your website."
-            label={<Header>Reference</Header>}
+            label={<h3>Reference</h3>}
             name="referenceUrl"
             onChange={onChange}
             errors={errors}
@@ -238,7 +238,7 @@ class StylistsApplicationPage extends Component {
             Join
           </Button>
         </Form>
-      </Container>
+      </div>
     );
   }
 }
