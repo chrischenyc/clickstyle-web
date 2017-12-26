@@ -8,6 +8,11 @@ import Stylists from '../../../../api/stylists/stylists';
 import StylistPortfolioPage from './StylistPortfolioPage';
 import { withLoading } from '../../../components/HOC';
 
+const compareFiles = (file1, file2) =>
+  file1.name === file2.name &&
+  file1.size === file2.size &&
+  file1.lastModified === file2.lastModified;
+
 class StylistPortfolio extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +28,7 @@ class StylistPortfolio extends Component {
     };
 
     this.handleFilesSelected = this.handleFilesSelected.bind(this);
+    this.handleFileDeleted = this.handleFileDeleted.bind(this);
   }
 
   componentDidMount() {
@@ -53,10 +59,8 @@ class StylistPortfolio extends Component {
 
       // avoid select same file
       if (
-        this.state.files.filter(currentFile =>
-          currentFile.source.name === selectedFile.name &&
-            currentFile.source.size === selectedFile.size &&
-            currentFile.source.lastModified === selectedFile.lastModified).length === 0
+        this.state.files.filter(currentFile => compareFiles(currentFile.source, selectedFile))
+          .length === 0
       ) {
         newFiles.push({ source: selectedFile });
       }
@@ -70,11 +74,7 @@ class StylistPortfolio extends Component {
       reader.onloadend = () => {
         this.setState({
           files: this.state.files.map((file) => {
-            if (
-              file.source.name === newFile.source.name &&
-              file.source.size === newFile.source.size &&
-              file.source.lastModified === newFile.source.lastModified
-            ) {
+            if (compareFiles(file.source, newFile.source)) {
               return { source: file.source, image: reader.result };
             }
             return file;
@@ -86,12 +86,19 @@ class StylistPortfolio extends Component {
     });
   }
 
+  handleFileDeleted(deletedFile) {
+    this.setState({
+      files: this.state.files.filter(file => !compareFiles(file.source, deletedFile.source)),
+    });
+  }
+
   render() {
     return (
       <StylistPortfolioPage
         portfolioPhotos={this.state.portfolioPhotos}
         saving={this.state.saving}
         onFilesSelected={this.handleFilesSelected}
+        onFileDeleted={this.handleFileDeleted}
         files={this.state.files}
       />
     );

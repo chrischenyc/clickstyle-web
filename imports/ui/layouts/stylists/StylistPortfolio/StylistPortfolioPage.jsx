@@ -2,12 +2,16 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { UploadField } from '@navjobs/upload';
-import { Grid, Icon } from 'semantic-ui-react';
+import { Grid, Icon, Button, Container } from 'semantic-ui-react';
 
 const StylistPortfolioPage = ({
-  portfolioPhotos, saving, onFilesSelected, files,
+  portfolioPhotos,
+  saving,
+  onFilesSelected,
+  files,
+  onFileDeleted,
 }) => (
-  <div className="container">
+  <Container>
     <h2>Portfolio photos</h2>
 
     <Grid className="margin-top-50 margin-bottom-50">
@@ -38,16 +42,27 @@ const StylistPortfolioPage = ({
       <Grid.Row>
         {files.map(file => (
           <Grid.Column
-            width="4"
+            computer="4"
+            tablet="8"
+            mobile="16"
             key={`${file.source.name}_${file.source.lastModified}`}
-            style={{ padding: '1rem' }}
           >
-            <img src={file.image || ''} alt="" />
+            <div className="portfolio-photo">
+              <img src={file.image || ''} alt="" />
+              <Button
+                id="delete-button"
+                icon="trash outline"
+                size="huge"
+                onClick={() => {
+                  onFileDeleted(file);
+                }}
+              />
+            </div>
           </Grid.Column>
         ))}
       </Grid.Row>
     </Grid>
-  </div>
+  </Container>
 );
 
 StylistPortfolioPage.propTypes = {
@@ -55,6 +70,7 @@ StylistPortfolioPage.propTypes = {
   saving: PropTypes.bool.isRequired,
   onFilesSelected: PropTypes.func.isRequired,
   files: PropTypes.array.isRequired,
+  onFileDeleted: PropTypes.func.isRequired,
 };
 
 export default StylistPortfolioPage;

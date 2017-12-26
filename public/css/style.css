@@ -102,3 +102,38 @@
   font-size: 17px;
   color: #888;
 }
+
+/* -- portfolio photo grid -- */
+.portfolio-photo {
+  margin-bottom: 2rem;
+}
+
+.portfolio-photo img {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  transition: 0.35s all;
+}
+
+.portfolio-photo #delete-button {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  opacity: 0;
+  transition: 0.35s all;
+}
+
+.portfolio-photo:hover img {
+  -webkit-filter: brightness(80%);
+  filter: brightness(80%);
+}
+
+.portfolio-photo:hover #delete-button {
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .portfolio-photo #delete-button {
+    opacity: 1;
+  }
+}
