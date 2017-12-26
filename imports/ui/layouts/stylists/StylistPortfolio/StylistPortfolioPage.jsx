@@ -25,12 +25,10 @@ const StylistPortfolioPage = ({
                 multiple: true,
               }}
             >
-              <Icon name="upload" size="huge" />
-
-              <p>
-                upload portfolio photos<br />
-                maximum file size: {Meteor.settings.public.maxPhotoSize}MB
-              </p>
+              <Button basic circular color="teal">
+                upload photos<br />
+                maximum size: {Meteor.settings.public.maxPhotoSize}MB
+              </Button>
             </UploadField>
           )}
 

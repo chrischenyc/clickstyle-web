@@ -12,8 +12,8 @@
 #dashboard {
   background-color: #f7f7f7;
   min-height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
 }
 
 /* Flexbox Adjustments */
