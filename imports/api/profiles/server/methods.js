@@ -81,14 +81,7 @@ Meteor.methods({
 
       // remove current profile photo from cloud
       if (profile.photo) {
-        deleteCloudinaryFile(profile.photo, (error) => {
-          if (error) {
-            /* eslint-disable no-console */
-            console.error(`Unable to delete cloudinary file: ${profile.photo}`);
-            console.error(error);
-            /* eslint-enable no-console */
-          }
-        });
+        deleteCloudinaryFile(profile.photo);
       }
 
       // update Profile.photo data
@@ -113,14 +106,7 @@ Meteor.methods({
 
       // remove profile photo from cloud
       if (profile.photo) {
-        deleteCloudinaryFile(profile.photo, (error) => {
-          if (error) {
-            /* eslint-disable no-console */
-            console.error(`Unable to delete cloudinary file: ${profile.photo}`);
-            console.error(error);
-            /* eslint-enable no-console */
-          }
-        });
+        deleteCloudinaryFile(profile.photo);
       }
 
       // update Profile.photo data

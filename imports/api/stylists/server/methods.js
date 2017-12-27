@@ -11,6 +11,7 @@ import Profiles from '../../profiles/profiles';
 import Suburbs from '../../suburbs/suburbs';
 import { SearchLimit } from '../../../modules/server/constants';
 import coordinatesDistance from '../../../modules/server/coordinates-distance';
+import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
 
 Meteor.methods({
   'stylists.update.services': function updateStylistsServices(services) {
@@ -305,6 +306,74 @@ Meteor.methods({
       throw new Meteor.Error('500');
     }
   },
+
+  'stylists.portfolio.photos': function stylistPortfolioPhotos(data) {
+    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(data, Object);
+
+    try {
+      const stylist = Stylists.findOne(
+        { owner: this.userId },
+        {
+          fields: {
+            portfolioPhotos: 1,
+          },
+        },
+      );
+
+      if (stylist.portfolioPhotos) {
+        return _.orderBy(stylist.portfolioPhotos, 'displayOrder');
+      }
+
+      return [];
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500');
+    }
+  },
+  'stylists.portfolio.photos.update': function updateStylistPortfolioPhotos(photos) {
+    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(photos, Array);
+
+    try {
+      // delete deselected photos from cloud
+      const newPhotoUrls = photos.map(photo => photo.url);
+      const { portfolioPhotos: currentPhotos } = Stylists.findOne({ owner: this.userId });
+      currentPhotos.forEach((photo) => {
+        if (newPhotoUrls.indexOf(photo.url) === -1) {
+          deleteCloudinaryFile(photo.url);
+        }
+      });
+
+      // displayOrder from client may be inconsistent or not in sequence
+      const portfolioPhotos = _.sortBy(photos, 'displayOrder').map((photo, index) => ({
+        url: photo.url,
+        displayOrder: index,
+      }));
+
+      Stylists.update(
+        { owner: this.userId },
+        {
+          $set: {
+            portfolioPhotos,
+          },
+        },
+      );
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500');
+    }
+  },
 });
 
 rateLimit({
@@ -315,6 +384,8 @@ rateLimit({
     'stylists.search',
     'stylists.favourite',
     'stylists.favoured',
+    'stylists.portfolio.photos',
+    'stylists.portfolio.photos.update',
   ],
   limit: 5,
   timeRange: 1000,

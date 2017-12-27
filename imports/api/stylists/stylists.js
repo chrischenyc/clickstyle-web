@@ -192,7 +192,7 @@ const ReviewSchema = new SimpleSchema({
 });
 
 const PortfolioPhotoSchema = new SimpleSchema({
-  photo: String,
+  url: String,
   displayOrder: SimpleSchema.Integer,
 });
 
