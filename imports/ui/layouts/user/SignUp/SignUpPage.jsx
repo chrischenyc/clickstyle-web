@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, Form, Grid, Segment, Divider, Checkbox } from 'semantic-ui-react';
+import { Button, Form, Grid, Divider, Checkbox } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import ModalLink from '../../../components/ModalLink';
@@ -24,70 +24,68 @@ const SignUpPage = ({
   <Grid textAlign="center" verticalAlign="middle" style={{ marginTop: modal ? '0' : '51px' }}>
     <Grid.Row style={{ maxWidth: 450 }}>
       <Grid.Column>
-        <Segment attached>
-          <SocialLoginButtons isSignUp disabled={disabled} onLoggedIn={onLoggedIn} />
+        <SocialLoginButtons isSignUp disabled={disabled} onLoggedIn={onLoggedIn} />
 
-          <Divider horizontal>or</Divider>
+        <Divider horizontal>or</Divider>
 
-          <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-            <FormInputField
-              fluid
-              icon="mail"
-              iconPosition="left"
-              placeholder="Email address"
-              type="email"
-              name="email"
-              size="huge"
-              onChange={onChange}
-              errors={errors}
-            />
+        <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+          <FormInputField
+            fluid
+            icon="mail"
+            iconPosition="left"
+            placeholder="Email address"
+            type="email"
+            name="email"
+            size="huge"
+            onChange={onChange}
+            errors={errors}
+          />
 
-            <FormInputField
-              fluid
-              icon="user"
-              iconPosition="left"
-              placeholder="First name"
-              name="firstName"
-              size="huge"
-              onChange={onChange}
-              errors={errors}
-            />
+          <FormInputField
+            fluid
+            icon="user"
+            iconPosition="left"
+            placeholder="First name"
+            name="firstName"
+            size="huge"
+            onChange={onChange}
+            errors={errors}
+          />
 
-            <FormInputField
-              fluid
-              icon="user"
-              iconPosition="left"
-              placeholder="Last name"
-              name="lastName"
-              size="huge"
-              onChange={onChange}
-              errors={errors}
-            />
+          <FormInputField
+            fluid
+            icon="user"
+            iconPosition="left"
+            placeholder="Last name"
+            name="lastName"
+            size="huge"
+            onChange={onChange}
+            errors={errors}
+          />
 
-            <FormInputField
-              fluid
-              icon="lock"
-              iconPosition="left"
-              placeholder="Create a Password"
-              type="password"
-              name="password"
-              size="huge"
-              onChange={onChange}
-              errors={errors}
-            />
+          <FormInputField
+            fluid
+            icon="lock"
+            iconPosition="left"
+            placeholder="Create a Password"
+            type="password"
+            name="password"
+            size="huge"
+            onChange={onChange}
+            errors={errors}
+          />
 
-            <Button circular color="teal" fluid size="huge" type="submit" disabled={disabled}>
-              Sign up
-            </Button>
+          <Button circular color="teal" fluid size="huge" type="submit" disabled={disabled}>
+            Sign up
+          </Button>
 
-            {!_.isEmpty(errors.message) && (
-              <div className="notification error"> {errors.message} </div>
-            )}
-          </Form>
-        </Segment>
+          {!_.isEmpty(errors.message) && (
+            <div className="notification error"> {errors.message} </div>
+          )}
+        </Form>
 
-        <div className="notification notice margin-top-10">
-          <span>{`Already have a ${Meteor.settings.public.appName} account? `}</span>
+        <p className="margin-top-20">
+          Already have an account?&nbsp;
           {modal ? (
             <ModalLink
               to="/login"
@@ -99,7 +97,7 @@ const SignUpPage = ({
           ) : (
             <Link to="/login">Log in</Link>
           )}
-        </div>
+        </p>
 
         <Checkbox
           defaultChecked
