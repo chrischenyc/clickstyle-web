@@ -76,7 +76,7 @@ const SignUpPage = ({
               errors={errors}
             />
 
-            <Button color="teal" fluid size="huge" type="submit" disabled={disabled}>
+            <Button circular color="teal" fluid size="huge" type="submit" disabled={disabled}>
               Sign up
             </Button>
 

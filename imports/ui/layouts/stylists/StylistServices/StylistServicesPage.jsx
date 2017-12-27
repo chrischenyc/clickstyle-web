@@ -64,6 +64,7 @@ class StylistServicesPage extends Component {
 
         <Modal.Actions>
           <Button
+            circular
             onClick={() => {
               this.setState({ showAvailableServicesModal: false, servicesToAdd: [] });
             }}
@@ -71,6 +72,7 @@ class StylistServicesPage extends Component {
             Cancel
           </Button>
           <Button
+            circular
             color="teal"
             onClick={() => {
               onAddServices(this.state.servicesToAdd);
@@ -108,8 +110,8 @@ class StylistServicesPage extends Component {
             <p>
               <Button
                 basic
+                circular
                 color="teal"
-                size="large"
                 content="Add more services"
                 icon="add circle"
                 type="button"
@@ -121,7 +123,14 @@ class StylistServicesPage extends Component {
             </p>
           )}
 
-          <Button color="teal" size="massive" type="submit" disabled={pristine} loading={saving}>
+          <Button
+            circular
+            color="teal"
+            size="huge"
+            type="submit"
+            disabled={pristine}
+            loading={saving}
+          >
             Save
           </Button>
 

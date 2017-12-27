@@ -79,8 +79,9 @@ const StylistAvailableAreasPage = ({
       </Form.Field>
 
       <Button
+        circular
+        size="huge"
         color="teal"
-        size="massive"
         type="submit"
         disabled={pristine || !_.isEmpty(error)}
         loading={saving}

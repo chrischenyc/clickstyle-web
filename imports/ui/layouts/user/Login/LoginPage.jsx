@@ -48,7 +48,7 @@ const LoginPage = ({
               errors={errors}
             />
 
-            <Button color="teal" fluid size="huge" type="submit">
+            <Button circular color="teal" fluid size="huge" type="submit">
               Login
             </Button>
 

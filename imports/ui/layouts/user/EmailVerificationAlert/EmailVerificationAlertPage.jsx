@@ -17,7 +17,7 @@ const EmailVerificationAlertPage = ({
     </p>
     <p>
       You can request to&nbsp;
-      <Button compact size="small" onClick={onSubmit} loading={loading}>
+      <Button circular compact size="small" onClick={onSubmit} loading={loading}>
         re-send verification email
       </Button>
     </p>

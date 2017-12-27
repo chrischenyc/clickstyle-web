@@ -34,36 +34,36 @@ const ChangePasswordPage = ({
         <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
           <FormInputField
             fluid
+            size="huge"
             icon="lock"
             iconPosition="left"
             placeholder="Old password"
             type="password"
             name="oldPassword"
-            size="huge"
             onChange={onChange}
             errors={errors}
           />
 
           <FormInputField
             fluid
+            size="huge"
             icon="lock"
             iconPosition="left"
             placeholder="New password"
             type="password"
             name="password"
-            size="huge"
             onChange={onChange}
             errors={errors}
           />
 
           <FormInputField
             fluid
+            size="huge"
             icon="lock"
             iconPosition="left"
             placeholder="Confirm password"
             type="password"
             name="confirm"
-            size="huge"
             onChange={onChange}
             errors={errors}
           />
@@ -72,7 +72,7 @@ const ChangePasswordPage = ({
             <div className="notification error"> {errors.message} </div>
           )}
 
-          <Button color="teal" size="huge" type="submit">
+          <Button color="teal" size="huge" circular type="submit">
             Change password
           </Button>
         </Form>

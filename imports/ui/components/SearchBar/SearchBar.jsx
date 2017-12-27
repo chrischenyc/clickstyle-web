@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Search } from 'semantic-ui-react';
+import { Search, Button } from 'semantic-ui-react';
 
 import _ from 'lodash';
 
@@ -225,14 +225,15 @@ class SearchBar extends Component {
           <i className="fa fa-calendar" />
         </div>
 
-        <button
-          className="button"
+        <Button
+          color="teal"
+          circular
           onClick={() => {
             this.handleSearch();
           }}
         >
           Search
-        </button>
+        </Button>
       </div>
     );
   }

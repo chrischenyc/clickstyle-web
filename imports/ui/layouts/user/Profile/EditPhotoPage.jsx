@@ -80,6 +80,7 @@ class EditPhotoPage extends Component {
               <span>&nbsp;&nbsp;Rotate&nbsp;</span>
 
               <Button
+                circular
                 icon="repeat"
                 onClick={(event) => {
                   event.preventDefault();
@@ -90,6 +91,7 @@ class EditPhotoPage extends Component {
 
             <div>
               <Button
+                circular
                 onClick={(event) => {
                   event.preventDefault();
 
@@ -104,7 +106,8 @@ class EditPhotoPage extends Component {
               </Button>
 
               <Button
-                positive
+                circular
+                color="teal"
                 onClick={(event) => {
                   event.preventDefault();
 
@@ -134,6 +137,7 @@ class EditPhotoPage extends Component {
 
             {photo && (
               <Button
+                circular
                 negative
                 onClick={() => {
                   this.setState({ openRemoveConfirm: true });
@@ -153,7 +157,7 @@ class EditPhotoPage extends Component {
                 accept: '.jpg,.jpeg,.png',
               }}
             >
-              <Button color="teal" loading={photoUploading}>
+              <Button circular color="teal" loading={photoUploading}>
                 Upload photo
               </Button>
               <span>&nbsp;maximum image file size: {Meteor.settings.public.maxPhotoSize}MB</span>

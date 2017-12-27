@@ -79,7 +79,7 @@ class StylistsApplicationPage extends Component {
           Illum molestias quibusdam cumque eum neque.
         </p>
 
-        <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)} size="large">
+        <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
           <FormInputField
             label={<h3>Mobile number</h3>}
             placeholder="Mobile number"
@@ -182,12 +182,9 @@ class StylistsApplicationPage extends Component {
                   accept: '.jpg,.jpeg,.png,.pdf,.doc,.docx,.dot',
                 }}
               >
-                <Button color="teal" loading={false}>
-                  Upload file
+                <Button circular basic color="teal" loading={false}>
+                  Upload file (maximum file size: {Meteor.settings.public.document.maxFileSize}MB)
                 </Button>
-                <span>
-                  &nbsp;maximum file size: {Meteor.settings.public.document.maxFileSize}MB
-                </span>
               </FileField>
             )}
 
@@ -228,7 +225,13 @@ class StylistsApplicationPage extends Component {
             />
           </Form.Field>
 
-          <Button color="teal" size="huge" type="submit" disabled={!this.state.agreementChecked}>
+          <Button
+            circular
+            color="teal"
+            size="huge"
+            type="submit"
+            disabled={!this.state.agreementChecked}
+          >
             Join
           </Button>
         </Form>

@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
 import ScaledImageURL from '../../../../modules/scaled-image-url';
 import userProfileLink from '../../../../modules/user-profile-link';
@@ -41,16 +42,16 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
                   </div>
                 </div>
                 <div className="buttons-to-right">
-                  <a
-                    href={`./un-favour/${stylist.owner}`}
-                    className="button gray"
+                  <Button
+                    circular
+                    negative
                     onClick={(e) => {
                       e.preventDefault();
                       unFavourStylist(stylist.owner);
                     }}
                   >
-                    <i className="sl sl-icon-close" /> Delete
-                  </a>
+                    Un-favourite
+                  </Button>
                 </div>
               </li>
             ))}

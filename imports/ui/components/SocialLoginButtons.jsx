@@ -9,6 +9,7 @@ import { userSignedIn } from '../../modules/client/redux/user';
 const SocialLoginButtons = props => (
   <div>
     <Button
+      circular
       fluid
       color="facebook"
       size="huge"
@@ -39,6 +40,7 @@ const SocialLoginButtons = props => (
     </Button>
 
     <Button
+      circular
       fluid
       color="grey"
       basic

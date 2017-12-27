@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
 const HomeJoin = () => (
   <div className="main-join-container">
@@ -9,9 +10,10 @@ const HomeJoin = () => (
         <div className="row">
           <div className="col-lg-offset-8 col-lg-4 col-sm-offset-6 col-sm-6">
             <h2>Expand your business with {Meteor.settings.public.appName}</h2>
-            <Link to="/join" className="button margin-top-25">
+
+            <Button circular size="massive" color="teal" as={Link} to="/join">
               Find Out More
-            </Link>
+            </Button>
           </div>
         </div>
       </div>

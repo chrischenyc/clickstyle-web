@@ -61,7 +61,7 @@ const ResetPasswordPage = ({
 
         {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
 
-        <Button color="teal" size="huge" type="submit">
+        <Button circular color="teal" size="huge" type="submit">
           Save and continue
         </Button>
       </Form>

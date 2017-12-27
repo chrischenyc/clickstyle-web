@@ -194,6 +194,7 @@ class StylistServiceItem extends Component {
             <List.Item>
               <Button
                 basic
+                circular
                 type="button"
                 color="teal"
                 content="Add an add-on"

@@ -6,6 +6,8 @@ import { Button } from 'semantic-ui-react';
 const LoadMore = ({ onLoadMore, searching }) => (
   <Button
     basic
+    circular
+    size="huge"
     color="teal"
     content="Load More"
     onClick={onLoadMore}

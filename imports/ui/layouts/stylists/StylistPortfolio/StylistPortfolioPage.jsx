@@ -48,9 +48,10 @@ const StylistPortfolioPage = ({
             <div className="portfolio-photo">
               <img src={file.image || ''} alt="" />
               <Button
+                circular
                 id="delete-button"
                 icon="trash outline"
-                size="huge"
+                size="large"
                 onClick={() => {
                   onFileDeleted(file);
                 }}

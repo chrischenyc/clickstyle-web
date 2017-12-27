@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
+import { Button } from 'semantic-ui-react';
 
 const ContactPage = () => (
-  <div className="container">
+  <div className="container padding-top-50 padding-bottom-50">
     <div className="row">
       <div className="col-md-offset-2 col-md-8">
         <div>
@@ -81,7 +82,9 @@ const ContactPage = () => (
               />
             </div>
 
-            <input type="submit" className="submit button" id="submit" value="Submit" />
+            <Button type="submit" circular color="teal" size="huge">
+              Submit
+            </Button>
           </form>
         </section>
       </div>

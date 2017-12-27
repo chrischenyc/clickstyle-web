@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Button } from 'semantic-ui-react';
 
 import { closeModal } from '../../../modules/client/redux/modal';
 import SecureLink from '../../components/SecureLink';
@@ -16,8 +17,12 @@ const StylistsJoinPage = props => (
               Become a stylist and start your business on {Meteor.settings.public.appName}
             </h2>
 
-            <SecureLink
-              className="button border"
+            <Button
+              basic
+              circular
+              color="teal"
+              size="huge"
+              as={SecureLink}
               history={props.history}
               to="/users/stylist/application"
               onLoggedIn={() => {
@@ -26,7 +31,7 @@ const StylistsJoinPage = props => (
               }}
             >
               Get Started
-            </SecureLink>
+            </Button>
           </div>
         </div>
 
@@ -171,8 +176,13 @@ const StylistsJoinPage = props => (
         <div className="col-lg-6 col-sm-12">
           <div className="centered-content margin-top-60 margin-bottom-60">
             <h2 className="headline">Start your journey here</h2>
-            <SecureLink
-              className="button border"
+
+            <Button
+              basic
+              circular
+              color="teal"
+              size="huge"
+              as={SecureLink}
               history={props.history}
               to="/users/stylist/application"
               onLoggedIn={() => {
@@ -181,7 +191,7 @@ const StylistsJoinPage = props => (
               }}
             >
               Get Started
-            </SecureLink>
+            </Button>
           </div>
         </div>
       </div>

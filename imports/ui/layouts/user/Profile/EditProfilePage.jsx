@@ -34,9 +34,16 @@ const EditProfilePage = ({
     {profile &&
       profile.owner &&
       profile.name && (
-        <Link to={userProfileLink(profile)} target="_blank" className="button margin-bottom-35">
+        <Button
+          circular
+          color="teal"
+          className="margin-bottom-35"
+          as={Link}
+          to={userProfileLink(profile)}
+          target="_blank"
+        >
           View my public profile
-        </Link>
+        </Button>
       )}
     <Form
       onSubmit={onSubmit}
@@ -185,7 +192,7 @@ const EditProfilePage = ({
         )}
       </Form.Field>
 
-      <Button color="teal" size="huge" type="submit" disabled={pristine} loading={saving}>
+      <Button circular color="teal" size="huge" type="submit" disabled={pristine} loading={saving}>
         Save
       </Button>
 

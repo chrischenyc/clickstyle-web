@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Responsive } from 'semantic-ui-react';
+import { Responsive, Button } from 'semantic-ui-react';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
 import StylistsListItem from './StylistsListItem';
@@ -46,13 +46,15 @@ const SearchPage = ({
             <div className="margin-top-50 margin-bottom-50">
               <h3>Are we missing a stylist?</h3>
 
-              <Link to="/suggest" className="button border">
-                Suggest a stylist
-              </Link>
-
-              <Link to="/join" className="button">
-                Join as a stylist
-              </Link>
+              <Button.Group size="huge">
+                <Button as={Link} to="/suggest-stylist">
+                  Suggest a stylist
+                </Button>
+                <Button.Or />
+                <Button color="teal" as={Link} to="/join">
+                  Join as a stylist
+                </Button>
+              </Button.Group>
             </div>
           )}
       </div>

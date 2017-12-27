@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { ShareButtons } from 'react-share';
+import { Button, Icon } from 'semantic-ui-react';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import ScaledImageURL from '../../../modules/scaled-image-url';
@@ -120,9 +121,9 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
               </div>
 
               {/* -- progress button animation handled via custom.js -- */}
-              <a href="pages-booking.html" className="button book-now fullwidth margin-top-5">
+              <Button circular size="huge" fluid color="teal" className="margin-top-5">
                 Book Now
-              </a>
+              </Button>
             </div>
 
             {/* -- Opening Hours -- */}
@@ -144,10 +145,16 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
             {/* -- Share / Like -- */}
             <div className="listing-share margin-top-35 margin-bottom-35 no-border">
               {authenticated && (
-                <button className="like-button" onClick={favourStylist}>
-                  <span className="like-icon" /> {stylist.favoured ? 'Un-favourite' : 'Favourite'}&nbsp;this
-                  stylist
-                </button>
+                <Button
+                  circular
+                  basic={!stylist.favoured}
+                  color="red"
+                  onClick={favourStylist}
+                  className="margin-bottom-10"
+                >
+                  <Icon name="heart" />
+                  {stylist.favoured ? 'Un-favourite' : 'Favourite'}&nbsp;this stylist
+                </Button>
               )}
               {stylist.favourites &&
                 stylist.favourites.length > 0 && (
@@ -161,9 +168,9 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                     url={window.location.href}
                     quote={`check this stylist I found on @${Meteor.settings.public.facebookId}`}
                   >
-                    <a className="fb-share" href="./share-facebook">
-                      <i className="fa fa-facebook" /> Share
-                    </a>
+                    <Button circular color="facebook">
+                      Share on Facebook
+                    </Button>
                   </FacebookShareButton>
                 </li>
                 <li>
@@ -172,9 +179,9 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
                     title="check this stylist I found"
                     via={Meteor.settings.public.twitterId}
                   >
-                    <a className="twitter-share" href="./share-twitter">
-                      <i className="fa fa-twitter" /> Tweet
-                    </a>
+                    <Button circular color="twitter">
+                      Tweet
+                    </Button>
                   </TwitterShareButton>
                 </li>
               </ul>
