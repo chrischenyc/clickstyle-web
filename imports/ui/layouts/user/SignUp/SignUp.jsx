@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { userSignedIn } from '../../../../modules/client/redux/user';
+import { closeModal } from '../../../../modules/client/redux/modal';
 import { validateUserSignUp } from '../../../../modules/validate';
 import SignUpPage from './SignUpPage';
 
@@ -103,6 +104,7 @@ class SignUp extends Component {
         disabled={this.state.disabled}
         modal={this.props.modal}
         onLoggedIn={this.props.onLoggedIn}
+        onDismissModal={this.props.closeModal}
       />
     );
   }
@@ -116,6 +118,7 @@ SignUp.propTypes = {
   modal: PropTypes.bool,
   onLoggedIn: PropTypes.func,
   userSignedIn: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
-export default connect(null, { userSignedIn })(SignUp);
+export default connect(null, { userSignedIn, closeModal })(SignUp);

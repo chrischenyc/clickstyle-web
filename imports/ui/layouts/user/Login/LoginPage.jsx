@@ -66,7 +66,7 @@ const LoginPage = ({
           </Link>
         )}
 
-        <p className="margin-top-20">
+        <p className="margin-top-20 margin-bottom-20">
           Don&apos;t have an account?&nbsp;
           {modal ? (
             <ModalLink

@@ -23,7 +23,10 @@ const ForgotPasswordPage = ({
   }
 
   const form = (
-    <div className="container centered-content" style={{ maxWidth: 450 }}>
+    <div
+      className="container centered-content padding-top-30 padding-bottom-30"
+      style={{ maxWidth: 450 }}
+    >
       <h2>Reset Password</h2>
       <p>
         Enter the email address associated with your account, and we&apos;ll email you a link to

@@ -20,6 +20,7 @@ const SignUpPage = ({
   errors,
   modal,
   onLoggedIn,
+  onDismissModal,
 }) => (
   <Grid textAlign="center" verticalAlign="middle" style={{ marginTop: modal ? '0' : '51px' }}>
     <Grid.Row style={{ maxWidth: 450 }}>
@@ -99,17 +100,37 @@ const SignUpPage = ({
           )}
         </p>
 
-        <Checkbox
-          defaultChecked
-          onChange={onAgreement}
-          label={
-            <label htmlFor="agreement">
-              I confirm I am over 18 and I agree to {Meteor.settings.public.appName}&apos;s&nbsp;
-              <Link to="/terms">Terms of Use</Link>&nbsp;and&nbsp;
-              <Link to="/privacy">Privacy Policy</Link>.
-            </label>
-          }
-        />
+        <p className="margin-bottom-20">
+          <Checkbox
+            defaultChecked
+            onChange={onAgreement}
+            label={
+              <label htmlFor="agreement">
+                I confirm I am over 18 and I agree to {Meteor.settings.public.appName}&apos;s&nbsp;
+                <Link
+                  to="/terms"
+                  onClick={() => {
+                    if (modal && onDismissModal) {
+                      onDismissModal();
+                    }
+                  }}
+                >
+                  Terms of Use
+                </Link>&nbsp;and&nbsp;
+                <Link
+                  to="/privacy"
+                  onClick={() => {
+                    if (modal && onDismissModal) {
+                      onDismissModal();
+                    }
+                  }}
+                >
+                  Privacy Policy
+                </Link>.
+              </label>
+            }
+          />
+        </p>
       </Grid.Column>
     </Grid.Row>
   </Grid>
@@ -117,6 +138,7 @@ const SignUpPage = ({
 
 SignUpPage.defaultProps = {
   onLoggedIn: null,
+  onDismissModal: null,
 };
 
 SignUpPage.propTypes = {
@@ -128,6 +150,7 @@ SignUpPage.propTypes = {
   errors: PropTypes.object.isRequired,
   modal: PropTypes.bool.isRequired,
   onLoggedIn: PropTypes.func,
+  onDismissModal: PropTypes.func,
 };
 
 export default SignUpPage;
