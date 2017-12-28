@@ -61,6 +61,7 @@ class StylistPortfolio extends Component {
       photos: [], // working state
       pristine: true,
       saving: false,
+      error: '',
     };
 
     this.handleFilesSelected = this.handleFilesSelected.bind(this);
@@ -92,6 +93,21 @@ class StylistPortfolio extends Component {
         photos,
         pristine: isPristine(portfolioPhotos, photos),
       });
+    });
+  }
+
+  savePortfolioPhotos() {
+    const portfolioPhotos = this.state.photos.filter(photo => !photo.local).map(photo => ({
+      url: photo.url,
+      displayOrder: photo.displayOrder,
+    }));
+
+    Meteor.call('stylists.portfolio.photos.update', portfolioPhotos, () => {
+      this.setState({
+        saving: false,
+      });
+
+      this.loadPortfolioPhotos();
     });
   }
 
@@ -158,22 +174,12 @@ class StylistPortfolio extends Component {
 
     serial(promiseFuncs)
       .then(() => {
-        // call method
-        const portfolioPhotos = this.state.photos.filter(photo => !photo.local).map(photo => ({
-          url: photo.url,
-          displayOrder: photo.displayOrder,
-        }));
-
-        Meteor.call('stylists.portfolio.photos.update', portfolioPhotos, () => {
-          this.setState({
-            saving: false,
-          });
-
-          this.loadPortfolioPhotos();
-        });
+        this.savePortfolioPhotos();
       })
-      .catch(() => {
-        this.setState({ saving: false });
+      .catch((error) => {
+        this.setState({ error });
+
+        this.savePortfolioPhotos();
       });
   }
 
