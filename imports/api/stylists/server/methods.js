@@ -347,11 +347,14 @@ Meteor.methods({
       // delete deselected photos from cloud
       const newPhotoUrls = photos.map(photo => photo.url);
       const { portfolioPhotos: currentPhotos } = Stylists.findOne({ owner: this.userId });
-      currentPhotos.forEach((photo) => {
-        if (newPhotoUrls.indexOf(photo.url) === -1) {
-          deleteCloudinaryFile(photo.url);
-        }
-      });
+      
+      if (currentPhotos) {
+        currentPhotos.forEach((photo) => {
+          if (newPhotoUrls.indexOf(photo.url) === -1) {
+            deleteCloudinaryFile(photo.url);
+          }
+        });
+      }
 
       // displayOrder from client may be inconsistent or not in sequence
       const portfolioPhotos = _.sortBy(photos, 'displayOrder').map((photo, index) => ({
