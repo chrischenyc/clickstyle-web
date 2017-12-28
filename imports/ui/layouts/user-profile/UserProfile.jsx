@@ -74,6 +74,7 @@ class UserProfile extends Component {
           user={this.state.user}
           favourStylist={this.handleFavourStylist}
           authenticated={this.props.authenticated}
+          userId={this.props.userId}
         />
       );
     }
@@ -81,14 +82,20 @@ class UserProfile extends Component {
   }
 }
 
+UserProfile.defaultProps = {
+  userId: null,
+};
+
 UserProfile.propTypes = {
   showLoading: PropTypes.func.isRequired,
   hideLoading: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
+  userId: PropTypes.string,
 };
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
+  userId: state.user.id,
 });
 
 export default withLoading(connect(mapStateToProps)(UserProfile));

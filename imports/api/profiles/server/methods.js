@@ -135,6 +135,7 @@ Meteor.methods({
             products: 1,
             about: 1,
             createdAt: 1,
+            owner: 1,
           },
         },
       );
@@ -148,6 +149,7 @@ Meteor.methods({
             reviews: 1,
             averageRating: 1,
             portfolioPhotos: 1,
+            owner: 1,
           },
         },
       );

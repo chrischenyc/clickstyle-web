@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { ShareButtons } from 'react-share';
 import { Button, Icon } from 'semantic-ui-react';
+import classNames from 'classnames';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import ScaledImageURL from '../../../modules/scaled-image-url';
@@ -17,7 +18,9 @@ import StylistPortfolioSection from './StylistPortfolioSection';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
-const UserProfilePage = ({ user, favourStylist, authenticated }) => {
+const UserProfilePage = ({
+  user, favourStylist, authenticated, userId,
+}) => {
   if (_.isNil(user)) {
     return <Loading />;
   }
@@ -98,42 +101,48 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
 
           {/* -- Sidebar -- */}
           <div className="col-lg-4 col-md-4 margin-top-70">
-            {/* -- Book Now -- */}
-            <div className="boxed-widget booking-widget">
-              <h3>
-                <i className="fa fa-calendar-check-o " /> Make a booking
-              </h3>
-              <div className="row with-forms  margin-top-0">
-                {/* -- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -- */}
-                <div className="col-lg-6 col-md-12">
-                  <input
-                    type="text"
-                    id="booking-date"
-                    data-lang="en"
-                    data-large-mode="true"
-                    data-large-default="true"
-                    data-min-year="2017"
-                    data-max-year="2020"
-                    data-disabled-days="08/17/2017,08/18/2017"
-                  />
+            {/* only display book section if stylist is not current user */}
+            {(_.isNil(userId) || userId !== stylist.owner) && (
+              <div className="boxed-widget booking-widget">
+                <h3>
+                  <i className="fa fa-calendar-check-o " /> Make a booking
+                </h3>
+                <div className="row with-forms  margin-top-0">
+                  {/* -- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -- */}
+                  <div className="col-lg-6 col-md-12">
+                    <input
+                      type="text"
+                      id="booking-date"
+                      data-lang="en"
+                      data-large-mode="true"
+                      data-large-default="true"
+                      data-min-year="2017"
+                      data-max-year="2020"
+                      data-disabled-days="08/17/2017,08/18/2017"
+                    />
+                  </div>
+
+                  {/* -- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -- */}
+                  <div className="col-lg-6 col-md-12">
+                    <input type="text" id="booking-time" value="9:00 am" />
+                  </div>
+
+                  {/* TODO: add selected service/addon */}
                 </div>
 
-                {/* -- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -- */}
-                <div className="col-lg-6 col-md-12">
-                  <input type="text" id="booking-time" value="9:00 am" />
-                </div>
-
-                {/* TODO: add selected service/addon */}
+                {/* -- progress button animation handled via custom.js -- */}
+                <Button circular size="huge" fluid color="teal" className="margin-top-5">
+                  Book Now
+                </Button>
               </div>
-
-              {/* -- progress button animation handled via custom.js -- */}
-              <Button circular size="huge" fluid color="teal" className="margin-top-5">
-                Book Now
-              </Button>
-            </div>
+            )}
 
             {/* -- Opening Hours -- */}
-            <div className="boxed-widget opening-hours margin-top-35">
+            <div
+              className={classNames('boxed-widget', 'opening-hours', {
+                'margin-top-35': _.isNil(userId) || userId !== stylist.owner,
+              })}
+            >
               <h3>
                 <i className="sl sl-icon-clock" /> Opening Hours
               </h3>
@@ -150,18 +159,20 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
 
             {/* -- Share / Like -- */}
             <div className="listing-share margin-top-35 margin-bottom-35 no-border">
-              {authenticated && (
-                <Button
-                  circular
-                  basic={!stylist.favoured}
-                  color="red"
-                  onClick={favourStylist}
-                  className="margin-bottom-10"
-                >
-                  <Icon name="heart" />
-                  {stylist.favoured ? 'Un-favourite' : 'Favourite'}&nbsp;this stylist
-                </Button>
-              )}
+              {authenticated &&
+                userId &&
+                userId !== stylist.owner && (
+                  <Button
+                    circular
+                    basic={!stylist.favoured}
+                    color="red"
+                    onClick={favourStylist}
+                    className="margin-bottom-10"
+                  >
+                    <Icon name="heart" />
+                    {stylist.favoured ? 'Un-favourite' : 'Favourite'}&nbsp;this stylist
+                  </Button>
+                )}
               {stylist.favourites &&
                 stylist.favourites.length > 0 && (
                   <span>{stylist.favourites.length} favourites</span>
@@ -202,12 +213,14 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
 
 UserProfilePage.defaultProps = {
   user: null,
+  userId: null,
 };
 
 UserProfilePage.propTypes = {
   user: PropTypes.object,
   favourStylist: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
+  userId: PropTypes.string,
 };
 
 export default UserProfilePage;
