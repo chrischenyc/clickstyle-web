@@ -147,6 +147,7 @@ Meteor.methods({
             favourites: 1,
             reviews: 1,
             averageRating: 1,
+            portfolioPhotos: 1,
           },
         },
       );

@@ -81,7 +81,12 @@
   background: url("https://images.unsplash.com/photo-1496715976403-7e36dc43f17b?auto=format&fit=crop&w=1280&q=60");
   background-size: cover;
   background-color: #333;
-  height: 300px;
+  height: 320px;
+}
+
+.profile-header .profile-header-carousel-image {
+  background-color: #333;
+  height: 320px;
 }
 
 .profile-header .large-avatar {

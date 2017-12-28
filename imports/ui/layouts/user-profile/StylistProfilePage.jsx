@@ -13,6 +13,7 @@ import OpenHourString from '../../../modules/client/OpenHourString';
 
 import StylistServiceSection from './StylistServiceSection';
 import StylistReviewsSection from './StylistReviewsSection';
+import StylistPortfolioSection from './StylistPortfolioSection';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
@@ -25,10 +26,15 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
 
   return (
     <div>
-      {/* TODO: add stylist portfolio carousal */}
-
       <div className="profile-header">
-        <div className="profile-header-bg" />
+        {stylist.portfolioPhotos &&
+          stylist.portfolioPhotos.length > 0 && (
+            <StylistPortfolioSection photos={stylist.portfolioPhotos} />
+          )}
+
+        {(_.isNil(stylist.portfolioPhotos) || stylist.portfolioPhotos.length === 0) && (
+          <div className="profile-header-bg" />
+        )}
 
         <div className="large-avatar">
           <img

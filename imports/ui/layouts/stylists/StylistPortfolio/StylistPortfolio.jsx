@@ -156,21 +156,25 @@ class StylistPortfolio extends Component {
     const promiseFuncs = photosToUpload.map(photoToUpload => () =>
       this.uploadLocalPhoto(photoToUpload));
 
-    serial(promiseFuncs).then(() => {
-      // call method
-      const portfolioPhotos = this.state.photos.filter(photo => !photo.local).map(photo => ({
-        url: photo.url,
-        displayOrder: photo.displayOrder,
-      }));
+    serial(promiseFuncs)
+      .then(() => {
+        // call method
+        const portfolioPhotos = this.state.photos.filter(photo => !photo.local).map(photo => ({
+          url: photo.url,
+          displayOrder: photo.displayOrder,
+        }));
 
-      Meteor.call('stylists.portfolio.photos.update', portfolioPhotos, () => {
-        this.setState({
-          saving: false,
+        Meteor.call('stylists.portfolio.photos.update', portfolioPhotos, () => {
+          this.setState({
+            saving: false,
+          });
+
+          this.loadPortfolioPhotos();
         });
-
-        this.loadPortfolioPhotos();
+      })
+      .catch(() => {
+        this.setState({ saving: false });
       });
-    });
   }
 
   displayLocalPhoto(localPhoto) {
