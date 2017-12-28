@@ -87,16 +87,18 @@
 .profile-header .profile-header-carousel-image {
   background-color: #333;
   height: 320px;
+  cursor: pointer;
 }
 
-.profile-header .large-avatar {
+.profile-header #avatar {
   position: relative;
   top: -60px;
-  margin-bottom: -60px;
+  display: inline;
 }
 
 .profile-header .profile-header-info {
   padding-top: 8px;
+  margin-top: -60px;
 }
 
 .profile-header .profile-header-info .title {

@@ -49,7 +49,7 @@ class Header extends Component {
         onStateChange={(status) => {
           this.setState({ menuFixed: status.status === Sticky.STATUS_FIXED });
         }}
-        innerZ={9999}
+        innerZ={999}
       >
         <Menu
           borderless

@@ -183,7 +183,7 @@ class StylistsApplicationPage extends Component {
                 }}
               >
                 <Button circular basic color="teal" loading={false}>
-                  Upload file (maximum file size: {Meteor.settings.public.document.maxFileSize}MB)
+                  Upload file (maximum file size: {Meteor.settings.public.maxDocSize}MB)
                 </Button>
               </FileField>
             )}

@@ -17,5 +17,5 @@ Slingshot.fileRestrictions(Meteor.settings.public.SlingshotS3File, {
     'application/pdf',
     'application/msword',
   ],
-  maxSize: Meteor.settings.public.document.maxFileSize * 1024 * 1024,
+  maxSize: Meteor.settings.public.maxDocSize * 1024 * 1024,
 });

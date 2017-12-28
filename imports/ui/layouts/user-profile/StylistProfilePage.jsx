@@ -36,7 +36,7 @@ const UserProfilePage = ({ user, favourStylist, authenticated }) => {
           <div className="profile-header-bg" />
         )}
 
-        <div className="large-avatar">
+        <div className="large-avatar" id="avatar">
           <img
             alt=""
             src={ScaledImageURL(profile.photo || Meteor.settings.public.defaultAvatar, 'tiny')}
