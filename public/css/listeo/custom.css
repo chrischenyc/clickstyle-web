@@ -45,7 +45,7 @@ textarea:focus {
   background-color: #00aca4;
   border-bottom: none;
   width: 100%;
-  padding: 1em 2em;
+  padding: 0.5em 2em;
   border-radius: 0;
   position: relative;
   z-index: 10;
