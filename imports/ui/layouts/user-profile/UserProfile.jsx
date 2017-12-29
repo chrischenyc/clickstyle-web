@@ -17,6 +17,8 @@ class UserProfile extends Component {
     };
 
     this.handleFavourStylist = this.handleFavourStylist.bind(this);
+    this.handleServiceSelected = this.handleServiceSelected.bind(this);
+    this.handleAddonSelected = this.handleAddonSelected.bind(this);
   }
 
   componentDidMount() {
@@ -65,6 +67,15 @@ class UserProfile extends Component {
     );
   }
 
+  handleServiceSelected(service) {
+    console.log(service);
+  }
+
+  handleAddonSelected(service, addon) {
+    console.log(service);
+    console.log(addon);
+  }
+
   render() {
     if (_.isNil(this.state.user)) {
       return <Loading />;
@@ -75,6 +86,8 @@ class UserProfile extends Component {
           favourStylist={this.handleFavourStylist}
           authenticated={this.props.authenticated}
           userId={this.props.userId}
+          onServiceSelected={this.handleServiceSelected}
+          onAddonSelected={this.handleAddonSelected}
         />
       );
     }
