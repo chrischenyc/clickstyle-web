@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 
-import { selectService } from '../../../modules/client/redux/cart';
+import { deleteService, deleteAddon } from '../../../modules/client/redux/cart';
 
 const StylistBookingSection = props => (
   <div className="booking">
@@ -27,11 +27,31 @@ const StylistBookingSection = props => (
       <ul>
         {props.cart.services.map(service => (
           <li key={service._id}>
+            <Button
+              circular
+              icon="minus"
+              negative
+              basic
+              size="mini"
+              onClick={() => {
+                props.deleteService(service);
+              }}
+            />
             {service.name}
             <span>{`$${service.basePrice}`}</span>
             <ul>
               {service.addons.map(addon => (
                 <li key={addon._id}>
+                  <Button
+                    circular
+                    icon="minus"
+                    negative
+                    basic
+                    size="mini"
+                    onClick={() => {
+                      props.deleteAddon(service, addon);
+                    }}
+                  />
                   {addon.name}
                   <span>{`$${addon.price}`}</span>
                 </li>
@@ -56,7 +76,8 @@ const StylistBookingSection = props => (
 );
 
 StylistBookingSection.propTypes = {
-  selectService: PropTypes.func.isRequired,
+  deleteService: PropTypes.func.isRequired,
+  deleteAddon: PropTypes.func.isRequired,
   cart: PropTypes.object.isRequired,
 };
 
@@ -64,4 +85,4 @@ const mapStateToProps = state => ({
   cart: state.cart,
 });
 
-export default connect(mapStateToProps, { selectService })(StylistBookingSection);
+export default connect(mapStateToProps, { deleteService, deleteAddon })(StylistBookingSection);

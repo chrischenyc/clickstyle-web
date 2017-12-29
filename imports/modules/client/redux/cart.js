@@ -70,6 +70,21 @@ export function selectService(stylist, service, addon = null) {
   };
 }
 
+export function deleteService(service) {
+  return {
+    type: 'DELETE_SERVICE',
+    service,
+  };
+}
+
+export function deleteAddon(service, addon) {
+  return {
+    type: 'DELETE_ADDON',
+    service,
+    addon,
+  };
+}
+
 // --------- reducer ----------
 const defaultState = {
   stylist: null,
@@ -105,6 +120,27 @@ const reducer = (state = defaultState, action) => {
       }
 
       const services = updateServices(state.services, service, addon);
+      return { ...state, services, total: calculateTotal(services) };
+    }
+
+    case 'DELETE_SERVICE': {
+      const { service } = action;
+
+      const services = state.services.filter(s => s._id !== service._id);
+
+      return { ...state, services, total: calculateTotal(services) };
+    }
+
+    case 'DELETE_ADDON': {
+      const { service, addon } = action;
+
+      const services = state.services.map((s) => {
+        if (s._id === service._id) {
+          return { ...s, addons: s.addons.filter(a => a._id !== addon._id) };
+        }
+        return s;
+      });
+
       return { ...state, services, total: calculateTotal(services) };
     }
 
