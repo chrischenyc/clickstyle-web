@@ -19,7 +19,7 @@ class StylistServiceSection extends Component {
     return (
       <div className="pricing-list-section">
         <a
-          href="#toggle"
+          href={`./${service.name}#toggle`}
           onClick={(e) => {
             e.preventDefault();
             this.setState({ sectionOpen: !sectionOpen });
@@ -38,7 +38,7 @@ class StylistServiceSection extends Component {
           <ul>
             <li>
               <a
-                href="#book-base"
+                href={`./book/${service.name}`}
                 onClick={(e) => {
                   e.preventDefault();
                 }}
@@ -53,7 +53,7 @@ class StylistServiceSection extends Component {
               service.addons.map(addon => (
                 <li key={addon._id}>
                   <a
-                    href="#book-addon"
+                    href={`./book/${addon.name}`}
                     onClick={(e) => {
                       e.preventDefault();
                     }}
