@@ -25,7 +25,7 @@ const StylistBookingSection = props => (
 
     <div className="row">
       <ul>
-        {props.services.map(service => (
+        {props.cart.services.map(service => (
           <li key={service._id}>
             {service.name}
             <span>{`$${service.basePrice}`}</span>
@@ -40,9 +40,9 @@ const StylistBookingSection = props => (
           </li>
         ))}
 
-        {props.services.length > 0 && (
+        {props.cart.total > 0 && (
           <li className="total-cost">
-            Total<span>$45</span>
+            Total<span>${props.cart.total}</span>
           </li>
         )}
       </ul>
@@ -57,11 +57,11 @@ const StylistBookingSection = props => (
 
 StylistBookingSection.propTypes = {
   selectService: PropTypes.func.isRequired,
-  services: PropTypes.array.isRequired,
+  cart: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  services: state.cart.services,
+  cart: state.cart,
 });
 
 export default connect(mapStateToProps, { selectService })(StylistBookingSection);

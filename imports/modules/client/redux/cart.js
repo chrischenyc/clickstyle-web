@@ -39,6 +39,20 @@ const updateServices = (currentServices, service, addon = null) => {
   return newServices;
 };
 
+const calculateTotal = (services) => {
+  let total = 0;
+
+  services.forEach((service) => {
+    total += service.basePrice;
+
+    service.addons.forEach((addon) => {
+      total += addon.price;
+    });
+  });
+
+  return total;
+};
+
 // --------- actions ----------
 export function selectStylist(stylist) {
   return {
@@ -81,14 +95,17 @@ const reducer = (state = defaultState, action) => {
 
       if (_.isNil(state.stylist) || state.stylist.owner !== stylist.owner) {
         // reset cart if different stylist is selected
+        const services = updateServices([], service, addon);
         return {
           ...defaultState,
           stylist: { _id: stylist._id, owner: stylist.owner },
-          services: updateServices([], service, addon),
+          services,
+          total: calculateTotal(services),
         };
       }
 
-      return { ...state, services: updateServices(state.services, service, addon) };
+      const services = updateServices(state.services, service, addon);
+      return { ...state, services, total: calculateTotal(services) };
     }
 
     default:
