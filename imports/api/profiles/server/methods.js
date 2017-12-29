@@ -156,13 +156,6 @@ Meteor.methods({
 
       if (!_.isEmpty(stylist)) {
         // normalise data
-        if (stylist.services) {
-          stylist.services = stylist.services.map((stylistService) => {
-            const service = Services.findOne({ _id: stylistService._id });
-            const { photo } = service;
-            return { ...stylistService, photo };
-          });
-        }
 
         if (stylist.reviews) {
           stylist.reviews = stylist.reviews.map((review) => {
