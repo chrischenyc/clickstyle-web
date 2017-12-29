@@ -13,7 +13,7 @@ class StylistServiceSection extends Component {
   }
 
   render() {
-    const { service, onServiceSelected, onAddonSelected } = this.props;
+    const { service, onServiceSelected } = this.props;
     const { sectionOpen } = this.state;
 
     return (
@@ -57,7 +57,7 @@ class StylistServiceSection extends Component {
                     href={`./book/${addon.name}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      onAddonSelected(service, addon);
+                      onServiceSelected(service, addon);
                     }}
                   >
                     <h5>{addon.name}</h5>
@@ -76,7 +76,6 @@ class StylistServiceSection extends Component {
 StylistServiceSection.propTypes = {
   service: PropTypes.object.isRequired,
   onServiceSelected: PropTypes.func.isRequired,
-  onAddonSelected: PropTypes.func.isRequired,
 };
 
 export default StylistServiceSection;

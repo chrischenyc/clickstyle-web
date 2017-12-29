@@ -19,12 +19,7 @@ import StylistPortfolioSection from './StylistPortfolioSection';
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
 const UserProfilePage = ({
-  user,
-  favourStylist,
-  authenticated,
-  userId,
-  onServiceSelected,
-  onAddonSelected,
+  user, favourStylist, authenticated, userId, onServiceSelected,
 }) => {
   if (_.isNil(user)) {
     return <Loading />;
@@ -99,7 +94,6 @@ const UserProfilePage = ({
                       key={service._id}
                       service={service}
                       onServiceSelected={onServiceSelected}
-                      onAddonSelected={onAddonSelected}
                     />
                   ))}
               </div>
@@ -232,7 +226,6 @@ UserProfilePage.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   userId: PropTypes.string,
   onServiceSelected: PropTypes.func.isRequired,
-  onAddonSelected: PropTypes.func.isRequired,
 };
 
 export default UserProfilePage;

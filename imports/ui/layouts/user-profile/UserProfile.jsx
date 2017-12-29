@@ -8,6 +8,7 @@ import { withLoading } from '../../components/HOC';
 import Loading from '../../components/Loading';
 import UserProfilePage from './UserProfilePage';
 import StylistProfilePage from './StylistProfilePage';
+import { selectStylist, selectService } from '../../../modules/client/redux/cart';
 
 class UserProfile extends Component {
   constructor(props) {
@@ -18,7 +19,6 @@ class UserProfile extends Component {
 
     this.handleFavourStylist = this.handleFavourStylist.bind(this);
     this.handleServiceSelected = this.handleServiceSelected.bind(this);
-    this.handleAddonSelected = this.handleAddonSelected.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +46,10 @@ class UserProfile extends Component {
           return;
         }
         this.setState({ user });
+
+        if (!_.isNil(user.stylist)) {
+          this.props.selectStylist(user.stylist);
+        }
       }
     });
   }
@@ -67,13 +71,10 @@ class UserProfile extends Component {
     );
   }
 
-  handleServiceSelected(service) {
-    console.log(service);
-  }
-
-  handleAddonSelected(service, addon) {
-    console.log(service);
-    console.log(addon);
+  handleServiceSelected(service, addon = null) {
+    if (!_.isNil(this.state.user.stylist)) {
+      this.props.selectService(this.state.user.stylist, service, addon);
+    }
   }
 
   render() {
@@ -87,7 +88,6 @@ class UserProfile extends Component {
           authenticated={this.props.authenticated}
           userId={this.props.userId}
           onServiceSelected={this.handleServiceSelected}
-          onAddonSelected={this.handleAddonSelected}
         />
       );
     }
@@ -104,6 +104,8 @@ UserProfile.propTypes = {
   hideLoading: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
   userId: PropTypes.string,
+  selectStylist: PropTypes.func.isRequired,
+  selectService: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -111,4 +113,4 @@ const mapStateToProps = state => ({
   userId: state.user.id,
 });
 
-export default withLoading(connect(mapStateToProps)(UserProfile));
+export default withLoading(connect(mapStateToProps, { selectStylist, selectService })(UserProfile));
