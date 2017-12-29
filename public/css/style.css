@@ -148,7 +148,6 @@
 /* --- booking side --- */
 .booking ul {
   list-style: none;
-  padding: 0;
   margin: 0;
   font-size: 1rem;
 }
@@ -178,6 +177,10 @@
 /* addons style */
 .booking ul li ul {
   padding-left: 1rem;
+}
+
+.booking ul li ul li {
+  padding-top: 0.5rem;
 }
 
 /* total style */
