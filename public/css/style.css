@@ -144,3 +144,48 @@
     opacity: 1;
   }
 }
+
+/* --- booking side --- */
+.booking ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* services style */
+.booking ul li {
+  width: 100%;
+  font-weight: 600;
+  color: #888;
+  transition: 0.2s;
+  cursor: default;
+  margin-bottom: 1rem;
+}
+
+.booking ul li:hover {
+  color: #444;
+}
+
+.booking ul li span {
+  float: right;
+  font-weight: 400;
+}
+
+/* addons style */
+.booking ul li ul {
+  padding-left: 1rem;
+}
+
+/* total style */
+.booking ul li.total-cost {
+  font-size: 1.5rem;
+  border-top: 1px solid #e8e8e8;
+  padding-top: 18px;
+  margin-top: 18px;
+}
+
+.booking ul li.total-cost span {
+  font-weight: 600;
+  color: #66676b;
+}

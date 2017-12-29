@@ -15,6 +15,7 @@ import OpenHourString from '../../../modules/client/OpenHourString';
 import StylistServiceSection from './StylistServiceSection';
 import StylistReviewsSection from './StylistReviewsSection';
 import StylistPortfolioSection from './StylistPortfolioSection';
+import StylistBookingSection from './StylistBookingSection';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
@@ -108,36 +109,7 @@ const UserProfilePage = ({
             {/* only display book section if stylist is not current user */}
             {(_.isNil(userId) || userId !== stylist.owner) && (
               <div className="boxed-widget booking-widget">
-                <h3>
-                  <i className="fa fa-calendar-check-o " /> Make a booking
-                </h3>
-                <div className="row with-forms  margin-top-0">
-                  {/* -- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -- */}
-                  <div className="col-lg-6 col-md-12">
-                    <input
-                      type="text"
-                      id="booking-date"
-                      data-lang="en"
-                      data-large-mode="true"
-                      data-large-default="true"
-                      data-min-year="2017"
-                      data-max-year="2020"
-                      data-disabled-days="08/17/2017,08/18/2017"
-                    />
-                  </div>
-
-                  {/* -- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -- */}
-                  <div className="col-lg-6 col-md-12">
-                    <input type="text" id="booking-time" value="9:00 am" />
-                  </div>
-
-                  {/* TODO: add selected service/addon */}
-                </div>
-
-                {/* -- progress button animation handled via custom.js -- */}
-                <Button circular size="huge" fluid color="teal" className="margin-top-5">
-                  Book Now
-                </Button>
+                <StylistBookingSection />
               </div>
             )}
 
