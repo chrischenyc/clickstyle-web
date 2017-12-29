@@ -11,7 +11,7 @@ const HomeServices = ({ services }) => {
   // carousel config, disable auto-scroll and arrows if elements are too few
   const slickSettings = {
     slidesToShow: 5,
-    slidesToScroll: 5,
+    slidesToScroll: 1,
     dots: false,
     arrows: services.length > 5,
     infinite: services.length > 5,
@@ -23,7 +23,6 @@ const HomeServices = ({ services }) => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 4,
           arrows: services.length > 4,
           infinite: services.length > 4,
           autoplay: services.length > 4,
@@ -33,7 +32,6 @@ const HomeServices = ({ services }) => {
         breakpoint: 600,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1,
           arrows: services.length > 1,
           infinite: services.length > 1,
           autoplay: services.length > 1,

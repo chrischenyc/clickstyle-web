@@ -45,7 +45,7 @@ class HomeStylists extends Component {
     // carousel config, disable auto-scroll and arrows if elements are too few
     const slickSettings = {
       slidesToShow: 4,
-      slidesToScroll: 4,
+      slidesToScroll: 1,
       dots: false,
       arrows: stylistsPairs.length > 4,
       infinite: stylistsPairs.length > 4,
@@ -57,7 +57,6 @@ class HomeStylists extends Component {
           breakpoint: 1024,
           settings: {
             slidesToShow: 3,
-            slidesToScroll: 3,
             arrows: stylistsPairs.length > 3,
             infinite: stylistsPairs.length > 3,
             autoplay: stylistsPairs.length > 3,
@@ -67,7 +66,6 @@ class HomeStylists extends Component {
           breakpoint: 600,
           settings: {
             slidesToShow: 1,
-            slidesToScroll: 1,
             arrows: stylistsPairs.length > 1,
             infinite: stylistsPairs.length > 1,
             autoplay: stylistsPairs.length > 1,
