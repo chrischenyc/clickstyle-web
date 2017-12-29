@@ -16,33 +16,12 @@ const updateServices = (currentServices, service, addon = null) => {
         // service has been selected
         serviceMatched = true;
 
-        if (!_.isNil(addon)) {
-          // new addon is provided, we need to evaluate it
-          let addonMatched = false;
-
-          let newAddons = currentService.addons
-            .map((currentAddon) => {
-              if (currentAddon._id === addon._id) {
-                // addon has been selected, remove it from data structure
-                addonMatched = true;
-
-                return null;
-              }
-              return currentAddon;
-            })
-            .filter(currentAddon => !_.isNil(currentAddon));
-
-          if (!addonMatched) {
-            // addon hasn't been selected, add it to data structure
-            newAddons = [...newAddons, addon];
-          }
-
-          return { ...currentService, addons: newAddons };
-        }
-
-        // new addon is null, deselect selected service only if it has no addons
-        if (currentService.addons.length === 0) {
-          return null;
+        if (
+          !_.isNil(addon) &&
+          currentService.addons.filter(currentAddon => currentAddon._id === addon._id).length === 0
+        ) {
+          // new addon hasn't been selected, insert it
+          return { ...currentService, addons: [...currentService.addons, addon] };
         }
 
         // otherwise, do nothing
@@ -81,6 +60,7 @@ export function selectService(stylist, service, addon = null) {
 const defaultState = {
   stylist: null,
   services: [],
+  total: 0,
 };
 
 const reducer = (state = defaultState, action) => {
