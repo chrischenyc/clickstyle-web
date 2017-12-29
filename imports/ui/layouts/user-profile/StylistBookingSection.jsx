@@ -27,31 +27,25 @@ const StylistBookingSection = props => (
       <ul>
         {props.cart.services.map(service => (
           <li key={service._id}>
-            <Button
-              circular
-              icon="minus"
-              negative
-              basic
-              size="mini"
+            <i
+              className="fa fa-minus delete"
               onClick={() => {
                 props.deleteService(service);
               }}
             />
+
             {service.name}
             <span>{`$${service.basePrice}`}</span>
             <ul>
               {service.addons.map(addon => (
                 <li key={addon._id}>
-                  <Button
-                    circular
-                    icon="minus"
-                    negative
-                    basic
-                    size="mini"
+                  <i
+                    className="fa fa-minus delete"
                     onClick={() => {
                       props.deleteAddon(service, addon);
                     }}
                   />
+
                   {addon.name}
                   <span>{`$${addon.price}`}</span>
                 </li>

@@ -195,3 +195,15 @@
   font-weight: 600;
   color: #66676b;
 }
+
+.booking ul li .delete {
+  cursor: pointer;
+  padding: 0.25rem;
+  margin-right: 1rem;
+}
+
+.booking ul li .delete:hover {
+  color: #fff;
+  background: #db2828;
+  border-radius: 3px;
+}

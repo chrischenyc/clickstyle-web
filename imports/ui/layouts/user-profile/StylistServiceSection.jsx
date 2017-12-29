@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Collapse } from 'react-collapse';
 import _ from 'lodash';
+import { Button } from 'semantic-ui-react';
 
 class StylistServiceSection extends Component {
   constructor(props) {
@@ -46,7 +47,12 @@ class StylistServiceSection extends Component {
               >
                 <h5>Base price</h5>
                 {!_.isEmpty(service.basePriceDescription) && <p>{service.basePriceDescription}</p>}
-                <span>${service.basePrice}</span>
+                <span>
+                  ${service.basePrice}
+                  <Button type="button" color="teal" size="small" style={{ marginLeft: '1rem' }}>
+                    Book
+                  </Button>
+                </span>
               </a>
             </li>
 
@@ -62,7 +68,17 @@ class StylistServiceSection extends Component {
                   >
                     <h5>{addon.name}</h5>
                     {!_.isEmpty(addon.description) && <p>{addon.description}</p>}
-                    <span>${addon.price}</span>
+                    <span>
+                      ${addon.price}
+                      <Button
+                        type="button"
+                        color="teal"
+                        size="small"
+                        style={{ marginLeft: '1rem' }}
+                      >
+                        Book
+                      </Button>
+                    </span>
                   </a>
                 </li>
               ))}
