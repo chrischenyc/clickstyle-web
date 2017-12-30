@@ -50,6 +50,7 @@ class HomeStylists extends Component {
       arrows: stylistsPairs.length > 4,
       infinite: stylistsPairs.length > 4,
       autoplay: stylistsPairs.length > 4,
+      autoplaySpeed: 5000,
       speed: 500,
       initialSlide: 0,
       responsive: [

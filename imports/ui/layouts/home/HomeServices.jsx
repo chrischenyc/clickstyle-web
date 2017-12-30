@@ -16,6 +16,7 @@ const HomeServices = ({ services }) => {
     arrows: services.length > 5,
     infinite: services.length > 5,
     autoplay: services.length > 5,
+    autoplaySpeed: 5000,
     speed: 500,
     initialSlide: 0,
     responsive: [
