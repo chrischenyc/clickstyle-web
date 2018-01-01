@@ -68,7 +68,6 @@ class Header extends Component {
 
             <Responsive maxWidth={1024} as={Menu.Item} style={{ paddingLeft: '0' }}>
               <Button
-                circular
                 basic
                 color="teal"
                 icon="bars"
