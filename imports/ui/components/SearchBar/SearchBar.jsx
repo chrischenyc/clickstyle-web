@@ -2,8 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Search, Button } from 'semantic-ui-react';
-
 import _ from 'lodash';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
+import './react-day-picker-custom.css';
+import { formatDate, parseDate } from 'react-day-picker/moment';
 
 import {
   ServiceNameToSEOName,
@@ -42,6 +45,7 @@ class SearchBar extends Component {
       searchingSuburb: false,
       matchedSuburbs: [],
       selectedSuburb: suburbObject(SEONameToSuburbName(suburb), postcode),
+      date: null,
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
@@ -168,7 +172,7 @@ class SearchBar extends Component {
 
     return (
       <div className="main-search-input">
-        <div className="main-search-input-item">
+        <div className="main-search-input-item service">
           <Search
             input={
               <input
@@ -193,7 +197,7 @@ class SearchBar extends Component {
           />
         </div>
 
-        <div className="main-search-input-item location">
+        <div className="main-search-input-item suburb">
           <Search
             input={<input type="text" />}
             name="suburb"
@@ -210,19 +214,28 @@ class SearchBar extends Component {
             results={matchedSuburbs}
             showNoResults={false}
           />
-
-          <i className="fa fa-map-marker" />
         </div>
 
-        <div className="main-search-input-item location">
-          <input
-            type="text"
+        <div className="main-search-input-item date">
+          <DayPickerInput
             placeholder="Any date, any time"
-            data-option="value"
-            id="date-picker"
+            onDayChange={(date) => {
+              this.setState({ date });
+            }}
+            formatDate={formatDate}
+            parseDate={parseDate}
           />
+        </div>
 
-          <i className="fa fa-calendar" />
+        <div className="main-search-input-item time">
+          <DayPickerInput
+            placeholder="Any date, any time"
+            onDayChange={(date) => {
+              this.setState({ date });
+            }}
+            formatDate={formatDate}
+            parseDate={parseDate}
+          />
         </div>
 
         <Button
