@@ -8,6 +8,8 @@ import 'react-day-picker/lib/style.css';
 import './react-day-picker-custom.css';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 
+import TimeInput from '../TimeInput';
+
 import {
   ServiceNameToSEOName,
   SEONameToServiceName,
@@ -46,6 +48,7 @@ class SearchBar extends Component {
       matchedSuburbs: [],
       selectedSuburb: suburbObject(SEONameToSuburbName(suburb), postcode),
       date: null,
+      time: null,
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
@@ -228,13 +231,12 @@ class SearchBar extends Component {
         </div>
 
         <div className="main-search-input-item time">
-          <DayPickerInput
-            placeholder="Any date, any time"
-            onDayChange={(date) => {
-              this.setState({ date });
+          <TimeInput
+            placeholder="Any time"
+            optional
+            onChange={(value) => {
+              this.setState({ time: value });
             }}
-            formatDate={formatDate}
-            parseDate={parseDate}
           />
         </div>
 
