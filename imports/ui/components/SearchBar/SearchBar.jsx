@@ -7,7 +7,6 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import './react-day-picker-custom.css';
 import { formatDate, parseDate } from 'react-day-picker/moment';
-import queryString from 'query-string';
 
 import TimeInput from '../TimeInput';
 import {
@@ -17,12 +16,8 @@ import {
   datePickerFormat,
 } from '../../../modules/format-date';
 
-import {
-  ServiceNameToSEOName,
-  SEONameToServiceName,
-  SuburbNameToSEOName,
-  SEONameToSuburbName,
-} from '../../../modules/seo-name';
+import { ServiceNameToSEOName, SuburbNameToSEOName } from '../../../modules/seo-name';
+import parseSearchUrlParams from '../../../modules/client/parse-search-url';
 
 const suburbString = (suburbObject) => {
   if (!_.isNil(suburbObject) && !_.isNil(suburbObject.name)) {
@@ -39,38 +34,6 @@ const suburbString = (suburbObject) => {
 };
 
 const suburbObject = (suburb, postcode) => (suburb && { name: suburb, postcode }) || null;
-
-const parseSearchUrlParams = (props) => {
-  const { service, suburb, postcode } = props.match.params;
-  const { date, time } = queryString.parse(props.location.search);
-
-  let isTimeValid = true;
-
-  if (_.isNil(time)) {
-    isTimeValid = false;
-  } else if (time.indexOf(':') === -1) {
-    isTimeValid = false;
-  } else {
-    const parts = time.split(':');
-    if (parts.length !== 2) {
-      isTimeValid = false;
-    } else if (parseInt(parts[0]) < 0 || parseInt(parts[0]) > 23) {
-      // validate hour
-      isTimeValid = false;
-    } else if (parseInt(parts[1]) < 0 || parseInt(parts[1]) > 59) {
-      // validate minute
-      isTimeValid = false;
-    }
-  }
-
-  return {
-    service: service && SEONameToServiceName(service),
-    suburb: suburb && `${SEONameToSuburbName(suburb)}`,
-    postcode,
-    date,
-    time: isTimeValid ? time : '',
-  };
-};
 
 class SearchBar extends Component {
   constructor(props) {

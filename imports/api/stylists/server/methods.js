@@ -145,7 +145,7 @@ Meteor.methods({
     check(data, Object);
 
     const {
-      service, suburb: suburbName, postcode, offset,
+      service, suburb: suburbName, postcode, date, time, offset,
     } = data;
     check(service, String);
     if (suburbName) {
@@ -154,6 +154,8 @@ Meteor.methods({
     if (postcode) {
       check(postcode, String);
     }
+    check(date, String);
+    check(time, String);
     check(offset, Number);
 
     try {
@@ -336,6 +338,7 @@ Meteor.methods({
       throw new Meteor.Error('500');
     }
   },
+
   'stylists.portfolio.photos.update': function updateStylistPortfolioPhotos(photos) {
     if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
       throw new Meteor.Error(403, 'unauthorized');
@@ -347,7 +350,7 @@ Meteor.methods({
       // delete deselected photos from cloud
       const newPhotoUrls = photos.map(photo => photo.url);
       const { portfolioPhotos: currentPhotos } = Stylists.findOne({ owner: this.userId });
-      
+
       if (currentPhotos) {
         currentPhotos.forEach((photo) => {
           if (newPhotoUrls.indexOf(photo.url) === -1) {

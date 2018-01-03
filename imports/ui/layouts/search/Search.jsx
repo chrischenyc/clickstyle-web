@@ -6,17 +6,22 @@ import _ from 'lodash';
 import { withLoading } from '../../components/HOC';
 import SearchPage from './SearchPage';
 import { SEONameToServiceName, SEONameToSuburbName } from '../../../modules/seo-name';
+import parseSearchUrlParams from '../../../modules/client/parse-search-url';
 
 class Search extends Component {
   constructor(props) {
     super(props);
 
-    const { service, suburb, postcode } = props.match.params;
+    const {
+      service, suburb, postcode, date, time,
+    } = parseSearchUrlParams(props);
 
     this.state = {
-      service: (service && SEONameToServiceName(service)) || '',
-      suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
+      service: service || '', // value of service input
+      suburb: suburb || '', // value of suburb input
       postcode: postcode || '',
+      date: date || '',
+      time: time || '',
       searching: false,
       searched: false,
       error: '',
@@ -30,16 +35,27 @@ class Search extends Component {
 
   componentDidMount() {
     if (this.state.service) {
-      this.search(this.state.service, this.state.suburb, this.state.postcode);
+      this.search(
+        this.state.service,
+        this.state.suburb,
+        this.state.postcode,
+        this.state.date,
+        this.state.time,
+      );
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!_.isEqual(this.props.match.params, nextProps.match.params)) {
-      const { service, suburb, postcode } = nextProps.match.params;
+    if (
+      !_.isEqual(this.props.match.params, nextProps.match.params) ||
+      !_.isEqual(this.props.location.search, nextProps.location.search)
+    ) {
+      const {
+        service, suburb, postcode, date, time,
+      } = parseSearchUrlParams(nextProps);
 
       if (service) {
-        this.search(SEONameToServiceName(service), SEONameToSuburbName(suburb), postcode);
+        this.search(service, suburb, postcode, date, time);
       }
     }
   }
@@ -49,11 +65,13 @@ class Search extends Component {
       this.state.service,
       this.state.suburb,
       this.state.postcode,
+      this.state.date,
+      this.state.time,
       this.state.stylists.length,
     );
   }
 
-  search(service, suburb, postcode, offset = 0) {
+  search(service, suburb, postcode, date, time, offset = 0) {
     this.setState({
       searching: true,
       searched: false,
@@ -77,6 +95,8 @@ class Search extends Component {
         service,
         suburb,
         postcode,
+        date,
+        time,
         offset,
       },
       (error, result) => {
