@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import userProfileLink from '../../../modules/user-profile-link';
-import { formatDate } from '../../../modules/format-date';
+import { formatDateDisplayString } from '../../../modules/format-date';
 import StarRating from '../../components/StarRating';
 
 const StylistReviewsSection = ({ reviews }) => (
@@ -32,7 +32,7 @@ const StylistReviewsSection = ({ reviews }) => (
             <div className="comment-content">
               <div className="comment-by">
                 {`${review.reviewer.name.first} ${review.reviewer.name.last}`}
-                <span className="date">{formatDate(review.createdAt)}</span>
+                <span className="date">{formatDateDisplayString(review.createdAt)}</span>
                 <StarRating rating={review.rating} />
               </div>
               <p>{review.comment}</p>

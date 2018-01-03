@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import { FormInputField } from '../../components/FormInputField';
-import { formatDate } from '../../../modules/format-date';
+import { formatDateDisplayString } from '../../../modules/format-date';
 
 class StylistsApplicationPage extends Component {
   constructor(props) {
@@ -40,8 +40,8 @@ class StylistsApplicationPage extends Component {
             <h2>Welcome to the club!</h2>
 
             <p>
-              Your application was approved on {formatDate(application.approvedAt)}. Thanks for
-              being part of us.
+              Your application was approved on {formatDateDisplayString(application.approvedAt)}.
+              Thanks for being part of us.
             </p>
 
             <p>
@@ -57,8 +57,8 @@ class StylistsApplicationPage extends Component {
           <h2>Relax and sit tight</h2>
 
           <p>
-            Your previous application submitted on {formatDate(application.createdAt)} is under
-            review process, we will contact you shortly.
+            Your previous application submitted on {formatDateDisplayString(application.createdAt)}{' '}
+            is under review process, we will contact you shortly.
           </p>
 
           <p>

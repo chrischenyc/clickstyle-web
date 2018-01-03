@@ -10,3 +10,7 @@
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
   background-color: #00aca4;
 }
+
+.DayPicker-Day--today {
+  color: #000;
+}

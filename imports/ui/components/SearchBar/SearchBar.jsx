@@ -7,8 +7,15 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import './react-day-picker-custom.css';
 import { formatDate, parseDate } from 'react-day-picker/moment';
+import queryString from 'query-string';
 
 import TimeInput from '../TimeInput';
+import {
+  formatDateQueryString,
+  parseDateQueryString,
+  formatDateDisplayString,
+  datePickerFormat,
+} from '../../../modules/format-date';
 
 import {
   ServiceNameToSEOName,
@@ -33,22 +40,56 @@ const suburbString = (suburbObject) => {
 
 const suburbObject = (suburb, postcode) => (suburb && { name: suburb, postcode }) || null;
 
+const parseSearchUrlParams = (props) => {
+  const { service, suburb, postcode } = props.match.params;
+  const { date, time } = queryString.parse(props.location.search);
+
+  let isTimeValid = true;
+
+  if (_.isNil(time)) {
+    isTimeValid = false;
+  } else if (time.indexOf(':') === -1) {
+    isTimeValid = false;
+  } else {
+    const parts = time.split(':');
+    if (parts.length !== 2) {
+      isTimeValid = false;
+    } else if (parseInt(parts[0]) < 0 || parseInt(parts[0]) > 23) {
+      // validate hour
+      isTimeValid = false;
+    } else if (parseInt(parts[1]) < 0 || parseInt(parts[1]) > 59) {
+      // validate minute
+      isTimeValid = false;
+    }
+  }
+
+  return {
+    service: service && SEONameToServiceName(service),
+    suburb: suburb && `${SEONameToSuburbName(suburb)}`,
+    postcode,
+    date,
+    time: isTimeValid ? time : '',
+  };
+};
+
 class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    const { service, suburb, postcode } = props.match.params;
+    const {
+      service, suburb, postcode, date, time,
+    } = parseSearchUrlParams(props);
 
     this.state = {
-      service: (service && SEONameToServiceName(service)) || '', // value of service input
+      service: service || '', // value of service input
+      suburb: suburb || '', // value of suburb input
+      selectedSuburb: suburbObject(suburb, postcode),
+      date: date || '',
+      time: time || '',
       services: [], // services/addons keywords search data source
       matchedServices: [],
-      suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '', // value of suburb input
       searchingSuburb: false,
       matchedSuburbs: [],
-      selectedSuburb: suburbObject(SEONameToSuburbName(suburb), postcode),
-      date: null,
-      time: '',
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
@@ -71,12 +112,16 @@ class SearchBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { service, suburb, postcode } = nextProps.match.params;
+    const {
+      service, suburb, postcode, date, time,
+    } = parseSearchUrlParams(nextProps);
 
     this.setState({
-      service: (service && SEONameToServiceName(service)) || '',
-      suburb: (suburb && `${SEONameToSuburbName(suburb)}`) || '',
-      selectedSuburb: suburbObject(SEONameToSuburbName(suburb), postcode),
+      service: service || '', // value of service input
+      suburb: suburb || '', // value of suburb input
+      selectedSuburb: suburbObject(suburb, postcode),
+      date: date || '',
+      time: time || '',
     });
   }
 
@@ -127,14 +172,18 @@ class SearchBar extends Component {
   }
 
   handleSearch() {
-    const { service, selectedSuburb } = this.state;
+    const {
+      service, selectedSuburb, date, time,
+    } = this.state;
 
     if (!_.isEmpty(service)) {
-      this.redirectToSearch(
+      this.redirectToSearch({
         service,
-        selectedSuburb && selectedSuburb.name,
-        selectedSuburb && selectedSuburb.postcode,
-      );
+        suburb: selectedSuburb && selectedSuburb.name,
+        postcode: selectedSuburb && selectedSuburb.postcode,
+        date,
+        time,
+      });
     } else {
       // TODO: prompt user to select service
     }
@@ -150,7 +199,9 @@ class SearchBar extends Component {
    * @param {name of the suburb, optional} suburb
    * @param {postcode, optional} postcode
    */
-  redirectToSearch(service, suburb, postcode) {
+  redirectToSearch({
+    service, suburb, postcode, date, time,
+  }) {
     let searchUrl = '/stylists';
 
     if (!_.isNil(service) && service.length > 0) {
@@ -165,7 +216,23 @@ class SearchBar extends Component {
       searchUrl += `/${postcode}`;
     }
 
-    this.props.history.push(searchUrl);
+    if (!_.isNil(date)) {
+      searchUrl += `?date=${date}`;
+    }
+
+    if (!_.isNil(time) && time.length > 0) {
+      const timeQueryString = time;
+
+      if (!_.isNil(date)) {
+        searchUrl += '&';
+      } else {
+        searchUrl += '?';
+      }
+
+      searchUrl += `time=${timeQueryString}`;
+    }
+
+    this.props.history.push(encodeURI(searchUrl));
   }
 
   render() {
@@ -221,12 +288,24 @@ class SearchBar extends Component {
 
         <div className="main-search-input-item date">
           <DayPickerInput
+            value={
+              parseDateQueryString(this.state.date).isValid()
+                ? formatDateDisplayString(parseDateQueryString(this.state.date))
+                : ''
+            }
             placeholder="Any date, any time"
             onDayChange={(date) => {
-              this.setState({ date });
+              this.setState({ date: formatDateQueryString(date) });
             }}
+            format={datePickerFormat}
             formatDate={formatDate}
             parseDate={parseDate}
+            dayPickerProps={{
+              modifiers: {
+                disabled: { before: new Date() },
+                selected: day => formatDateQueryString(day) === this.state.date,
+              },
+            }}
           />
         </div>
 
@@ -235,8 +314,8 @@ class SearchBar extends Component {
             placeholder="Any time"
             optional
             value={this.state.time}
-            onChange={(value) => {
-              this.setState({ time: value });
+            onChange={(time) => {
+              this.setState({ time });
             }}
           />
         </div>
