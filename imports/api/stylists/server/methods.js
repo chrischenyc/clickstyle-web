@@ -12,6 +12,9 @@ import Suburbs from '../../suburbs/suburbs';
 import { SearchLimit } from '../../../modules/server/constants';
 import coordinatesDistance from '../../../modules/server/coordinates-distance';
 import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
+import isStylistAvailable from '../../../modules/stylist-available';
+import isTimeQueryValid from '../../../modules/validate-time-query';
+import { parseDateQueryString, weekdayOfDateQueryString } from '../../../modules/format-date';
 
 Meteor.methods({
   'stylists.update.services': function updateStylistsServices(services) {
@@ -26,7 +29,7 @@ Meteor.methods({
 
       // insert user-defined addons
       Meteor.defer(() => {
-        services.forEach((service) => {
+        services.forEach(service => {
           const addonNames = service.addons.map(addon => addon.name);
           const publicAddonNames = Addons.find({ serviceId: service._id })
             .fetch()
@@ -35,7 +38,7 @@ Meteor.methods({
             (arrVal, othVal) => _.isEqual(arrVal.toLowerCase(), othVal.toLowerCase()),
           ]);
 
-          newAddonNames.forEach((name) => {
+          newAddonNames.forEach(name => {
             Addons.insert({
               serviceId: service._id,
               name,
@@ -108,7 +111,7 @@ Meteor.methods({
             { fields: { lat: 1, lon: 1 } },
           )
             .fetch()
-            .filter((suburb) => {
+            .filter(suburb => {
               const distance = coordinatesDistance(
                 selectedSuburb.lat,
                 selectedSuburb.lon,
@@ -133,108 +136,6 @@ Meteor.methods({
         `userId: ${this.userId}`,
         `param: ${JSON.stringify(areas)}`,
       );
-    } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
-    }
-  },
-
-  'stylists.search': function searchStylists(data) {
-    check(data, Object);
-
-    const {
-      service, suburb: suburbName, postcode, date, time, offset,
-    } = data;
-    check(service, String);
-    if (suburbName) {
-      check(suburbName, String);
-    }
-    if (postcode) {
-      check(postcode, String);
-    }
-    check(date, String);
-    check(time, String);
-    check(offset, Number);
-
-    try {
-      // final query selector, only look for published stylists
-      let selector = {
-        published: true,
-      };
-
-      // add query selector by service/addon name
-
-      // a less precise search would be to break down service name into words,
-      // match with names of services and addons in the order of keywords
-      // sample conversion: "full face makeup" -> "/full.+face.+makeup/i"
-      // const keywords = service.split(' ').filter(word => word !== 'and');
-      // let regex = '';
-      // for (let index = 0; index < keywords.length; index += 1) {
-      //   regex += keywords[index];
-      //   if (index < keywords.length - 1) {
-      //     regex += '.+';
-      //   }
-      // }
-
-      const serviceNameSelector = { 'services.name': RegExp(service, 'i') };
-      const addonNameSelector = {
-        'services.addons.name': RegExp(service, 'i'),
-      };
-
-      const keywords = service.split(' ');
-      let nameSelector = {
-        $or: [{ 'name.first': RegExp(service, 'i') }, { 'name.last': RegExp(service, 'i') }],
-      };
-      if (keywords.length > 1) {
-        nameSelector = {
-          $and: [
-            { 'name.first': RegExp(keywords[0], 'i') },
-            { 'name.last': RegExp(keywords[1], 'i') },
-          ],
-        };
-      }
-
-      selector = {
-        ...selector,
-        ...{ $or: [serviceNameSelector, addonNameSelector, nameSelector] },
-      };
-
-      // add query selector by available suburbs
-      if (suburbName) {
-        const suburbsSelector = { name: RegExp(suburbName, 'i') };
-        if (postcode && postcode !== undefined) {
-          suburbsSelector.postcode = postcode;
-        }
-        const suburbIds = Suburbs.find(suburbsSelector)
-          .fetch()
-          .map(suburb => suburb._id);
-
-        selector = { ...selector, ...{ 'areas.availableSuburbs': { $in: suburbIds } } };
-      }
-
-      // query Stylists
-      const stylists = Stylists.find(selector, {
-        fields: {
-          owner: 1,
-          'services._id': 1,
-          'services.basePrice': 1,
-          'services.name': 1,
-          name: 1,
-          'address.state': 1,
-          'address.suburb': 1,
-          photo: 1,
-          averageRating: 1,
-        },
-        limit: SearchLimit,
-        skip: offset,
-      }).fetch();
-
-      return {
-        stylists,
-        hasMore: stylists.length >= SearchLimit,
-      };
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -352,7 +253,7 @@ Meteor.methods({
       const { portfolioPhotos: currentPhotos } = Stylists.findOne({ owner: this.userId });
 
       if (currentPhotos) {
-        currentPhotos.forEach((photo) => {
+        currentPhotos.forEach(photo => {
           if (newPhotoUrls.indexOf(photo.url) === -1) {
             deleteCloudinaryFile(photo.url);
           }
@@ -373,6 +274,102 @@ Meteor.methods({
           },
         },
       );
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500');
+    }
+  },
+
+  'stylists.search': function searchStylists(data) {
+    check(data, Object);
+
+    const { service, suburb: suburbName, postcode, date, time, offset } = data;
+    check(service, String);
+    if (suburbName) {
+      check(suburbName, String);
+    }
+    if (postcode) {
+      check(postcode, String);
+    }
+    check(date, String);
+    check(time, String);
+    check(offset, Number);
+
+    try {
+      // base query selector, only look for published stylists
+      let selector = {
+        published: true,
+      };
+
+      // add query selector of service/addon name, stylist name
+      const serviceNameSelector = { 'services.name': RegExp(service, 'i') };
+      const addonNameSelector = {
+        'services.addons.name': RegExp(service, 'i'),
+      };
+
+      const keywords = service.split(' ');
+      let stylistNameSelector = {
+        $or: [{ 'name.first': RegExp(service, 'i') }, { 'name.last': RegExp(service, 'i') }],
+      };
+      if (keywords.length > 1) {
+        stylistNameSelector = {
+          $and: [
+            { 'name.first': RegExp(keywords[0], 'i') },
+            { 'name.last': RegExp(keywords[1], 'i') },
+          ],
+        };
+      }
+
+      const nameSelector = { $or: [serviceNameSelector, addonNameSelector, stylistNameSelector] };
+
+      selector = {
+        ...selector,
+        ...nameSelector,
+      };
+
+      // add query selector of available suburbs
+      if (suburbName) {
+        const suburbsSelector = { name: RegExp(suburbName, 'i') };
+        if (postcode && postcode !== undefined) {
+          suburbsSelector.postcode = postcode;
+        }
+        const suburbIds = Suburbs.find(suburbsSelector)
+          .fetch()
+          .map(suburb => suburb._id);
+
+        const suburbSelector = { 'areas.availableSuburbs': { $in: suburbIds } };
+
+        selector = { ...selector, ...suburbSelector };
+      }
+
+      // TODO: add query selector of open hours
+      const isDateValid = parseDateQueryString(date).isValid();
+      const weekday = weekdayOfDateQueryString(date);
+      const isTimeValid = isTimeQueryValid(time);
+
+      // query Stylists
+      const stylists = Stylists.find(selector, {
+        fields: {
+          owner: 1,
+          'services._id': 1,
+          'services.basePrice': 1,
+          'services.name': 1,
+          name: 1,
+          'address.state': 1,
+          'address.suburb': 1,
+          photo: 1,
+          averageRating: 1,
+        },
+        limit: SearchLimit,
+        skip: offset,
+      }).fetch();
+
+      return {
+        stylists,
+        hasMore: stylists.length >= SearchLimit,
+      };
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);

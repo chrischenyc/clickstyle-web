@@ -179,14 +179,14 @@ class SearchBar extends Component {
       searchUrl += `/${postcode}`;
     }
 
-    if (!_.isNil(date)) {
+    if (parseDateQueryString(date).isValid()) {
       searchUrl += `?date=${date}`;
     }
 
     if (!_.isNil(time) && time.length > 0) {
       const timeQueryString = time;
 
-      if (!_.isNil(date)) {
+      if (parseDateQueryString(date).isValid()) {
         searchUrl += '&';
       } else {
         searchUrl += '?';

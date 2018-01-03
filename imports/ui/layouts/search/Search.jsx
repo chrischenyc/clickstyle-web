@@ -5,7 +5,6 @@ import _ from 'lodash';
 
 import { withLoading } from '../../components/HOC';
 import SearchPage from './SearchPage';
-import { SEONameToServiceName, SEONameToSuburbName } from '../../../modules/seo-name';
 import parseSearchUrlParams from '../../../modules/client/parse-search-url';
 
 class Search extends Component {
