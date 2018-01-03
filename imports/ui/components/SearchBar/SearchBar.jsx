@@ -48,7 +48,7 @@ class SearchBar extends Component {
       matchedSuburbs: [],
       selectedSuburb: suburbObject(SEONameToSuburbName(suburb), postcode),
       date: null,
-      time: null,
+      time: '',
     };
 
     this.handleServiceChange = this.handleServiceChange.bind(this);
@@ -234,6 +234,7 @@ class SearchBar extends Component {
           <TimeInput
             placeholder="Any time"
             optional
+            value={this.state.time}
             onChange={(value) => {
               this.setState({ time: value });
             }}

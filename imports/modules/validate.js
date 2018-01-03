@@ -165,11 +165,14 @@ export const validateStylistOpenHours = (openHours) => {
   const errors = {};
 
   openHours.forEach((openHour) => {
+    const openAtHour = parseInt(openHour.openAt.split(':')[0]);
+    const openAtMinute = parseInt(openHour.openAt.split(':')[1]);
+    const closeAtHour = parseInt(openHour.closeAt.split(':')[0]);
+    const closeAtMinute = parseInt(openHour.closeAt.split(':')[1]);
+
     if (
       openHour.open &&
-      (openHour.openAtHour > openHour.closeAtHour ||
-        (openHour.openAtHour === openHour.closeAtHour &&
-          openHour.openAtMinute >= openHour.closeAtMinute))
+      (openAtHour > closeAtHour || (openAtHour === closeAtHour && openAtMinute >= closeAtMinute))
     ) {
       _.set(errors, `${openHour.day}`, "'Available from' must be earlier than 'Available to'");
     }

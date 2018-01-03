@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { Form, Table, Checkbox, Button } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import HoursDropdown from '../../../components/HoursDropdown';
-import MinutesDropdown from '../../../components/MinutesDropdown';
+import TimeInput from '../../../components/TimeInput';
 import { dayOfWeekAsString } from '../../../../modules/format-date';
 
 const StylistAvailableTimePage = ({
@@ -41,18 +40,10 @@ const StylistAvailableTimePage = ({
                   <Table.Cell>{dayOfWeekAsString(openHour.day)}</Table.Cell>
 
                   <Table.Cell error={!_.isEmpty(error)}>
-                    <HoursDropdown
-                      hour={openHour.openAtHour}
-                      onChange={(event, data) => {
-                        onChange(openHour.day, 'openAtHour', data.value);
-                      }}
-                      disabled={!openHour.open}
-                    />
-                    &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
-                    <MinutesDropdown
-                      minute={openHour.openAtMinute}
-                      onChange={(event, data) => {
-                        onChange(openHour.day, 'openAtMinute', data.value);
+                    <TimeInput
+                      value={openHour.openAt}
+                      onChange={(value) => {
+                        onChange(openHour.day, 'openAt', value);
                       }}
                       disabled={!openHour.open}
                     />
@@ -60,18 +51,10 @@ const StylistAvailableTimePage = ({
                   </Table.Cell>
 
                   <Table.Cell>
-                    <HoursDropdown
-                      hour={openHour.closeAtHour}
-                      onChange={(event, data) => {
-                        onChange(openHour.day, 'closeAtHour', data.value);
-                      }}
-                      disabled={!openHour.open}
-                    />
-                    &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
-                    <MinutesDropdown
-                      minute={openHour.closeAtMinute}
-                      onChange={(event, data) => {
-                        onChange(openHour.day, 'closeAtMinute', data.value);
+                    <TimeInput
+                      value={openHour.closeAt}
+                      onChange={(value) => {
+                        onChange(openHour.day, 'closeAt', value);
                       }}
                       disabled={!openHour.open}
                     />

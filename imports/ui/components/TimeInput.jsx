@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Search } from 'semantic-ui-react';
+import _ from 'lodash';
 
 // TODO: support exclusive hours
 const timeOptions = () => {
   const options = [];
 
-  for (let hour = 0; hour < 24; hour += 1) {
+  for (let hour = 9; hour < 24; hour += 1) {
+    for (let minute = 0; minute < 59; minute += 15) {
+      const hourString = hour.toString().padStart(2, '0');
+      const minuteString = minute.toString().padStart(2, '0');
+      options.push({ title: `${hourString}:${minuteString}` });
+    }
+  }
+
+  for (let hour = 0; hour < 9; hour += 1) {
     for (let minute = 0; minute < 59; minute += 15) {
       const hourString = hour.toString().padStart(2, '0');
       const minuteString = minute.toString().padStart(2, '0');
@@ -23,20 +32,21 @@ class TimeInput extends Component {
 
     this.state = {
       results: props.optional ? [{ title: 'Any time' }, ...timeOptions()] : timeOptions(),
-      value: '',
+      value: _.isNil(props.value) ? '' : props.value,
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ value: _.isNil(nextProps.value) ? '' : nextProps.value });
+  }
+
   render() {
-    const {
-      time, optional, onChange, ...rest
-    } = this.props;
+    const { optional, onChange, ...rest } = this.props;
 
     return (
       <Search
-        input={<input type="text" />}
+        input={<input type="text" value={this.state.value} />}
         results={this.state.results}
-        value={this.state.value}
         minCharacters={0}
         onResultSelect={(e, { result }) => {
           if (optional && result.title === 'Any time') {
@@ -55,12 +65,12 @@ class TimeInput extends Component {
 }
 
 TimeInput.defaultProps = {
-  time: null,
+  value: undefined,
   optional: false,
 };
 
 TimeInput.propTypes = {
-  time: PropTypes.number,
+  value: PropTypes.string,
   optional: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 };
