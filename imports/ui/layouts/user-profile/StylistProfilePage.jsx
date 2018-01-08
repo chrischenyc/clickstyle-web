@@ -20,7 +20,12 @@ import StylistBookingSection from './StylistBookingSection';
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
 const UserProfilePage = ({
-  user, favourStylist, authenticated, userId, onServiceSelected,
+  user,
+  favourStylist,
+  authenticated,
+  userId,
+  onServiceSelected,
+  onBook,
 }) => {
   if (_.isNil(user)) {
     return <Loading />;
@@ -109,7 +114,7 @@ const UserProfilePage = ({
             {/* only display book section if stylist is not current user */}
             {(_.isNil(userId) || userId !== stylist.owner) && (
               <div className="boxed-widget booking-widget">
-                <StylistBookingSection />
+                <StylistBookingSection onBook={onBook} />
               </div>
             )}
 
@@ -198,6 +203,7 @@ UserProfilePage.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   userId: PropTypes.string,
   onServiceSelected: PropTypes.func.isRequired,
+  onBook: PropTypes.func.isRequired,
 };
 
 export default UserProfilePage;

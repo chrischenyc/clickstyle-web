@@ -33,6 +33,9 @@ import ResetPassword from '../layouts/user/ResetPassword/ResetPassword';
 import Search from '../layouts/search/Search';
 import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 
+import Booking from '../layouts/booking/Booking';
+import BookingConfirm from '../layouts/booking/BookingConfirm';
+
 import Dashboard from '../layouts/user/DashboardPage';
 import EditProfile from '../layouts/user/Profile/EditProfile';
 import SettingsPage from '../layouts/user/SettingsPage';
@@ -103,6 +106,8 @@ class App extends Component {
               <Route path="/privacy" component={withHeaderAndFooter(PrivacyPage)} />
               <Route path="/help" component={withHeaderAndFooter(HelpPage)} />
               <Route path="/about" component={withHeaderAndFooter(AboutPage)} />
+              <Route path="/booking" component={withHeaderAndFooter(Booking)} />
+              <Route path="/booking-confirm" component={withHeaderAndFooter(BookingConfirm)} />
 
               <PublicRoute path="/login" component={withHeaderAndFooter(Login)} />
               <PublicRoute path="/signup" component={withHeaderAndFooter(SignUp)} />

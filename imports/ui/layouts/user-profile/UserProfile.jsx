@@ -19,6 +19,7 @@ class UserProfile extends Component {
 
     this.handleFavourStylist = this.handleFavourStylist.bind(this);
     this.handleServiceSelected = this.handleServiceSelected.bind(this);
+    this.handleBook = this.handleBook.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +78,10 @@ class UserProfile extends Component {
     }
   }
 
+  handleBook() {
+    this.props.history.push('/booking');
+  }
+
   render() {
     if (_.isNil(this.state.user)) {
       return <Loading />;
@@ -88,6 +93,7 @@ class UserProfile extends Component {
           authenticated={this.props.authenticated}
           userId={this.props.userId}
           onServiceSelected={this.handleServiceSelected}
+          onBook={this.handleBook}
         />
       );
     }
