@@ -1,5 +1,6 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, compose } from 'redux';
 import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
+import persistState from 'redux-localstorage';
 
 import user from './user';
 import profile from './profile';
@@ -19,6 +20,9 @@ const reducer = combineReducers({
 /* eslint-disable no-underscore-dangle */
 export default createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  compose(
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    persistState(),
+  ),
 );
 /* eslint-enable */
