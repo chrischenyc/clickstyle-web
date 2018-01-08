@@ -14,49 +14,48 @@ const BookingPage = props => (
         <div className="row">
           <div className="col-md-6">
             <label>First Name</label>
-            <input type="text" value="" />
+            <input
+              id=""
+              type="text"
+              value={(props.profile && props.profile.name && props.profile.name.first) || ''}
+            />
           </div>
 
           <div className="col-md-6">
             <label>Last Name</label>
-            <input type="text" value="" />
+            <input
+              id=""
+              type="text"
+              value={(props.profile && props.profile.name && props.profile.name.last) || ''}
+            />
           </div>
 
           <div className="col-md-6">
-            <div className="input-with-icon medium-icons">
-              <label>E-Mail Address</label>
-              <input type="text" value="" />
-              <i className="im im-icon-Mail" />
-            </div>
+            <label>Email</label>
+            <input id="" type="text" value={(props.profile && props.profile.email) || ''} />
           </div>
 
           <div className="col-md-6">
-            <div className="input-with-icon medium-icons">
-              <label>Phone</label>
-              <input type="text" value="" />
-              <i className="im im-icon-Phone-2" />
-            </div>
+            <label>Phone</label>
+            <input id="" type="text" value={(props.profile && props.profile.mobile) || ''} />
           </div>
         </div>
 
         <h3 className="margin-top-55 margin-bottom-30">Payment Method</h3>
 
         <div className="payment">
+          {/* TODO: add saved credit card */}
+
           <div className="payment-tab payment-tab-active">
             <div className="payment-tab-trigger">
-              <input checked id="paypal" name="cardType" type="radio" value="paypal" />
-              <label htmlFor="paypal">PayPal</label>
-              <img className="payment-logo paypal" src="https://i.imgur.com/ApBxkXU.png" alt="" />
-            </div>
-
-            <div className="payment-tab-content">
-              <p>You will be redirected to PayPal to complete payment.</p>
-            </div>
-          </div>
-
-          <div className="payment-tab">
-            <div className="payment-tab-trigger">
-              <input type="radio" name="cardType" id="creditCart" value="creditCard" />
+              <input
+                checked
+                disabled
+                type="radio"
+                name="cardType"
+                id="creditCart"
+                value="creditCard"
+              />
               <label htmlFor="creditCart">Credit / Debit Card</label>
               <img className="payment-logo" src="https://i.imgur.com/IHEKLgm.png" alt="" />
             </div>
@@ -108,47 +107,48 @@ const BookingPage = props => (
           </div>
         </div>
 
-        <Button
-          color="teal"
-          circular
-          size="large"
-          className="margin-top-20"
-          onClick={props.onConfirm}
-        >
-          Confirm and Pay
-        </Button>
+        <div className="margin-top-20">
+          <Button
+            color="teal"
+            circular
+            size="large"
+            onClick={props.onConfirm}
+            disabled={props.cart.total === 0}
+          >
+            Confirm and Pay
+          </Button>
+
+          <Button color="teal" circular size="large" basic onClick={props.onBack}>
+            Go back
+          </Button>
+        </div>
       </div>
 
       {/* TODO: responsive  */}
       <div className="col-lg-4 col-md-4">
-        <div className="listing-item-container compact order-summary-widget">
-          <div className="listing-item">
-            <img src="images/listing-item-04.jpg" alt="" />
-
-            <div className="listing-item-content">
-              <div className="numerical-rating" data-rating="5.0" />
-              <h3>Burger House</h3>
-              <span>2726 Shinn Street, New York</span>
-            </div>
-          </div>
-        </div>
         <div className="boxed-widget opening-hours summary margin-top-0">
           <h3>
             <i className="fa fa-calendar-check-o" /> Booking Summary
           </h3>
+
+          <h3>
+            {`${props.cart.stylist.name.first} ${props.cart.stylist.name.last}`}
+            {props.cart.stylist.address &&
+              props.cart.stylist.address.suburb &&
+              ` (${props.cart.stylist.address.suburb}, ${props.cart.stylist.address.state})`}
+          </h3>
+
           <ul>
             <li>
               Date <span>10/20/2017</span>
             </li>
             <li>
-              Hour <span>5:30 PM</span>
+              Time <span>5:30 PM</span>
             </li>
           </ul>
 
-          <div className="booking">
-            <div className="row">
-              <CartSummary />
-            </div>
+          <div className="booking margin-top-10">
+            <CartSummary />
           </div>
         </div>
       </div>
@@ -158,6 +158,10 @@ const BookingPage = props => (
 
 BookingPage.propTypes = {
   onConfirm: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired,
+  cart: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
 export default BookingPage;

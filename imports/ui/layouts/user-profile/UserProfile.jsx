@@ -49,7 +49,7 @@ class UserProfile extends Component {
         this.setState({ user });
 
         if (!_.isNil(user.stylist)) {
-          this.props.selectStylist(user.stylist);
+          this.props.selectStylist(user.profile);
         }
       }
     });

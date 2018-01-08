@@ -6,7 +6,6 @@ import _ from 'lodash';
 import rateLimit from '../../../modules/server/rate-limit';
 import Profiles from '../profiles';
 import Stylists from '../../stylists/stylists';
-import Services from '../../services/services';
 import Products from '../../products/products';
 import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
 

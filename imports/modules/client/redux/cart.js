@@ -97,9 +97,12 @@ const reducer = (state = defaultState, action) => {
     case 'SELECT_STYLIST': {
       const { stylist } = action;
 
+      // reset cart if no stylist was previously selected or a different stylist is selected
       if (_.isNil(state.stylist) || state.stylist.owner !== stylist.owner) {
-        // reset cart if different stylist is selected
-        return { ...defaultState, stylist: { _id: stylist._id, owner: stylist.owner } };
+        return {
+          ...defaultState,
+          stylist: { owner: stylist.owner, name: stylist.name, address: stylist.address },
+        };
       }
 
       return state;
