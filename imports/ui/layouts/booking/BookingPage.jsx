@@ -1,7 +1,11 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import { closeModal } from '../../../modules/client/redux/modal';
+import Login from '../user/Login/Login';
+import ModalLink from '../../components/ModalLink';
 import CartSummary from '../../components/CartSummary';
 
 const BookingPage = props => (
@@ -9,7 +13,30 @@ const BookingPage = props => (
     <div className="row margin-top-60 margin-bottom-60">
       {/* TODO: responsive  */}
       <div className="col-lg-8 col-md-8 padding-right-30">
-        <h3 className="margin-top-0 margin-bottom-30">Personal Details</h3>
+        <h3 className="margin-top-0 margin-bottom-30">
+          Personal Details
+          {!props.user.authenticated && (
+            <span style={{ fontSize: '1rem', marginLeft: '2rem' }}>
+              Already a user?&nbsp;
+              <ModalLink
+                className="sign-in"
+                to="/login"
+                component={
+                  <Login
+                    modal
+                    onLoggedIn={() => {
+                      props.closeModal();
+                    }}
+                  />
+                }
+                title="Log in to continue"
+              >
+                Log in
+              </ModalLink>
+              &nbsp;to continue
+            </span>
+          )}
+        </h3>
 
         <div className="row">
           <div className="col-md-6">
@@ -38,6 +65,11 @@ const BookingPage = props => (
           <div className="col-md-6">
             <label>Phone</label>
             <input id="" type="text" value={(props.profile && props.profile.mobile) || ''} />
+          </div>
+
+          <div className="col-md-12">
+            <label>Address</label>
+            <input id="" type="text" value="" />
           </div>
         </div>
 
@@ -159,9 +191,10 @@ const BookingPage = props => (
 BookingPage.propTypes = {
   onConfirm: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   cart: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 };
 
-export default BookingPage;
+export default connect(null, { closeModal })(BookingPage);
