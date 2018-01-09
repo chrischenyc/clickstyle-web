@@ -27,6 +27,7 @@ class SecureLink extends Component {
             e.preventDefault();
 
             // on mobile, push to login instead of opening a modal
+            // as modal form cursor doesn't work well on mobile scrolling
             if (this.state.width <= Responsive.onlyMobile.maxWidth) {
               this.props.history.push('/login');
             } else {

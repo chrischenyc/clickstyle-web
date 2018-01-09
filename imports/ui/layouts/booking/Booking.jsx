@@ -66,6 +66,7 @@ class Booking extends Component {
         onBack={this.handleBack}
         cart={this.props.cart}
         authenticated={this.props.authenticated}
+        history={this.props.history}
       />
     );
   }

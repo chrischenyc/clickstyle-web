@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import { closeModal } from '../../../modules/client/redux/modal';
-import Login from '../user/Login/Login';
-import ModalLink from '../../components/ModalLink';
+import SecureLink from '../../components/SecureLink';
 import CartSummary from '../../components/CartSummary';
 
 const BookingPage = props => (
@@ -14,30 +13,23 @@ const BookingPage = props => (
     <div className="row margin-top-60 margin-bottom-60">
       {/* TODO: responsive  */}
       <div className="col-lg-8 col-md-8 padding-right-30">
-        <h3 className="margin-top-0 margin-bottom-30">
-          Personal Details
-          {!props.authenticated && (
-            <span style={{ fontSize: '1rem', marginLeft: '2rem' }}>
-              Already a user?&nbsp;
-              <ModalLink
-                className="sign-in"
-                to="/login"
-                component={
-                  <Login
-                    modal
-                    onLoggedIn={() => {
-                      props.closeModal();
-                    }}
-                  />
-                }
-                title="Log in to continue"
-              >
-                Log in
-              </ModalLink>
-              &nbsp;to continue
-            </span>
-          )}
-        </h3>
+        <h3 className="margin-top-0 margin-bottom-30">Personal Details</h3>
+
+        {!props.authenticated && (
+          <div className="margin-top-10 margin-bottom-10">
+            Already a user?&nbsp;
+            <SecureLink
+              history={props.history}
+              to="/booking"
+              onLoggedIn={() => {
+                props.closeModal();
+              }}
+            >
+              Log in
+            </SecureLink>
+            &nbsp;to continue
+          </div>
+        )}
 
         <div className="row">
           <div className="col-md-6">
@@ -211,6 +203,7 @@ BookingPage.propTypes = {
   closeModal: PropTypes.func.isRequired,
   cart: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { closeModal })(BookingPage);
