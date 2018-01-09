@@ -56,14 +56,14 @@ const calculateTotal = (services) => {
 // --------- actions ----------
 export function selectStylist(stylist) {
   return {
-    type: 'SELECT_STYLIST',
+    type: 'CART_SELECT_STYLIST',
     stylist,
   };
 }
 
 export function selectService(stylist, service, addon = null) {
   return {
-    type: 'SELECT_SERVICE',
+    type: 'CART_SELECT_SERVICE',
     stylist,
     service,
     addon,
@@ -72,16 +72,23 @@ export function selectService(stylist, service, addon = null) {
 
 export function deleteService(service) {
   return {
-    type: 'DELETE_SERVICE',
+    type: 'CART_DELETE_SERVICE',
     service,
   };
 }
 
 export function deleteAddon(service, addon) {
   return {
-    type: 'DELETE_ADDON',
+    type: 'CART_DELETE_ADDON',
     service,
     addon,
+  };
+}
+
+export function setUserInfo(info) {
+  return {
+    type: 'CART_SET_USER_INFO',
+    info,
   };
 }
 
@@ -90,11 +97,16 @@ const defaultState = {
   stylist: null,
   services: [],
   total: 0,
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  address: '',
 };
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
-    case 'SELECT_STYLIST': {
+    case 'CART_SELECT_STYLIST': {
       const { stylist } = action;
 
       // reset cart if no stylist was previously selected or a different stylist is selected
@@ -108,7 +120,7 @@ const reducer = (state = defaultState, action) => {
       return state;
     }
 
-    case 'SELECT_SERVICE': {
+    case 'CART_SELECT_SERVICE': {
       const { stylist, service, addon } = action;
 
       if (_.isNil(state.stylist) || state.stylist.owner !== stylist.owner) {
@@ -126,7 +138,7 @@ const reducer = (state = defaultState, action) => {
       return { ...state, services, total: calculateTotal(services) };
     }
 
-    case 'DELETE_SERVICE': {
+    case 'CART_DELETE_SERVICE': {
       const { service } = action;
 
       const services = state.services.filter(s => s._id !== service._id);
@@ -134,7 +146,7 @@ const reducer = (state = defaultState, action) => {
       return { ...state, services, total: calculateTotal(services) };
     }
 
-    case 'DELETE_ADDON': {
+    case 'CART_DELETE_ADDON': {
       const { service, addon } = action;
 
       const services = state.services.map((s) => {
@@ -145,6 +157,12 @@ const reducer = (state = defaultState, action) => {
       });
 
       return { ...state, services, total: calculateTotal(services) };
+    }
+
+    case 'CART_SET_USER_INFO': {
+      const { info } = action;
+
+      return { ...state, ...info };
     }
 
     default:

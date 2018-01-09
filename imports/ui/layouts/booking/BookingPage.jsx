@@ -15,7 +15,7 @@ const BookingPage = props => (
       <div className="col-lg-8 col-md-8 padding-right-30">
         <h3 className="margin-top-0 margin-bottom-30">
           Personal Details
-          {!props.user.authenticated && (
+          {!props.authenticated && (
             <span style={{ fontSize: '1rem', marginLeft: '2rem' }}>
               Already a user?&nbsp;
               <ModalLink
@@ -42,34 +42,41 @@ const BookingPage = props => (
           <div className="col-md-6">
             <label>First Name</label>
             <input
-              id=""
+              name="firstName"
               type="text"
-              value={(props.profile && props.profile.name && props.profile.name.first) || ''}
+              value={props.cart.firstName}
+              onChange={props.onChange}
             />
           </div>
 
           <div className="col-md-6">
             <label>Last Name</label>
             <input
-              id=""
+              name="lastName"
               type="text"
-              value={(props.profile && props.profile.name && props.profile.name.last) || ''}
+              value={props.cart.lastName}
+              onChange={props.onChange}
             />
           </div>
 
           <div className="col-md-6">
             <label>Email</label>
-            <input id="" type="text" value={(props.profile && props.profile.email) || ''} />
+            <input name="email" type="text" value={props.cart.email} onChange={props.onChange} />
           </div>
 
           <div className="col-md-6">
             <label>Phone</label>
-            <input id="" type="text" value={(props.profile && props.profile.mobile) || ''} />
+            <input name="phone" type="text" value={props.cart.phone} onChange={props.onChange} />
           </div>
 
           <div className="col-md-12">
             <label>Address</label>
-            <input id="" type="text" value="" />
+            <input
+              name="address"
+              type="text"
+              value={props.cart.address}
+              onChange={props.onChange}
+            />
           </div>
         </div>
 
@@ -189,12 +196,12 @@ const BookingPage = props => (
 );
 
 BookingPage.propTypes = {
+  onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   cart: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
+  authenticated: PropTypes.bool.isRequired,
 };
 
 export default connect(null, { closeModal })(BookingPage);
