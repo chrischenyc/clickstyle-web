@@ -20,9 +20,8 @@ const reducer = combineReducers({
 /* eslint-disable no-underscore-dangle */
 export default createStore(
   reducer,
-  compose(
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    persistState(),
+  compose(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    // persistState(),
   ),
 );
 /* eslint-enable */
