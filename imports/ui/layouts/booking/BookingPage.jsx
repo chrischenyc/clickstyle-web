@@ -3,6 +3,7 @@ import { Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import { closeModal } from '../../../modules/client/redux/modal';
 import Login from '../user/Login/Login';
 import ModalLink from '../../components/ModalLink';
@@ -71,11 +72,19 @@ const BookingPage = props => (
 
           <div className="col-md-12">
             <label>Address</label>
-            <input
-              name="address"
-              type="text"
-              value={props.cart.address}
-              onChange={props.onChange}
+            <SemanticGeoSuggest
+              placeholder="type to search your address"
+              country="au"
+              name="address.raw"
+              initialValue=""
+              onChange={(value) => {
+                // convert to generic onChange param
+                props.onChange({ target: { name: 'address', value } });
+              }}
+              onSuggestSelect={(suggest) => {
+                // force onChange as well
+                props.onChange({ target: { name: 'address', value: suggest.label } });
+              }}
             />
           </div>
         </div>
