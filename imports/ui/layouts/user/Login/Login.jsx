@@ -23,6 +23,7 @@ class Login extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLoggedIn = this.handleLoggedIn.bind(this);
   }
 
   handleChange(event) {
@@ -55,15 +56,21 @@ class Login extends Component {
             errors: {},
           });
 
-          this.props.userSignedIn(Meteor.user());
-
-          // call back if in modal mode
-          if (this.props.modal && this.props.onLoggedIn) {
-            this.props.onLoggedIn();
-          }
+          this.handleLoggedIn();
         }
       });
     }
+  }
+
+  handleLoggedIn() {
+    this.props.userSignedIn(Meteor.user());
+
+    // call back if in modal mode
+    if (this.props.onLoggedIn) {
+      this.props.onLoggedIn();
+    }
+
+    // TODO: redirect to url stored in redux
   }
 
   render() {
@@ -71,10 +78,10 @@ class Login extends Component {
       <LoginPage
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
+        onLoggedIn={this.handleLoggedIn}
         loading={this.state.loading}
         errors={this.state.errors}
         modal={this.props.modal}
-        onLoggedIn={this.props.onLoggedIn}
       />
     );
   }

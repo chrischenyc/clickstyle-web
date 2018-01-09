@@ -29,6 +29,7 @@ class SignUp extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleAgreement = this.handleAgreement.bind(this);
+    this.handleLoggedIn = this.handleLoggedIn.bind(this);
   }
 
   handleChange(event) {
@@ -77,12 +78,7 @@ class SignUp extends Component {
               errors: {},
             });
 
-            this.props.userSignedIn(Meteor.user());
-
-            // call back if in modal mode
-            if (this.props.modal && this.props.onLoggedIn) {
-              this.props.onLoggedIn();
-            }
+            this.handleLoggedIn();
           }
         },
       );
@@ -93,18 +89,29 @@ class SignUp extends Component {
     this.setState({ disabled: !data.checked });
   }
 
+  handleLoggedIn() {
+    this.props.userSignedIn(Meteor.user());
+
+    // call back if in modal mode
+    if (this.props.onLoggedIn) {
+      this.props.onLoggedIn();
+    }
+
+    // TODO: redirect to url stored in redux
+  }
+
   render() {
     return (
       <SignUpPage
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onAgreement={this.handleAgreement}
+        onLoggedIn={this.handleLoggedIn}
+        onDismissModal={this.props.closeModal}
         loading={this.state.loading}
         errors={this.state.errors}
         disabled={this.state.disabled}
         modal={this.props.modal}
-        onLoggedIn={this.props.onLoggedIn}
-        onDismissModal={this.props.closeModal}
       />
     );
   }

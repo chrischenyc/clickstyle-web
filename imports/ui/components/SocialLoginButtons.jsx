@@ -23,7 +23,6 @@ const SocialLoginButtons = props => (
           },
           (error) => {
             if (!error) {
-              props.userSignedIn(Meteor.user());
               if (props.onLoggedIn) {
                 props.onLoggedIn();
               }
@@ -56,7 +55,6 @@ const SocialLoginButtons = props => (
           },
           (error) => {
             if (!error) {
-              props.userSignedIn(Meteor.user());
               if (props.onLoggedIn) {
                 props.onLoggedIn();
               }
