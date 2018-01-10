@@ -168,8 +168,8 @@ StylistApplication.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  mobile: state.profile.mobile,
-  address: state.profile.address && state.profile.address.raw,
+  mobile: state.user.profile.mobile,
+  address: state.user.profile.address && state.user.profile.address.raw,
 });
 
 export default compose(

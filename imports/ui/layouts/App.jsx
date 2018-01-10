@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import { Responsive } from 'semantic-ui-react';
 
 import Profiles from '../../api/profiles/profiles';
-import { userSignedIn, userSignedOut } from '../../modules/client/redux/user';
-import { fetchProfile } from '../../modules/client/redux/profile';
+import { userSignedIn, userSignedOut, userProfileFetched } from '../../modules/client/redux/user';
 
 import PublicRoute from '../components/PublicRoute';
 import SecureRoute from '../components/SecureRoute';
@@ -71,16 +70,15 @@ class App extends Component {
       if (user !== undefined) {
         if (user) {
           this.props.userSignedIn(user);
+
+          // get user profile
+          Meteor.subscribe('profiles.owner');
+          const profile = Profiles.findOne({});
+          this.props.userProfileFetched(profile);
         } else {
           this.props.userSignedOut();
         }
       }
-
-      // get user profile
-      const handle = Meteor.subscribe('profiles.owner');
-      const fetching = !handle.ready();
-      const profile = Profiles.findOne({});
-      this.props.fetchProfile(fetching, profile);
     });
   }
 
@@ -166,7 +164,7 @@ class App extends Component {
 App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
-  fetchProfile: PropTypes.func.isRequired,
+  userProfileFetched: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool.isRequired,
 };
 
@@ -177,5 +175,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   userSignedIn,
   userSignedOut,
-  fetchProfile,
+  userProfileFetched,
 })(App);

@@ -117,7 +117,7 @@ SideMenu.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
+  profile: state.user.profile,
   isStylist: state.user.isStylist,
 });
 

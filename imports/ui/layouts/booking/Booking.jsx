@@ -82,7 +82,7 @@ Booking.propTypes = {
 const mapStateToProps = state => ({
   cart: state.cart,
   authenticated: state.user.authenticated,
-  profile: state.profile,
+  profile: state.user.profile,
 });
 
 export default connect(mapStateToProps, { setUserInfo })(Booking);

@@ -248,7 +248,7 @@ EditProfile.propTypes = {
 
 export default compose(
   connect(state => ({
-    profile: state.profile,
+    profile: state.user.profile,
   })),
   withTracker(() => {
     Meteor.subscribe('products');

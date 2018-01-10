@@ -162,7 +162,7 @@ Header.propTypes = {
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
-  firstName: state.profile && state.profile.name && state.profile.name.first,
+  firstName: state.user.profile && state.user.profile.name && state.user.profile.name.first,
 });
 
 export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(Header);

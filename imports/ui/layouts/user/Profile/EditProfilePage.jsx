@@ -47,7 +47,7 @@ const EditProfilePage = ({
       )}
     <Form
       onSubmit={onSubmit}
-      loading={profile.fetching || saving}
+      loading={_.isEmpty(profile) || saving}
       error={!_.isEmpty(errors) || !_.isEmpty(photoError)}
     >
       <EditPhotoPage

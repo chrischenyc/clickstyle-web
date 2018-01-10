@@ -15,9 +15,17 @@ export function userSignedOut() {
   };
 }
 
+export function userProfileFetched(profile) {
+  return {
+    type: 'USER_PROFILE_FETCHED',
+    profile,
+  };
+}
+
 // --------- reducer ----------
 const defaultState = {
   authenticated: localStorage.getItem('Meteor.userId') !== null,
+  profile: {},
 };
 
 const reducer = (state = defaultState, action) => {
@@ -42,6 +50,19 @@ const reducer = (state = defaultState, action) => {
     case 'USER_SIGNED_OUT': {
       return {
         authenticated: false,
+        profile: {},
+      };
+    }
+
+    case 'USER_PROFILE_FETCHED': {
+      const { profile } = action;
+
+      return {
+        ...state,
+        profile: {
+          ...profile,
+          photoURL: profile && profile.photo,
+        },
       };
     }
 
