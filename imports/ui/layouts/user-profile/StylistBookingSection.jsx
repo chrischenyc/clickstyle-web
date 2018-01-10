@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
+import _ from 'lodash';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 import 'react-day-picker/lib/style.css';
@@ -27,6 +28,12 @@ const StylistBookingSection = props => (
     <div className="row">
       <div className="col-lg-6 col-md-12">
         <DayPickerInput
+          clickUnselectsDay
+          inputProps={{
+            onKeyPress: (e) => {
+              e.preventDefault();
+            },
+          }}
           value={
             parseDateQueryString(props.cart.date).isValid()
               ? formatDateDisplayString(parseDateQueryString(props.cart.date))
@@ -34,7 +41,7 @@ const StylistBookingSection = props => (
           }
           placeholder="Date"
           onDayChange={(date) => {
-            props.setUserInfo({ date: formatDateQueryString(date) });
+            props.setUserInfo({ date: _.isNil(date) ? '' : formatDateQueryString(date) });
           }}
           format={datePickerFormat}
           formatDate={formatDate}
