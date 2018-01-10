@@ -21,13 +21,7 @@ class SecureLink extends Component {
   render() {
     return (
       <Link
-        {..._.omit(this.props, [
-          'onLoggedIn',
-          'authenticated',
-          'dispatch',
-          'openModal',
-          'setNextRoute',
-        ])}
+        {..._.omit(this.props, ['authenticated', 'openModal', 'setNextRoute'])}
         onClick={(e) => {
           if (!this.props.authenticated) {
             e.preventDefault();
@@ -38,10 +32,7 @@ class SecureLink extends Component {
               this.props.setNextRoute(this.props.to);
               this.props.history.push('/login');
             } else {
-              this.props.openModal(
-                <Login modal onLoggedIn={this.props.onLoggedIn} />,
-                'Log in to continue',
-              );
+              this.props.openModal(<Login modal />, 'Log in to continue');
             }
           }
         }}
@@ -50,17 +41,11 @@ class SecureLink extends Component {
   }
 }
 
-SecureLink.defaultProps = {
-  onLoggedIn: null,
-};
-
 SecureLink.propTypes = {
   to: PropTypes.string.isRequired,
-  onLoggedIn: PropTypes.func,
   authenticated: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   setNextRoute: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

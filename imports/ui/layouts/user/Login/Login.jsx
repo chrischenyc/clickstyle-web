@@ -64,15 +64,11 @@ class Login extends Component {
   }
 
   handleLoggedIn() {
+    // force update redux store, as Meteor auto-run in App.jsx tends to lag
     this.props.userSignedIn(Meteor.user());
 
     if (this.props.modal) {
       this.props.closeModal();
-    }
-
-    // call back if in modal mode
-    if (this.props.onLoggedIn) {
-      this.props.onLoggedIn();
     }
 
     // redirect if a nextRoute is stored in redux
@@ -90,7 +86,7 @@ class Login extends Component {
       <LoginPage
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        onLoggedIn={this.handleLoggedIn}
+        onSocialSignedIn={this.handleLoggedIn}
         loading={this.state.loading}
         errors={this.state.errors}
         modal={this.props.modal}
@@ -101,13 +97,11 @@ class Login extends Component {
 
 Login.defaultProps = {
   modal: false,
-  onLoggedIn: null,
   nextRoute: null,
 };
 
 Login.propTypes = {
   modal: PropTypes.bool,
-  onLoggedIn: PropTypes.func,
   userSignedIn: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   setNextRoute: PropTypes.func.isRequired,

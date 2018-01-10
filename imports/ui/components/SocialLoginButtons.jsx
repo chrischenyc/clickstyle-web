@@ -23,8 +23,8 @@ const SocialLoginButtons = props => (
           },
           (error) => {
             if (!error) {
-              if (props.onLoggedIn) {
-                props.onLoggedIn();
+              if (props.onSocialSignedIn) {
+                props.onSocialSignedIn();
               }
             } else {
               /* eslint-disable no-console */
@@ -55,8 +55,8 @@ const SocialLoginButtons = props => (
           },
           (error) => {
             if (!error) {
-              if (props.onLoggedIn) {
-                props.onLoggedIn();
+              if (props.onSocialSignedIn) {
+                props.onSocialSignedIn();
               }
             } else {
               /* eslint-disable no-console */
@@ -75,13 +75,12 @@ const SocialLoginButtons = props => (
 SocialLoginButtons.defaultProps = {
   isSignUp: false,
   disabled: false,
-  onLoggedIn: null,
 };
 
 SocialLoginButtons.propTypes = {
   isSignUp: PropTypes.bool,
   disabled: PropTypes.bool,
-  onLoggedIn: PropTypes.func,
+  onSocialSignedIn: PropTypes.func.isRequired,
   userSignedIn: PropTypes.func.isRequired,
 };
 

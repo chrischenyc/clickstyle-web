@@ -90,15 +90,11 @@ class SignUp extends Component {
   }
 
   handleLoggedIn() {
+    // force update redux store, as Meteor auto-run in App.jsx tends to lag
     this.props.userSignedIn(Meteor.user());
 
     if (this.props.modal) {
       this.props.closeModal();
-    }
-
-    // call back if in modal mode
-    if (this.props.onLoggedIn) {
-      this.props.onLoggedIn();
     }
 
     // redirect to url stored in redux
@@ -117,7 +113,7 @@ class SignUp extends Component {
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onAgreement={this.handleAgreement}
-        onLoggedIn={this.handleLoggedIn}
+        onSocialSignedIn={this.handleLoggedIn}
         onDismissModal={this.props.closeModal}
         loading={this.state.loading}
         errors={this.state.errors}
@@ -135,7 +131,6 @@ SignUp.defaultProps = {
 
 SignUp.propTypes = {
   modal: PropTypes.bool,
-  onLoggedIn: PropTypes.func,
   closeModal: PropTypes.func.isRequired,
   setNextRoute: PropTypes.func.isRequired,
   userSignedIn: PropTypes.func.isRequired,

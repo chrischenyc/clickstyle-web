@@ -19,14 +19,14 @@ const SignUpPage = ({
   loading,
   errors,
   modal,
-  onLoggedIn,
+  onSocialSignedIn,
   onDismissModal,
 }) => (
   <Container className="margin-top-20">
     <Grid textAlign="center">
       <Grid.Row style={{ maxWidth: 450 }}>
         <Grid.Column>
-          <SocialLoginButtons isSignUp disabled={disabled} onLoggedIn={onLoggedIn} />
+          <SocialLoginButtons isSignUp disabled={disabled} onSocialSignedIn={onSocialSignedIn} />
 
           <Divider horizontal>or</Divider>
 
@@ -89,16 +89,13 @@ const SignUpPage = ({
           <p className="margin-top-20">
             Already have an account?&nbsp;
             {modal ? (
-              <ModalLink
-                to="/login"
-                component={<Login modal onLoggedIn={onLoggedIn} />}
-                title="Log in to continue"
-              >
-                Log in here
+              <ModalLink to="/login" component={<Login modal />} title="Log in to continue">
+                Log in
               </ModalLink>
             ) : (
               <Link to="/login">Log in</Link>
             )}
+            &nbsp;here
           </p>
 
           <p className="margin-bottom-20">
@@ -139,7 +136,6 @@ const SignUpPage = ({
 );
 
 SignUpPage.defaultProps = {
-  onLoggedIn: null,
   onDismissModal: null,
 };
 
@@ -151,7 +147,7 @@ SignUpPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   modal: PropTypes.bool.isRequired,
-  onLoggedIn: PropTypes.func,
+  onSocialSignedIn: PropTypes.func.isRequired,
   onDismissModal: PropTypes.func,
 };
 
