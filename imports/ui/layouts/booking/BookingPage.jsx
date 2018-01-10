@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Responsive } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
-import { closeModal } from '../../../modules/client/redux/modal';
-import SecureLink from '../../components/SecureLink';
+import ModalLink from '../../components/ModalLink';
+import Login from '../user/Login/Login';
 import CartSummary from '../../components/CartSummary';
 import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
 
@@ -19,15 +19,18 @@ const BookingPage = props => (
         {!props.authenticated && (
           <div className="margin-top-10 margin-bottom-10">
             Already a user?&nbsp;
-            <SecureLink
-              history={props.history}
-              to="/booking"
-              onLoggedIn={() => {
-                props.closeModal();
-              }}
+            <Responsive
+              minWidth={1025}
+              as={ModalLink}
+              to="/login"
+              component={<Login modal />}
+              title="Log in to continue"
             >
-              Log in
-            </SecureLink>
+              Log In
+            </Responsive>
+            <Responsive maxWidth={1024} as={Link} to="/login">
+              Log In
+            </Responsive>
             &nbsp;to continue
           </div>
         )}
@@ -201,10 +204,9 @@ BookingPage.propTypes = {
   onChange: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
   cart: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
-export default connect(null, { closeModal })(BookingPage);
+export default BookingPage;

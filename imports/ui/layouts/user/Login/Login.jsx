@@ -2,7 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 
+import { closeModal } from '../../../../modules/client/redux/modal';
 import { validateUserLogin } from '../../../../modules/validate';
 import LoginPage from './LoginPage';
 
@@ -61,6 +63,10 @@ class Login extends Component {
   }
 
   handleLoggedIn() {
+    if (this.props.modal) {
+      this.props.closeModal();
+    }
+
     // call back if in modal mode
     if (this.props.onLoggedIn) {
       this.props.onLoggedIn();
@@ -91,6 +97,7 @@ Login.defaultProps = {
 Login.propTypes = {
   modal: PropTypes.bool,
   onLoggedIn: PropTypes.func,
+  closeModal: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default connect(null, { closeModal })(Login);

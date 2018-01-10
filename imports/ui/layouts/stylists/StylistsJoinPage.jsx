@@ -1,10 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 
-import { closeModal } from '../../../modules/client/redux/modal';
 import SecureLink from '../../components/SecureLink';
 
 const StylistsJoinPage = props => (
@@ -26,7 +23,6 @@ const StylistsJoinPage = props => (
               history={props.history}
               to="/users/stylist/application"
               onLoggedIn={() => {
-                props.closeModal();
                 props.history.push('/users/stylist/application');
               }}
             >
@@ -186,7 +182,6 @@ const StylistsJoinPage = props => (
               history={props.history}
               to="/users/stylist/application"
               onLoggedIn={() => {
-                props.closeModal();
                 props.history.push('/users/stylist/application');
               }}
             >
@@ -199,9 +194,4 @@ const StylistsJoinPage = props => (
   </div>
 );
 
-StylistsJoinPage.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-};
-
-export default connect(null, { closeModal })(StylistsJoinPage);
+export default StylistsJoinPage;

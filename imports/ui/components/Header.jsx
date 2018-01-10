@@ -96,14 +96,7 @@ class Header extends Component {
                   as={ModalLink}
                   className="sign-in"
                   to="/signup"
-                  component={
-                    <SignUp
-                      modal
-                      onLoggedIn={() => {
-                        this.props.closeModal();
-                      }}
-                    />
-                  }
+                  component={<SignUp modal />}
                   title="Join us"
                 >
                   Sign Up
@@ -115,14 +108,7 @@ class Header extends Component {
                   as={ModalLink}
                   className="sign-in"
                   to="/login"
-                  component={
-                    <Login
-                      modal
-                      onLoggedIn={() => {
-                        this.props.closeModal();
-                      }}
-                    />
-                  }
+                  component={<Login modal />}
                   title="Log in to continue"
                 >
                   Log In

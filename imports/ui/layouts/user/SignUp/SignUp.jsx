@@ -89,6 +89,10 @@ class SignUp extends Component {
   }
 
   handleLoggedIn() {
+    if (this.props.modal) {
+      this.props.closeModal();
+    }
+
     // call back if in modal mode
     if (this.props.onLoggedIn) {
       this.props.onLoggedIn();
