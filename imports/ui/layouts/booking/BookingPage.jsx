@@ -7,6 +7,7 @@ import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoS
 import { closeModal } from '../../../modules/client/redux/modal';
 import SecureLink from '../../components/SecureLink';
 import CartSummary from '../../components/CartSummary';
+import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
 
 const BookingPage = props => (
   <div className="container">
@@ -180,10 +181,10 @@ const BookingPage = props => (
 
           <ul>
             <li>
-              Date <span>10/20/2017</span>
+              Date <span>{formatDateDisplayString(parseDateQueryString(props.cart.date))}</span>
             </li>
             <li>
-              Time <span>5:30 PM</span>
+              Time <span>{props.cart.time}</span>
             </li>
           </ul>
 

@@ -14,6 +14,7 @@ import {
   formatDateDisplayString,
   datePickerFormat,
 } from '../../../modules/format-date';
+import { setUserInfo } from '../../../modules/client/redux/cart';
 
 import CartSummary from '../../components/CartSummary';
 
@@ -26,14 +27,14 @@ const StylistBookingSection = props => (
     <div className="row">
       <div className="col-lg-6 col-md-12">
         <DayPickerInput
-          // value={
-          //   parseDateQueryString(this.state.date).isValid()
-          //     ? formatDateDisplayString(parseDateQueryString(this.state.date))
-          //     : ''
-          // }
+          value={
+            parseDateQueryString(props.cart.date).isValid()
+              ? formatDateDisplayString(parseDateQueryString(props.cart.date))
+              : ''
+          }
           placeholder="Date"
           onDayChange={(date) => {
-            // this.setState({ date: formatDateQueryString(date) });
+            props.setUserInfo({ date: formatDateQueryString(date) });
           }}
           format={datePickerFormat}
           formatDate={formatDate}
@@ -41,7 +42,7 @@ const StylistBookingSection = props => (
           dayPickerProps={{
             modifiers: {
               disabled: { before: new Date() },
-              // selected: day => formatDateQueryString(day) === this.state.date,
+              selected: day => formatDateQueryString(day) === props.cart.date,
             },
           }}
         />
@@ -51,9 +52,9 @@ const StylistBookingSection = props => (
         <TimeInput
           placeholder="Time"
           optional
-          // value={this.state.time}
+          value={props.cart.time}
           onChange={(time) => {
-            // this.setState({ time });
+            props.setUserInfo({ time });
           }}
         />
       </div>
@@ -80,10 +81,11 @@ const StylistBookingSection = props => (
 StylistBookingSection.propTypes = {
   cart: PropTypes.object.isRequired,
   onBook: PropTypes.func.isRequired,
+  setUserInfo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   cart: state.cart,
 });
 
-export default connect(mapStateToProps)(StylistBookingSection);
+export default connect(mapStateToProps, { setUserInfo })(StylistBookingSection);

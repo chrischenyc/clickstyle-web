@@ -102,6 +102,8 @@ const defaultState = {
   email: '',
   phone: '',
   address: '',
+  date: '',
+  time: '',
 };
 
 const reducer = (state = defaultState, action) => {
