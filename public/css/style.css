@@ -197,9 +197,10 @@
 }
 
 .booking ul li .delete {
+  font-size: 0.75rem;
   cursor: pointer;
   padding: 0.25rem;
-  margin-right: 1rem;
+  margin-right: 0.25rem;
 }
 
 .booking ul li .delete:hover {
