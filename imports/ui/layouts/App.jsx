@@ -155,7 +155,7 @@ class App extends Component {
               <Route component={withHeaderAndFooter(NotFoundPage)} />
             </Switch>
 
-            {this.props.modalOpen && <Route to="/modal" component={ModalContainer} />}
+            {this.props.modalOpen && <ModalContainer />}
           </main>
         </div>
       </Router>
