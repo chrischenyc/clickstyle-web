@@ -22,9 +22,7 @@ const StylistsJoinPage = props => (
               as={SecureLink}
               history={props.history}
               to="/users/stylist/application"
-              onLoggedIn={() => {
-                props.history.push('/users/stylist/application');
-              }}
+              onLoggedIn={() => {}}
             >
               Get Started
             </Button>
@@ -181,9 +179,7 @@ const StylistsJoinPage = props => (
               as={SecureLink}
               history={props.history}
               to="/users/stylist/application"
-              onLoggedIn={() => {
-                props.history.push('/users/stylist/application');
-              }}
+              onLoggedIn={() => {}}
             >
               Get Started
             </Button>

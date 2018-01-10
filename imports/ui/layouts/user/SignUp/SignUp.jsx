@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { closeModal } from '../../../../modules/client/redux/ui';
+import { closeModal, setNextRoute } from '../../../../modules/client/redux/ui';
+import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserSignUp } from '../../../../modules/validate';
 import SignUpPage from './SignUpPage';
 
@@ -89,6 +90,8 @@ class SignUp extends Component {
   }
 
   handleLoggedIn() {
+    this.props.userSignedIn(Meteor.user());
+
     if (this.props.modal) {
       this.props.closeModal();
     }
@@ -98,11 +101,10 @@ class SignUp extends Component {
       this.props.onLoggedIn();
     }
 
-    // TODO: redirect to url stored in redux
-    const nextUrl = null;
-
-    if (!_.isNil(nextUrl) && !_.isEmpty(nextUrl)) {
-      this.props.history.push(nextUrl);
+    // redirect to url stored in redux
+    if (!_.isNil(this.props.nextRoute) && !_.isEmpty(this.props.nextRoute)) {
+      this.props.history.push(this.props.nextRoute);
+      this.props.setNextRoute(null);
     } else if (!this.props.modal) {
       // otherwise, go back if not modal
       this.props.history.goBack();
@@ -128,12 +130,20 @@ class SignUp extends Component {
 
 SignUp.defaultProps = {
   modal: false,
+  nextRoute: null,
 };
 
 SignUp.propTypes = {
   modal: PropTypes.bool,
   onLoggedIn: PropTypes.func,
   closeModal: PropTypes.func.isRequired,
+  setNextRoute: PropTypes.func.isRequired,
+  userSignedIn: PropTypes.func.isRequired,
+  nextRoute: PropTypes.string,
 };
 
-export default connect(null, { closeModal })(SignUp);
+const mapStateToProps = state => ({
+  nextRoute: state.ui.nextRoute,
+});
+
+export default connect(mapStateToProps, { closeModal, setNextRoute, userSignedIn })(SignUp);

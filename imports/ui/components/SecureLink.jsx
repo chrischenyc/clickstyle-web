@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { Responsive } from 'semantic-ui-react';
 
 import Login from '../layouts/user/Login/Login';
-import { openModal } from '../../modules/client/redux/ui';
+import { openModal, setNextRoute } from '../../modules/client/redux/ui';
 
 class SecureLink extends Component {
   constructor(props) {
@@ -21,7 +21,13 @@ class SecureLink extends Component {
   render() {
     return (
       <Link
-        {..._.omit(this.props, ['onLoggedIn', 'authenticated', 'dispatch', 'openModal'])}
+        {..._.omit(this.props, [
+          'onLoggedIn',
+          'authenticated',
+          'dispatch',
+          'openModal',
+          'setNextRoute',
+        ])}
         onClick={(e) => {
           if (!this.props.authenticated) {
             e.preventDefault();
@@ -29,6 +35,7 @@ class SecureLink extends Component {
             // on mobile, push to login instead of opening a modal
             // as modal form cursor doesn't work well on mobile scrolling
             if (this.state.width <= Responsive.onlyMobile.maxWidth) {
+              this.props.setNextRoute(this.props.to);
               this.props.history.push('/login');
             } else {
               this.props.openModal(
@@ -52,10 +59,12 @@ SecureLink.propTypes = {
   onLoggedIn: PropTypes.func,
   authenticated: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
+  setNextRoute: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
 });
-export default connect(mapStateToProps, { openModal })(SecureLink);
+
+export default connect(mapStateToProps, { openModal, setNextRoute })(SecureLink);
