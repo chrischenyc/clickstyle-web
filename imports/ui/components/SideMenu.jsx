@@ -112,12 +112,10 @@ SideMenu.defaultProps = {
 };
 
 SideMenu.propTypes = {
-  profile: PropTypes.object.isRequired,
   isStylist: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
-  profile: state.user.profile,
   isStylist: state.user.isStylist,
 });
 

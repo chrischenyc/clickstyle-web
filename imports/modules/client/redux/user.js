@@ -59,10 +59,7 @@ const reducer = (state = defaultState, action) => {
 
       return {
         ...state,
-        profile: {
-          ...profile,
-          photoURL: profile && profile.photo,
-        },
+        profile,
       };
     }
 
