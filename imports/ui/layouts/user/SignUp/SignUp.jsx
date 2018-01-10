@@ -99,6 +99,14 @@ class SignUp extends Component {
     }
 
     // TODO: redirect to url stored in redux
+    const nextUrl = null;
+
+    if (!_.isNil(nextUrl) && !_.isEmpty(nextUrl)) {
+      this.props.history.push(nextUrl);
+    } else if (!this.props.modal) {
+      // otherwise, go back if not modal
+      this.props.history.goBack();
+    }
   }
 
   render() {
