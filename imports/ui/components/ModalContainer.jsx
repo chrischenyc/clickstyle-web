@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { closeModal } from '../../modules/client/redux/modal';
+import { closeModal } from '../../modules/client/redux/ui';
 
 const ModalContainer = props => (
   <Modal
@@ -30,8 +30,8 @@ ModalContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  component: state.modal.component,
-  title: state.modal.title,
+  component: state.ui.modalComponent,
+  title: state.ui.modalTitle,
 });
 
 export default connect(mapStateToProps, { closeModal })(ModalContainer);

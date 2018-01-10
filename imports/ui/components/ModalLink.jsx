@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { openModal } from '../../modules/client/redux/modal';
+import { openModal } from '../../modules/client/redux/ui';
 
 const ModalLink = props => (
   <Link
     {..._.omit(props, ['component', 'title', 'openModal'])}
     onClick={(e) => {
       e.preventDefault();
-      props.openModal(props.to, props.component, props.title);
+      props.openModal(props.component, props.title);
     }}
   />
 );

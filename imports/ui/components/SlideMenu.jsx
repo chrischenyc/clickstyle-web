@@ -230,7 +230,7 @@ SlideMenu.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  open: state.ui.openSlideMenu,
+  open: state.ui.slideMenuOpen,
   authenticated: state.user.authenticated,
   isStylist: state.user.isStylist,
 });

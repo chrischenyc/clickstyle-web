@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { Responsive } from 'semantic-ui-react';
 
 import Login from '../layouts/user/Login/Login';
-import { openModal } from '../../modules/client/redux/modal';
+import { openModal } from '../../modules/client/redux/ui';
 
 class SecureLink extends Component {
   constructor(props) {
@@ -32,7 +32,6 @@ class SecureLink extends Component {
               this.props.history.push('/login');
             } else {
               this.props.openModal(
-                this.props.to,
                 <Login modal onLoggedIn={this.props.onLoggedIn} />,
                 'Log in to continue',
               );

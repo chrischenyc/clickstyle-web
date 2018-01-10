@@ -171,7 +171,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  modalOpen: state.modal.open,
+  modalOpen: state.ui.modalOpen,
 });
 
 export default connect(mapStateToProps, {

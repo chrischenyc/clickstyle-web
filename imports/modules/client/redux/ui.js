@@ -3,24 +3,61 @@ import _ from 'lodash';
 // --------- actions ----------
 export function toggleSlideMenu(open = null) {
   return {
-    type: 'TOGGLE_SLIDE_MENU',
+    type: 'UI_TOGGLE_SLIDE_MENU',
     open,
+  };
+}
+
+export function openModal(modalComponent, modalTitle) {
+  return {
+    type: 'UI_MODAL_OPEN',
+    modalComponent,
+    modalTitle,
+  };
+}
+
+export function closeModal() {
+  return {
+    type: 'UI_MODAL_CLOSE',
   };
 }
 
 // --------- reducer ----------
 const defaultState = {
-  openSlideMenu: false,
+  slideMenuOpen: false,
+  modalOpen: false,
+  modalComponent: null,
+  modalTitle: null,
 };
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
-    case 'TOGGLE_SLIDE_MENU': {
+    case 'UI_TOGGLE_SLIDE_MENU': {
       const { open } = action;
 
       return {
         ...state,
-        openSlideMenu: _.isNil(open) ? !state.openSlideMenu : open,
+        slideMenuOpen: _.isNil(open) ? !state.slideMenuOpen : open,
+      };
+    }
+
+    case 'UI_MODAL_OPEN': {
+      const { modalComponent, modalTitle } = action;
+
+      return {
+        ...state,
+        modalOpen: true,
+        modalComponent,
+        modalTitle,
+      };
+    }
+
+    case 'UI_MODAL_CLOSE': {
+      return {
+        ...state,
+        modalOpen: false,
+        modalComponent: null,
+        modalTitle: null,
       };
     }
 

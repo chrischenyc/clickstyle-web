@@ -7,7 +7,7 @@ import { Dropdown, Menu, Responsive, Button } from 'semantic-ui-react';
 import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
 
-import { closeModal } from '../../modules/client/redux/modal';
+import { closeModal } from '../../modules/client/redux/ui';
 import { toggleSlideMenu } from '../../modules/client/redux/ui';
 import ModalLink from './ModalLink';
 import Login from '../layouts/user/Login/Login';

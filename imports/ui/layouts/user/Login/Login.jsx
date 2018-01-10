@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { closeModal } from '../../../../modules/client/redux/modal';
+import { closeModal } from '../../../../modules/client/redux/ui';
 import { validateUserLogin } from '../../../../modules/validate';
 import LoginPage from './LoginPage';
 
