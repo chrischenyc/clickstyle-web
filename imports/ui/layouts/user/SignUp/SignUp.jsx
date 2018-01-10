@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { userSignedIn } from '../../../../modules/client/redux/user';
 import { closeModal } from '../../../../modules/client/redux/modal';
 import { validateUserSignUp } from '../../../../modules/validate';
 import SignUpPage from './SignUpPage';
@@ -90,8 +89,6 @@ class SignUp extends Component {
   }
 
   handleLoggedIn() {
-    this.props.userSignedIn(Meteor.user());
-
     // call back if in modal mode
     if (this.props.onLoggedIn) {
       this.props.onLoggedIn();
@@ -124,8 +121,7 @@ SignUp.defaultProps = {
 SignUp.propTypes = {
   modal: PropTypes.bool,
   onLoggedIn: PropTypes.func,
-  userSignedIn: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
 
-export default connect(null, { userSignedIn, closeModal })(SignUp);
+export default connect(null, { closeModal })(SignUp);
