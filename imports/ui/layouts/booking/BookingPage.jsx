@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Responsive } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ModalLink from '../../components/ModalLink';
@@ -175,16 +176,22 @@ const BookingPage = props => (
             <i className="fa fa-calendar-check-o" /> Booking Summary
           </h3>
 
-          <h3>
-            {`${props.cart.stylist.name.first} ${props.cart.stylist.name.last}`}
-            {props.cart.stylist.address &&
-              props.cart.stylist.address.suburb &&
-              ` (${props.cart.stylist.address.suburb}, ${props.cart.stylist.address.state})`}
-          </h3>
+          {!_.isNil(props.cart.stylist) && (
+            <h3>
+              {`${props.cart.stylist.name.first} ${props.cart.stylist.name.last}`}
+              {props.cart.stylist.address &&
+                props.cart.stylist.address.suburb &&
+                ` (${props.cart.stylist.address.suburb}, ${props.cart.stylist.address.state})`}
+            </h3>
+          )}
 
           <ul>
             <li>
-              Date <span>{formatDateDisplayString(parseDateQueryString(props.cart.date))}</span>
+              Date{' '}
+              <span>
+                {parseDateQueryString(props.cart.date).isValid() &&
+                  formatDateDisplayString(parseDateQueryString(props.cart.date))}
+              </span>
             </li>
             <li>
               Time <span>{props.cart.time}</span>
