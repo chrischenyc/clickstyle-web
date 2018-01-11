@@ -303,6 +303,7 @@ Meteor.methods({
         published: true,
       };
 
+      // TODO: replace name search selectors with $text $search
       // add query selector of service/addon name, stylist name
       const serviceNameSelector = { 'services.name': RegExp(service, 'i') };
       const addonNameSelector = {
