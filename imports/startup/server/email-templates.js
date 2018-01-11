@@ -4,11 +4,11 @@ import getPrivateFile from '../../modules/server/get-private-file';
 import templateToHTML from '../../modules/server/handlebars-email-to-html';
 import templateToText from '../../modules/server/handlebars-email-to-text';
 
-import { fromAddress, templateVars } from '../../modules/server/send-email';
+import { fromAddress, templateConstants } from '../../modules/server/send-email';
 
 // override Meteor default Accounts email template
 
-const { appName } = templateVars;
+const { appName } = templateConstants;
 const { emailTemplates } = Accounts;
 
 emailTemplates.siteName = appName;
@@ -23,7 +23,7 @@ emailTemplates.verifyEmail = {
     return templateToHTML(getPrivateFile('email-templates/verify-email.html'), {
       firstName: user.profile.name.first,
       verifyUrl: urlWithoutHash,
-      ...templateVars,
+      ...templateConstants,
     });
   },
   text(user, url) {
@@ -32,7 +32,7 @@ emailTemplates.verifyEmail = {
     return templateToText(getPrivateFile('email-templates/verify-email.txt'), {
       firstName: user.profile.name.first,
       verifyUrl: urlWithoutHash,
-      ...templateVars,
+      ...templateConstants,
     });
   },
 };
@@ -47,7 +47,7 @@ emailTemplates.resetPassword = {
       firstName: user.profile.name.first,
       emailAddress: user.emails[0].address,
       resetUrl: urlWithoutHash,
-      ...templateVars,
+      ...templateConstants,
     });
   },
   text(user, url) {
@@ -57,7 +57,7 @@ emailTemplates.resetPassword = {
       firstName: user.profile.name.first,
       emailAddress: user.emails[0].address,
       resetUrl: urlWithoutHash,
-      ...templateVars,
+      ...templateConstants,
     });
   },
 };

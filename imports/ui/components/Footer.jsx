@@ -3,10 +3,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { ServiceNameToSEOName } from '../../modules/seo-name';
+import { formatYear } from '../../modules/format-date';
 
 const Footer = () => {
   const {
-    appName, facebookUrl, twitterUrl, instagramUrl, supportEmail,
+    appName,
+    legalName,
+    about,
+    facebookUrl,
+    twitterUrl,
+    instagramUrl,
+    supportEmail,
   } = Meteor.settings.public;
 
   const services = [
@@ -30,7 +37,7 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-3 col-sm-6">
-            <h4>{Meteor.settings.public.appName}</h4>
+            <h4>{appName}</h4>
             <ul className="footer-links">
               <li>
                 <Link to="/about">About</Link>
@@ -99,12 +106,10 @@ const Footer = () => {
           </div>
 
           <div className="col-md-3 col-sm-12">
+            <p>{about}</p>
             <p>
-              TODO: blurb for SEO - Morbi convallis bibendum urna ut viverra. Maecenas quis
-              consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet
-              ullamcorper phasellus semper.
+              &copy; 2017-{formatYear(new Date())} {legalName}. All Rights Reserved.
             </p>
-            <p>&copy; 2017 {appName}. All Rights Reserved.</p>
           </div>
         </div>
 

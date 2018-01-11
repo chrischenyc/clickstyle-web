@@ -8,7 +8,7 @@ import Profiles from '../../api/profiles/profiles';
 
 // core function to send email
 const sendEmail = ({
-  text, html, template, templateVars, ...rest
+  text, html, template, templateConstants, ...rest
 }) => {
   if (text || html || template) {
     return new Promise((resolve, reject) => {
@@ -19,13 +19,13 @@ const sendEmail = ({
             text: template
               ? templateToText(
                 getPrivateFile(`email-templates/${template}.txt`),
-                templateVars || {},
+                templateConstants || {},
               )
               : text,
             html: template
               ? templateToHTML(
                 getPrivateFile(`email-templates/${template}.html`),
-                templateVars || {},
+                templateConstants || {},
               )
               : html,
           });
@@ -42,6 +42,8 @@ const sendEmail = ({
 // retrieve constants from Meteor settings files
 const {
   appName,
+  legalName,
+  about,
   homeUrl,
   helpUrl,
   contactUrl,
@@ -57,9 +59,11 @@ const {
 
 export const fromAddress = `${appName} <${supportEmail}>`;
 
-// standard vars most email templates use
-const commonTemplateVars = {
+// standard constants most email templates use
+const constantsFromSettings = {
   appName,
+  legalName,
+  about,
   homeUrl: Meteor.absoluteUrl(homeUrl),
   helpUrl: Meteor.absoluteUrl(helpUrl),
   contactUrl: Meteor.absoluteUrl(contactUrl),
@@ -74,10 +78,10 @@ const commonTemplateVars = {
 };
 
 // add shared footers
-export const templateVars = {
-  ...commonTemplateVars,
-  txtFooter: templateToText(getPrivateFile('email-templates/footer.txt'), commonTemplateVars),
-  htmlFooter: templateToHTML(getPrivateFile('email-templates/footer.html'), commonTemplateVars),
+export const templateConstants = {
+  ...constantsFromSettings,
+  txtFooter: templateToText(getPrivateFile('email-templates/footer.txt'), constantsFromSettings),
+  htmlFooter: templateToHTML(getPrivateFile('email-templates/footer.html'), constantsFromSettings),
 };
 
 export const sendWelcomeEmail = (userId) => {
@@ -89,9 +93,9 @@ export const sendWelcomeEmail = (userId) => {
       from: fromAddress,
       subject: `Welcome to ${appName}!`,
       template: 'welcome',
-      templateVars: {
+      templateConstants: {
         firstName: profile.name.first,
-        ...templateVars,
+        ...templateConstants,
       },
     }).catch((error) => {
       throw new Meteor.Error('500', `${error}`);
@@ -108,9 +112,9 @@ export const sendPasswordChangedEmail = (userId) => {
       from: fromAddress,
       subject: `Account alert: ${appName} password updated`,
       template: 'password-changed',
-      templateVars: {
+      templateConstants: {
         firstName: profile.name.first,
-        ...templateVars,
+        ...templateConstants,
       },
     }).catch((error) => {
       throw new Meteor.Error('500', `${error}`);
@@ -127,9 +131,9 @@ export const sendStylistJoinConfirmEmail = (userId) => {
       from: fromAddress,
       subject: `We received your application to become a stylist on ${appName}`,
       template: 'stylist-join-confirm',
-      templateVars: {
+      templateConstants: {
         firstName: profile.name.first,
-        ...templateVars,
+        ...templateConstants,
       },
     }).catch((error) => {
       throw new Meteor.Error('500', `${error}`);
@@ -152,9 +156,9 @@ export const sendAdminEmailStylistApplication = (applicationId) => {
         from: fromAddress,
         subject: 'New stylist join application',
         template: 'stylist-join-notify-admin',
-        templateVars: {
+        templateConstants: {
           adminUrl,
-          ...templateVars,
+          ...templateConstants,
         },
       });
     });

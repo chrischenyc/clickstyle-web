@@ -6,7 +6,9 @@ Find a stylist: searchUrl
 Become a stylist: joinUrl
 Email: {{supportEmail}}
 
-&copy; {{appName}} 2017. All right reserved.
+&copy; {{legalName}} 2017-2018. All right reserved.
 Privacy: privacyUrl
 Terms: termsUrl
 Contact: contactUrl
+
+{{about}}
