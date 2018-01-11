@@ -98,37 +98,36 @@ const SignUpPage = ({
             &nbsp;here
           </p>
 
-          <p className="margin-bottom-20">
-            <Checkbox
-              defaultChecked
-              onChange={onAgreement}
-              label={
-                <label htmlFor="agreement">
-                  I confirm I am over 18 and I agree to {Meteor.settings.public.appName}&apos;s&nbsp;
-                  <Link
-                    to="/terms"
-                    onClick={() => {
-                      if (modal && onDismissModal) {
-                        onDismissModal();
-                      }
-                    }}
-                  >
-                    Terms of Use
-                  </Link>&nbsp;and&nbsp;
-                  <Link
-                    to="/privacy"
-                    onClick={() => {
-                      if (modal && onDismissModal) {
-                        onDismissModal();
-                      }
-                    }}
-                  >
-                    Privacy Policy
-                  </Link>.
-                </label>
-              }
-            />
-          </p>
+          <Checkbox
+            className="margin-bottom-20"
+            defaultChecked
+            onChange={onAgreement}
+            label={
+              <label htmlFor="agreement">
+                I confirm I am over 18 and I agree to {Meteor.settings.public.appName}&apos;s&nbsp;
+                <Link
+                  to="/terms"
+                  onClick={() => {
+                    if (modal && onDismissModal) {
+                      onDismissModal();
+                    }
+                  }}
+                >
+                  Terms of Use
+                </Link>&nbsp;and&nbsp;
+                <Link
+                  to="/privacy"
+                  onClick={() => {
+                    if (modal && onDismissModal) {
+                      onDismissModal();
+                    }
+                  }}
+                >
+                  Privacy Policy
+                </Link>.
+              </label>
+            }
+          />
         </Grid.Column>
       </Grid.Row>
     </Grid>
