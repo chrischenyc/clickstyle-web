@@ -12,9 +12,20 @@ const reducer = combineReducers({
   loadingBar,
 });
 
+const persistedState = localStorage.getItem('stylesquad.cart')
+  ? { cart: JSON.parse(localStorage.getItem('stylesquad.cart')) }
+  : {};
+
 /* eslint-disable no-underscore-dangle */
-export default createStore(
+const store = createStore(
   reducer,
+  persistedState,
   compose(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()),
 );
 /* eslint-enable */
+
+store.subscribe(() => {
+  localStorage.setItem('stylesquad.cart', JSON.stringify(store.getState().cart));
+});
+
+export default store;
