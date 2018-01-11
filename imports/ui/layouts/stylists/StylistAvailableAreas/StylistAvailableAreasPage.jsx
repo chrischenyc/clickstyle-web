@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Checkbox, Search, Dropdown, Popup, Button } from 'semantic-ui-react';
+import { Container, Form, Checkbox, Search, Dropdown, Popup, Button } from 'semantic-ui-react';
 import _ from 'lodash';
 
 const StylistAvailableAreasPage = ({
@@ -17,7 +17,7 @@ const StylistAvailableAreasPage = ({
   suburb,
   canTravel,
 }) => (
-  <div className="container">
+  <Container>
     <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(error)}>
       <p>TODO: write something to educate stylists what this page is about</p>
 
@@ -90,7 +90,7 @@ const StylistAvailableAreasPage = ({
       </Button>
       {!_.isEmpty(error) && <div className="notification error"> {error} </div>}
     </Form>
-  </div>
+  </Container>
 );
 
 StylistAvailableAreasPage.propTypes = {

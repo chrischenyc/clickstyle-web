@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Dropdown, Menu, Responsive, Button } from 'semantic-ui-react';
+import { Dropdown, Menu, Responsive, Button, Container } from 'semantic-ui-react';
 import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
 
@@ -57,7 +57,7 @@ class Header extends Component {
           style={menuFixed || !fullContent ? fixedMenuStyle : menuStyle}
         >
           <LoadingBar style={{ backgroundColor: '#00aca4' }} />
-          <div className="container">
+          <Container fluid>
             {fullContent && (
               <Menu.Item id="logo">
                 <Link to="/">
@@ -132,7 +132,7 @@ class Header extends Component {
                 </Dropdown>
               )}
             </Responsive>
-          </div>
+          </Container>
 
           {searchBar && (
             <Responsive minWidth={1025} className="container margin-bottom-10">

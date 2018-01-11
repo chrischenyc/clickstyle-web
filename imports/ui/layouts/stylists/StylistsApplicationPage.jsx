@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Form, Checkbox, List, Message, Button } from 'semantic-ui-react';
+import { Container, Form, Checkbox, List, Message, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { UploadField as FileField } from '@navjobs/upload';
@@ -36,7 +36,7 @@ class StylistsApplicationPage extends Component {
     if (application) {
       if (application.approved) {
         return (
-          <div className="container margin-top-35 margin-bottom-35">
+          <Container className="margin-top-35 margin-bottom-35">
             <h2>Welcome to the club!</h2>
 
             <p>
@@ -48,12 +48,12 @@ class StylistsApplicationPage extends Component {
               Meanwhile, if you have any question, feel free to&nbsp;
               <Link to="/contact">contact us</Link>.
             </p>
-          </div>
+          </Container>
         );
       }
 
       return (
-        <div className="container margin-top-35 margin-bottom-35">
+        <Container className="margin-top-35 margin-bottom-35">
           <h2>Relax and sit tight</h2>
 
           <p>
@@ -65,12 +65,12 @@ class StylistsApplicationPage extends Component {
             Meanwhile, if you have any question, feel free to&nbsp;
             <Link to="/contact">contact us</Link>.
           </p>
-        </div>
+        </Container>
       );
     }
 
     return (
-      <div className="container margin-top-35 margin-bottom-35">
+      <Container className="margin-top-35 margin-bottom-35">
         <h2>Tell us something about you</h2>
 
         <p>
@@ -235,7 +235,7 @@ class StylistsApplicationPage extends Component {
             Join
           </Button>
         </Form>
-      </div>
+      </Container>
     );
   }
 }

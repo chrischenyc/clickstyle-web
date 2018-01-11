@@ -2,13 +2,13 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
+import { Button, Container } from 'semantic-ui-react';
 
 import ScaledImageURL from '../../../../modules/scaled-image-url';
 import userProfileLink from '../../../../modules/user-profile-link';
 
 const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
-  <div className="container">
+  <Container>
     <div className="row">
       <div className="col-lg-12 col-md-12">
         <div className="dashboard-list-box margin-top-0">
@@ -59,7 +59,7 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
         </div>
       </div>
     </div>
-  </div>
+  </Container>
 );
 
 FavouredStylistsPage.propTypes = {

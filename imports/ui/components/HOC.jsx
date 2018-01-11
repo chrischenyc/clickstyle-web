@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { Container } from 'semantic-ui-react';
 
 import Header from './Header';
 import Footer from './Footer';

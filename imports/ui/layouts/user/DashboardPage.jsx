@@ -1,13 +1,14 @@
 import React from 'react';
+import { Container } from 'semantic-ui-react';
 
 import EmailVerificationAlert from './EmailVerificationAlert/EmailVerificationAlert';
 
 const DashboardPage = () => (
-  <div className="container">
+  <Container>
     <EmailVerificationAlert />
 
     <p>TODO: implement Dashboard</p>
-  </div>
+  </Container>
 );
 
 export default DashboardPage;

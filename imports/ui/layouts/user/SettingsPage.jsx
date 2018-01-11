@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
 
 const SettingsPage = () => (
-  <div className="container">
+  <Container>
     <h2>Setting</h2>
 
     <ul className="list-unstyled">
@@ -13,7 +14,7 @@ const SettingsPage = () => (
         <Link to="/users/reset-password">Reset Password</Link>
       </li>
     </ul>
-  </div>
+  </Container>
 );
 
 export default SettingsPage;

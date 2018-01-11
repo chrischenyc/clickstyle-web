@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Form, TextArea, Label, Divider, Button } from 'semantic-ui-react';
+import { Form, TextArea, Label, Divider, Button, Container } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
@@ -30,7 +30,7 @@ const EditProfilePage = ({
   pristine,
   errors,
 }) => (
-  <div className="container">
+  <Container>
     {profile &&
       profile.owner &&
       profile.name && (
@@ -198,7 +198,7 @@ const EditProfilePage = ({
 
       {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
     </Form>
-  </div>
+  </Container>
 );
 
 EditProfilePage.defaultProps = {

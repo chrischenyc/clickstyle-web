@@ -1,9 +1,10 @@
 import React from 'react';
+import { Container } from 'semantic-ui-react';
 
 const InboxPage = () => (
-  <div className="container">
+  <Container>
     <p>TODO: implement Inbox</p>
-  </div>
+  </Container>
 );
 
 export default InboxPage;

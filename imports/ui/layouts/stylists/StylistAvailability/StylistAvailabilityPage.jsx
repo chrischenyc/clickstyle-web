@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Table, Checkbox, Button } from 'semantic-ui-react';
+import { Form, Table, Checkbox, Button, Container } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import TimeInput from '../../../components/TimeInput';
@@ -16,7 +16,7 @@ const StylistAvailableTimePage = ({
   pristine,
   errors,
 }) => (
-  <div className="container">
+  <Container>
     <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
       <p>TODO: write something to educate stylists what this page is about</p>
 
@@ -88,7 +88,7 @@ const StylistAvailableTimePage = ({
 
       {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
     </Form>
-  </div>
+  </Container>
 );
 
 StylistAvailableTimePage.propTypes = {
