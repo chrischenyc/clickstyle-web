@@ -19,25 +19,28 @@ class StylistPortfolioSection extends Component {
     const { photos } = this.props;
 
     const slickSettings = {
-      slidesToShow: 4,
+      slidesToShow: Math.min(photos.length, 4),
       slidesToScroll: 1,
       dots: false,
       arrows: false,
-      infinite: true,
-      autoplay: true,
+      infinite: photos.length > 4,
+      autoplay: photos.length > 4,
       speed: 500,
       initialSlide: 0,
       responsive: [
         {
           breakpoint: 1280,
           settings: {
-            slidesToShow: 3,
+            slidesToShow: Math.min(photos.length, 3),
+            infinite: photos.length > 3,
+            autoplay: photos.length > 3,
+            arrows: photos.length > 3,
           },
         },
         {
           breakpoint: 640,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: Math.min(photos.length, 1),
             infinite: photos.length > 1,
             autoplay: photos.length > 1,
             arrows: photos.length > 1,
