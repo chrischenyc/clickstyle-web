@@ -124,6 +124,10 @@ textarea:focus {
 }
 
 /* 03-shortcodes.css override */
+.text-content {
+  z-index: 100;
+}
+
 .listing-item-container {
   border-radius: 0;
   margin-bottom: 0;
