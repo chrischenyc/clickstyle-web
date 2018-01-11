@@ -67,6 +67,7 @@ class App extends Component {
     Tracker.autorun(() => {
       // get user login
       const user = Meteor.user();
+
       if (user !== undefined) {
         if (user) {
           this.props.userSignedIn(user);
@@ -74,7 +75,9 @@ class App extends Component {
           // get user profile
           Meteor.subscribe('profiles.owner');
           const profile = Profiles.findOne({});
-          this.props.userProfileFetched(profile);
+          if (profile) {
+            this.props.userProfileFetched(profile);
+          }
         } else {
           this.props.userSignedOut();
         }

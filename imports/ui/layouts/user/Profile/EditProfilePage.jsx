@@ -11,7 +11,6 @@ import EditPhotoPage from './EditPhotoPage';
 import userProfileLink from '../../../../modules/user-profile-link';
 
 const EditProfilePage = ({
-  photo,
   onPhotoSelected,
   onPhotoUpload,
   onPhotoRemove,
@@ -51,7 +50,7 @@ const EditProfilePage = ({
       error={!_.isEmpty(errors) || !_.isEmpty(photoError)}
     >
       <EditPhotoPage
-        photo={photo}
+        photo={!_.isNil(profile.photo) ? profile.photo : ""}
         onPhotoSelected={onPhotoSelected}
         onPhotoUpload={onPhotoUpload}
         onPhotoRemove={onPhotoRemove}
@@ -168,7 +167,7 @@ const EditProfilePage = ({
         )}
 
         {/* selected tags */}
-        {profile.products && (
+        {(_.has(profile, 'products') && profile.products) && (
           <div style={{ marginBottom: '0.5rem' }}>
             {profile.products.map(product => (
               <Label
@@ -202,18 +201,17 @@ const EditProfilePage = ({
 );
 
 EditProfilePage.defaultProps = {
-  photo: null,
+  profile: null,
 };
 
 EditProfilePage.propTypes = {
-  photo: PropTypes.string,
   onPhotoSelected: PropTypes.func.isRequired,
   onPhotoUpload: PropTypes.func.isRequired,
   onPhotoRemove: PropTypes.func.isRequired,
   photoUploading: PropTypes.bool.isRequired,
   photoPristine: PropTypes.bool.isRequired,
   photoError: PropTypes.string.isRequired,
-  profile: PropTypes.object.isRequired,
+  profile: PropTypes.object,
   productsMatched: PropTypes.array.isRequired,
   productsSearch: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,

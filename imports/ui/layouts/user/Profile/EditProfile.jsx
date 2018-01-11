@@ -41,7 +41,10 @@ class EditProfile extends Component {
       photoUploading: false,
       photoPristine: true,
       profile: _.cloneDeep(props.profile),
-      productsAvailable: availableProducts(props.products, props.profile.products),
+      productsAvailable: availableProducts(
+        props.products,
+        props.profile ? props.profile.products : [],
+      ),
       productsMatched: [],
       productsSearch: '',
       errors: {},
@@ -64,7 +67,10 @@ class EditProfile extends Component {
     this.setState({
       pristine: true,
       profile: _.cloneDeep(nextProps.profile),
-      productsAvailable: availableProducts(nextProps.products, nextProps.profile.products),
+      productsAvailable: availableProducts(
+        nextProps.products,
+        nextProps.profile ? nextProps.profile.products : [],
+      ),
     });
   }
 
@@ -214,7 +220,6 @@ class EditProfile extends Component {
   render() {
     return (
       <EditProfilePage
-        photo={this.props.profile.photo}
         onPhotoSelected={this.handlePhotoSelected}
         onPhotoUpload={this.handlePhotoUpload}
         onPhotoRemove={this.handlePhotoRemove}
