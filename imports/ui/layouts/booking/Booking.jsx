@@ -72,10 +72,14 @@ class Booking extends Component {
   }
 }
 
+Booking.defaultProps = {
+  profile: null,
+};
+
 Booking.propTypes = {
   cart: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
-  profile: PropTypes.object.isRequired,
+  profile: PropTypes.object,
   setUserInfo: PropTypes.func.isRequired,
 };
 
