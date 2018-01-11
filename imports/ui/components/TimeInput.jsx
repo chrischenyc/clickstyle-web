@@ -45,7 +45,7 @@ class TimeInput extends Component {
 
     return (
       <Search
-        input={<input type="text" value={this.state.value} />}
+        input={<input type="text" value={this.state.value} readOnly="true" />}
         results={this.state.results}
         minCharacters={0}
         onResultSelect={(e, { result }) => {

@@ -30,9 +30,7 @@ const StylistBookingSection = props => (
         <DayPickerInput
           clickUnselectsDay
           inputProps={{
-            onKeyPress: (e) => {
-              e.preventDefault();
-            },
+            readOnly: 'true',
           }}
           value={
             parseDateQueryString(props.cart.date).isValid()

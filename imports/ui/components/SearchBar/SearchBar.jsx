@@ -253,9 +253,7 @@ class SearchBar extends Component {
           <DayPickerInput
             clickUnselectsDay
             inputProps={{
-              onKeyPress: (e) => {
-                e.preventDefault();
-              },
+              readOnly: 'true',
             }}
             value={
               parseDateQueryString(this.state.date).isValid()
@@ -264,7 +262,7 @@ class SearchBar extends Component {
             }
             placeholder="Any date, any time"
             onDayChange={(date) => {
-              this.setState({ date: _.isNil(date) ? '': formatDateQueryString(date) });
+              this.setState({ date: _.isNil(date) ? '' : formatDateQueryString(date) });
             }}
             format={datePickerFormat}
             formatDate={formatDate}
