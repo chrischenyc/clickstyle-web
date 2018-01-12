@@ -26,13 +26,15 @@ class StylistServiceSection extends Component {
             this.setState({ sectionOpen: !sectionOpen });
           }}
         >
-          <h4>
-            {service.name}
-            <span>
-              {sectionOpen && <i className="fa fa-angle-up" />}
-              {!sectionOpen && <i className="fa fa-angle-down" />}
-            </span>
-          </h4>
+          <div className="pricing-list-section-header">
+            <h4>
+              {service.name}
+              <span>
+                {sectionOpen && <i className="fa fa-angle-up" />}
+                {!sectionOpen && <i className="fa fa-angle-down" />}
+              </span>
+            </h4>
+          </div>
         </a>
 
         <Collapse isOpened={sectionOpen}>
@@ -45,14 +47,18 @@ class StylistServiceSection extends Component {
                   onServiceSelected(service);
                 }}
               >
-                <h5>Base price</h5>
-                {!_.isEmpty(service.basePriceDescription) && <p>{service.basePriceDescription}</p>}
-                <span>
-                  ${service.basePrice}
-                  <Button type="button" color="teal" size="small" style={{ marginLeft: '1rem' }}>
-                    Book
-                  </Button>
-                </span>
+                <div className="pricing-list-section-item">
+                  <h5>Base price</h5>
+                  {!_.isEmpty(service.basePriceDescription) && (
+                    <p>{service.basePriceDescription}</p>
+                  )}
+                  <span>
+                    ${service.basePrice}
+                    <Button type="button" color="teal" size="small" style={{ marginLeft: '1rem' }}>
+                      Book
+                    </Button>
+                  </span>
+                </div>
               </a>
             </li>
 
@@ -66,19 +72,21 @@ class StylistServiceSection extends Component {
                       onServiceSelected(service, addon);
                     }}
                   >
-                    <h5>{addon.name}</h5>
-                    {!_.isEmpty(addon.description) && <p>{addon.description}</p>}
-                    <span>
-                      ${addon.price}
-                      <Button
-                        type="button"
-                        color="teal"
-                        size="small"
-                        style={{ marginLeft: '1rem' }}
-                      >
-                        Book
-                      </Button>
-                    </span>
+                    <div className="pricing-list-section-item">
+                      <h5>{addon.name}</h5>
+                      {!_.isEmpty(addon.description) && <p>{addon.description}</p>}
+                      <span>
+                        ${addon.price}
+                        <Button
+                          type="button"
+                          color="teal"
+                          size="small"
+                          style={{ marginLeft: '1rem' }}
+                        >
+                          Book
+                        </Button>
+                      </span>
+                    </div>
                   </a>
                 </li>
               ))}

@@ -43,59 +43,24 @@ textarea:focus {
 
 /* Pricing Menu List
 	------------------------------------- */
-.pricing-list-container h4 {
-  color: #fff;
+.pricing-list-container .pricing-list-section-header {
   background-color: #00aca4;
-  border-bottom: none;
-  width: 100%;
-  padding: 0.25em 1em;
-  border-radius: 0;
+  padding: 0.25rem 1rem;
   position: relative;
-  z-index: 10;
-  margin: 0;
-  display: block;
-  font-weight: 500;
-  font-size: 1.5em;
 }
 
-.pricing-list-container h4 span {
-  right: 1rem;
+.pricing-list-container .pricing-list-section-header h4 {
+  color: #fff;
 }
 
-.pricing-list-container h4:after {
-  width: 100%;
-  height: 100%;
-  border-radius: 0;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: none;
-  background-color: none;
-  opacity: none;
-  z-index: 9;
-}
-
-.pricing-list-container h5 {
-  padding: 1em 1.5em;
-}
-
-.pricing-list-container h5 span {
-  right: 1rem;
+.pricing-list-container .pricing-list-section-item {
+  padding: 1rem 1.5rem;
 }
 
 .pricing-list-container i {
   color: #fff;
   font-weight: 500;
   font-size: 1.5em;
-}
-
-.pricing-list-container ul {
-  margin-bottom: 0;
-}
-
-.pricing-list-container ul:last-child {
-  margin-bottom: 0;
 }
 
 .pricing-list-container .pricing-list-section {
