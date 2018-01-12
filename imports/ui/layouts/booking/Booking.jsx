@@ -10,15 +10,14 @@ class Booking extends Component {
   constructor(props) {
     super(props);
 
-    if (props.authenticated) {
-      props.setUserInfo({
-        firstName: (props.profile && props.profile.name && props.profile.name.first) || '',
-        lastName: (props.profile && props.profile.name && props.profile.name.last) || '',
-        email: (props.profile && props.profile.email) || '',
-        phone: (props.profile && props.profile.mobile) || '',
-        address: (props.profile && props.profile.address && props.profile.address.raw) || '',
-      });
-    }
+    props.setUserInfo({
+      firstName: (props.profile && props.profile.name && props.profile.name.first) || '',
+      lastName: (props.profile && props.profile.name && props.profile.name.last) || '',
+      email: (props.profile && props.profile.email) || '',
+      phone: (props.profile && props.profile.mobile) || '',
+      address: (props.profile && props.profile.address && props.profile.address.raw) || '',
+      register: _.isEmpty(props.profile),
+    });
 
     this.handleChange = this.handleChange.bind(this);
     this.handleConfirm = this.handleConfirm.bind(this);
@@ -36,6 +35,7 @@ class Booking extends Component {
         phone: (nextProps.profile && nextProps.profile.mobile) || '',
         address:
           (nextProps.profile && nextProps.profile.address && nextProps.profile.address.raw) || '',
+        register: _.isEmpty(nextProps.profile),
       });
     }
   }

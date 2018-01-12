@@ -104,6 +104,7 @@ const defaultState = {
   address: '',
   date: '',
   time: '',
+  register: false,
 };
 
 const reducer = (state = defaultState, action) => {

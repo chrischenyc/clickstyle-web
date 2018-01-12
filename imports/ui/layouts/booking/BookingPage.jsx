@@ -1,5 +1,6 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import { Button, Responsive } from 'semantic-ui-react';
+import { Button, Responsive, Checkbox } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
@@ -18,7 +19,7 @@ const BookingPage = props => (
         <h3 className="margin-top-0 margin-bottom-30">Personal Details</h3>
 
         {!props.authenticated && (
-          <div className="margin-top-10 margin-bottom-10">
+          <div className="margin-top-10 margin-bottom-20">
             Already a user?&nbsp;
             <Responsive
               minWidth={1025}
@@ -84,6 +85,20 @@ const BookingPage = props => (
               }}
             />
           </div>
+
+          {!props.authenticated && (
+            <div className="col-md-12">
+              <Checkbox
+                className="margin-top-20"
+                defaultChecked
+                name="register"
+                onChange={(event, data) => {
+                  props.onChange({ target: { name: 'register', value: data.checked } });
+                }}
+                label={<label>also sign me up with {Meteor.settings.public.appName}</label>}
+              />
+            </div>
+          )}
         </div>
 
         <h3 className="margin-top-55 margin-bottom-30">Payment Method</h3>
