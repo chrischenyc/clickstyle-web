@@ -82,6 +82,29 @@ textarea:focus {
   height: 100%;
 }
 
+.pricing-list-container
+  .pricing-list-section-item
+  .price-list-section-item-price {
+  font-size: 1.25rem;
+  color: #777;
+}
+
+@media (min-width: 992px) {
+  .pricing-list-container
+    .pricing-list-section-item
+    .price-list-section-item-price {
+    float: right !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .pricing-list-container
+    .pricing-list-section-item
+    .price-list-section-item-price {
+    margin-top: 1.5rem;
+  }
+}
+
 /* Listing Reviews */
 .listing-reviews ul li {
   border-bottom: none;

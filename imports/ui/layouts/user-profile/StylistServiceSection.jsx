@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Collapse } from 'react-collapse';
-import _ from 'lodash';
-import { Button } from 'semantic-ui-react';
+
+import StylistServiceSectionItem from './StylistServiceSectionItem';
 
 class StylistServiceSection extends Component {
   constructor(props) {
@@ -47,18 +47,11 @@ class StylistServiceSection extends Component {
                   onServiceSelected(service);
                 }}
               >
-                <div className="pricing-list-section-item">
-                  <h5>Base price</h5>
-                  {!_.isEmpty(service.basePriceDescription) && (
-                    <p>{service.basePriceDescription}</p>
-                  )}
-                  <span>
-                    ${service.basePrice}
-                    <Button type="button" color="teal" size="small" style={{ marginLeft: '1rem' }}>
-                      Book
-                    </Button>
-                  </span>
-                </div>
+                <StylistServiceSectionItem
+                  title="Base price"
+                  description={service.basePriceDescription}
+                  price={service.basePrice}
+                />
               </a>
             </li>
 
@@ -72,21 +65,11 @@ class StylistServiceSection extends Component {
                       onServiceSelected(service, addon);
                     }}
                   >
-                    <div className="pricing-list-section-item">
-                      <h5>{addon.name}</h5>
-                      {!_.isEmpty(addon.description) && <p>{addon.description}</p>}
-                      <span>
-                        ${addon.price}
-                        <Button
-                          type="button"
-                          color="teal"
-                          size="small"
-                          style={{ marginLeft: '1rem' }}
-                        >
-                          Book
-                        </Button>
-                      </span>
-                    </div>
+                    <StylistServiceSectionItem
+                      title={addon.name}
+                      description={addon.description}
+                      price={addon.price}
+                    />
                   </a>
                 </li>
               ))}
