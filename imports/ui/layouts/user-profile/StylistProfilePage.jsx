@@ -93,11 +93,6 @@ const UserProfilePage = ({
             <div id="stylist-profile-pricing-list" className="listing-section margin-bottom-50">
               <h3 className="listing-desc-headline">Services</h3>
 
-              <p style={{ fontSize: '1rem' }}>
-                select &quot;Book&quot; to add services to your cart, multiple services can be
-                selected
-              </p>
-
               <div className="pricing-list-container">
                 {stylist.services &&
                   stylist.services.map(service => (

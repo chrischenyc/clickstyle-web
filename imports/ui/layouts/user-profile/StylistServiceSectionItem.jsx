@@ -13,7 +13,7 @@ const StylistServiceSectionItem = ({ title, description, price }) => (
       <div className="price-list-section-item-price">
         ${price}
         <Button type="button" color="teal" size="small" style={{ marginLeft: '1rem' }}>
-          Book
+          Add
         </Button>
       </div>
       <div className="clearfix" />
