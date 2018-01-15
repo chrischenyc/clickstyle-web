@@ -4,6 +4,12 @@ import { Button, Responsive, Checkbox } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
+import {
+  CardNumberElement,
+  CardExpiryElement,
+  CardCVCElement,
+  injectStripe,
+} from 'react-stripe-elements';
 
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ModalLink from '../../components/ModalLink';
@@ -11,177 +17,190 @@ import Login from '../user/Login/Login';
 import CartSummary from '../../components/CartSummary';
 import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
 
+// const createOptions = fontSize => ({
+//   style: {
+//     base: {
+//       fontSize,
+//       color: '#424770',
+//       letterSpacing: '0.025em',
+//       fontFamily: 'Source Code Pro, Menlo, monospace',
+//       '::placeholder': {
+//         color: '#aab7c4',
+//       },
+//     },
+//     invalid: {
+//       color: '#9e2146',
+//     },
+//   },
+// });
+
 const BookingPage = props => (
   <div className="container">
     <div className="row margin-top-60 margin-bottom-60">
       {/* TODO: responsive  */}
       <div className="col-lg-8 col-md-8 padding-right-30">
-        <h3 className="margin-top-0 margin-bottom-30">Personal Details</h3>
-
-        {!props.authenticated && (
-          <div className="margin-top-10 margin-bottom-20">
-            Already a user?&nbsp;
-            <Responsive
-              minWidth={1025}
-              as={ModalLink}
-              to="/login"
-              component={<Login modal />}
-              title="Log in to continue"
-            >
-              Log In
-            </Responsive>
-            <Responsive maxWidth={1024} as={Link} to="/login">
-              Log In
-            </Responsive>
-            &nbsp;to continue
-          </div>
-        )}
-
-        <div className="row">
-          <div className="col-md-6">
-            <label>First Name</label>
-            <input
-              name="firstName"
-              type="text"
-              value={props.cart.firstName}
-              onChange={props.onChange}
-            />
-          </div>
-
-          <div className="col-md-6">
-            <label>Last Name</label>
-            <input
-              name="lastName"
-              type="text"
-              value={props.cart.lastName}
-              onChange={props.onChange}
-            />
-          </div>
-
-          <div className="col-md-6">
-            <label>Email</label>
-            <input name="email" type="text" value={props.cart.email} onChange={props.onChange} />
-          </div>
-
-          <div className="col-md-6">
-            <label>Phone</label>
-            <input name="phone" type="text" value={props.cart.phone} onChange={props.onChange} />
-          </div>
-
-          <div className="col-md-12">
-            <label>Address</label>
-            <SemanticGeoSuggest
-              placeholder="type to search your address"
-              country="au"
-              name="address.raw"
-              initialValue=""
-              onChange={(value) => {
-                // convert to generic onChange param
-                props.onChange({ target: { name: 'address', value } });
-              }}
-              onSuggestSelect={(suggest) => {
-                // force onChange as well
-                props.onChange({ target: { name: 'address', value: suggest.label } });
-              }}
-            />
-          </div>
+        <form onSubmit={props.onSubmit}>
+          <h3 className="margin-top-0 margin-bottom-30">Personal Details</h3>
 
           {!props.authenticated && (
-            <div className="col-md-12">
-              <Checkbox
-                className="margin-top-20"
-                defaultChecked
-                name="register"
-                onChange={(event, data) => {
-                  props.onChange({ target: { name: 'register', value: data.checked } });
-                }}
-                label={<label>also sign me up with {Meteor.settings.public.appName}</label>}
-              />
+            <div className="margin-top-10 margin-bottom-20">
+              Already a user?&nbsp;
+              <Responsive
+                minWidth={1025}
+                as={ModalLink}
+                to="/login"
+                component={<Login modal />}
+                title="Log in to continue"
+              >
+                Log In
+              </Responsive>
+              <Responsive maxWidth={1024} as={Link} to="/login">
+                Log In
+              </Responsive>
+              &nbsp;to continue
             </div>
           )}
-        </div>
 
-        <h3 className="margin-top-55 margin-bottom-30">Payment Method</h3>
-
-        <div className="payment">
-          {/* TODO: add saved credit card */}
-
-          <div className="payment-tab payment-tab-active">
-            <div className="payment-tab-trigger">
+          <div className="row">
+            <div className="col-md-6">
+              <label>First Name</label>
               <input
-                checked
-                disabled
-                type="radio"
-                name="cardType"
-                id="creditCart"
-                value="creditCard"
+                name="firstName"
+                type="text"
+                value={props.cart.firstName}
+                onChange={props.onChange}
               />
-              <label htmlFor="creditCart">Credit / Debit Card</label>
-              <img className="payment-logo" src="https://i.imgur.com/IHEKLgm.png" alt="" />
             </div>
 
-            <div className="payment-tab-content">
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="card-label">
-                    <label htmlFor="nameOnCard">Name on Card</label>
-                    <input id="nameOnCard" name="nameOnCard" required type="text" />
-                  </div>
-                </div>
+            <div className="col-md-6">
+              <label>Last Name</label>
+              <input
+                name="lastName"
+                type="text"
+                value={props.cart.lastName}
+                onChange={props.onChange}
+              />
+            </div>
 
-                <div className="col-md-6">
-                  <div className="card-label">
-                    <label htmlFor="cardNumber">Card Number</label>
-                    <input
-                      id="cardNumber"
-                      name="cardNumber"
-                      placeholder="1234  5678  9876  5432"
-                      required
-                      type="text"
-                    />
-                  </div>
-                </div>
+            <div className="col-md-6">
+              <label>Email</label>
+              <input name="email" type="text" value={props.cart.email} onChange={props.onChange} />
+            </div>
 
-                <div className="col-md-4">
-                  <div className="card-label">
-                    <label htmlFor="expirynDate">Expiry Month</label>
-                    <input id="expiryDate" placeholder="MM" required type="text" />
-                  </div>
-                </div>
+            <div className="col-md-6">
+              <label>Phone</label>
+              <input name="phone" type="text" value={props.cart.phone} onChange={props.onChange} />
+            </div>
 
-                <div className="col-md-4">
-                  <div className="card-label">
-                    <label htmlFor="expiryDate">Expiry Year</label>
-                    <input id="expirynDate" placeholder="YY" required type="text" />
-                  </div>
-                </div>
+            <div className="col-md-12">
+              <label>Address</label>
+              <SemanticGeoSuggest
+                placeholder="type to search your address"
+                country="au"
+                name="address.raw"
+                initialValue=""
+                onChange={(value) => {
+                  // convert to generic onChange param
+                  props.onChange({ target: { name: 'address', value } });
+                }}
+                onSuggestSelect={(suggest) => {
+                  // force onChange as well
+                  props.onChange({ target: { name: 'address', value: suggest.label } });
+                }}
+              />
+            </div>
 
-                <div className="col-md-4">
-                  <div className="card-label">
-                    <label htmlFor="cvv">CVV</label>
-                    <input id="cvv" required type="text" />
+            {!props.authenticated && (
+              <div className="col-md-12">
+                <Checkbox
+                  className="margin-top-20"
+                  defaultChecked
+                  name="register"
+                  onChange={(event, data) => {
+                    props.onChange({ target: { name: 'register', value: data.checked } });
+                  }}
+                  label={<label>also sign me up with {Meteor.settings.public.appName}</label>}
+                />
+              </div>
+            )}
+          </div>
+
+          <h3 className="margin-top-55 margin-bottom-30">Payment Method</h3>
+
+          <div className="payment">
+            {/* TODO: add saved credit card */}
+
+            <div className="payment-tab payment-tab-active">
+              <div className="payment-tab-trigger">
+                <input
+                  checked
+                  disabled
+                  type="radio"
+                  name="cardType"
+                  id="creditCart"
+                  value="creditCard"
+                />
+                <label htmlFor="creditCart">Credit / Debit Card</label>
+                <img className="payment-logo" src="https://i.imgur.com/IHEKLgm.png" alt="" />
+              </div>
+
+              <div className="payment-tab-content">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="card-label">
+                      <label htmlFor="nameOnCard">Name on Card</label>
+                      <input id="nameOnCard" name="nameOnCard" required type="text" />
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div className="card-label">
+                      <label>Card number</label>
+                      <CardNumberElement />
+                    </div>
+                  </div>
+
+                  <div className="col-md-4">
+                    <div className="card-label">
+                      <label>Expiration date</label>
+                      <CardExpiryElement />
+                    </div>
+                  </div>
+
+                  <div className="col-md-4">
+                    <div className="card-label">
+                      <label>CVV</label>
+                      <CardCVCElement />
+                    </div>
+                  </div>
+
+                  <div className="col-md-4">
+                    <div className="card-label">
+                      <Checkbox
+                        defaultChecked
+                        name="saveCard"
+                        onChange={(event, data) => {
+                          props.onChange({ target: { name: 'saveCard', value: data.checked } });
+                        }}
+                        label={<label>save this card</label>}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="margin-top-20">
-          <Button
-            color="teal"
-            circular
-            size="large"
-            onClick={props.onConfirm}
-            disabled={props.cart.total === 0}
-          >
-            Confirm and Pay
-          </Button>
+          <div className="margin-top-20">
+            <Button color="teal" circular size="large" disabled={props.cart.total === 0}>
+              Confirm and Pay
+            </Button>
 
-          <Button color="teal" circular size="large" basic onClick={props.onBack}>
-            Go back
-          </Button>
-        </div>
+            <Button color="teal" circular size="large" basic onClick={props.onBack}>
+              Go back
+            </Button>
+          </div>
+        </form>
       </div>
 
       {/* TODO: responsive  */}
@@ -224,11 +243,11 @@ const BookingPage = props => (
 
 BookingPage.propTypes = {
   onChange: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
   cart: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
-export default BookingPage;
+export default injectStripe(BookingPage);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { StripeProvider, Elements } from 'react-stripe-elements';
 
 import { setUserInfo } from '../../../modules/client/redux/cart';
 import BookingPage from './BookingPage';
@@ -20,7 +21,7 @@ class Booking extends Component {
     });
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleConfirm = this.handleConfirm.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBack = this.handleBack.bind(this);
   }
 
@@ -44,7 +45,7 @@ class Booking extends Component {
     this.props.setUserInfo({ [event.target.name]: event.target.value });
   }
 
-  handleConfirm() {
+  handleSubmit() {
     // TODO: form validation
 
     // TODO: handle payment
@@ -60,14 +61,18 @@ class Booking extends Component {
 
   render() {
     return (
-      <BookingPage
-        onChange={this.handleChange}
-        onConfirm={this.handleConfirm}
-        onBack={this.handleBack}
-        cart={this.props.cart}
-        authenticated={this.props.authenticated}
-        history={this.props.history}
-      />
+      <StripeProvider apiKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh">
+        <Elements>
+          <BookingPage
+            onChange={this.handleChange}
+            onSubmit={this.handleSubmit}
+            onBack={this.handleBack}
+            cart={this.props.cart}
+            authenticated={this.props.authenticated}
+            history={this.props.history}
+          />
+        </Elements>
+      </StripeProvider>
     );
   }
 }
