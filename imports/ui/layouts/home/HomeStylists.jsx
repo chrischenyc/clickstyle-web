@@ -49,8 +49,7 @@ class HomeStylists extends Component {
       dots: false,
       arrows: stylistsPairs.length > 4,
       infinite: stylistsPairs.length > 4,
-      autoplay: stylistsPairs.length > 4,
-      autoplaySpeed: 5000,
+      autoplay: false,
       speed: 500,
       initialSlide: 0,
       responsive: [
@@ -60,7 +59,6 @@ class HomeStylists extends Component {
             slidesToShow: 3,
             arrows: stylistsPairs.length > 3,
             infinite: stylistsPairs.length > 3,
-            autoplay: stylistsPairs.length > 3,
           },
         },
         {
@@ -69,7 +67,6 @@ class HomeStylists extends Component {
             slidesToShow: 1,
             arrows: stylistsPairs.length > 1,
             infinite: stylistsPairs.length > 1,
-            autoplay: stylistsPairs.length > 1,
           },
         },
       ],

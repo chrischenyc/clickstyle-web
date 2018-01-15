@@ -15,8 +15,7 @@ const HomeServices = ({ services }) => {
     dots: false,
     arrows: services.length > 5,
     infinite: services.length > 5,
-    autoplay: services.length > 5,
-    autoplaySpeed: 6000,
+    autoplay: false,
     speed: 500,
     initialSlide: 0,
     responsive: [
@@ -26,7 +25,6 @@ const HomeServices = ({ services }) => {
           slidesToShow: 4,
           arrows: services.length > 4,
           infinite: services.length > 4,
-          autoplay: services.length > 4,
         },
       },
       {
@@ -35,7 +33,6 @@ const HomeServices = ({ services }) => {
           slidesToShow: 1,
           arrows: services.length > 1,
           infinite: services.length > 1,
-          autoplay: services.length > 1,
         },
       },
     ],
