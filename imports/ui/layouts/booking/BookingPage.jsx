@@ -17,22 +17,28 @@ import Login from '../user/Login/Login';
 import CartSummary from '../../components/CartSummary';
 import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
 
-// const createOptions = fontSize => ({
-//   style: {
-//     base: {
-//       fontSize,
-//       color: '#424770',
-//       letterSpacing: '0.025em',
-//       fontFamily: 'Source Code Pro, Menlo, monospace',
-//       '::placeholder': {
-//         color: '#aab7c4',
-//       },
-//     },
-//     invalid: {
-//       color: '#9e2146',
-//     },
-//   },
-// });
+const stripeInputStyle = {
+  style: {
+    base: {
+      boxSizing: 'border-box',
+      display: 'block',
+      height: '51px',
+      margin: '-14px auto 5px',
+      padding: '5px 15px 0 15px',
+      border: '1px solid #dbdbdb',
+      borderRadius: '4px',
+      fontSize: '15px',
+      color: '#000',
+      letterSpacing: 'normal',
+      '::placeholder': {
+        color: '#aab7c4',
+      },
+    },
+    invalid: {
+      color: '#9e2146',
+    },
+  },
+};
 
 const BookingPage = props => (
   <div className="container">
@@ -141,6 +147,7 @@ const BookingPage = props => (
                   value="creditCard"
                 />
                 <label htmlFor="creditCart">Credit / Debit Card</label>
+                {/* TODO: host card logo png on CDN */}
                 <img className="payment-logo" src="https://i.imgur.com/IHEKLgm.png" alt="" />
               </div>
 
@@ -148,44 +155,42 @@ const BookingPage = props => (
                 <div className="row">
                   <div className="col-md-6">
                     <div className="card-label">
-                      <label htmlFor="nameOnCard">Name on Card</label>
-                      <input id="nameOnCard" name="nameOnCard" required type="text" />
+                      <label>Name on Card</label>
+                      <input name="nameOnCard" required type="text" />
                     </div>
                   </div>
 
                   <div className="col-md-6">
                     <div className="card-label">
                       <label>Card number</label>
-                      <CardNumberElement />
+                      <CardNumberElement placeholder="" />
                     </div>
                   </div>
 
                   <div className="col-md-4">
                     <div className="card-label">
-                      <label>Expiration date</label>
+                      <label>Expiration</label>
                       <CardExpiryElement />
                     </div>
                   </div>
 
                   <div className="col-md-4">
                     <div className="card-label">
-                      <label>CVV</label>
-                      <CardCVCElement />
+                      <label>CVC</label>
+                      <CardCVCElement placeholder="" />
                     </div>
                   </div>
-
-                  <div className="col-md-4">
-                    <div className="card-label">
-                      <Checkbox
-                        defaultChecked
-                        name="saveCard"
-                        onChange={(event, data) => {
-                          props.onChange({ target: { name: 'saveCard', value: data.checked } });
-                        }}
-                        label={<label>save this card</label>}
-                      />
-                    </div>
-                  </div>
+                </div>
+                <div className="row">
+                  <Checkbox
+                    style={{ padding: '0 20px' }}
+                    defaultChecked
+                    name="saveCard"
+                    onChange={(event, data) => {
+                      props.onChange({ target: { name: 'saveCard', value: data.checked } });
+                    }}
+                    label={<label>save this card</label>}
+                  />
                 </div>
               </div>
             </div>

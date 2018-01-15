@@ -208,3 +208,22 @@
   background: #db2828;
   border-radius: 3px;
 }
+
+/* -- Stripe Element customise -- */
+.StripeElement {
+  display: block;
+  margin: 10px 0 20px 0;
+  width: 100%;
+  padding: 10px 14px;
+  box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.06);
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: white;
+}
+
+.StripeElement--focus {
+  -webkit-transition: box-shadow 0.2s !important;
+  transition: box-shadow 0.2s !important;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.07);
+  border: 1px solid #d8d8d8;
+}
