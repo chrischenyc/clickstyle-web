@@ -17,29 +17,6 @@ import Login from '../user/Login/Login';
 import CartSummary from '../../components/CartSummary';
 import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
 
-const stripeInputStyle = {
-  style: {
-    base: {
-      boxSizing: 'border-box',
-      display: 'block',
-      height: '51px',
-      margin: '-14px auto 5px',
-      padding: '5px 15px 0 15px',
-      border: '1px solid #dbdbdb',
-      borderRadius: '4px',
-      fontSize: '15px',
-      color: '#000',
-      letterSpacing: 'normal',
-      '::placeholder': {
-        color: '#aab7c4',
-      },
-    },
-    invalid: {
-      color: '#9e2146',
-    },
-  },
-};
-
 const BookingPage = props => (
   <div className="container">
     <div className="row margin-top-60 margin-bottom-60">
