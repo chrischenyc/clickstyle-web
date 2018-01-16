@@ -213,6 +213,12 @@ class SearchBar extends Component {
                 onFocus={(e) => {
                   this.handleServiceChange(e.target);
                 }}
+                onKeyPress={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                    this.handleSearch();
+                  }
+                }}
               />
             }
             name="service"
@@ -232,7 +238,17 @@ class SearchBar extends Component {
 
         <div className="main-search-input-item suburb">
           <Search
-            input={<input type="text" />}
+            input={
+              <input
+                type="text"
+                onKeyPress={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                    this.handleSearch();
+                  }
+                }}
+              />
+            }
             name="suburb"
             placeholder="Suburb, postcode"
             value={suburb}
