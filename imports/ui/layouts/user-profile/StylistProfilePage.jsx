@@ -2,22 +2,20 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { ShareButtons } from 'react-share';
-import { Button, Icon } from 'semantic-ui-react';
+import { Responsive } from 'semantic-ui-react';
 import classNames from 'classnames';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
-import { dayOfWeekAsString, formatMonthYear } from '../../../modules/format-date';
-import OpenHourString from '../../../modules/client/OpenHourString';
+import { formatMonthYear } from '../../../modules/format-date';
 
 import StylistServiceSection from './StylistServiceSection';
 import StylistReviewsSection from './StylistReviewsSection';
 import StylistPortfolioSection from './StylistPortfolioSection';
 import StylistBookingSection from './StylistBookingSection';
-
-const { FacebookShareButton, TwitterShareButton } = ShareButtons;
+import StylistHoursSection from './StylistHoursSection';
+import StylistShareSection from './StylistShareSection';
 
 const UserProfilePage = ({
   user,
@@ -71,6 +69,20 @@ const UserProfilePage = ({
         <div className="row">
           {/* -- Content -- */}
           <div className="col-lg-8 col-md-8 margin-top-70">
+            <Responsive maxWidth={1023} className="margin-bottom-20">
+              {stylist.openHours && <StylistHoursSection openHours={stylist.openHours} />}
+
+              {/* -- Share / Like -- */}
+              <div className="margin-top-35 margin-bottom-35">
+                <StylistShareSection
+                  stylist={user.stylist}
+                  userId={userId}
+                  authenticated={authenticated}
+                  favourStylist={favourStylist}
+                />
+              </div>
+            </Responsive>
+
             {/* -- About -- */}
             {!_.isEmpty(profile.about) && (
               <div id="stylist-profile-overview" className="listing-section margin-bottom-50">
@@ -109,8 +121,8 @@ const UserProfilePage = ({
               stylist.reviews.length > 0 && <StylistReviewsSection reviews={stylist.reviews} />}
           </div>
 
-          {/* -- Sidebar -- */}
-          <div className="col-lg-4 col-md-4 margin-top-70">
+          {/* -- Sidebar for desktop version -- */}
+          <Responsive minWidth={1024} className="col-lg-4 col-md-4 margin-top-70">
             {/* only display book section if stylist is not current user */}
             {(_.isNil(userId) || userId !== stylist.owner) && (
               <div className="boxed-widget booking-widget">
@@ -120,72 +132,23 @@ const UserProfilePage = ({
 
             {/* -- Opening Hours -- */}
             <div
-              className={classNames('boxed-widget', 'opening-hours', {
+              className={classNames({
                 'margin-top-35': _.isNil(userId) || userId !== stylist.owner,
               })}
             >
-              <h3>
-                <i className="sl sl-icon-clock" /> Opening Hours
-              </h3>
-              <ul>
-                {stylist.openHours &&
-                  stylist.openHours.map(openHour => (
-                    <li key={openHour.day}>
-                      {dayOfWeekAsString(openHour.day)}
-                      <span>{OpenHourString(openHour)}</span>
-                    </li>
-                  ))}
-              </ul>
+              {stylist.openHours && <StylistHoursSection openHours={stylist.openHours} />}
             </div>
 
             {/* -- Share / Like -- */}
-            <div className="listing-share margin-top-35 margin-bottom-35 no-border">
-              {authenticated &&
-                userId &&
-                userId !== stylist.owner && (
-                  <Button
-                    circular
-                    basic={!stylist.favoured}
-                    color="red"
-                    onClick={favourStylist}
-                    className="margin-bottom-10"
-                  >
-                    <Icon name="heart" />
-                    {stylist.favoured ? 'Un-favourite' : 'Favourite'}&nbsp;this stylist
-                  </Button>
-                )}
-              {stylist.favourites &&
-                stylist.favourites.length > 0 && (
-                  <span>{stylist.favourites.length} favourites</span>
-                )}
-
-              {/* -- Share Buttons -- */}
-              <ul className="share-buttons margin-top-20 margin-bottom-0">
-                <li>
-                  <FacebookShareButton
-                    url={window.location.href}
-                    quote={`check this stylist I found on @${Meteor.settings.public.facebookId}`}
-                  >
-                    <Button circular color="facebook">
-                      Share on Facebook
-                    </Button>
-                  </FacebookShareButton>
-                </li>
-                <li>
-                  <TwitterShareButton
-                    url={window.location.href}
-                    title="check this stylist I found"
-                    via={Meteor.settings.public.twitterId}
-                  >
-                    <Button circular color="twitter">
-                      Tweet
-                    </Button>
-                  </TwitterShareButton>
-                </li>
-              </ul>
-              <div className="clearfix" />
+            <div className="margin-top-35 margin-bottom-35">
+              <StylistShareSection
+                stylist={user.stylist}
+                userId={userId}
+                authenticated={authenticated}
+                favourStylist={favourStylist}
+              />
             </div>
-          </div>
+          </Responsive>
         </div>
       </div>
     </div>
