@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Button } from 'semantic-ui-react';
 
+import formatPrice from '../../../modules/format-price';
+
 const StylistServiceSectionItem = ({ title, description, price }) => (
   <div className="pricing-list-section-item">
     <div className="col-lg-9 col-md-8">
@@ -11,7 +13,7 @@ const StylistServiceSectionItem = ({ title, description, price }) => (
     </div>
     <div className="col-lg-3 col-md-4">
       <div className="price-list-section-item-price">
-        ${price}
+        {formatPrice(price)}
         <Button type="button" color="teal" size="small" style={{ marginLeft: '1rem' }}>
           Add
         </Button>

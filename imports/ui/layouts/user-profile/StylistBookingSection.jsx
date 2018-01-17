@@ -16,7 +16,6 @@ import {
   datePickerFormat,
 } from '../../../modules/format-date';
 import { setUserInfo } from '../../../modules/client/redux/cart';
-
 import CartSummary from '../../components/CartSummary';
 
 const StylistBookingSection = props => (

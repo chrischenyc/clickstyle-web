@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Dropdown, Menu, Responsive, Button, Container } from 'semantic-ui-react';
+import { Dropdown, Menu, Responsive, Button, Container, Icon } from 'semantic-ui-react';
 import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
 
@@ -13,6 +13,7 @@ import ModalLink from './ModalLink';
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
 import SearchBar from './SearchBar/SearchBar';
+import formatPrice from '../../modules/format-price';
 
 const menuStyle = {
   border: 'none',
@@ -41,7 +42,7 @@ class Header extends Component {
   render() {
     const { menuFixed } = this.state;
     const {
-      authenticated, firstName, fullContent, searchBar,
+      authenticated, firstName, fullContent, searchBar, cart,
     } = this.props;
 
     return (
@@ -132,6 +133,16 @@ class Header extends Component {
                 </Dropdown>
               )}
             </Responsive>
+
+            <Responsive maxWidth={1024} as={Menu.Menu} position="right">
+              {/* only display cart in header on mobile screen, when cart isn't empty */}
+              {cart.showCartInHeader && (
+                <Menu.Item as={Link} to="/join" style={{ fontSize: '1rem', paddingRight: 0 }}>
+                  <Icon name="cart" />
+                  {`${formatPrice(cart.total)} (${cart.count})`}
+                </Menu.Item>
+              )}
+            </Responsive>
           </Container>
 
           {searchBar && (
@@ -158,11 +169,13 @@ Header.propTypes = {
   firstName: PropTypes.string,
   fullContent: PropTypes.bool, // if false, header links only contain user menu
   searchBar: PropTypes.bool,
+  cart: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
   firstName: state.user.profile && state.user.profile.name && state.user.profile.name.first,
+  cart: state.cart,
 });
 
 export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(Header);

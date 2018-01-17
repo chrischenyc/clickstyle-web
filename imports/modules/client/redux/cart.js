@@ -53,6 +53,20 @@ const calculateTotal = (services) => {
   return total;
 };
 
+const calculateCount = (services) => {
+  let count = 0;
+
+  services.forEach((service) => {
+    count += 1;
+
+    service.addons.forEach(() => {
+      count += 1;
+    });
+  });
+
+  return count;
+};
+
 // --------- actions ----------
 export function selectStylist(stylist) {
   return {
@@ -94,13 +108,15 @@ export function setUserInfo(info) {
 
 // --------- reducer ----------
 const defaultState = {
+  showCartInHeader: false,
   stylist: null,
   services: [],
   total: 0,
+  count: 0,
   firstName: '',
   lastName: '',
   email: '',
-  phone: '',
+  mobile: '',
   address: '',
   date: '',
   time: '',
@@ -134,11 +150,19 @@ const reducer = (state = defaultState, action) => {
           stylist: { _id: stylist._id, owner: stylist.owner },
           services,
           total: calculateTotal(services),
+          count: calculateCount(services),
+          showCartInHeader: calculateTotal(services) > 0,
         };
       }
 
       const services = updateServices(state.services, service, addon);
-      return { ...state, services, total: calculateTotal(services) };
+      return {
+        ...state,
+        services,
+        total: calculateTotal(services),
+        count: calculateCount(services),
+        showCartInHeader: calculateTotal(services) > 0,
+      };
     }
 
     case 'CART_DELETE_SERVICE': {
@@ -146,7 +170,13 @@ const reducer = (state = defaultState, action) => {
 
       const services = state.services.filter(s => s._id !== service._id);
 
-      return { ...state, services, total: calculateTotal(services) };
+      return {
+        ...state,
+        services,
+        total: calculateTotal(services),
+        count: calculateCount(services),
+        showCartInHeader: calculateTotal(services) > 0,
+      };
     }
 
     case 'CART_DELETE_ADDON': {
@@ -159,7 +189,13 @@ const reducer = (state = defaultState, action) => {
         return s;
       });
 
-      return { ...state, services, total: calculateTotal(services) };
+      return {
+        ...state,
+        services,
+        total: calculateTotal(services),
+        count: calculateCount(services),
+        showCartInHeader: calculateTotal(services) > 0,
+      };
     }
 
     case 'CART_SET_USER_INFO': {

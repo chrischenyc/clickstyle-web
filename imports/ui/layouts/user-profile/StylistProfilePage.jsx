@@ -69,7 +69,7 @@ const UserProfilePage = ({
         <div className="row">
           {/* -- Content -- */}
           <div className="col-lg-8 col-md-8 margin-top-70">
-            <Responsive maxWidth={1023} className="margin-bottom-20">
+            <Responsive maxWidth={1024} className="margin-bottom-20">
               {stylist.openHours && <StylistHoursSection openHours={stylist.openHours} />}
 
               {/* -- Share / Like -- */}
@@ -122,7 +122,7 @@ const UserProfilePage = ({
           </div>
 
           {/* -- Sidebar for desktop version -- */}
-          <Responsive minWidth={1024} className="col-lg-4 col-md-4 margin-top-70">
+          <Responsive minWidth={1025} className="col-lg-4 col-md-4 margin-top-70">
             {/* only display book section if stylist is not current user */}
             {(_.isNil(userId) || userId !== stylist.owner) && (
               <div className="boxed-widget booking-widget">
