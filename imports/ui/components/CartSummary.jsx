@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { deleteService, deleteAddon } from '../../modules/client/redux/cart';
+import formatPrice from '../../modules/format-price';
 
 const CartSummary = props => (
   <ul>
@@ -16,7 +17,7 @@ const CartSummary = props => (
         />
 
         {service.name}
-        <span>{`$${service.basePrice}`}</span>
+        <span>{formatPrice(service.basePrice)}</span>
         <ul>
           {service.addons.map(addon => (
             <li key={addon._id}>
@@ -28,7 +29,7 @@ const CartSummary = props => (
               />
 
               {addon.name}
-              <span>{`$${addon.price}`}</span>
+              <span>{formatPrice(addon.price)}</span>
             </li>
           ))}
         </ul>
@@ -37,7 +38,7 @@ const CartSummary = props => (
 
     {props.cart.total > 0 && (
       <li className="total-cost">
-        Total<span>${props.cart.total}</span>
+        Total<span>{formatPrice(props.cart.total)}</span>
       </li>
     )}
   </ul>
