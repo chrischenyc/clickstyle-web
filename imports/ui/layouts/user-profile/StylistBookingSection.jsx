@@ -36,7 +36,7 @@ const StylistBookingSection = props => (
               ? formatDateDisplayString(parseDateQueryString(props.cart.date))
               : ''
           }
-          placeholder="Date"
+          placeholder="Select date"
           onDayChange={(date) => {
             props.setUserInfo({ date: _.isNil(date) ? '' : formatDateQueryString(date) });
           }}
@@ -54,7 +54,7 @@ const StylistBookingSection = props => (
 
       <div className="col-lg-6 col-md-12">
         <TimeInput
-          placeholder="Time"
+          placeholder="Select time"
           optional
           value={props.cart.time}
           onChange={(time) => {
@@ -74,7 +74,7 @@ const StylistBookingSection = props => (
       fluid
       color="teal"
       className="margin-top-25"
-      disabled={props.cart.total === 0}
+      disabled={props.cart.total === 0 || _.isEmpty(props.cart.date) || _.isEmpty(props.cart.time)}
       onClick={props.onBook}
     >
       Book Now
