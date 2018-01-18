@@ -68,36 +68,21 @@ const UserProfilePage = ({
       <div className="container">
         <div className="row">
           {/* -- Content -- */}
-          <div className="col-lg-8 col-md-8 margin-top-70">
-            <Responsive maxWidth={1024} className="margin-bottom-20">
-              {stylist.openHours && <StylistHoursSection openHours={stylist.openHours} />}
-
-              {/* -- Share / Like -- */}
-              <div className="margin-top-35 margin-bottom-35">
-                <StylistShareSection
-                  stylist={user.stylist}
-                  userId={userId}
-                  authenticated={authenticated}
-                  favourStylist={favourStylist}
-                />
-              </div>
-            </Responsive>
-
-            {/* -- About -- */}
-            {!_.isEmpty(profile.about) && (
+          <div className="col-lg-8 col-md-8 margin-top-50">
+            {/* -- About, Products -- */}
+            {(!_.isEmpty(profile.about) || !_.isEmpty(profile.products)) && (
               <div id="stylist-profile-overview" className="listing-section margin-bottom-50">
-                <h3 className="listing-desc-headline">About me</h3>
+                {!_.isEmpty(profile.about) && <p>{profile.about}</p>}
 
-                <p>{profile.about}</p>
-              </div>
-            )}
+                {!_.isEmpty(profile.products) && (
+                  <p>Products used: {profile.products.map(product => product.name).join(', ')}</p>
+                )}
 
-            {/* -- Products -- */}
-            {!_.isEmpty(profile.products) && (
-              <div id="stylist-profile-overview" className="listing-section margin-bottom-50">
-                <h3 className="listing-desc-headline">Products used</h3>
-
-                <p>{profile.products.map(product => product.name).join(', ')}</p>
+                {/* -- mobile version content before price list -- */}
+                <Responsive maxWidth={1024}>
+                  {/* -- Open Hours -- */}
+                  {stylist.openHours && <StylistHoursSection openHours={stylist.openHours} />}
+                </Responsive>
               </div>
             )}
 
@@ -117,12 +102,25 @@ const UserProfilePage = ({
               </div>
             </div>
 
+            <Responsive maxWidth={1024}>
+              {/* -- Share / Like -- */}
+              <div className="margin-bottom-35">
+                <StylistShareSection
+                  stylist={user.stylist}
+                  userId={userId}
+                  authenticated={authenticated}
+                  favourStylist={favourStylist}
+                />
+              </div>
+            </Responsive>
+
+            {/* -- Reviews -- */}
             {stylist.reviews &&
               stylist.reviews.length > 0 && <StylistReviewsSection reviews={stylist.reviews} />}
           </div>
 
           {/* -- Sidebar for desktop version -- */}
-          <Responsive minWidth={1025} className="col-lg-4 col-md-4 margin-top-70">
+          <Responsive minWidth={1025} className="col-lg-4 col-md-4 margin-top-50">
             {/* only display book section if stylist is not current user */}
             {(_.isNil(userId) || userId !== stylist.owner) && (
               <div className="boxed-widget booking-widget">
