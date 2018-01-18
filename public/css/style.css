@@ -90,6 +90,16 @@
   cursor: pointer;
 }
 
+@media (max-width: 991px) {
+  .profile-header .profile-header-bg {
+    height: 220px;
+  }
+
+  .profile-header .profile-header-carousel-image {
+    height: 220px;
+  }
+}
+
 .profile-header #avatar {
   position: relative;
   top: -60px;
