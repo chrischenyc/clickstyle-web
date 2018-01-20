@@ -180,3 +180,25 @@ export const validateStylistOpenHours = (openHours) => {
 
   return errors;
 };
+
+export const validateBooking = (email, firstName, lastName, mobile, address) => {
+  const errors = {};
+
+  if (validator.isEmpty(firstName)) {
+    errors.firstName = 'first name is required';
+  } else if (validator.isEmpty(lastName)) {
+    errors.lastName = 'last name is required';
+  } else if (validator.isEmpty(email)) {
+    errors.email = 'email is required';
+  } else if (!validator.isEmail(email)) {
+    errors.email = 'invalid email';
+  } else if (validator.isEmpty(mobile)) {
+    errors.mobile = 'Mobile number is required';
+  } else if (!validator.isMobilePhone(mobile, 'en-AU')) {
+    errors.mobile = 'Invalid mobile number';
+  } else if (validator.isEmpty(address)) {
+    errors.address = 'Address is required';
+  }
+
+  return errors;
+};

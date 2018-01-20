@@ -16,7 +16,7 @@ FormFieldNote.propTypes = {
 };
 
 export const FormFieldErrorMessage = ({ message, ...rest }) => {
-  if (_.isEmpty(message)) {
+  if (_.isNil(message) || _.isEmpty(message)) {
     return '';
   }
 
