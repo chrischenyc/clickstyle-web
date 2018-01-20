@@ -7,11 +7,11 @@ import formatPrice from '../../../modules/format-price';
 
 const StylistServiceSectionItem = ({ title, description, price }) => (
   <div className="pricing-list-section-item">
-    <div className="col-lg-9 col-md-8">
+    <div className="col-lg-9 col-md-8 col-sm-7 col-xs-7">
       <h5>{title}</h5>
       {!_.isEmpty(description) && <p>{description}</p>}
     </div>
-    <div className="col-lg-3 col-md-4">
+    <div className="col-lg-3 col-md-4 col-sm-5 col-xs-5 padding-left-0 padding-right-0">
       <div className="price-list-section-item-price">
         {formatPrice(price)}
         <Button type="button" color="teal" size="small" style={{ marginLeft: '1rem' }}>

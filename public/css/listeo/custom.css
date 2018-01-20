@@ -53,10 +53,6 @@ textarea:focus {
   color: #fff;
 }
 
-.pricing-list-container .pricing-list-section-item {
-  padding: 1rem 1.5rem;
-}
-
 .pricing-list-container i {
   color: #fff;
   font-weight: 500;
@@ -85,23 +81,43 @@ textarea:focus {
 .pricing-list-container
   .pricing-list-section-item
   .price-list-section-item-price {
-  font-size: 1.25rem;
   color: #777;
+  float: right !important;
 }
 
 @media (min-width: 992px) {
+  .pricing-list-container .pricing-list-section-item {
+    padding: 1rem 1.5rem;
+  }
+
   .pricing-list-container
     .pricing-list-section-item
     .price-list-section-item-price {
-    float: right !important;
+    font-size: 1.25rem;
   }
 }
 
 @media (max-width: 991px) {
+  .pricing-list-container h4 {
+    font-size: 1.2rem;
+  }
+
+  .pricing-list-container h5 {
+    font-size: 1rem;
+  }
+
+  .pricing-list-container p {
+    font-size: 1rem;
+  }
+
+  .pricing-list-container .pricing-list-section-item {
+    padding: 1rem 0.25rem;
+  }
+
   .pricing-list-container
     .pricing-list-section-item
     .price-list-section-item-price {
-    margin-top: 1.5rem;
+    font-size: 1rem;
   }
 }
 
