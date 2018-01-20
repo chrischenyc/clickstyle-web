@@ -92,11 +92,11 @@
 
 @media (max-width: 991px) {
   .profile-header .profile-header-bg {
-    height: 220px;
+    height: 180px;
   }
 
   .profile-header .profile-header-carousel-image {
-    height: 220px;
+    height: 180px;
   }
 }
 
