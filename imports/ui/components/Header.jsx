@@ -137,7 +137,7 @@ class Header extends Component {
             <Responsive maxWidth={1024} as={Menu.Menu} position="right">
               {/* only display cart in header on mobile screen, when cart isn't empty */}
               {cart.showCartInHeader && (
-                <Menu.Item as={Link} to="/join" style={{ fontSize: '1rem', paddingRight: 0 }}>
+                <Menu.Item as={Link} to="/booking" style={{ fontSize: '1rem', paddingRight: 0 }}>
                   <Icon name="cart" />
                   {`${formatPrice(cart.total)} (${cart.count})`}
                 </Menu.Item>
