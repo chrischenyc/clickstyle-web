@@ -74,12 +74,17 @@ class UserProfilePage extends Component {
         </div>
 
         <div className="container">
-          <div className="row">
+          <div className="row margin-top-50 margin-bottom-50">
             {/* -- Content -- */}
-            <div className="col-lg-8 col-md-8 margin-top-50">
+            <div
+              className={classNames({
+                'col-lg-8 col-md-8 padding-right-30': this.props.screenWidth > 1024,
+                'col-12': this.props.screenWidth <= 1024,
+              })}
+            >
               {/* -- About, Products -- */}
               {(!_.isEmpty(profile.about) || !_.isEmpty(profile.products)) && (
-                <div id="stylist-profile-overview" className="listing-section margin-bottom-50">
+                <div id="stylist-profile-overview" className="listing-section margin-bottom-35">
                   {!_.isEmpty(profile.about) && <p>{profile.about}</p>}
 
                   {!_.isEmpty(profile.products) && (
@@ -95,7 +100,7 @@ class UserProfilePage extends Component {
               )}
 
               {/* -- Services -- */}
-              <div id="stylist-profile-pricing-list" className="listing-section margin-bottom-50">
+              <div id="stylist-profile-pricing-list" className="listing-section margin-bottom-35">
                 <h3 className="listing-desc-headline">Services</h3>
 
                 <div className="pricing-list-container">
@@ -124,16 +129,14 @@ class UserProfilePage extends Component {
                 </div>
               </div>
 
-              <Responsive maxWidth={1024}>
+              <Responsive maxWidth={1024} className="margin-bottom-35">
                 {/* -- Share / Like -- */}
-                <div className="margin-bottom-35">
-                  <StylistShareSection
-                    stylist={this.props.user.stylist}
-                    userId={this.props.userId}
-                    authenticated={this.props.authenticated}
-                    favourStylist={this.props.favourStylist}
-                  />
-                </div>
+                <StylistShareSection
+                  stylist={this.props.user.stylist}
+                  userId={this.props.userId}
+                  authenticated={this.props.authenticated}
+                  favourStylist={this.props.favourStylist}
+                />
               </Responsive>
 
               {/* -- Reviews -- */}
@@ -142,7 +145,7 @@ class UserProfilePage extends Component {
             </div>
 
             {/* -- Sidebar for desktop version -- */}
-            <Responsive minWidth={1025} className="col-lg-4 col-md-4 margin-top-50">
+            <Responsive minWidth={1025} className="col-lg-4 col-md-4">
               {/* only display book section if stylist is not current user */}
               {(_.isNil(this.props.userId) || this.props.userId !== stylist.owner) && (
                 <div className="boxed-widget booking-widget">

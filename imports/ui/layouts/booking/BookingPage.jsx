@@ -10,12 +10,14 @@ import {
   CardCVCElement,
   injectStripe,
 } from 'react-stripe-elements';
+import classNames from 'classnames';
 
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ModalLink from '../../components/ModalLink';
 import Login from '../user/Login/Login';
 import BookingPageSummarySection from './BookingPageSummarySection';
 import { FormFieldErrorMessage } from '../../components/FormInputField';
+import { withMediaQuery } from '../../components/HOC';
 
 class BookingPage extends Component {
   constructor(props) {
@@ -60,8 +62,13 @@ class BookingPage extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row margin-top-60 margin-bottom-60">
-          <div className="col-lg-8 col-md-8 padding-right-30">
+        <div className="row margin-top-50 margin-bottom-50">
+          <div
+            className={classNames({
+              'col-lg-8 col-md-8 padding-right-30': this.props.screenWidth > 1024,
+              'col-12': this.props.screenWidth <= 1024,
+            })}
+          >
             <Responsive maxWidth={1024} className="margin-bottom-20">
               <BookingPageSummarySection cart={this.props.cart} />
             </Responsive>
@@ -281,6 +288,7 @@ BookingPage.propTypes = {
   cart: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
   stripe: PropTypes.object.isRequired,
+  screenWidth: PropTypes.number.isRequired,
 };
 
-export default injectStripe(BookingPage);
+export default injectStripe(withMediaQuery(BookingPage));
