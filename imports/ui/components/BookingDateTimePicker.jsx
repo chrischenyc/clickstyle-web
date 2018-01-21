@@ -5,17 +5,17 @@ import _ from 'lodash';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { formatDate, parseDate } from 'react-day-picker/moment';
 import 'react-day-picker/lib/style.css';
-import '../../components/SearchBar/react-day-picker-custom.css';
+import './SearchBar/react-day-picker-custom.css';
 
 import {
   formatDateQueryString,
   parseDateQueryString,
   formatDateDisplayString,
   datePickerFormat,
-} from '../../../modules/format-date';
-import { setUserInfo } from '../../../modules/client/redux/cart';
+} from '../../modules/format-date';
+import { setUserInfo } from '../../modules/client/redux/cart';
 
-import TimeInput from '../../components/TimeInput';
+import TimeInput from './TimeInput';
 
 const BookingDateTimePicker = props => (
   <div className="row">

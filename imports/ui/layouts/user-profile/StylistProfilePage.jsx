@@ -19,7 +19,7 @@ import StylistPortfolioSection from './StylistPortfolioSection';
 import StylistBookingSection from './StylistBookingSection';
 import StylistHoursSection from './StylistHoursSection';
 import StylistShareSection from './StylistShareSection';
-import BookingDateTimePicker from './BookingDateTimePicker';
+import BookingDateTimePicker from '../../components/BookingDateTimePicker';
 
 class UserProfilePage extends Component {
   componentWillReceiveProps(nextProps) {
@@ -114,7 +114,7 @@ class UserProfilePage extends Component {
                             this.props.screenWidth <= 1024 &&
                             (_.isEmpty(this.props.cart.date) || _.isEmpty(this.props.cart.time))
                           ) {
-                            // TODO: on mobile screen, pop up date/time picker modal
+                            // on mobile screen, pop up date/time picker modal if date or time hasn't been set
                             this.props.openModal(
                               <BookingDateTimePicker />,
                               'Pick booking time',

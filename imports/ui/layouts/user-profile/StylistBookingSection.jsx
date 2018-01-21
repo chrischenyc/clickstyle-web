@@ -5,7 +5,7 @@ import { Button } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import CartSummary from '../../components/CartSummary';
-import BookingDateTimePicker from './BookingDateTimePicker';
+import BookingDateTimePicker from '../../components/BookingDateTimePicker';
 
 const StylistBookingSection = props => (
   <div className="booking">

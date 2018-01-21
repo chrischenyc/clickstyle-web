@@ -11,6 +11,7 @@ import {
   injectStripe,
 } from 'react-stripe-elements';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ModalLink from '../../components/ModalLink';
@@ -18,6 +19,8 @@ import Login from '../user/Login/Login';
 import BookingPageSummarySection from './BookingPageSummarySection';
 import { FormFieldErrorMessage } from '../../components/FormInputField';
 import { withMediaQuery } from '../../components/HOC';
+import { openModal, closeModal } from '../../../modules/client/redux/ui';
+import BookingDateTimePicker from '../../components/BookingDateTimePicker';
 
 class BookingPage extends Component {
   constructor(props) {
@@ -26,6 +29,24 @@ class BookingPage extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = { errors: {}, loading: false };
+  }
+
+  componentDidMount() {
+    if (_.isEmpty(this.props.cart.date) || _.isEmpty(this.props.cart.time)) {
+      // on mobile screen, pop up date/time picker modal if date or time hasn't been set
+      this.props.openModal(<BookingDateTimePicker />, 'Pick booking time', false);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // a way to detect user has picked booking date and time
+    if (
+      this.props.modalOpen &&
+      (_.isEmpty(this.props.cart.date) || _.isEmpty(this.props.cart.time)) &&
+      (!_.isEmpty(nextProps.cart.date) && !_.isEmpty(nextProps.cart.time))
+    ) {
+      this.props.closeModal();
+    }
   }
 
   handleSubmit() {
@@ -289,6 +310,13 @@ BookingPage.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   stripe: PropTypes.object.isRequired,
   screenWidth: PropTypes.number.isRequired,
+  modalOpen: PropTypes.bool.isRequired,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
-export default injectStripe(withMediaQuery(BookingPage));
+const mapStateToProps = state => ({
+  modalOpen: state.ui.modalOpen,
+});
+
+export default connect(mapStateToProps, { openModal, closeModal })(injectStripe(withMediaQuery(BookingPage)));
