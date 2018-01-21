@@ -8,7 +8,8 @@ const ModalContainer = props => (
   <Modal
     size="small"
     open
-    closeIcon
+    closeOnDimmerClick={props.dismissible}
+    closeIcon={props.dismissible}
     onClose={() => {
       props.closeModal();
     }}
@@ -27,11 +28,13 @@ ModalContainer.propTypes = {
   component: PropTypes.node.isRequired,
   title: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
+  dismissible: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   component: state.ui.modalComponent,
   title: state.ui.modalTitle,
+  dismissible: state.ui.modalDismissible,
 });
 
 export default connect(mapStateToProps, { closeModal })(ModalContainer);

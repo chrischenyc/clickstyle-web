@@ -8,11 +8,12 @@ export function toggleSlideMenu(open = null) {
   };
 }
 
-export function openModal(modalComponent, modalTitle) {
+export function openModal(modalComponent, modalTitle, modalDismissible) {
   return {
     type: 'UI_MODAL_OPEN',
     modalComponent,
     modalTitle,
+    modalDismissible,
   };
 }
 
@@ -35,6 +36,7 @@ const defaultState = {
   modalOpen: false,
   modalComponent: null,
   modalTitle: null,
+  modalDismissible: true,
   nextRoute: null,
 };
 
@@ -50,13 +52,14 @@ const reducer = (state = defaultState, action) => {
     }
 
     case 'UI_MODAL_OPEN': {
-      const { modalComponent, modalTitle } = action;
+      const { modalComponent, modalTitle, modalDismissible } = action;
 
       return {
         ...state,
         modalOpen: true,
         modalComponent,
         modalTitle,
+        modalDismissible,
       };
     }
 
@@ -66,6 +69,7 @@ const reducer = (state = defaultState, action) => {
         modalOpen: false,
         modalComponent: null,
         modalTitle: null,
+        modalDismissible: true,
       };
     }
 
