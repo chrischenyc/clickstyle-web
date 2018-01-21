@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Responsive } from 'semantic-ui-react';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
 import { formatMonthYear } from '../../../modules/format-date';
+import { openModal, closeModal } from '../../../modules/client/redux/ui';
+import { withMediaQuery } from '../../components/HOC';
 
 import StylistServiceSection from './StylistServiceSection';
 import StylistReviewsSection from './StylistReviewsSection';
@@ -16,6 +19,7 @@ import StylistPortfolioSection from './StylistPortfolioSection';
 import StylistBookingSection from './StylistBookingSection';
 import StylistHoursSection from './StylistHoursSection';
 import StylistShareSection from './StylistShareSection';
+import BookingDateTimePicker from './BookingDateTimePicker';
 
 const UserProfilePage = ({
   user,
@@ -24,6 +28,10 @@ const UserProfilePage = ({
   userId,
   onServiceSelected,
   onBook,
+  screenWidth,
+  cart,
+  openModal,
+  closeModal,
 }) => {
   if (_.isNil(user)) {
     return <Loading />;
@@ -96,7 +104,14 @@ const UserProfilePage = ({
                     <StylistServiceSection
                       key={service._id}
                       service={service}
-                      onServiceSelected={onServiceSelected}
+                      onServiceSelected={(selectedService, selectedAddon) => {
+                        if (screenWidth <= 1024 && (_.isEmpty(cart.date) || _.isEmpty(cart.time))) {
+                          // TODO: on mobile screen, pop up date/time picker modal
+                          openModal(<BookingDateTimePicker />, 'Pick booking time');
+                        }
+
+                        onServiceSelected(selectedService, selectedAddon);
+                      }}
                     />
                   ))}
               </div>
@@ -165,6 +180,14 @@ UserProfilePage.propTypes = {
   userId: PropTypes.string,
   onServiceSelected: PropTypes.func.isRequired,
   onBook: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  screenWidth: PropTypes.number.isRequired,
+  cart: PropTypes.object.isRequired,
 };
 
-export default UserProfilePage;
+const mapStateToProps = state => ({
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps, { openModal, closeModal })(withMediaQuery(UserProfilePage));
