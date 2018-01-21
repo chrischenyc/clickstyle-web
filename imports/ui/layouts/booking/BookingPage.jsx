@@ -14,8 +14,7 @@ import {
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ModalLink from '../../components/ModalLink';
 import Login from '../user/Login/Login';
-import CartSummary from '../../components/CartSummary';
-import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
+import BookingPageSummarySection from './BookingPageSummarySection';
 import { FormFieldErrorMessage } from '../../components/FormInputField';
 
 class BookingPage extends Component {
@@ -62,8 +61,11 @@ class BookingPage extends Component {
     return (
       <div className="container">
         <div className="row margin-top-60 margin-bottom-60">
-          {/* TODO: responsive  */}
           <div className="col-lg-8 col-md-8 padding-right-30">
+            <Responsive maxWidth={1024} className="margin-bottom-20">
+              <BookingPageSummarySection cart={this.props.cart} />
+            </Responsive>
+
             <form>
               <h3 className="margin-top-0 margin-bottom-30">Personal Details</h3>
 
@@ -262,42 +264,9 @@ class BookingPage extends Component {
             </form>
           </div>
 
-          {/* TODO: responsive  */}
-          <div className="col-lg-4 col-md-4">
-            <div className="boxed-widget opening-hours summary margin-top-0">
-              <h3>
-                <i className="fa fa-calendar-check-o" /> Booking Summary
-              </h3>
-
-              {!_.isNil(this.props.cart.stylist) && (
-                <h3>
-                  {`${this.props.cart.stylist.name.first} ${this.props.cart.stylist.name.last}`}
-                  {this.props.cart.stylist.address &&
-                    this.props.cart.stylist.address.suburb &&
-                    ` (${this.props.cart.stylist.address.suburb}, ${
-                      this.props.cart.stylist.address.state
-                    })`}
-                </h3>
-              )}
-
-              <ul>
-                <li>
-                  Date{' '}
-                  <span>
-                    {parseDateQueryString(this.props.cart.date).isValid() &&
-                      formatDateDisplayString(parseDateQueryString(this.props.cart.date))}
-                  </span>
-                </li>
-                <li>
-                  Time <span>{this.props.cart.time}</span>
-                </li>
-              </ul>
-
-              <div className="booking margin-top-10">
-                <CartSummary />
-              </div>
-            </div>
-          </div>
+          <Responsive minWidth={1025} className="col-lg-4 col-md-4">
+            <BookingPageSummarySection cart={this.props.cart} />
+          </Responsive>
         </div>
       </div>
     );
