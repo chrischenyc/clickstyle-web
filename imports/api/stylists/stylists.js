@@ -202,7 +202,7 @@ const StylistsSchema = new SimpleSchema({
   // each stands for a 15-min time slot that has been booked or is unavailable
   // there's a system cron job to auto-update this info for each stylist
   occupiedTimeSlots: Array,
-  'occupiedTimeSlots.$': SimpleSchema.Integer, // format YYMMDDHHmm
+  'occupiedTimeSlots.$': String, // format YYYYMMDDHHmm
 
   areas: {
     type: AreasSchema,
