@@ -1,10 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ShareButtons } from 'react-share';
 import { Button, Icon } from 'semantic-ui-react';
-
-const { FacebookShareButton, TwitterShareButton } = ShareButtons;
+import { FacebookShareButton, TwitterShareButton } from 'react-share';
 
 const StylistShareSection = props => (
   <div className="listing-share no-border">
