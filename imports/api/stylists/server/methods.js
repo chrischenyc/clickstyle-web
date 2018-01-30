@@ -12,9 +12,9 @@ import Suburbs from '../../suburbs/suburbs';
 import { SearchLimit } from '../../../modules/server/constants';
 import coordinatesDistance from '../../../modules/server/coordinates-distance';
 import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
-import isStylistAvailable from '../../../modules/stylist-available';
 import isTimeQueryValid from '../../../modules/validate-time-query';
-import { parseDateQueryString, weekdayOfDateQueryString } from '../../../modules/format-date';
+import { parseDateQueryString } from '../../../modules/format-date';
+import updateStylistOccupiedTimeSlots from '../../../modules/server/update-stylist-occupied-timeslots';
 
 Meteor.methods({
   'stylists.update.services': function updateStylistsServices(services) {
@@ -29,7 +29,7 @@ Meteor.methods({
 
       // insert user-defined addons
       Meteor.defer(() => {
-        services.forEach(service => {
+        services.forEach((service) => {
           const addonNames = service.addons.map(addon => addon.name);
           const publicAddonNames = Addons.find({ serviceId: service._id })
             .fetch()
@@ -38,7 +38,7 @@ Meteor.methods({
             (arrVal, othVal) => _.isEqual(arrVal.toLowerCase(), othVal.toLowerCase()),
           ]);
 
-          newAddonNames.forEach(name => {
+          newAddonNames.forEach((name) => {
             Addons.insert({
               serviceId: service._id,
               name,
@@ -71,6 +71,7 @@ Meteor.methods({
 
     try {
       Stylists.update({ owner: this.userId }, { $set: { openHours } });
+      updateStylistOccupiedTimeSlots(this.userId, 90);
 
       log.info(
         'Meteor.methods: stylists.update.openHours',
@@ -111,7 +112,7 @@ Meteor.methods({
             { fields: { lat: 1, lon: 1 } },
           )
             .fetch()
-            .filter(suburb => {
+            .filter((suburb) => {
               const distance = coordinatesDistance(
                 selectedSuburb.lat,
                 selectedSuburb.lon,
@@ -253,7 +254,7 @@ Meteor.methods({
       const { portfolioPhotos: currentPhotos } = Stylists.findOne({ owner: this.userId });
 
       if (currentPhotos) {
-        currentPhotos.forEach(photo => {
+        currentPhotos.forEach((photo) => {
           if (newPhotoUrls.indexOf(photo.url) === -1) {
             deleteCloudinaryFile(photo.url);
           }
@@ -285,7 +286,9 @@ Meteor.methods({
   'stylists.search': function searchStylists(data) {
     check(data, Object);
 
-    const { service, suburb: suburbName, postcode, date, time, offset } = data;
+    const {
+      service, suburb: suburbName, postcode, date, time, duration, offset,
+    } = data;
     check(service, String);
     if (suburbName) {
       check(suburbName, String);
@@ -293,18 +296,27 @@ Meteor.methods({
     if (postcode) {
       check(postcode, String);
     }
-    check(date, String);
-    check(time, String);
-    check(offset, Number);
+    if (date) {
+      check(date, String);
+    }
+    if (time) {
+      check(time, String);
+    }
+    if (duration) {
+      check(duration, Number);
+    }
+    if (offset) {
+      check(offset, Number);
+    }
 
     try {
-      // base query selector, only look for published stylists
+      // ----------- BASE SELECTOR -----------------
       let selector = {
         published: true,
       };
 
+      // ----------- SELECTOR FOR SERVICE/ADDON NAME, STYLIST NAME -----------------
       // TODO: replace name search selectors with $text $search
-      // add query selector of service/addon name, stylist name
       const serviceNameSelector = { 'services.name': RegExp(service, 'i') };
       const addonNameSelector = {
         'services.addons.name': RegExp(service, 'i'),
@@ -330,7 +342,7 @@ Meteor.methods({
         ...nameSelector,
       };
 
-      // add query selector of available suburbs
+      // ----------- SELECTOR FOR SUBURB -----------------
       if (suburbName) {
         const suburbsSelector = { name: RegExp(suburbName, 'i') };
         if (postcode && postcode !== undefined) {
@@ -345,12 +357,79 @@ Meteor.methods({
         selector = { ...selector, ...suburbSelector };
       }
 
-      // TODO: add query selector of open hours
+      // ----------- SELECTOR FOR OPEN HOURS -----------------
       const isDateValid = parseDateQueryString(date).isValid();
-      const weekday = weekdayOfDateQueryString(date);
       const isTimeValid = isTimeQueryValid(time);
+      if (isDateValid && isTimeValid) {
+        const fromTimeString = time.replace(':', '');
 
-      // query Stylists
+        // calculate to string
+        const fromHour = parseInt(time.split(':')[0], 10);
+        const fromMinute = parseInt(time.split(':')[1], 10);
+
+        let toHour = fromHour;
+        let toMinute = fromMinute + duration;
+        if (toMinute >= 60) {
+          toHour += 1;
+          toMinute -= 60;
+        }
+        const toTimeString =
+          toHour.toString().padStart(2, '0') + toMinute.toString().padStart(2, '0');
+
+        const fromDateTime = parseInt(date + fromTimeString, 10);
+        const toDateTime = parseInt(date + toTimeString, 10);
+
+        // const dateTimeSelector = {
+        //   $nor: [
+        //     {
+        //       occupiedTimeSlots: {
+        //         $elemMatch: { from: { $lte: fromDateTime }, to: { $gte: toDateTime } },
+        //       },
+        //     },
+        //     {
+        //       occupiedTimeSlots: {
+        //         $elemMatch: { from: { $gte: fromDateTime, $lt: toDateTime } },
+        //       },
+        //     },
+        //     {
+        //       occupiedTimeSlots: {
+        //         $elemMatch: { to: { $gt: fromDateTime, $lte: toDateTime } },
+        //       },
+        //     },
+        //   ],
+        // };
+
+        const dateTimeSelector = {
+          $and: [
+            {
+              occupiedTimeSlots: {
+                $not: { $elemMatch: { from: { $lte: fromDateTime }, to: { $gte: toDateTime } } },
+              },
+            },
+            // {
+            //   occupiedTimeSlots: {
+            //     $not: { $elemMatch: { from: { $gte: fromDateTime, $lt: toDateTime } } },
+            //   },
+            // },
+            // {
+            //   occupiedTimeSlots: {
+            //     $not: { $elemMatch: { to: { $gt: fromDateTime, $lte: toDateTime } } },
+            //   },
+            // },
+          ],
+        };
+
+        selector = {
+          ...selector,
+          ...dateTimeSelector,
+        };
+
+        selector = dateTimeSelector;
+      }
+
+      console.log(JSON.stringify(selector));
+
+      // ----------- RUN QUERY -----------------
       const stylists = Stylists.find(selector, {
         fields: {
           owner: 1,
@@ -385,11 +464,11 @@ rateLimit({
     'stylists.update.services',
     'stylists.update.openHours',
     'stylists.update.areas',
-    'stylists.search',
     'stylists.favourite',
     'stylists.favoured',
     'stylists.portfolio.photos',
     'stylists.portfolio.photos.update',
+    'stylists.search',
   ],
   limit: 5,
   timeRange: 1000,

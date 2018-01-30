@@ -7,7 +7,7 @@ export const formatYear = date => moment(date).format('YYYY');
 export const formatMonthYear = date => moment(date).format('MMMM YYYY');
 export const formatFileTimestamp = date => moment(date).format('YYYYMMDDHHmmss');
 
-export const urlQueryFormat = 'YYYY-MM-DD';
+export const urlQueryFormat = 'YYMMDD';
 export const formatDateQueryString = date => moment(date).format(urlQueryFormat);
 export const parseDateQueryString = string => moment(string, urlQueryFormat);
 export const weekdayOfDateQueryString = string => moment(string, urlQueryFormat).weekday();

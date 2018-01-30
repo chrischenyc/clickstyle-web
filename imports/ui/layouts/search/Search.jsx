@@ -6,13 +6,14 @@ import _ from 'lodash';
 import { withLoading } from '../../components/HOC';
 import SearchPage from './SearchPage';
 import parseSearchUrlParams from '../../../modules/client/parse-search-url';
+import { DEFAULT_DURATION } from '../../../modules/constants';
 
 class Search extends Component {
   constructor(props) {
     super(props);
 
     const {
-      service, suburb, postcode, date, time,
+      service, suburb, postcode, date, time, duration,
     } = parseSearchUrlParams(props);
 
     this.state = {
@@ -21,6 +22,7 @@ class Search extends Component {
       postcode: postcode || '',
       date: date || '',
       time: time || '',
+      duration: duration || DEFAULT_DURATION,
       searching: false,
       searched: false,
       error: '',
@@ -40,6 +42,7 @@ class Search extends Component {
         this.state.postcode,
         this.state.date,
         this.state.time,
+        this.state.duration,
       );
     }
   }
@@ -50,11 +53,11 @@ class Search extends Component {
       !_.isEqual(this.props.location.search, nextProps.location.search)
     ) {
       const {
-        service, suburb, postcode, date, time,
+        service, suburb, postcode, date, time, duration,
       } = parseSearchUrlParams(nextProps);
 
       if (service) {
-        this.search(service, suburb, postcode, date, time);
+        this.search(service, suburb, postcode, date, time, duration);
       }
     }
   }
@@ -66,11 +69,12 @@ class Search extends Component {
       this.state.postcode,
       this.state.date,
       this.state.time,
+      this.state.duration,
       this.state.stylists.length,
     );
   }
 
-  search(service, suburb, postcode, date, time, offset = 0) {
+  search(service, suburb, postcode, date, time, duration, offset = 0) {
     this.setState({
       searching: true,
       searched: false,
@@ -96,6 +100,7 @@ class Search extends Component {
         postcode,
         date,
         time,
+        duration,
         offset,
       },
       (error, result) => {

@@ -18,6 +18,7 @@ import {
 
 import { ServiceNameToSEOName, SuburbNameToSEOName } from '../../../modules/seo-name';
 import parseSearchUrlParams from '../../../modules/client/parse-search-url';
+import { DEFAULT_DURATION } from '../../../modules/constants';
 
 const suburbString = (suburbObject) => {
   if (!_.isNil(suburbObject) && !_.isNil(suburbObject.name)) {
@@ -40,7 +41,7 @@ class SearchBar extends Component {
     super(props);
 
     const {
-      service, suburb, postcode, date, time,
+      service, suburb, postcode, date, time, duration,
     } = parseSearchUrlParams(props);
 
     this.state = {
@@ -49,6 +50,7 @@ class SearchBar extends Component {
       selectedSuburb: suburbObject(suburb, postcode),
       date: date || '',
       time: time || '',
+      duration: duration || DEFAULT_DURATION, // in minutes
       services: [], // services/addons keywords search data source
       matchedServices: [],
       searchingSuburb: false,
@@ -76,7 +78,7 @@ class SearchBar extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
-      service, suburb, postcode, date, time,
+      service, suburb, postcode, date, time, duration,
     } = parseSearchUrlParams(nextProps);
 
     this.setState({
@@ -85,6 +87,7 @@ class SearchBar extends Component {
       selectedSuburb: suburbObject(suburb, postcode),
       date: date || '',
       time: time || '',
+      duration: duration || DEFAULT_DURATION,
     });
   }
 
@@ -136,7 +139,7 @@ class SearchBar extends Component {
 
   handleSearch() {
     const {
-      service, selectedSuburb, date, time,
+      service, selectedSuburb, date, time, duration,
     } = this.state;
 
     if (!_.isEmpty(service)) {
@@ -146,6 +149,7 @@ class SearchBar extends Component {
         postcode: selectedSuburb && selectedSuburb.postcode,
         date,
         time,
+        duration,
       });
     } else {
       // TODO: prompt user to select service
@@ -163,7 +167,7 @@ class SearchBar extends Component {
    * @param {postcode, optional} postcode
    */
   redirectToSearch({
-    service, suburb, postcode, date, time,
+    service, suburb, postcode, date, time, duration,
   }) {
     let searchUrl = '/stylists';
 
@@ -181,18 +185,21 @@ class SearchBar extends Component {
 
     if (parseDateQueryString(date).isValid()) {
       searchUrl += `?date=${date}`;
-    }
 
-    if (!_.isNil(time) && time.length > 0) {
-      const timeQueryString = time;
-
-      if (parseDateQueryString(date).isValid()) {
-        searchUrl += '&';
-      } else {
-        searchUrl += '?';
+      if (!_.isNil(time) && time.length > 0) {
+        const timeQueryString = time;
+        searchUrl += `&time=${timeQueryString}`;
       }
 
-      searchUrl += `time=${timeQueryString}`;
+      if (!_.isNil(duration)) {
+        if (!_.isNil(time) && time.length > 0) {
+          searchUrl += '&';
+        } else {
+          searchUrl += '?';
+        }
+
+        searchUrl += `duration=${duration}`;
+      }
     }
 
     this.props.history.push(encodeURI(searchUrl));
