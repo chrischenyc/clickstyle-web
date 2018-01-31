@@ -36,9 +36,10 @@ const SearchPage = ({
         )}
 
         {foundNothing && (
-          <h4>
-            Sorry, there are no providers that offer what you are looking for in area you selected.
-          </h4>
+          <h2>
+            Sorry, there are no stylists that offer what you are looking for in area and time you
+            selected.
+          </h2>
         )}
 
         {searched &&
