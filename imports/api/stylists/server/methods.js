@@ -360,6 +360,9 @@ Meteor.methods({
       // ----------- SELECTOR FOR OPEN HOURS -----------------
       const isDateValid = parseDateQueryString(date).isValid();
       const isTimeValid = isTimeQueryValid(time);
+
+      // TODO: what if only date is selected
+      // TODO: what if only time is selected
       if (isDateValid && isTimeValid) {
         const fromTimeString = time.replace(':', '');
 
@@ -379,55 +382,32 @@ Meteor.methods({
         const fromDateTime = parseInt(date + fromTimeString, 10);
         const toDateTime = parseInt(date + toTimeString, 10);
 
-        // const dateTimeSelector = {
-        //   $nor: [
-        //     {
-        //       occupiedTimeSlots: {
-        //         $elemMatch: { from: { $lte: fromDateTime }, to: { $gte: toDateTime } },
-        //       },
-        //     },
-        //     {
-        //       occupiedTimeSlots: {
-        //         $elemMatch: { from: { $gte: fromDateTime, $lt: toDateTime } },
-        //       },
-        //     },
-        //     {
-        //       occupiedTimeSlots: {
-        //         $elemMatch: { to: { $gt: fromDateTime, $lte: toDateTime } },
-        //       },
-        //     },
-        //   ],
-        // };
-
         const dateTimeSelector = {
-          $and: [
+          $nor: [
             {
               occupiedTimeSlots: {
-                $not: { $elemMatch: { from: { $lte: fromDateTime }, to: { $gte: toDateTime } } },
+                $elemMatch: { from: { $lte: fromDateTime }, to: { $gte: toDateTime } },
               },
             },
-            // {
-            //   occupiedTimeSlots: {
-            //     $not: { $elemMatch: { from: { $gte: fromDateTime, $lt: toDateTime } } },
-            //   },
-            // },
-            // {
-            //   occupiedTimeSlots: {
-            //     $not: { $elemMatch: { to: { $gt: fromDateTime, $lte: toDateTime } } },
-            //   },
-            // },
+            {
+              occupiedTimeSlots: {
+                $elemMatch: { from: { $gte: fromDateTime, $lt: toDateTime } },
+              },
+            },
+            {
+              occupiedTimeSlots: {
+                $elemMatch: { to: { $gt: fromDateTime, $lte: toDateTime } },
+              },
+            },
           ],
         };
+
 
         selector = {
           ...selector,
           ...dateTimeSelector,
         };
-
-        selector = dateTimeSelector;
       }
-
-      console.log(JSON.stringify(selector));
 
       // ----------- RUN QUERY -----------------
       const stylists = Stylists.find(selector, {
