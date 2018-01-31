@@ -12,7 +12,7 @@ const updateStylistOccupiedTimeSlots = (owner, days) => {
   // clean up existing recurring occupied time slots
   let newOccupiedTimeSlots = _.isEmpty(occupiedTimeSlots)
     ? []
-    : occupiedTimeSlots.filter(t => !(t.state === 'recurring' || t.state === 'off'));
+    : occupiedTimeSlots.filter(t => !(t.state === 'closed'));
 
   for (let index = 0; index < days; index += 1) {
     const timeSlotsOfDay = [];
@@ -27,7 +27,7 @@ const updateStylistOccupiedTimeSlots = (owner, days) => {
       timeSlotsOfDay.push({
         from: parseInt(`${dateString}0000`, 10),
         to: parseInt(`${dateString}2359`, 10),
-        state: 'recurring',
+        state: 'closed',
       });
     } else {
       // else, fill the day with occupied timeslots before/after open/close time
@@ -41,7 +41,7 @@ const updateStylistOccupiedTimeSlots = (owner, days) => {
         timeSlotsOfDay.push({
           from: parseInt(`${dateString}0000`, 10),
           to: parseInt(dateString + openHour.openAt.replace(':', ''), 10),
-          state: 'recurring',
+          state: 'closed',
         });
       }
 
@@ -49,7 +49,7 @@ const updateStylistOccupiedTimeSlots = (owner, days) => {
         timeSlotsOfDay.push({
           from: parseInt(dateString + openHour.closeAt.replace(':', ''), 10),
           to: parseInt(`${dateString}2359`, 10),
-          state: 'recurring',
+          state: 'closed',
         });
       }
     }
