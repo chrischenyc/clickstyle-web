@@ -9,12 +9,14 @@ import Stylists from '../stylists';
 import Addons from '../../addons/addons';
 import Profiles from '../../profiles/profiles';
 import Suburbs from '../../suburbs/suburbs';
+import Services from '../../services/services';
 import { SearchLimit } from '../../../modules/server/constants';
 import coordinatesDistance from '../../../modules/server/coordinates-distance';
 import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
 import isTimeQueryValid from '../../../modules/validate-time-query';
 import { parseDateQueryString } from '../../../modules/format-date';
 import updateStylistOccupiedTimeSlots from '../../../modules/server/update-stylist-occupied-timeslots';
+import scaledImageUrl from '../../../modules/scaled-image-url';
 
 Meteor.methods({
   'stylists.update.services': function updateStylistsServices(services) {
@@ -402,7 +404,6 @@ Meteor.methods({
           ],
         };
 
-
         selector = {
           ...selector,
           ...dateTimeSelector,
@@ -410,7 +411,7 @@ Meteor.methods({
       }
 
       // ----------- RUN QUERY -----------------
-      const stylists = Stylists.find(selector, {
+      let stylists = Stylists.find(selector, {
         fields: {
           owner: 1,
           'services._id': 1,
@@ -421,10 +422,34 @@ Meteor.methods({
           'address.suburb': 1,
           photo: 1,
           averageRating: 1,
+          portfolioPhotos: 1,
         },
         limit: SearchLimit,
         skip: offset,
       }).fetch();
+
+      // ----------- ATTACH EXTRA FIELDS -----------
+      // banner photos
+      stylists = stylists.map((stylist) => {
+        if (stylist.portfolioPhotos && stylist.portfolioPhotos.length > 0) {
+          return {
+            ..._.omit(stylist, 'portfolioPhotos'),
+            bannerPhotos: stylist.portfolioPhotos.map(portfolioPhoto => portfolioPhoto.url),
+          };
+        }
+
+        const services = Services.find().fetch();
+        return {
+          ..._.omit(stylist, 'portfolioPhotos'),
+          bannerPhotos: stylist.services.map(stylistService => services.filter(s => s._id === stylistService._id)[0].photo),
+        };
+      });
+
+      // use scaled photo urls
+      stylists = stylists.map(stylist => ({
+        ...stylist,
+        bannerPhotos: stylist.bannerPhotos.filter(url => !_.isNil(url)).map(url => scaledImageUrl(url, 'small')),
+      }));
 
       return {
         stylists,

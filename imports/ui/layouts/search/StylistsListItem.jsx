@@ -2,18 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
 
 import ScaledImageURL from '../../../modules/scaled-image-url';
 import userProfileLink from '../../../modules/user-profile-link';
-
-const dummyBanners = [
-  'http://res.cloudinary.com/stylesquard/image/upload/v1511498808/banner1_wahqwj',
-  'http://res.cloudinary.com/stylesquard/image/upload/v1511498807/banner2_nzwd8s',
-  'http://res.cloudinary.com/stylesquard/image/upload/v1511499198/banner4_e0qb2e',
-  'http://res.cloudinary.com/stylesquard/image/upload/v1511499199/banner3_wzdcon',
-  'http://res.cloudinary.com/stylesquard/image/upload/v1511499198/banner5_u7lgpc',
-];
 
 const limitedArray = (objects, size) => {
   if (objects.length >= size) {
@@ -27,7 +18,7 @@ const StylistsListItem = ({ stylist }) => (
   <div className="col-lg-4 col-md-6 margin-bottom-20">
     <Link to={userProfileLink(stylist)} className="listing-item-container">
       <div className="listing-item">
-        <img src={_.sample(dummyBanners)} alt="" />
+        <img src={stylist.bannerPhotos[0]} alt="" />
 
         <div className="listing-item-content vertical-centered">
           <div id="avatar" className="small-avatar">
