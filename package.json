@@ -15,6 +15,7 @@
     "cloc": "cloc imports client server private --exclude-ext=json"
   },
   "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.39",
     "@navjobs/upload": "^3.1.2",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.3",
