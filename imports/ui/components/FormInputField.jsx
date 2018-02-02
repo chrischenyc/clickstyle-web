@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Input } from 'semantic-ui-react';
 import _ from 'lodash';
 
+// ----------- FormFieldNote ----------
 export const FormFieldNote = ({ note }) => {
   if (_.isEmpty(note)) {
     return '';
@@ -14,7 +15,9 @@ export const FormFieldNote = ({ note }) => {
 FormFieldNote.propTypes = {
   note: PropTypes.string.isRequired,
 };
+// ----------- End of FormFieldNote ----------
 
+// ----------- FormFieldErrorMessage ----------
 export const FormFieldErrorMessage = ({ message, ...rest }) => {
   if (_.isNil(message) || _.isEmpty(message)) {
     return '';
@@ -34,7 +37,9 @@ FormFieldErrorMessage.defaultProps = {
 FormFieldErrorMessage.propTypes = {
   message: PropTypes.string,
 };
+// ----------- End of FormFieldErrorMessage ----------
 
+// ----------- FormInputField ----------
 export const FormInputField = ({
   name, onChange, errors, note, ...rest
 }) => (
@@ -58,8 +63,10 @@ FormInputField.propTypes = {
   errors: PropTypes.object.isRequired,
   note: PropTypes.string,
 };
+// ----------- End of FormInputField ----------
 
-export const PriceField = ({ onChange, ...rest }) => (
+// ----------- NumberField ----------
+export const NumberField = ({ onChange, ...rest }) => (
   <Input
     type="number"
     min="1"
@@ -74,6 +81,7 @@ export const PriceField = ({ onChange, ...rest }) => (
   />
 );
 
-PriceField.propTypes = {
+NumberField.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
+// ----------- End of NumberField ----------

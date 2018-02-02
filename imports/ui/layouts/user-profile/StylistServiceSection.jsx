@@ -49,7 +49,7 @@ class StylistServiceSection extends Component {
               >
                 <StylistServiceSectionItem
                   title="Base price"
-                  description={service.basePriceDescription}
+                  description={service.baseDescription}
                   price={service.basePrice}
                 />
               </a>

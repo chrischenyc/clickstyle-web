@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Input, Grid, Responsive, Search, Button } from 'semantic-ui-react';
+import { Input, Search, Button, List } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-import { PriceField, FormFieldErrorMessage } from '../../../components/FormInputField';
+import { NumberField, FormFieldErrorMessage } from '../../../components/FormInputField';
+import { withMediaQuery } from '../../../components/HOC';
 
 class StylistServiceAddonItem extends Component {
   constructor(props) {
@@ -39,146 +40,100 @@ class StylistServiceAddonItem extends Component {
 
   render() {
     const {
-      addon, onRemove, onChange, errors,
+      addon, onRemove, onChange, errors, screenWidth,
     } = this.props;
 
     return (
       <div>
-        <Responsive
-          minWidth={Responsive.onlyTablet.minWidth}
-          style={{ margin: '0.5rem 0.5rem 0.5rem 0' }}
-        >
-          <Grid>
-            <Grid.Row style={{ paddingTop: '0', paddingBottom: '0' }}>
-              <Grid.Column width="9">
-                <Search
-                  fluid
-                  input={{ fluid: true, label: 'Name' }}
-                  name="name"
-                  placeholder="add-on name"
-                  maxLength="100"
-                  noResultsMessage="no matched add-on name"
-                  noResultsDescription="but that's totally alright, keep typing and name your own add-on"
-                  value={addon.name}
-                  onFocus={this.handleSearchChange}
-                  onSearchChange={this.handleSearchChange}
-                  onResultSelect={this.handleResultSelect}
-                  results={this.state.results}
-                />
-                <div>
-                  <FormFieldErrorMessage
-                    compact
-                    message={errors.name}
-                    style={{ marginTop: '0.2rem', marginBottom: '0.5rem' }}
-                  />
-                </div>
-              </Grid.Column>
+        <List>
+          <List.Item>
+            <Search
+              fluid={screenWidth < 1024}
+              input={{ fluid: true, label: 'Name' }}
+              name="name"
+              placeholder="add-on name"
+              maxLength="100"
+              noResultsMessage="no matched add-on name"
+              noResultsDescription="but that's totally alright, keep typing and name your own add-on"
+              value={addon.name}
+              onFocus={this.handleSearchChange}
+              onSearchChange={this.handleSearchChange}
+              onResultSelect={this.handleResultSelect}
+              results={this.state.results}
+            />
+            <div>
+              <FormFieldErrorMessage
+                compact
+                message={errors.name}
+                style={{ marginTop: '0.2rem', marginBottom: '0.5rem' }}
+              />
+            </div>
+          </List.Item>
 
-              <Grid.Column width="6">
-                <PriceField
-                  fluid
-                  name="price"
-                  label="Price"
-                  placeholder="add-on price"
-                  value={addon.price}
-                  onChange={onChange}
-                />
+          <List.Item>
+            <NumberField
+              fluid={screenWidth < 1024}
+              name="price"
+              label="Price"
+              placeholder="add-on price"
+              value={addon.price}
+              onChange={onChange}
+            />
 
-                <div>
-                  <FormFieldErrorMessage
-                    compact
-                    message={errors.price}
-                    style={{ marginTop: '0.2rem', marginBottom: '0.5rem' }}
-                  />
-                </div>
-              </Grid.Column>
+            <div>
+              <FormFieldErrorMessage
+                compact
+                message={errors.price}
+                style={{ marginTop: '0.2rem', marginBottom: '0.5rem' }}
+              />
+            </div>
+          </List.Item>
 
-              <Grid.Column width="1">
-                <Button
-                  basic
-                  type="button"
-                  icon="delete"
-                  onClick={() => {
-                    onRemove();
-                  }}
-                />
-              </Grid.Column>
-            </Grid.Row>
+          <List.Item>
+            <NumberField
+              fluid={screenWidth < 1024}
+              name="duration"
+              label="Duration (mins)"
+              placeholder="how long will this add-on take?"
+              value={addon.duration}
+              onChange={this.handleChange}
+            />
 
-            <Grid.Row style={{ paddingTop: '0.25rem' }}>
-              <Grid.Column width="15">
-                <Input
-                  fluid
-                  name="description"
-                  label="Description"
-                  type="text"
-                  placeholder="what is this addon about (optional)"
-                  maxLength="200"
-                  value={addon.description}
-                  onChange={onChange}
-                />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Responsive>
+            <FormFieldErrorMessage
+              compact
+              message={errors.duration}
+              style={{ marginTop: '0.2rem' }}
+            />
+          </List.Item>
 
-        <Responsive maxWidth={Responsive.onlyMobile.maxWidth} style={{ margin: '0.5rem 0' }}>
-          <Input
-            fluid
-            name="name"
-            label="Name"
-            type="text"
-            placeholder="add-on name"
-            maxLength="100"
-            style={{ marginBottom: '0.25rem' }}
-            value={addon.name}
-            onChange={onChange}
-          />
-          <FormFieldErrorMessage
-            compact
-            message={errors.name}
-            style={{ marginTop: '0.2rem', marginBottom: '0.5rem' }}
-          />
+          <List.Item>
+            <Input
+              fluid
+              name="description"
+              label="Description"
+              type="text"
+              placeholder="what is this addon about (optional)"
+              maxLength="200"
+              value={addon.description}
+              onChange={onChange}
+            />
+          </List.Item>
 
-          <PriceField
-            fluid
-            name="price"
-            label="Price"
-            placeholder="add-on price"
-            style={{ marginBottom: '0.25rem' }}
-            value={addon.price}
-            onChange={onChange}
-          />
-          <FormFieldErrorMessage
-            compact
-            message={errors.price}
-            style={{ marginTop: '0.2rem', marginBottom: '0.5rem' }}
-          />
-
-          <Input
-            fluid
-            name="description"
-            label="Description"
-            type="text"
-            placeholder="what is this addon about (optional)"
-            maxLength="200"
-            style={{ marginBottom: '0.25rem' }}
-            value={addon.description}
-            onChange={onChange}
-          />
-
-          <Button
-            basic
-            fluid
-            type="button"
-            content="Remove add-on"
-            icon="delete"
-            labelPosition="right"
-            onClick={() => {
-              onRemove();
-            }}
-          />
-        </Responsive>
+          <List.Item>
+            <Button
+              style={{ float: 'right' }}
+              circular
+              basic
+              type="button"
+              negative
+              onClick={() => {
+                onRemove();
+              }}
+            >
+              Delete
+            </Button>
+          </List.Item>
+        </List>
       </div>
     );
   }
@@ -194,6 +149,7 @@ StylistServiceAddonItem.propTypes = {
   onRemove: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object,
+  screenWidth: PropTypes.number.isRequired,
 };
 
-export default StylistServiceAddonItem;
+export default withMediaQuery(StylistServiceAddonItem);

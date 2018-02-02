@@ -1,21 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import {
-  Segment,
-  Message,
-  Confirm,
-  List,
-  Divider,
-  Button,
-  Responsive,
-  Input,
-} from 'semantic-ui-react';
+import { Segment, Message, Confirm, List, Divider, Button, Input } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid from 'uuid/v1';
 
 import StylistServiceAddonItem from './StylistServiceAddonItem';
-import { PriceField, FormFieldErrorMessage } from '../../../components/FormInputField';
+import { NumberField, FormFieldErrorMessage } from '../../../components/FormInputField';
+import { withMediaQuery } from '../../../components/HOC';
 
 const normalizeService = (service) => {
   const cloneService = _.cloneDeep(service);
@@ -112,7 +104,7 @@ class StylistServiceItem extends Component {
 
   render() {
     const { service } = this.state;
-    const { onDelete, errors } = this.props;
+    const { onDelete, errors, screenWidth } = this.props;
 
     return (
       <div style={{ padding: '1rem 0' }}>
@@ -129,43 +121,48 @@ class StylistServiceItem extends Component {
         <Segment attached>
           <List>
             <List.Item>
-              <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-                <PriceField
-                  name="basePrice"
-                  label="Base price"
-                  placeholder="base price"
-                  value={service.basePrice}
-                  onChange={this.handleChange}
-                />
-              </Responsive>
-              <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
-                <PriceField
-                  fluid
-                  name="basePrice"
-                  label="Base price"
-                  placeholder="base price"
-                  value={service.basePrice}
-                  onChange={this.handleChange}
-                />
-              </Responsive>
+              <NumberField
+                fluid={screenWidth < 1024}
+                name="basePrice"
+                label="Base price"
+                placeholder="base price"
+                value={service.basePrice}
+                onChange={this.handleChange}
+              />
 
-              <div>
-                <FormFieldErrorMessage
-                  compact
-                  message={errors.basePrice}
-                  style={{ marginTop: '0.2rem' }}
-                />
-              </div>
+              <FormFieldErrorMessage
+                compact
+                message={errors.basePrice}
+                style={{ marginTop: '0.2rem' }}
+              />
+            </List.Item>
 
+            <List.Item>
+              <NumberField
+                fluid={screenWidth < 1024}
+                name="baseDuration"
+                label="Duration (mins)"
+                placeholder="how long will the basic service take?"
+                value={service.baseDuration}
+                onChange={this.handleChange}
+              />
+
+              <FormFieldErrorMessage
+                compact
+                message={errors.baseDuration}
+                style={{ marginTop: '0.2rem' }}
+              />
+            </List.Item>
+
+            <List.Item>
               <Input
                 fluid
-                name="basePriceDescription"
+                name="baseDescription"
                 label="Description"
                 placeholder="what does the base price includes (optional)"
                 type="text"
                 maxLength="200"
-                style={{ marginTop: '0.2rem', marginBottom: '0.25rem' }}
-                value={service.basePriceDescription}
+                value={service.baseDescription}
                 onChange={this.handleChange}
               />
             </List.Item>
@@ -233,6 +230,7 @@ StylistServiceItem.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object,
+  screenWidth: PropTypes.number.isRequired,
 };
 
-export default StylistServiceItem;
+export default withMediaQuery(StylistServiceItem);
