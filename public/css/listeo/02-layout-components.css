@@ -34,8 +34,8 @@ input[type="email"],
 input[type="number"],
 textarea,
 select {
-  /* height: 51px; */
-  /* line-height: 51px; */
+  height: 51px;
+  line-height: 51px;
   padding: 0 20px;
   outline: none;
   font-size: 15px;
