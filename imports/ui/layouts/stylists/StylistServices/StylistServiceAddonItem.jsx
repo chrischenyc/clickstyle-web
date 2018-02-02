@@ -96,7 +96,7 @@ class StylistServiceAddonItem extends Component {
               label="Duration (mins)"
               placeholder="how long will this add-on take?"
               value={addon.duration}
-              onChange={this.handleChange}
+              onChange={onChange}
             />
 
             <FormFieldErrorMessage

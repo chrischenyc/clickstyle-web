@@ -145,6 +145,10 @@ export const validateStylistServices = (services) => {
       _.set(errors, `${service._id}.basePrice`, 'Please assign an amount');
     }
 
+    if (!service.baseDuration || parseInt(service.baseDuration) <= 0) {
+      _.set(errors, `${service._id}.baseDuration`, 'Please assign a duration');
+    }
+
     if (service.addons) {
       service.addons.forEach((addon) => {
         if (validator.isEmpty(addon.name)) {
@@ -153,6 +157,10 @@ export const validateStylistServices = (services) => {
 
         if (!addon.price || parseInt(addon.price) <= 0) {
           _.set(errors, `${service._id}.${addon._id}.price`, 'Please assign an amount');
+        }
+
+        if (!addon.duration || parseInt(addon.duration) <= 0) {
+          _.set(errors, `${service._id}.${addon._id}.duration`, 'Please assign a duration');
         }
       });
     }
