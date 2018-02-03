@@ -4,9 +4,10 @@ import { withRouter } from 'react-router-dom';
 import { Search, Button } from 'semantic-ui-react';
 import _ from 'lodash';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { formatDate, parseDate } from 'react-day-picker/moment';
 import 'react-day-picker/lib/style.css';
 import './react-day-picker-custom.css';
-import { formatDate, parseDate } from 'react-day-picker/moment';
+
 
 import TimeInput from '../TimeInput';
 import {
@@ -68,9 +69,7 @@ class SearchBar extends Component {
     Meteor.call('services.keywords', {}, (error, services) => {
       if (services) {
         this.setState({
-          services: services.map(service => ({
-            title: service,
-          })),
+          services,
         });
       }
     });
@@ -104,7 +103,7 @@ class SearchBar extends Component {
   }
 
   handleServiceSelection(service) {
-    this.setState({ service: service.title });
+    this.setState({ service: service.title, duration: service.duration });
   }
 
   handleSuburbChange(data) {

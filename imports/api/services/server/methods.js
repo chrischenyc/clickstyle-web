@@ -36,7 +36,7 @@ Meteor.methods({
     try {
       const services = Services.find(
         {},
-        { sort: { displayOrder: 1 }, fields: { name: 1 } },
+        { sort: { displayOrder: 1 }, fields: { name: 1, duration: 1 } },
       ).fetch();
 
       const systemAddons = Addons.find(
@@ -45,25 +45,26 @@ Meteor.methods({
           fields: {
             name: 1,
             serviceId: 1,
+            duration: 1,
           },
         },
       ).fetch();
 
-      const names = [];
+      const values = [];
 
       services.forEach((service) => {
-        if (!_.includes(names, service.name)) {
-          names.push(service.name);
+        if (values.filter(value => value.title === service.name).length === 0) {
+          values.push({ title: service.name, duration: service.duration });
         }
 
         systemAddons.filter(addon => addon.serviceId === service._id).forEach((addon) => {
-          if (!_.includes(names, addon.name)) {
-            names.push(addon.name);
+          if (values.filter(value => value.title === addon.name).length === 0) {
+            values.push({ title: addon.name, duration: addon.duration });
           }
         });
       });
 
-      return names;
+      return values;
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
