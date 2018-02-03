@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { StripeProvider, Elements } from 'react-stripe-elements';
+import scriptLoader from 'react-async-script-loader';
 
 import { setUserInfo } from '../../../modules/client/redux/cart';
 import BookingPage from './BookingPage';
@@ -71,7 +72,7 @@ class Booking extends Component {
   }
 
   render() {
-    return (
+    return this.props.isScriptLoaded && this.props.isScriptLoadSucceed ? (
       <StripeProvider apiKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh">
         <Elements>
           <BookingPage
@@ -85,6 +86,8 @@ class Booking extends Component {
           />
         </Elements>
       </StripeProvider>
+    ) : (
+      ''
     );
   }
 }
@@ -98,6 +101,8 @@ Booking.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   profile: PropTypes.object,
   setUserInfo: PropTypes.func.isRequired,
+  isScriptLoaded: PropTypes.bool.isRequired,
+  isScriptLoadSucceed: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -106,4 +111,4 @@ const mapStateToProps = state => ({
   profile: state.user.profile,
 });
 
-export default connect(mapStateToProps, { setUserInfo })(Booking);
+export default connect(mapStateToProps, { setUserInfo })(scriptLoader('https://js.stripe.com/v3/')(Booking));
