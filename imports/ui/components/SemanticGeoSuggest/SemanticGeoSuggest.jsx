@@ -3,6 +3,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import _ from 'lodash';
+import scriptLoader from 'react-async-script-loader';
 
 import defaults from './defaults';
 import propTypes from './prop-types';
@@ -43,46 +44,43 @@ class SemanticGeoSuggest extends React.Component {
     }
   }
 
-  /**
-   * Change inputValue if prop changes
-   * @param {Object} props The new props
-   */
-  componentWillReceiveProps(props) {
-    if (this.props.initialValue !== props.initialValue) {
-      this.setState({ userInput: props.initialValue });
-    }
-  }
-
-  /**
-   * Called on the client side after component is mounted.
-   * Google api sdk object will be obtained and cached as a instance property.
-   * Necessary objects of google api will also be determined and saved.
-   */
-  componentWillMount() {
-    if (typeof window === 'undefined') {
-      return;
+  componentWillReceiveProps(nextProps) {
+    if (this.props.initialValue !== nextProps.initialValue) {
+      this.setState({ userInput: nextProps.initialValue });
     }
 
-    var googleMaps =
-      this.props.googleMaps ||
-      (window.google && // eslint-disable-line no-extra-parens
-        window.google.maps) ||
-      this.googleMaps;
+    if (nextProps.isScriptLoaded && !this.props.isScriptLoaded) {
+      // load finished
+      if (nextProps.isScriptLoadSucceed) {
+        var googleMaps =
+          this.props.googleMaps ||
+          (window.google && // eslint-disable-line no-extra-parens
+            window.google.maps) ||
+          this.googleMaps;
 
-    /* istanbul ignore next */
-    if (!googleMaps) {
-      if (console) {
-        console.error(
-          // eslint-disable-line no-console
-          'Google map api was not found in the page.',
-        );
+        /* istanbul ignore next */
+        if (!googleMaps) {
+          if (console) {
+            console.error(
+              // eslint-disable-line no-console
+              'Google map api was not found in the page.',
+            );
+          }
+          return;
+        }
+        this.googleMaps = googleMaps;
+
+        this.autocompleteService = new googleMaps.places.AutocompleteService();
+        this.geocoder = new googleMaps.Geocoder();
+      } else {
+        if (console) {
+          console.error(
+            // eslint-disable-line no-console
+            'Google map api was not found in the page.',
+          );
+        }
       }
-      return;
     }
-    this.googleMaps = googleMaps;
-
-    this.autocompleteService = new googleMaps.places.AutocompleteService();
-    this.geocoder = new googleMaps.Geocoder();
   }
 
   /**
@@ -479,4 +477,6 @@ SemanticGeoSuggest.propTypes = propTypes;
  */
 SemanticGeoSuggest.defaultProps = defaults;
 
-export default SemanticGeoSuggest;
+export default scriptLoader(
+  'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDO0gFGHaSbJelcxOot7Hpx-ztB5qleiE&libraries=places',
+)(SemanticGeoSuggest);
