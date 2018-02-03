@@ -32,18 +32,16 @@ Meteor.methods({
       // insert user-defined addons
       Meteor.defer(() => {
         services.forEach((service) => {
-          const addonNames = service.addons.map(addon => addon.name);
-          const publicAddonNames = Addons.find({ serviceId: service._id })
-            .fetch()
-            .map(addon => addon.name);
-          const newAddonNames = _.differenceWith(addonNames, publicAddonNames, [
-            (arrVal, othVal) => _.isEqual(arrVal.toLowerCase(), othVal.toLowerCase()),
+          const publicAddons = Addons.find({ serviceId: service._id }).fetch();
+          const newAddons = _.differenceWith(service.addons, publicAddons, [
+            (arrVal, othVal) => _.isEqual(arrVal.name.toLowerCase(), othVal.name.toLowerCase()),
           ]);
 
-          newAddonNames.forEach((name) => {
+          newAddons.forEach((addon) => {
             Addons.insert({
               serviceId: service._id,
-              name,
+              name: addon.name,
+              duration: addon.duration,
               createdBy: this.userId,
               published: false,
             });
@@ -448,7 +446,9 @@ Meteor.methods({
       // use scaled photo urls
       stylists = stylists.map(stylist => ({
         ...stylist,
-        bannerPhotos: stylist.bannerPhotos.filter(url => !_.isNil(url)).map(url => scaledImageUrl(url, 'small')),
+        bannerPhotos: stylist.bannerPhotos
+          .filter(url => !_.isNil(url))
+          .map(url => scaledImageUrl(url, 'small')),
       }));
 
       return {

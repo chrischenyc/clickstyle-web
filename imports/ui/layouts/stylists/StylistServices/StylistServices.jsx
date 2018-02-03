@@ -62,7 +62,10 @@ class StylistServices extends Component {
   handleAddServices(services) {
     this.setState({
       pristine: false,
-      selectedServices: [...this.state.selectedServices, ...services],
+      selectedServices: [
+        ...this.state.selectedServices,
+        ...services.map(service => ({ ..._.omit(service, 'duration'), baseDuration: service.duration })),
+      ],
     });
   }
 
