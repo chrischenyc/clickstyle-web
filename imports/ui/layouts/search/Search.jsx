@@ -48,17 +48,12 @@ class Search extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      !_.isEqual(this.props.match.params, nextProps.match.params) ||
-      !_.isEqual(this.props.location.search, nextProps.location.search)
-    ) {
-      const {
-        service, suburb, postcode, date, time, duration,
-      } = parseSearchUrlParams(nextProps);
+    const {
+      service, suburb, postcode, date, time, duration,
+    } = parseSearchUrlParams(nextProps);
 
-      if (service) {
-        this.search(service, suburb, postcode, date, time, duration);
-      }
+    if (service) {
+      this.search(service, suburb, postcode, date, time, duration);
     }
   }
 
