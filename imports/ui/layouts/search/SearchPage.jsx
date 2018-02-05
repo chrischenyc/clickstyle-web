@@ -48,7 +48,7 @@ const SearchPage = ({
               <h3>Are we missing a stylist?</h3>
 
               <Button.Group size="huge">
-                <Button as={Link} to="/suggest-stylist">
+                <Button as={Link} to="/contact?suggestStylist=true">
                   Suggest a stylist
                 </Button>
                 <Button.Or />
