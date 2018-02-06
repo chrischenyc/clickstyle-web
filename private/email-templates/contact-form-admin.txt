@@ -1,0 +1,9 @@
+Someone has submitted contact us form on {{appName}}.
+Name: {{name}}
+Email: {{email}}
+Phone: {{phone}}
+Subject: {{subject}}
+Message: {{message}}
+
+You received this email because you are one of the admin users on {{appName}}.
+

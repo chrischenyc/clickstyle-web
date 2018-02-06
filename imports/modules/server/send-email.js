@@ -168,3 +168,32 @@ export const sendAdminEmailStylistApplication = (applicationId) => {
     /* eslint-enable no-console */
   }
 };
+
+export const sendAdminEmailContactForm = (name, email, phone, subject, message) => {
+  const adminUsers = Meteor.users
+    .find({ roles: Meteor.settings.public.roles.admin }, { fields: { emails: 1 } })
+    .fetch();
+
+  try {
+    adminUsers.forEach((adminUser) => {
+      sendEmail({
+        to: adminUser.emails[0],
+        from: fromAddress,
+        subject: 'New contact us form submit',
+        template: 'contact-form-admin',
+        templateConstants: {
+          name,
+          email,
+          phone,
+          subject,
+          message,
+          ...templateConstants,
+        },
+      });
+    });
+  } catch (error) {
+    /* eslint-disable no-console */
+    console.error(error);
+    /* eslint-enable no-console */
+  }
+};

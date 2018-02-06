@@ -3,6 +3,7 @@ import { check } from 'meteor/check';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import UserContacts from '../user_contacts';
+import { sendAdminEmailContactForm } from '../../../modules/server/send-email';
 
 Meteor.methods({
   submitContact: function submitUserContactForm(data) {
@@ -42,7 +43,9 @@ Meteor.methods({
       suggestStylist,
     });
 
-    // TODO: send email
+    Meteor.defer(() => {
+      sendAdminEmailContactForm(name, email, phone, subject, message);
+    });
   },
 });
 
