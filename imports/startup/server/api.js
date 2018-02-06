@@ -24,3 +24,5 @@ import '../../api/stylists/server/methods';
 import '../../api/suburbs/server/methods';
 
 import '../../api/featured/server/methods';
+
+import '../../api/user_contacts/server/methods';

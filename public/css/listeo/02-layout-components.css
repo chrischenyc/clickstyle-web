@@ -4117,12 +4117,9 @@ body #navigation ul ul {
 	------------------------------------- */
 	#contact textarea {
 		min-height: 200px;
-		margin: 15px 0 25px 0;
 	}
 	
-	#contact input {
-		margin-bottom: 25px;
-	}
+	
 	
 	.loader { margin-left: 15px; }
 	.submit.disabled:hover,

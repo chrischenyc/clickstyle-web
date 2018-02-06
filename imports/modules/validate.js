@@ -210,3 +210,17 @@ export const validateBooking = (email, firstName, lastName, mobile, address) => 
 
   return errors;
 };
+
+export const validateContactForm = (name, email, phone, subject, message) => {
+  const errors = {};
+
+  if (validator.isEmpty(email)) {
+    errors.email = 'email is required';
+  } else if (!validator.isEmail(email)) {
+    errors.email = 'invalid email';
+  } else if (validator.isEmpty(message)) {
+    errors.message = 'please fill in the message';
+  }
+
+  return errors;
+};
