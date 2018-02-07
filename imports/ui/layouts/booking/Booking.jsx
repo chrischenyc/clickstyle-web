@@ -26,6 +26,10 @@ class Booking extends Component {
     this.handleValidate = this.handleValidate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBack = this.handleBack.bind(this);
+
+    this.state = {
+      creditCardNameOnCard: '',
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,7 +49,11 @@ class Booking extends Component {
   }
 
   handleChange(event) {
-    this.props.setUserInfo({ [event.target.name]: event.target.value });
+    if (event.target.name.indexOf('creditCard') === -1) {
+      this.props.setUserInfo({ [event.target.name]: event.target.value });
+    } else {
+      this.setState({ [event.target.name]: event.target.value });
+    }
   }
 
   handleValidate() {
@@ -53,17 +61,27 @@ class Booking extends Component {
       email, firstName, lastName, mobile, address, date, time,
     } = this.props.cart;
 
-    const errors = validateBooking(email, firstName, lastName, mobile, address, date, time);
+    const { creditCardNameOnCard } = this.state;
+
+    const errors = validateBooking(
+      email,
+      firstName,
+      lastName,
+      mobile,
+      address,
+      date,
+      time,
+      creditCardNameOnCard,
+    );
 
     return errors;
   }
 
-  handleSubmit(stripeToken) {
+  handleSubmit(stripePayload) {
+    console.log(stripePayload);
+
     // TODO: handle payment
-    console.log(stripeToken);
-
     // TODO: error handling
-
     // this.props.history.push('booking-confirm');
   }
 

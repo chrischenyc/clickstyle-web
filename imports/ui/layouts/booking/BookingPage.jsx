@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Button, Responsive, Checkbox } from 'semantic-ui-react';
+import { Button, Responsive, Checkbox, Form, Input } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
@@ -17,7 +17,7 @@ import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoS
 import ModalLink from '../../components/ModalLink';
 import Login from '../user/Login/Login';
 import BookingPageSummarySection from './BookingPageSummarySection';
-import { FormFieldErrorMessage } from '../../components/FormInputField';
+import { FormInputField, FormFieldErrorMessage } from '../../components/FormInputField';
 import { withMediaQuery } from '../../components/HOC';
 import { openModal, closeModal } from '../../../modules/client/redux/ui';
 import BookingDateTimePicker from '../../components/BookingDateTimePicker';
@@ -61,21 +61,24 @@ class BookingPage extends Component {
         this.props.stripe
           .createToken()
           .then((payload) => {
-            this.setState({ loading: false });
-            // 3. inform container component to handle payment
-            this.props.onSubmit(payload);
+            if (_.isNil(payload.error)) {
+              // 3. inform container component to handle payment
+              this.props.onSubmit(payload);
+            } else {
+              this.setState({
+                loading: false,
+                errors: { ...this.state.errors, stripe: payload.error.message },
+              });
+            }
           })
           .catch((error) => {
-            this.setState({ loading: false });
-            console.log(error);
-
-            // TODO: convert stripe error to field error
             this.setState({
-              errors: { ...this.state.errors, form: error },
+              loading: false,
+              errors: { ...this.state.errors, stripe: error.message },
             });
           });
       } else {
-        this.setState({ errors: { ...this.state.errors, form: "Stripe.js hasn't loaded yet." } });
+        this.setState({ errors: { ...this.state.errors, stripe: "Stripe.js hasn't loaded yet." } });
       }
     }
   }
@@ -94,7 +97,7 @@ class BookingPage extends Component {
               <BookingPageSummarySection cart={this.props.cart} />
             </Responsive>
 
-            <form>
+            <Form error={!_.isEmpty(this.state.errors)}>
               <h3 className="margin-top-0 margin-bottom-30">Personal Details</h3>
 
               {!this.props.authenticated && (
@@ -117,59 +120,52 @@ class BookingPage extends Component {
               )}
 
               <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-6 margin-bottom-15">
                   <label>First Name</label>
-                  <input
+                  <FormInputField
                     name="firstName"
                     type="text"
-                    value={this.props.cart.firstName}
                     onChange={this.props.onChange}
+                    errors={this.state.errors}
                   />
-                  <div>
-                    <FormFieldErrorMessage
-                      compact
-                      message={this.state.errors.firstName}
-                      style={{ marginTop: '0.2rem', marginBottom: '0.5rem' }}
-                    />
-                  </div>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-6 margin-bottom-15">
                   <label>Last Name</label>
-                  <input
+                  <FormInputField
                     name="lastName"
                     type="text"
-                    value={this.props.cart.lastName}
                     onChange={this.props.onChange}
+                    errors={this.state.errors}
                   />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-6 margin-bottom-15">
                   <label>Email</label>
-                  <input
+                  <FormInputField
                     name="email"
                     type="text"
-                    value={this.props.cart.email}
                     onChange={this.props.onChange}
+                    errors={this.state.errors}
                   />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-6 margin-bottom-15">
                   <label>Mobile</label>
-                  <input
+                  <FormInputField
                     name="mobile"
                     type="text"
-                    value={this.props.cart.phone}
                     onChange={this.props.onChange}
+                    errors={this.state.errors}
                   />
                 </div>
 
-                <div className="col-md-12">
+                <div className="col-md-12 margin-bottom-15">
                   <label>Address</label>
                   <SemanticGeoSuggest
                     placeholder="type to search your address"
                     country="au"
-                    name="address.raw"
+                    name="address"
                     initialValue=""
                     onChange={(value) => {
                       // convert to generic onChange param
@@ -179,7 +175,11 @@ class BookingPage extends Component {
                       // force onChange as well
                       this.props.onChange({ target: { name: 'address', value: suggest.label } });
                     }}
+                    error={
+                      !_.isNil(this.state.errors.address) && !_.isEmpty(this.state.errors.address)
+                    }
                   />
+                  <FormFieldErrorMessage compact message={this.state.errors.address} />
                 </div>
 
                 {!this.props.authenticated && (
@@ -222,7 +222,12 @@ class BookingPage extends Component {
                       <div className="col-md-6">
                         <div className="card-label">
                           <label>Name on Card</label>
-                          <input name="nameOnCard" type="text" />
+                          <FormInputField
+                            name="creditCardNameOnCard"
+                            type="text"
+                            onChange={this.props.onChange}
+                            errors={this.state.errors}
+                          />
                         </div>
                       </div>
 
@@ -261,6 +266,8 @@ class BookingPage extends Component {
                         label={<label>save this card</label>}
                       />
                     </div>
+
+                    <FormFieldErrorMessage compact={false} message={this.state.errors.stripe} />
                   </div>
                 </div>
               </div>
@@ -289,7 +296,7 @@ class BookingPage extends Component {
                   Go back
                 </Button>
               </div>
-            </form>
+            </Form>
           </div>
 
           <Responsive minWidth={1025} className="col-lg-4 col-md-4">

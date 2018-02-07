@@ -189,7 +189,16 @@ export const validateStylistOpenHours = (openHours) => {
   return errors;
 };
 
-export const validateBooking = (email, firstName, lastName, mobile, address) => {
+export const validateBooking = (
+  email,
+  firstName,
+  lastName,
+  mobile,
+  address,
+  date,
+  time,
+  creditCardNameOnCard,
+) => {
   const errors = {};
 
   if (validator.isEmpty(firstName)) {
@@ -206,6 +215,8 @@ export const validateBooking = (email, firstName, lastName, mobile, address) => 
     errors.mobile = 'Invalid mobile number';
   } else if (validator.isEmpty(address)) {
     errors.address = 'Address is required';
+  } else if (validator.isEmpty(creditCardNameOnCard)) {
+    errors.creditCardNameOnCard = 'Name on Card is required';
   }
 
   return errors;
