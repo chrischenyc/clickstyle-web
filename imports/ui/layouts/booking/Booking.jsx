@@ -29,6 +29,7 @@ class Booking extends Component {
 
     this.state = {
       creditCardNameOnCard: '',
+      creditCardSaveCard: true,
     };
   }
 

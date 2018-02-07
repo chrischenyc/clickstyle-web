@@ -257,10 +257,10 @@ class BookingPage extends Component {
                       <Checkbox
                         style={{ padding: '0 20px' }}
                         defaultChecked
-                        name="saveCard"
+                        name="creditCardSaveCard"
                         onChange={(event, data) => {
                           this.props.onChange({
-                            target: { name: 'saveCard', value: data.checked },
+                            target: { name: 'creditCardSaveCard', value: data.checked },
                           });
                         }}
                         label={<label>save this card</label>}
