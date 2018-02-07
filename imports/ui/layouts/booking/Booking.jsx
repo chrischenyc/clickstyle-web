@@ -13,15 +13,6 @@ class Booking extends Component {
   constructor(props) {
     super(props);
 
-    props.setUserInfo({
-      firstName: (props.profile && props.profile.name && props.profile.name.first) || '',
-      lastName: (props.profile && props.profile.name && props.profile.name.last) || '',
-      email: (props.profile && props.profile.email) || '',
-      mobile: (props.profile && props.profile.mobile) || '',
-      address: (props.profile && props.profile.address && props.profile.address.raw) || '',
-      register: _.isEmpty(props.profile),
-    });
-
     this.handleChange = this.handleChange.bind(this);
     this.handleValidate = this.handleValidate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

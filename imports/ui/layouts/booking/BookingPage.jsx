@@ -127,6 +127,7 @@ class BookingPage extends Component {
                     type="text"
                     onChange={this.props.onChange}
                     errors={this.state.errors}
+                    value={this.props.cart.firstName}
                   />
                 </div>
 
@@ -137,6 +138,7 @@ class BookingPage extends Component {
                     type="text"
                     onChange={this.props.onChange}
                     errors={this.state.errors}
+                    value={this.props.cart.lastName}
                   />
                 </div>
 
@@ -147,6 +149,7 @@ class BookingPage extends Component {
                     type="text"
                     onChange={this.props.onChange}
                     errors={this.state.errors}
+                    value={this.props.cart.email}
                   />
                 </div>
 
@@ -157,6 +160,7 @@ class BookingPage extends Component {
                     type="text"
                     onChange={this.props.onChange}
                     errors={this.state.errors}
+                    value={this.props.cart.mobile}
                   />
                 </div>
 
@@ -166,7 +170,7 @@ class BookingPage extends Component {
                     placeholder="type to search your address"
                     country="au"
                     name="address"
-                    initialValue=""
+                    initialValue={this.props.cart.address}
                     onChange={(value) => {
                       // convert to generic onChange param
                       this.props.onChange({ target: { name: 'address', value } });
@@ -186,7 +190,7 @@ class BookingPage extends Component {
                   <div className="col-md-12">
                     <Checkbox
                       className="margin-top-20"
-                      defaultChecked
+                      checked={this.props.cart.register}
                       name="register"
                       onChange={(event, data) => {
                         this.props.onChange({ target: { name: 'register', value: data.checked } });
