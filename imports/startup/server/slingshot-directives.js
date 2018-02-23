@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Slingshot } from 'meteor/edgee:slingshot';
+import uuid from 'uuid/v1';
 
 import { formatFileTimestamp } from '../../modules/format-date';
 
@@ -14,7 +15,7 @@ Slingshot.createDirective(Meteor.settings.public.SlingshotCloudinaryImage, Sling
     return true;
   },
   key() {
-    return Meteor.uuid();
+    return uuid();
   },
   tags: [Meteor.settings.public.CloudinaryTag],
 });
