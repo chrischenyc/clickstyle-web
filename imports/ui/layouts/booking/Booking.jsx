@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -50,12 +51,20 @@ class Booking extends Component {
   }
 
   handleSubmit(stripePayload) {
-    console.log(stripePayload);
-
     this.setState({ loading: true });
 
-    // TODO: handle payment
-    // TODO: error handling
+    Meteor.call(
+      'bookings.create',
+      { ..._.omit(this.props.cart, 'showCartInHeader'), stripePayload },
+      (error, success) => {
+        if (error) {
+          console.log('error', error);
+        }
+        if (success) {
+        }
+      },
+    );
+
     // this.props.history.push('booking-confirm');
   }
 

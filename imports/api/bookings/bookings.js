@@ -2,6 +2,8 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
+import ServiceSchema from '../stylists/stylists-services-schema';
+
 const Bookings = new Mongo.Collection('bookings');
 
 Bookings.allow({
@@ -32,23 +34,19 @@ Bookings.attachBehaviour('timestampable', {
   updatedBy: false,
 });
 
-// TODO: complete Bookings schema
 const BookingsSchema = new SimpleSchema({
-  title: {
-    type: String,
-    label: 'Title',
-    max: 200,
-  },
-  location: {
-    type: String,
-    label: 'Location',
-  },
-  summary: {
-    type: String,
-    label: 'Brief summary',
-    optional: true,
-    max: 1000,
-  },
+  stylist: String, // Stylists record id
+  services: Array,
+  'services.$': ServiceSchema,
+  total: Number,
+  count: Number,
+  firstName: String,
+  lastName: String,
+  email: String,
+  mobile: String,
+  address: String,
+  date: String,
+  time: String,
 });
 
 Bookings.attachSchema(BookingsSchema);

@@ -4,58 +4,65 @@ import Bookings from '../bookings';
 import rateLimit from '../../../modules/server/rate-limit';
 
 Meteor.methods({
-  'bookings.insert': function bookingsInsert(booking) {
-    if (!this.userId) {
-      throw new Meteor.Error(403, 'unauthorized');
-    }
-
-    check(booking, {
-      title: String,
-      body: String,
+  'bookings.create': function bookingsInsert(cart) {
+    check(cart, {
+      stylist: Object,
+      services: Array,
+      total: Number,
+      count: Number,
+      firstName: String,
+      lastName: String,
+      email: String,
+      mobile: String,
+      address: String,
+      date: String,
+      time: String,
+      creditCardNameOnCard: String,
+      creditCardSaveCard: Boolean,
+      register: Boolean,
+      stripePayload: Object,
     });
 
     try {
-      return Bookings.insert({ owner: this.userId, ...booking });
-    } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500', exception);
-    }
-  },
+      const {
+        stylist,
+        services,
+        total,
+        count,
+        firstName,
+        lastName,
+        email,
+        mobile,
+        address,
+        date,
+        time,
+        creditCardNameOnCard,
+        creditCardSaveCard,
+        register,
+        stripePayload,
+      } = cart;
 
-  'bookings.update': function bookingsUpdate(booking) {
-    if (!this.userId) {
-      throw new Meteor.Error(403, 'unauthorized');
-    }
+      // process Stripe token
+      console.log(stripePayload);
 
-    check(booking, {
-      _id: String,
-      title: String,
-      body: String,
-    });
+      // if success create Bookings record
 
-    try {
-      const bookingId = booking._id;
-      Bookings.update(bookingId, { $set: booking });
-      return bookingId; // Return _id so we can redirect to booking after update.
-    } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500', exception);
-    }
-  },
+      // if Stripe fail, return errors
 
-  'bookings.remove': function bookingsRemove(bookingId) {
-    if (!this.userId) {
-      throw new Meteor.Error(403, 'unauthorized');
-    }
+      // link Stripe card token with the Bookings record
 
-    check(bookingId, String);
+      // if guest check out, try to match the email with any user
 
-    try {
-      return Bookings.remove(bookingId);
+      // if no user found, create one
+      const userId = this.userId;
+
+      // if guest user selects to sign up, send out welcome and reset password
+
+      // if user selects to save credit card, save credit card token and its partial info
+
+      // send customer email notification
+
+      // send stylist email notification
     } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
@@ -66,7 +73,7 @@ Meteor.methods({
 });
 
 rateLimit({
-  methods: ['bookings.insert', 'bookings.update', 'bookings.remove'],
+  methods: ['bookings.create'],
   limit: 5,
   timeRange: 1000,
 });
