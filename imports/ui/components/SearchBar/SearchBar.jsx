@@ -191,13 +191,7 @@ class SearchBar extends Component {
       }
 
       if (!_.isNil(duration)) {
-        if (!_.isNil(time) && time.length > 0) {
-          searchUrl += '&';
-        } else {
-          searchUrl += '?';
-        }
-
-        searchUrl += `duration=${duration}`;
+        searchUrl += `&duration=${duration}`;
       }
     }
 
