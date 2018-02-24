@@ -361,12 +361,11 @@ Meteor.methods({
       const isDateValid = parseDateQueryString(date).isValid();
       const isTimeValid = isTimeQueryValid(time);
 
-      // TODO: what if only date is selected
-      // TODO: what if only time is selected
       if (isDateValid && isTimeValid) {
+        // both date and time are selected
         const fromTimeString = time.replace(':', '');
 
-        // calculate to string
+        // convert to strings
         const fromHour = parseInt(time.split(':')[0], 10);
         const fromMinute = parseInt(time.split(':')[1], 10);
 
@@ -406,6 +405,27 @@ Meteor.methods({
           ...selector,
           ...dateTimeSelector,
         };
+      } else if (isDateValid) {
+        // only date is selected
+        const fromDateTime = parseInt(`${date}0000`, 10);
+        const toDateTime = parseInt(`${date}2359`, 10);
+
+        const dateTimeSelector = {
+          $nor: [
+            {
+              occupiedTimeSlots: {
+                $elemMatch: { from: fromDateTime, to: toDateTime },
+              },
+            },
+          ],
+        };
+
+        selector = {
+          ...selector,
+          ...dateTimeSelector,
+        };
+      } else if (isTimeValid) {
+        // TODO: what if only time is selected
       }
 
       // ----------- RUN QUERY -----------------
