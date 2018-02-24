@@ -61,12 +61,15 @@ class BookingPage extends Component {
         this.props.stripe
           .createToken()
           .then((payload) => {
+            this.setState({
+              loading: false,
+            });
+
             if (_.isNil(payload.error)) {
               // 3. inform container component to handle payment
               this.props.onSubmit(payload);
             } else {
               this.setState({
-                loading: false,
                 errors: { ...this.state.errors, stripe: payload.error.message },
               });
             }
@@ -190,7 +193,7 @@ class BookingPage extends Component {
                   <div className="col-md-12">
                     <Checkbox
                       className="margin-top-20"
-                      checked={this.props.cart.register}
+                      checked={this.props.register}
                       name="register"
                       onChange={(event, data) => {
                         this.props.onChange({ target: { name: 'register', value: data.checked } });
@@ -278,7 +281,7 @@ class BookingPage extends Component {
 
               <div className="margin-top-20">
                 <Button
-                  loading={this.state.loading}
+                  loading={this.state.loading || this.props.loading}
                   type="button"
                   color="teal"
                   circular
@@ -295,7 +298,7 @@ class BookingPage extends Component {
                   size="large"
                   basic
                   onClick={this.props.onBack}
-                  disabled={this.state.loading}
+                  disabled={this.state.loading || this.props.loading}
                 >
                   Go back
                 </Button>
@@ -318,12 +321,14 @@ BookingPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
   cart: PropTypes.object.isRequired,
+  register: PropTypes.bool.isRequired,
   authenticated: PropTypes.bool.isRequired,
   stripe: PropTypes.object.isRequired,
   screenWidth: PropTypes.number.isRequired,
   modalOpen: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({

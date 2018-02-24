@@ -21,6 +21,8 @@ class Booking extends Component {
     this.state = {
       creditCardNameOnCard: '',
       creditCardSaveCard: true,
+      register: _.isEmpty(props.profile),
+      loading: false,
     };
   }
 
@@ -35,16 +37,21 @@ class Booking extends Component {
         mobile: (nextProps.profile && nextProps.profile.mobile) || '',
         address:
           (nextProps.profile && nextProps.profile.address && nextProps.profile.address.raw) || '',
-        register: _.isEmpty(nextProps.profile),
       });
+
+      this.setState({ register: _.isEmpty(nextProps.profile) });
     }
   }
 
   handleChange(event) {
-    if (event.target.name.indexOf('creditCard') === -1) {
-      this.props.setUserInfo({ [event.target.name]: event.target.value });
-    } else {
+    if (
+      event.target.name.indexOf('creditCardNameOnCard') !== -1 ||
+      event.target.name.indexOf('creditCardSaveCard') !== -1 ||
+      event.target.name === 'register'
+    ) {
       this.setState({ [event.target.name]: event.target.value });
+    } else {
+      this.props.setUserInfo({ [event.target.name]: event.target.value });
     }
   }
 
@@ -72,6 +79,8 @@ class Booking extends Component {
   handleSubmit(stripePayload) {
     console.log(stripePayload);
 
+    this.setState({ loading: true });
+
     // TODO: handle payment
     // TODO: error handling
     // this.props.history.push('booking-confirm');
@@ -91,8 +100,10 @@ class Booking extends Component {
             onSubmit={this.handleSubmit}
             onBack={this.handleBack}
             cart={this.props.cart}
+            register={this.state.register}
             authenticated={this.props.authenticated}
             history={this.props.history}
+            loading={this.state.loading}
           />
         </Elements>
       </StripeProvider>
