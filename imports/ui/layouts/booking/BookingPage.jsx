@@ -193,7 +193,7 @@ class BookingPage extends Component {
                   <div className="col-md-12">
                     <Checkbox
                       className="margin-top-20"
-                      checked={this.props.register}
+                      checked={this.props.cart.register}
                       name="register"
                       onChange={(event, data) => {
                         this.props.onChange({ target: { name: 'register', value: data.checked } });
@@ -321,7 +321,6 @@ BookingPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
   cart: PropTypes.object.isRequired,
-  register: PropTypes.bool.isRequired,
   authenticated: PropTypes.bool.isRequired,
   stripe: PropTypes.object.isRequired,
   screenWidth: PropTypes.number.isRequired,

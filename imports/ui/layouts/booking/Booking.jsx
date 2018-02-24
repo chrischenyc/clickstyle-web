@@ -19,9 +19,6 @@ class Booking extends Component {
     this.handleBack = this.handleBack.bind(this);
 
     this.state = {
-      creditCardNameOnCard: '',
-      creditCardSaveCard: true,
-      register: _.isEmpty(props.profile),
       loading: false,
     };
   }
@@ -37,41 +34,17 @@ class Booking extends Component {
         mobile: (nextProps.profile && nextProps.profile.mobile) || '',
         address:
           (nextProps.profile && nextProps.profile.address && nextProps.profile.address.raw) || '',
+        register: _.isEmpty(nextProps.profile),
       });
-
-      this.setState({ register: _.isEmpty(nextProps.profile) });
     }
   }
 
   handleChange(event) {
-    if (
-      event.target.name.indexOf('creditCardNameOnCard') !== -1 ||
-      event.target.name.indexOf('creditCardSaveCard') !== -1 ||
-      event.target.name === 'register'
-    ) {
-      this.setState({ [event.target.name]: event.target.value });
-    } else {
-      this.props.setUserInfo({ [event.target.name]: event.target.value });
-    }
+    this.props.setUserInfo({ [event.target.name]: event.target.value });
   }
 
   handleValidate() {
-    const {
-      email, firstName, lastName, mobile, address, date, time,
-    } = this.props.cart;
-
-    const { creditCardNameOnCard } = this.state;
-
-    const errors = validateBooking(
-      email,
-      firstName,
-      lastName,
-      mobile,
-      address,
-      date,
-      time,
-      creditCardNameOnCard,
-    );
+    const errors = validateBooking(this.props.cart);
 
     return errors;
   }
@@ -100,7 +73,6 @@ class Booking extends Component {
             onSubmit={this.handleSubmit}
             onBack={this.handleBack}
             cart={this.props.cart}
-            register={this.state.register}
             authenticated={this.props.authenticated}
             history={this.props.history}
             loading={this.state.loading}

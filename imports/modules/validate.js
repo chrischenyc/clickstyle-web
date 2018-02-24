@@ -189,16 +189,11 @@ export const validateStylistOpenHours = (openHours) => {
   return errors;
 };
 
-export const validateBooking = (
-  email,
-  firstName,
-  lastName,
-  mobile,
-  address,
-  date,
-  time,
-  creditCardNameOnCard,
-) => {
+export const validateBooking = (cart) => {
+  const {
+    email, firstName, lastName, mobile, address, date, time, creditCardNameOnCard,
+  } = cart;
+
   const errors = {};
 
   if (validator.isEmpty(firstName)) {
