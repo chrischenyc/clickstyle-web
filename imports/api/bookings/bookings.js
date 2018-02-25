@@ -35,11 +35,11 @@ Bookings.attachBehaviour('timestampable', {
 });
 
 const BookingsSchema = new SimpleSchema({
-  stylist: String, // Stylists record id
+  stylist: String, // Stylist user id
   services: Array,
   'services.$': ServiceSchema,
   total: Number,
-  count: Number,
+  customer: String, // Customer user id
   firstName: String,
   lastName: String,
   email: String,
@@ -47,6 +47,7 @@ const BookingsSchema = new SimpleSchema({
   address: String,
   date: String,
   time: String,
+  stripeCustomerId: String,
 });
 
 Bookings.attachSchema(BookingsSchema);

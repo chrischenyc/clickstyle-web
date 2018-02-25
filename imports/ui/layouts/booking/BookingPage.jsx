@@ -100,7 +100,7 @@ class BookingPage extends Component {
               <BookingPageSummarySection cart={this.props.cart} />
             </Responsive>
 
-            <Form error={!_.isEmpty(this.state.errors)}>
+            <Form error={!_.isEmpty(this.state.errors) || !_.isEmpty(this.props.error)}>
               <h3 className="margin-top-0 margin-bottom-30">Personal Details</h3>
 
               {!this.props.authenticated && (
@@ -188,20 +188,6 @@ class BookingPage extends Component {
                   />
                   <FormFieldErrorMessage compact message={this.state.errors.address} />
                 </div>
-
-                {!this.props.authenticated && (
-                  <div className="col-md-12">
-                    <Checkbox
-                      className="margin-top-20"
-                      checked={this.props.cart.register}
-                      name="register"
-                      onChange={(event, data) => {
-                        this.props.onChange({ target: { name: 'register', value: data.checked } });
-                      }}
-                      label={<label>also sign me up with {Meteor.settings.public.appName}</label>}
-                    />
-                  </div>
-                )}
               </div>
 
               <h3 className="margin-top-55 margin-bottom-30">Payment Method</h3>
@@ -280,6 +266,12 @@ class BookingPage extends Component {
               </div>
 
               <div className="margin-top-20">
+                <FormFieldErrorMessage
+                  className="margin-bottom-10"
+                  compact={false}
+                  message={this.props.error}
+                />
+
                 <Button
                   loading={this.state.loading || this.props.loading}
                   type="button"
@@ -328,6 +320,7 @@ BookingPage.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

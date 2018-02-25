@@ -35,7 +35,7 @@ const normalizeProfile = (options, user) => {
     return parseGoogleData(options, user);
   }
 
-  return null;
+  return parsePasswordData(options, user);
 };
 
 export default normalizeProfile;

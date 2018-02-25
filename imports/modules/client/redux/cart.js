@@ -122,7 +122,6 @@ const defaultState = {
   time: '',
   creditCardNameOnCard: '',
   creditCardSaveCard: true,
-  register: false,
 };
 
 const reducer = (state = defaultState, action) => {

@@ -1,15 +1,34 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { check } from 'meteor/check';
+
+import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
 import rateLimit from '../../../modules/server/rate-limit';
 
+const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
+
+// re-calculate total on server side
+const calculateTotal = (services) => {
+  let total = 0;
+
+  services.forEach((service) => {
+    total += service.basePrice;
+
+    service.addons.forEach((addon) => {
+      total += addon.price;
+    });
+  });
+
+  return total;
+};
+
 Meteor.methods({
-  'bookings.create': function bookingsInsert(cart) {
+  'bookings.create': async function bookingsCreate(cart) {
     check(cart, {
       stylist: Object,
       services: Array,
       total: Number,
-      count: Number,
       firstName: String,
       lastName: String,
       email: String,
@@ -19,51 +38,132 @@ Meteor.methods({
       time: String,
       creditCardNameOnCard: String,
       creditCardSaveCard: Boolean,
-      register: Boolean,
       stripePayload: Object,
     });
 
     try {
       const {
-        stylist,
-        services,
-        total,
-        count,
         firstName,
         lastName,
         email,
+        stylist,
+        services,
         mobile,
         address,
         date,
         time,
         creditCardNameOnCard,
         creditCardSaveCard,
-        register,
         stripePayload,
       } = cart;
 
-      // process Stripe token
-      console.log(stripePayload);
+      let userId = this.userId;
 
-      // if success create Bookings record
+      // pre-processing for guest user checkout
+      if (!userId) {
+        // verify email is not taken
+        if (Profiles.findOne({ email })) {
+          throw new Meteor.Error('email is taken. please log in if you are already a user');
+        }
 
-      // if Stripe fail, return errors
+        // create a new user account without password
+        userId = Accounts.createUser({
+          email,
+          profile: { name: { first: firstName, last: lastName } },
+        });
+      }
 
-      // link Stripe card token with the Bookings record
+      // find existing Stripe customer record, or create a new one
+      const { stripeCustomerId, stripeCardId } = Profiles.findOne({
+        owner: userId,
+      });
 
-      // if guest check out, try to match the email with any user
+      let stripeCustomer = null;
+      if (stripeCustomerId) {
+        stripeCustomer = await stripe.customers.retrieve(stripeCustomerId);
+      } else {
+        stripeCustomer = await stripe.customers.create({ email });
+        // save the customer ID for future use
+        Profiles.update({ owner: userId }, { $set: { stripeCustomerId: stripeCustomer.id } });
+      }
 
-      // if no user found, create one
-      const userId = this.userId;
+      const total = calculateTotal(services);
 
-      // if guest user selects to sign up, send out welcome and reset password
+      if (stripePayload) {
+        // ---------- pre-processing new card ----------
 
-      // if user selects to save credit card, save credit card token and its partial info
+        const card = await stripe.customers.createSource(stripeCustomer.id, {
+          source: stripePayload.token.id,
+        });
 
-      // send customer email notification
+        // set saved card as customer's default_source
+        stripe.customers.update(stripeCustomer.id, {
+          default_source: card.id,
+        });
 
-      // send stylist email notification
+        // add additional info to card
+        stripe.customers.updateCard(stripeCustomer.id, card.id, {
+          name: creditCardNameOnCard,
+        });
+
+        // keep local record of saved stripe card
+        if (creditCardSaveCard) {
+          Profiles.update(
+            { owner: userId },
+            {
+              $set: {
+                stripeCardId: card.id,
+                stripeCardLast4: card.last4,
+                stripeCardName: creditCardNameOnCard,
+              },
+            },
+          );
+        }
+
+        // ---------- create Bookings record ----------
+        const bookingsId = Bookings.insert({
+          stylist: stylist.owner,
+          services,
+          total,
+          customer: userId,
+          firstName,
+          lastName,
+          email,
+          mobile,
+          address,
+          date,
+          time,
+          stripeCustomerId: stripeCustomer.id,
+        });
+
+        // TODO: ---------- send customer email notification ----------
+        // TODO: ---------- send stylist email notification ----------
+      } else if (stripeCustomer.default_source === stripeCardId) {
+        // user's existing card record is valid, create Bookings record directly
+        const bookingsId = Bookings.insert({
+          stylist: stylist.owner,
+          services,
+          total,
+          customer: userId,
+          firstName,
+          lastName,
+          email,
+          mobile,
+          address,
+          date,
+          time,
+          stripeCustomerId: stripeCustomer.id,
+        });
+
+        // TODO: send customer email notification
+        // TODO: send stylist email notification
+      } else {
+        // invalid saved card, throw exception
+        throw new Error('Invalid payment method, please try with a new credit/debit card.');
+      }
     } catch (exception) {
+      // TODO: in case of any error, revoke user/profile and Stripe account created
+
       /* eslint-disable no-console */
       console.error(exception);
       /* eslint-enable no-console */

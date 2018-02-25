@@ -21,6 +21,7 @@ class Booking extends Component {
 
     this.state = {
       loading: false,
+      error: '',
     };
   }
 
@@ -35,7 +36,6 @@ class Booking extends Component {
         mobile: (nextProps.profile && nextProps.profile.mobile) || '',
         address:
           (nextProps.profile && nextProps.profile.address && nextProps.profile.address.raw) || '',
-        register: _.isEmpty(nextProps.profile),
       });
     }
   }
@@ -55,17 +55,15 @@ class Booking extends Component {
 
     Meteor.call(
       'bookings.create',
-      { ..._.omit(this.props.cart, 'showCartInHeader'), stripePayload },
-      (error, success) => {
+      { ..._.omit(this.props.cart, ['showCartInHeader', 'count']), stripePayload },
+      (error) => {
         if (error) {
-          console.log('error', error);
-        }
-        if (success) {
+          this.setState({ loading: false, error: error.reason.error });
+        } else {
+          // this.props.history.push('booking-confirm');
         }
       },
     );
-
-    // this.props.history.push('booking-confirm');
   }
 
   handleBack() {
@@ -74,7 +72,7 @@ class Booking extends Component {
 
   render() {
     return this.props.isScriptLoaded && this.props.isScriptLoadSucceed ? (
-      <StripeProvider apiKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh">
+      <StripeProvider apiKey={Meteor.settings.public.StripePublishableKey}>
         <Elements>
           <BookingPage
             onChange={this.handleChange}
@@ -85,6 +83,7 @@ class Booking extends Component {
             authenticated={this.props.authenticated}
             history={this.props.history}
             loading={this.state.loading}
+            error={this.state.error}
           />
         </Elements>
       </StripeProvider>
