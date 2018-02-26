@@ -138,6 +138,8 @@ Meteor.methods({
 
         // TODO: ---------- send customer email notification ----------
         // TODO: ---------- send stylist email notification ----------
+
+        return bookingsId;
       } else if (stripeCustomer.default_source === stripeCardId) {
         // user's existing card record is valid, create Bookings record directly
         const bookingsId = Bookings.insert({
@@ -157,10 +159,11 @@ Meteor.methods({
 
         // TODO: send customer email notification
         // TODO: send stylist email notification
-      } else {
-        // invalid saved card, throw exception
-        throw new Error('Invalid payment method, please try with a new credit/debit card.');
+
+        return bookingsId;
       }
+      // invalid saved card, throw exception
+      throw new Error('Invalid payment method, please try with a new credit/debit card.');
     } catch (exception) {
       // TODO: in case of any error, revoke user/profile and Stripe account created
 
