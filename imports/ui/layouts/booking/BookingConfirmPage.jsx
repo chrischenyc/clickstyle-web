@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const BookingConfirmPage = () => (
   <div className="container">
@@ -9,9 +10,9 @@ const BookingConfirmPage = () => (
           <h2 className="margin-top-30">Thanks for your booking!</h2>
           <p>You&apos;ll receive a confirmation email</p>
           <p>TODO: copy writing what's next</p>
-          <a href="dashboard-invoice.html" className="button margin-top-30">
+          <Link to="/help" className="button margin-top-30">
             FAQ
-          </a>
+          </Link>
         </div>
       </div>
     </div>
