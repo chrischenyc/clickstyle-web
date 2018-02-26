@@ -108,7 +108,7 @@ class App extends Component {
               <Route path="/help" component={withHeaderAndFooter(HelpPage)} />
               <Route path="/about" component={withHeaderAndFooter(AboutPage)} />
               <Route path="/booking" component={withHeaderAndFooter(Booking)} />
-              <Route path="/booking-confirm" component={withHeaderAndFooter(BookingConfirm)} />
+              <Route path="/booking-confirm/:_id" component={withHeaderAndFooter(BookingConfirm)} />
 
               <PublicRoute path="/login" component={withHeaderAndFooter(Login)} />
               <PublicRoute path="/signup" component={withHeaderAndFooter(SignUp)} />

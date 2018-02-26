@@ -173,6 +173,40 @@ Meteor.methods({
       throw new Meteor.Error('500', exception);
     }
   },
+
+  'bookings.find': function bookingsFind(_id) {
+    check(_id, String);
+
+    try {
+      const booking = Bookings.findOne(
+        { _id },
+        {
+          fields: {
+            stylist: 1,
+            services: 1,
+            total: 1,
+            customer: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+            address: 1,
+            date: 1,
+            time: 1,
+          },
+        },
+      );
+
+      return booking;
+    } catch (exception) {
+      // TODO: in case of any error, revoke user/profile and Stripe account created
+
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500', exception);
+    }
+  },
 });
 
 rateLimit({
