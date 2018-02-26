@@ -23,6 +23,17 @@ class Booking extends Component {
       loading: false,
       error: '',
     };
+
+    // load user info into cart if logged in
+    if (props.authenticated && _.isEmpty(props.cart.email)) {
+      props.setUserInfo({
+        firstName: (props.profile && props.profile.name && props.profile.name.first) || '',
+        lastName: (props.profile && props.profile.name && props.profile.name.last) || '',
+        email: (props.profile && props.profile.email) || '',
+        mobile: (props.profile && props.profile.mobile) || '',
+        address: (props.profile && props.profile.address && props.profile.address.raw) || '',
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {

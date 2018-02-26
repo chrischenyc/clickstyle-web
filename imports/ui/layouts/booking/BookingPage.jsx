@@ -148,6 +148,7 @@ class BookingPage extends Component {
                 <div className="col-md-6 margin-bottom-15">
                   <label>Email</label>
                   <FormInputField
+                    disabled={this.props.authenticated}
                     name="email"
                     type="text"
                     onChange={this.props.onChange}
