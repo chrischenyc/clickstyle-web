@@ -5,6 +5,9 @@ import { check } from 'meteor/check';
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
 import rateLimit from '../../../modules/server/rate-limit';
+import { sendCustomerBookingOrderedEmail } from '../../../modules/server/send-email';
+
+import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
@@ -21,6 +24,32 @@ const calculateTotal = (services) => {
   });
 
   return total;
+};
+
+const servicesSummary = (services) => {
+  let result = '';
+
+  services.forEach((service, index) => {
+    result += service.name;
+
+    if (service.addons.length > 0) {
+      result += ' (including ';
+    }
+
+    service.addons.forEach((addon) => {
+      result += addon.name;
+    });
+
+    if (service.addons.length > 0) {
+      result += ')';
+    }
+
+    if (index < services.length - 1) {
+      result += ', ';
+    }
+  });
+
+  return result;
 };
 
 Meteor.methods({
@@ -57,7 +86,7 @@ Meteor.methods({
         stripePayload,
       } = cart;
 
-      let userId = this.userId;
+      let { userId } = this;
 
       // pre-processing for guest user checkout
       if (!userId) {
@@ -136,7 +165,20 @@ Meteor.methods({
           stripeCustomerId: stripeCustomer.id,
         });
 
-        // TODO: ---------- send customer email notification ----------
+        sendCustomerBookingOrderedEmail({
+          stylist: `${stylist.name.first} ${stylist.name.last}`,
+          services: servicesSummary(services),
+          total,
+          firstName,
+          lastName,
+          email,
+          mobile,
+          address,
+          time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
+          bookingsId,
+          bookingUrl: `bookings/${bookingsId}`,
+        });
+
         // TODO: ---------- send stylist email notification ----------
 
         return bookingsId;
@@ -157,7 +199,20 @@ Meteor.methods({
           stripeCustomerId: stripeCustomer.id,
         });
 
-        // TODO: send customer email notification
+        sendCustomerBookingOrderedEmail({
+          stylist: `${stylist.name.first} ${stylist.name.last}`,
+          services: servicesSummary(services),
+          total,
+          firstName,
+          lastName,
+          email,
+          mobile,
+          address,
+          time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
+          bookingsId,
+          bookingUrl: `bookings/${bookingsId}`,
+        });
+
         // TODO: send stylist email notification
 
         return bookingsId;

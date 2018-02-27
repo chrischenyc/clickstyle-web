@@ -65,7 +65,7 @@ class Booking extends Component {
     this.setState({ loading: true });
 
     Meteor.call(
-      'bookings.find',
+      'bookings.create',
       { ..._.omit(this.props.cart, ['showCartInHeader', 'count']), stripePayload },
       (error, bookingsId) => {
         if (error) {

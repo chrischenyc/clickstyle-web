@@ -98,7 +98,9 @@ export const sendWelcomeEmail = (userId) => {
         ...templateConstants,
       },
     }).catch((error) => {
-      throw new Meteor.Error('500', `${error}`);
+      /* eslint-disable no-console */
+      console.error(error);
+      /* eslint-enable no-console */
     });
   }
 };
@@ -117,7 +119,9 @@ export const sendPasswordChangedEmail = (userId) => {
         ...templateConstants,
       },
     }).catch((error) => {
-      throw new Meteor.Error('500', `${error}`);
+      /* eslint-disable no-console */
+      console.error(error);
+      /* eslint-enable no-console */
     });
   }
 };
@@ -136,9 +140,50 @@ export const sendStylistJoinConfirmEmail = (userId) => {
         ...templateConstants,
       },
     }).catch((error) => {
-      throw new Meteor.Error('500', `${error}`);
+      /* eslint-disable no-console */
+      console.error(error);
+      /* eslint-enable no-console */
     });
   }
+};
+
+export const sendCustomerBookingOrderedEmail = ({
+  stylist,
+  services,
+  total,
+  firstName,
+  lastName,
+  email,
+  mobile,
+  address,
+  time,
+  bookingsId,
+  bookingUrl,
+}) => {
+  sendEmail({
+    to: email,
+    from: fromAddress,
+    subject: `Booking request sent for ${stylist}`,
+    template: 'booking-customer-booked',
+    templateConstants: {
+      stylist,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      bookingsId,
+      bookingUrl: Meteor.absoluteUrl(bookingUrl),
+      ...templateConstants,
+    },
+  }).catch((error) => {
+    /* eslint-disable no-console */
+    console.error(error);
+    /* eslint-enable no-console */
+  });
 };
 
 export const sendAdminEmailStylistApplication = (applicationId) => {
