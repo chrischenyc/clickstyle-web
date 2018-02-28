@@ -147,7 +147,7 @@ export const sendStylistJoinConfirmEmail = (userId) => {
   }
 };
 
-export const sendCustomerBookingOrderedEmail = ({
+export const sendCustomerBookingRequestedEmail = ({
   stylist,
   services,
   total,
@@ -164,9 +164,49 @@ export const sendCustomerBookingOrderedEmail = ({
     to: email,
     from: fromAddress,
     subject: `Booking request sent for ${stylist}`,
-    template: 'booking-customer-booked',
+    template: 'booking-requested-customer',
     templateConstants: {
       stylist,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      bookingsId,
+      bookingUrl: Meteor.absoluteUrl(bookingUrl),
+      ...templateConstants,
+    },
+  }).catch((error) => {
+    /* eslint-disable no-console */
+    console.error(error);
+    /* eslint-enable no-console */
+  });
+};
+
+export const sendStylistBookingRequestedEmail = ({
+  stylistFirsName,
+  stylistEmail,
+  services,
+  total,
+  firstName,
+  lastName,
+  email,
+  mobile,
+  address,
+  time,
+  bookingsId,
+  bookingUrl,
+}) => {
+  sendEmail({
+    to: stylistEmail,
+    from: fromAddress,
+    subject: `${firstName} ${lastName} sent you a booking`,
+    template: 'booking-requested-stylist',
+    templateConstants: {
+      stylistFirsName,
       services,
       total,
       firstName,

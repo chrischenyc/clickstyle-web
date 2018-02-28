@@ -5,7 +5,10 @@ import { check } from 'meteor/check';
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
 import rateLimit from '../../../modules/server/rate-limit';
-import { sendCustomerBookingOrderedEmail } from '../../../modules/server/send-email';
+import {
+  sendCustomerBookingRequestedEmail,
+  sendStylistBookingRequestedEmail,
+} from '../../../modules/server/send-email';
 
 import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
 
@@ -102,6 +105,8 @@ Meteor.methods({
         });
       }
 
+      const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
+
       // find existing Stripe customer record, or create a new one
       const { stripeCustomerId, stripeCardId } = Profiles.findOne({
         owner: userId,
@@ -165,7 +170,7 @@ Meteor.methods({
           stripeCustomerId: stripeCustomer.id,
         });
 
-        sendCustomerBookingOrderedEmail({
+        sendCustomerBookingRequestedEmail({
           stylist: `${stylist.name.first} ${stylist.name.last}`,
           services: servicesSummary(services),
           total,
@@ -179,7 +184,20 @@ Meteor.methods({
           bookingUrl: `bookings/${bookingsId}`,
         });
 
-        // TODO: ---------- send stylist email notification ----------
+        sendStylistBookingRequestedEmail({
+          stylistEmail,
+          stylistFirstName: stylist.name.first,
+          services: servicesSummary(services),
+          total,
+          firstName,
+          lastName,
+          email,
+          mobile,
+          address,
+          time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
+          bookingsId,
+          bookingUrl: `bookings/${bookingsId}`,
+        });
 
         return bookingsId;
       } else if (stripeCustomer.default_source === stripeCardId) {
@@ -199,7 +217,7 @@ Meteor.methods({
           stripeCustomerId: stripeCustomer.id,
         });
 
-        sendCustomerBookingOrderedEmail({
+        sendCustomerBookingRequestedEmail({
           stylist: `${stylist.name.first} ${stylist.name.last}`,
           services: servicesSummary(services),
           total,
@@ -213,7 +231,20 @@ Meteor.methods({
           bookingUrl: `bookings/${bookingsId}`,
         });
 
-        // TODO: send stylist email notification
+        sendStylistBookingRequestedEmail({
+          stylistEmail,
+          stylistFirstName: stylist.name.first,
+          services: servicesSummary(services),
+          total,
+          firstName,
+          lastName,
+          email,
+          mobile,
+          address,
+          time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
+          bookingsId,
+          bookingUrl: `bookings/${bookingsId}`,
+        });
 
         return bookingsId;
       }
