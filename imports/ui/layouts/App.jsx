@@ -115,6 +115,7 @@ class App extends Component {
               <Route path="/verify-email/:token" component={withHeaderAndFooter(VerifyEmailPage)} />
               <Route path="/forgot-password" component={withHeaderAndFooter(ForgotPassword)} />
               <Route path="/reset-password/:token" component={withHeaderAndFooter(ResetPassword)} />
+              <Route path="/enroll-account/:token" component={withHeaderAndFooter(ResetPassword)} />
 
               <SecureRoute path="/users/dashboard" component={withSideMenuAndHeader(Dashboard)} />
               <SecureRoute path="/users/profile" component={withSideMenuAndHeader(EditProfile)} />

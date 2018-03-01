@@ -32,7 +32,7 @@ const ResetPasswordPage = ({
       className="container centered-content margin-top-70 margin-bottom-70"
       style={{ maxWidth: 450 }}
     >
-      <h2>Reset Password</h2>
+      <h2>Set new password</h2>
 
       <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
         <FormInputField
