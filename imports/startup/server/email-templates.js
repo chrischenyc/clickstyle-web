@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import getPrivateFile from '../../modules/server/get-private-file';
 import templateToHTML from '../../modules/server/handlebars-email-to-html';
@@ -15,9 +14,7 @@ emailTemplates.siteName = appName;
 emailTemplates.from = fromAddress;
 
 emailTemplates.verifyEmail = {
-  subject() {
-    return 'Verify Your Email Address';
-  },
+  ...emailTemplates.resetPassword,
   html(user, url) {
     const urlWithoutHash = url.replace('#/', '');
     return templateToHTML(getPrivateFile('email-templates/verify-email.html'), {
@@ -28,7 +25,7 @@ emailTemplates.verifyEmail = {
   },
   text(user, url) {
     const urlWithoutHash = url.replace('#/', '');
-    if (Meteor.isDevelopment) console.info(`Verify Email Link: ${urlWithoutHash}`); // eslint-disable-line
+
     return templateToText(getPrivateFile('email-templates/verify-email.txt'), {
       firstName: user.profile.name.first,
       verifyUrl: urlWithoutHash,
@@ -38,9 +35,7 @@ emailTemplates.verifyEmail = {
 };
 
 emailTemplates.resetPassword = {
-  subject() {
-    return 'Reset Your Password';
-  },
+  ...emailTemplates.resetPassword,
   html(user, url) {
     const urlWithoutHash = url.replace('#/', '');
     return templateToHTML(getPrivateFile('email-templates/reset-password.html'), {
@@ -52,11 +47,32 @@ emailTemplates.resetPassword = {
   },
   text(user, url) {
     const urlWithoutHash = url.replace('#/', '');
-    if (Meteor.isDevelopment) console.info(`Reset Password Link: ${urlWithoutHash}`); // eslint-disable-line
+
     return templateToText(getPrivateFile('email-templates/reset-password.txt'), {
       firstName: user.profile.name.first,
       emailAddress: user.emails[0].address,
       resetUrl: urlWithoutHash,
+      ...templateConstants,
+    });
+  },
+};
+
+emailTemplates.enrollAccount = {
+  ...emailTemplates.enrollAccount,
+  html(user, url) {
+    const urlWithoutHash = url.replace('#/', '');
+    return templateToHTML(getPrivateFile('email-templates/enroll-account.html'), {
+      firstName: user.profile.name.first,
+      enrollUrl: urlWithoutHash,
+      ...templateConstants,
+    });
+  },
+  text(user, url) {
+    const urlWithoutHash = url.replace('#/', '');
+
+    return templateToText(getPrivateFile('email-templates/enroll-account.txt'), {
+      firstName: user.profile.name.first,
+      enrollUrl: urlWithoutHash,
       ...templateConstants,
     });
   },

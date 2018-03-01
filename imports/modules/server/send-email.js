@@ -203,7 +203,7 @@ export const sendStylistBookingRequestedEmail = ({
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `${firstName} ${lastName} sent you a booking`,
+    subject: `${firstName} ${lastName} sent you a booking request`,
     template: 'booking-requested-stylist',
     templateConstants: {
       stylistFirstName,

@@ -103,6 +103,8 @@ Meteor.methods({
           email,
           profile: { name: { first: firstName, last: lastName } },
         });
+
+        Accounts.sendEnrollmentEmail(userId);
       }
 
       const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });

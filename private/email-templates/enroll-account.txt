@@ -1,0 +1,11 @@
+Hi {{firstName}},
+
+To start using {{appName}}, simply click the link below.
+
+[Reset Password]({{enrollUrl}})
+
+
+Did you know:
+Hair can grow just about anywhere on the body, except for the palms of your hands, the soles of your feet, and on your lips and mucous membranes.
+
+{{{txtFooter}}}
