@@ -11,7 +11,7 @@ const ResetPasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
 }) => {
   if (redirect) {
-    return <Redirect to="/users/dashboard" />;
+    return <Redirect to="/" />;
   } else if (success) {
     return (
       <div

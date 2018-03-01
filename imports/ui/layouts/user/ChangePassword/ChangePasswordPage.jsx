@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button } from 'semantic-ui-react';
@@ -11,7 +10,7 @@ const ChangePasswordPage = ({
   onSubmit, onChange, loading, errors, success, redirect,
 }) => {
   if (redirect) {
-    return <Redirect to="/users/dashboard" />;
+    return <Redirect to="/" />;
   } else if (success) {
     return (
       <div className="container centered-content">

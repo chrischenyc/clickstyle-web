@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 
 const PublicRoute = ({ authenticated, component, ...rest }) => {
   if (authenticated) {
-    return <Redirect to="/users/dashboard" />;
+    return <Redirect to="/" />;
   }
 
   return <Route component={component} {...rest} />;
