@@ -1,6 +1,5 @@
-import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Button, Responsive, Checkbox, Form, Input } from 'semantic-ui-react';
+import { Button, Responsive, Checkbox, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';

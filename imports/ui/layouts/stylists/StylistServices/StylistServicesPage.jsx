@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Modal, List, Checkbox, Button, Container } from 'semantic-ui-react';

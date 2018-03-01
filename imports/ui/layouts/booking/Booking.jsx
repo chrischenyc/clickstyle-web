@@ -72,7 +72,7 @@ class Booking extends Component {
           this.setState({ loading: false, error: error.reason.error });
         } else {
           this.setState({ loading: false });
-          this.props.history.push(`booking-confirm/${bookingsId}`);
+          this.props.history.push(`booking-requested/${bookingsId}`);
         }
       },
     );

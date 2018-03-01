@@ -33,7 +33,8 @@ import Search from '../layouts/search/Search';
 import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 
 import Booking from '../layouts/booking/Booking';
-import BookingConfirm from '../layouts/booking/BookingConfirm';
+import BookingRequested from '../layouts/booking/BookingRequested';
+import BookingDetail from '../layouts/booking/BookingDetail';
 
 import Dashboard from '../layouts/user/DashboardPage';
 import EditProfile from '../layouts/user/Profile/EditProfile';
@@ -107,8 +108,12 @@ class App extends Component {
               <Route path="/privacy" component={withHeaderAndFooter(PrivacyPage)} />
               <Route path="/help" component={withHeaderAndFooter(HelpPage)} />
               <Route path="/about" component={withHeaderAndFooter(AboutPage)} />
+
               <Route path="/booking" component={withHeaderAndFooter(Booking)} />
-              <Route path="/booking-confirm/:_id" component={withHeaderAndFooter(BookingConfirm)} />
+              <Route
+                path="/booking-requested/:_id"
+                component={withHeaderAndFooter(BookingRequested)}
+              />
 
               <PublicRoute path="/login" component={withHeaderAndFooter(Login)} />
               <PublicRoute path="/signup" component={withHeaderAndFooter(SignUp)} />
@@ -132,6 +137,10 @@ class App extends Component {
               <SecureRoute
                 path="/users/booking/stylists"
                 component={withSideMenuAndHeader(FavouredStylists)}
+              />
+              <SecureRoute
+                path="/users/bookings/:_id"
+                component={withSideMenuAndHeader(BookingDetail)}
               />
               <SecureRoute
                 path="/users/stylist/application"

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { withLoading } from '../../components/HOC';
-import BookingConfirmPage from './BookingConfirmPage';
+import BookingDetailPage from './BookingDetailPage';
 
-class BookingConfirm extends Component {
+class BookingDetail extends Component {
   constructor(props) {
     super(props);
 
@@ -40,15 +40,15 @@ class BookingConfirm extends Component {
 
   render() {
     if (!_.isNil(this.state.booking)) {
-      return <BookingConfirmPage booking={this.state.booking} />;
+      return <BookingDetailPage booking={this.state.booking} />;
     }
     return '';
   }
 }
 
-BookingConfirm.propTypes = {
+BookingDetail.propTypes = {
   showLoading: PropTypes.func.isRequired,
   hideLoading: PropTypes.func.isRequired,
 };
 
-export default withLoading(BookingConfirm);
+export default withLoading(BookingDetail);

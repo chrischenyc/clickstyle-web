@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import _ from 'lodash';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Services from '../services';

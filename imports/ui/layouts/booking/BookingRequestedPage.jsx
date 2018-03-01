@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const BookingConfirmPage = props => (
+const BookingRequestedPage = props => (
   <div className="container">
     <div className="row">
       <div className="col-md-12">
@@ -21,8 +21,8 @@ const BookingConfirmPage = props => (
   </div>
 );
 
-BookingConfirmPage.propTypes = {
+BookingRequestedPage.propTypes = {
   booking: PropTypes.object.isRequired,
 };
 
-export default BookingConfirmPage;
+export default BookingRequestedPage;

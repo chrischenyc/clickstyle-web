@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
-import { withTracker } from 'meteor/react-meteor-data';
 import { Slingshot } from 'meteor/edgee:slingshot';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';

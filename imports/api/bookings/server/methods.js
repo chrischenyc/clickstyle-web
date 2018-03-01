@@ -170,6 +170,7 @@ Meteor.methods({
           date,
           time,
           stripeCustomerId: stripeCustomer.id,
+          status: 'pending',
         });
 
         sendCustomerBookingRequestedEmail({
@@ -183,7 +184,7 @@ Meteor.methods({
           address,
           time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
           bookingsId,
-          bookingUrl: `bookings/${bookingsId}`,
+          bookingUrl: `users/bookings/${bookingsId}`,
         });
 
         sendStylistBookingRequestedEmail({
@@ -198,7 +199,7 @@ Meteor.methods({
           address,
           time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
           bookingsId,
-          bookingUrl: `bookings/${bookingsId}`,
+          bookingUrl: `users/bookings/${bookingsId}`,
         });
 
         return bookingsId;
@@ -217,6 +218,7 @@ Meteor.methods({
           date,
           time,
           stripeCustomerId: stripeCustomer.id,
+          status: 'pending',
         });
 
         sendCustomerBookingRequestedEmail({
@@ -230,7 +232,7 @@ Meteor.methods({
           address,
           time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
           bookingsId,
-          bookingUrl: `bookings/${bookingsId}`,
+          bookingUrl: `users/bookings/${bookingsId}`,
         });
 
         sendStylistBookingRequestedEmail({
@@ -245,7 +247,7 @@ Meteor.methods({
           address,
           time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
           bookingsId,
-          bookingUrl: `bookings/${bookingsId}`,
+          bookingUrl: `users/bookings/${bookingsId}`,
         });
 
         return bookingsId;
