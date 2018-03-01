@@ -187,7 +187,7 @@ export const sendCustomerBookingRequestedEmail = ({
 };
 
 export const sendStylistBookingRequestedEmail = ({
-  stylistFirsName,
+  stylistFirstName,
   stylistEmail,
   services,
   total,
@@ -206,7 +206,7 @@ export const sendStylistBookingRequestedEmail = ({
     subject: `${firstName} ${lastName} sent you a booking`,
     template: 'booking-requested-stylist',
     templateConstants: {
-      stylistFirsName,
+      stylistFirstName,
       services,
       total,
       firstName,
