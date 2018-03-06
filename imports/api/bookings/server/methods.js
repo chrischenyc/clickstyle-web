@@ -118,7 +118,10 @@ Meteor.methods({
       if (stripeCustomerId) {
         stripeCustomer = await stripe.customers.retrieve(stripeCustomerId);
       } else {
-        stripeCustomer = await stripe.customers.create({ email, description: userId });
+        stripeCustomer = await stripe.customers.create({
+          email,
+          description: `${firstName} ${lastName} (${userId})`,
+        });
         // save the customer ID for future use
         Profiles.update({ owner: userId }, { $set: { stripeCustomerId: stripeCustomer.id } });
       }
