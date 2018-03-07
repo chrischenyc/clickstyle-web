@@ -111,7 +111,7 @@ class App extends Component {
 
               <Route path="/booking" component={withHeaderAndFooter(Booking)} />
               <Route
-                path="/booking-requested/:_id"
+                path="/booking-requested/:_id/:userId?"
                 component={withHeaderAndFooter(BookingRequested)}
               />
 

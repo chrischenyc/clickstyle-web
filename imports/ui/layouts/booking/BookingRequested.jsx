@@ -16,24 +16,24 @@ class BookingRequested extends Component {
   }
 
   componentDidMount() {
-    this.loadBooking(this.props.match.params._id);
+    this.loadBooking(this.props.match.params._id, this.props.match.params.userId);
   }
 
-  loadBooking(_id) {
+  loadBooking(_id, userId) {
     if (_.isNil(_id)) {
-      this.props.history.push('/');
+      this.props.history.push('/404');
       return;
     }
 
     this.props.showLoading();
 
-    Meteor.call('bookings.find', _id, (error, booking) => {
+    Meteor.call('bookings.find', { _id, userId }, (error, booking) => {
       this.props.hideLoading();
 
       if (booking) {
         this.setState({ booking });
       } else {
-        this.props.history.push('/');
+        this.props.history.push('/404');
       }
     });
   }

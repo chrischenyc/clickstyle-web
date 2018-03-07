@@ -67,12 +67,17 @@ class Booking extends Component {
     Meteor.call(
       'bookings.create',
       { ..._.omit(this.props.cart, ['showCartInHeader', 'count']), stripePayload },
-      (error, bookingsId) => {
+      (error, { bookingsId, userId }) => {
         if (error) {
           this.setState({ loading: false, error: error.reason.error });
         } else {
           this.setState({ loading: false });
-          this.props.history.push(`booking-requested/${bookingsId}`);
+
+          let url = `booking-requested/${bookingsId}`;
+          if (userId) {
+            url += `/${userId}`;
+          }
+          this.props.history.push(url);
         }
       },
     );

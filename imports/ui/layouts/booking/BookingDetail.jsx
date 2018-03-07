@@ -21,19 +21,19 @@ class BookingDetail extends Component {
 
   loadBooking(_id) {
     if (_.isNil(_id)) {
-      this.props.history.push('/');
+      this.props.history.push('/404');
       return;
     }
 
     this.props.showLoading();
 
-    Meteor.call('bookings.find', _id, (error, booking) => {
+    Meteor.call('bookings.find', { _id }, (error, booking) => {
       this.props.hideLoading();
 
       if (booking) {
         this.setState({ booking });
       } else {
-        this.props.history.push('/');
+        this.props.history.push('/404');
       }
     });
   }

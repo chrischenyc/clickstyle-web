@@ -205,7 +205,11 @@ Meteor.methods({
           bookingUrl: `users/bookings/${bookingsId}`,
         });
 
-        return bookingsId;
+        if (this.userId) {
+          return { bookingsId };
+        }
+
+        return { bookingsId, userId };
       } else if (stripeCustomer.default_source === stripeCardId) {
         // user's existing card record is valid, create Bookings record directly
         const bookingsId = Bookings.insert({
@@ -253,7 +257,11 @@ Meteor.methods({
           bookingUrl: `users/bookings/${bookingsId}`,
         });
 
-        return bookingsId;
+        if (this.userId) {
+          return { bookingsId };
+        }
+
+        return { bookingsId, userId };
       }
       // invalid saved card, throw exception
       throw new Error('Invalid payment method, please try with a new credit/debit card.');
@@ -267,12 +275,28 @@ Meteor.methods({
     }
   },
 
-  'bookings.find': function bookingsFind(_id) {
+  'bookings.find': function bookingsFind(object) {
+    check(object, Object);
+
+    const { _id, userId } = object;
     check(_id, String);
+
+    if (userId) {
+      check(userId, String);
+    }
+
+    if ((!this.userId && !userId) || (this.userId && userId && this.userId !== userId)) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    let theUserId = this.userId;
+    if (!theUserId) {
+      theUserId = userId;
+    }
 
     try {
       const booking = Bookings.findOne(
-        { _id },
+        { _id, $or: [{ customer: theUserId }, { stylist: theUserId }] },
         {
           fields: {
             stylist: 1,
