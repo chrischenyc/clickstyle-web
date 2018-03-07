@@ -250,7 +250,7 @@ Meteor.methods({
     }
   },
 
-  'requested.bookings.find': function bookingsFind(object) {
+  'requested.booking.find': function requestedBookingFind(object) {
     check(object, Object);
 
     const { _id, userId } = object;
@@ -271,7 +271,7 @@ Meteor.methods({
 
     try {
       const booking = Bookings.findOne(
-        { _id, $or: [{ customer: theUserId }, { stylist: theUserId }] },
+        { _id, customer: theUserId },
         {
           fields: {
             stylist: 1,
@@ -291,8 +291,6 @@ Meteor.methods({
 
       return booking;
     } catch (exception) {
-      // TODO: in case of any error, revoke user/profile and Stripe account created
-
       /* eslint-disable no-console */
       console.error(exception);
       /* eslint-enable no-console */
@@ -300,7 +298,7 @@ Meteor.methods({
     }
   },
 
-  'customer.bookings.find': function bookingsFind(_id) {
+  'customer.booking.find': function customerBookingFind(_id) {
     check(_id, String);
 
     if (!this.userId) {
@@ -331,8 +329,6 @@ Meteor.methods({
 
       return { ...booking, stylist };
     } catch (exception) {
-      // TODO: in case of any error, revoke user/profile and Stripe account created
-
       /* eslint-disable no-console */
       console.error(exception);
       /* eslint-enable no-console */
@@ -340,7 +336,7 @@ Meteor.methods({
     }
   },
 
-  'stylist.bookings.find': function bookingsFind(_id) {
+  'stylist.booking.find': function stylistBookingFind(_id) {
     check(_id, String);
 
     if (!this.userId) {
@@ -352,7 +348,6 @@ Meteor.methods({
         { _id, stylist: this.userId },
         {
           fields: {
-            stylist: 1,
             services: 1,
             total: 1,
             customer: 1,
@@ -367,10 +362,82 @@ Meteor.methods({
         },
       );
 
-      return booking;
-    } catch (exception) {
-      // TODO: in case of any error, revoke user/profile and Stripe account created
+      const customer = Profiles.findOne({ owner: booking.customer });
 
+      return { ...booking, customer };
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500', exception);
+    }
+  },
+
+  'customer.bookings.find': function customerBookingsFind() {
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    try {
+      const bookings = Bookings.find(
+        { customer: this.userId },
+        {
+          fields: {
+            stylist: 1,
+            services: 1,
+            total: 1,
+            firstName: 1,
+            lastName: 1,
+            mobile: 1,
+            address: 1,
+            date: 1,
+            time: 1,
+          },
+        },
+      ).fetch();
+
+      return bookings.map((booking) => {
+        const stylist = Profiles.findOne({ owner: booking.stylist });
+        return { ...booking, stylist };
+      });
+    } catch (exception) {
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500', exception);
+    }
+  },
+
+  'stylist.bookings.find': function stylistBookingsFind() {
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    try {
+      const bookings = Bookings.find(
+        { stylist: this.userId },
+        {
+          fields: {
+            services: 1,
+            total: 1,
+            customer: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+            address: 1,
+            date: 1,
+            time: 1,
+          },
+        },
+      );
+
+      return bookings.map((booking) => {
+        const customer = Profiles.findOne({ owner: booking.customer });
+
+        return { ...booking, customer };
+      });
+    } catch (exception) {
       /* eslint-disable no-console */
       console.error(exception);
       /* eslint-enable no-console */
@@ -382,7 +449,9 @@ Meteor.methods({
 rateLimit({
   methods: [
     'bookings.create',
-    'requested.bookings.find',
+    'requested.booking.find',
+    'customer.booking.find',
+    'stylist.booking.find',
     'customer.bookings.find',
     'stylist.bookings.find',
   ],

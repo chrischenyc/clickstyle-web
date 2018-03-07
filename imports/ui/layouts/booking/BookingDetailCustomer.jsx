@@ -27,7 +27,7 @@ class BookingDetailCustomer extends Component {
 
     this.props.showLoading();
 
-    Meteor.call('customer.bookings.find', _id, (error, booking) => {
+    Meteor.call('customer.booking.find', _id, (error, booking) => {
       this.props.hideLoading();
 
       if (booking) {
