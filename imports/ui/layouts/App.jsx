@@ -34,7 +34,7 @@ import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 
 import Booking from '../layouts/booking/Booking';
 import BookingRequested from '../layouts/booking/BookingRequested';
-import BookingDetail from '../layouts/booking/BookingDetail';
+import BookingDetailCustomer from '../layouts/booking/BookingDetailCustomer';
 
 import Dashboard from '../layouts/user/DashboardPage';
 import EditProfile from '../layouts/user/Profile/EditProfile';
@@ -140,7 +140,7 @@ class App extends Component {
               />
               <SecureRoute
                 path="/users/bookings/:_id"
-                component={withSideMenuAndHeader(BookingDetail)}
+                component={withSideMenuAndHeader(BookingDetailCustomer)}
               />
               <SecureRoute
                 path="/users/stylist/application"
@@ -161,6 +161,10 @@ class App extends Component {
               <SecureRoute
                 path="/users/stylist/portfolio"
                 component={withSideMenuAndHeader(StylistPortfolio)}
+              />
+              <SecureRoute
+                path="/users/stylist/bookings/:_id"
+                component={withSideMenuAndHeader(BookingDetailCustomer)}
               />
 
               <Route component={withHeaderAndFooter(NotFoundPage)} />

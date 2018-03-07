@@ -11,6 +11,7 @@ import {
 } from '../../../modules/server/send-email';
 
 import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
+import servicesSummary from '../../../modules/format-services';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
@@ -27,32 +28,6 @@ const calculateTotal = (services) => {
   });
 
   return total;
-};
-
-const servicesSummary = (services) => {
-  let result = '';
-
-  services.forEach((service, index) => {
-    result += service.name;
-
-    if (service.addons.length > 0) {
-      result += ' (including ';
-    }
-
-    service.addons.forEach((addon) => {
-      result += addon.name;
-    });
-
-    if (service.addons.length > 0) {
-      result += ')';
-    }
-
-    if (index < services.length - 1) {
-      result += ', ';
-    }
-  });
-
-  return result;
 };
 
 Meteor.methods({
@@ -202,7 +177,7 @@ Meteor.methods({
           address,
           time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
           bookingsId,
-          bookingUrl: `users/bookings/${bookingsId}`,
+          bookingUrl: `users/stylist/bookings/${bookingsId}`,
         });
 
         if (this.userId) {
@@ -254,7 +229,7 @@ Meteor.methods({
           address,
           time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
           bookingsId,
-          bookingUrl: `users/bookings/${bookingsId}`,
+          bookingUrl: `users/stylist/bookings/${bookingsId}`,
         });
 
         if (this.userId) {
@@ -275,7 +250,7 @@ Meteor.methods({
     }
   },
 
-  'bookings.find': function bookingsFind(object) {
+  'requested.bookings.find': function bookingsFind(object) {
     check(object, Object);
 
     const { _id, userId } = object;
@@ -324,10 +299,93 @@ Meteor.methods({
       throw new Meteor.Error('500', exception);
     }
   },
+
+  'customer.bookings.find': function bookingsFind(_id) {
+    check(_id, String);
+
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    try {
+      const booking = Bookings.findOne(
+        { _id, customer: this.userId },
+        {
+          fields: {
+            stylist: 1,
+            services: 1,
+            total: 1,
+            customer: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+            address: 1,
+            date: 1,
+            time: 1,
+          },
+        },
+      );
+
+      const stylist = Profiles.findOne({ owner: booking.stylist });
+
+      return { ...booking, stylist };
+    } catch (exception) {
+      // TODO: in case of any error, revoke user/profile and Stripe account created
+
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500', exception);
+    }
+  },
+
+  'stylist.bookings.find': function bookingsFind(_id) {
+    check(_id, String);
+
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    try {
+      const booking = Bookings.findOne(
+        { _id, stylist: this.userId },
+        {
+          fields: {
+            stylist: 1,
+            services: 1,
+            total: 1,
+            customer: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            mobile: 1,
+            address: 1,
+            date: 1,
+            time: 1,
+          },
+        },
+      );
+
+      return booking;
+    } catch (exception) {
+      // TODO: in case of any error, revoke user/profile and Stripe account created
+
+      /* eslint-disable no-console */
+      console.error(exception);
+      /* eslint-enable no-console */
+      throw new Meteor.Error('500', exception);
+    }
+  },
 });
 
 rateLimit({
-  methods: ['bookings.create'],
+  methods: [
+    'bookings.create',
+    'requested.bookings.find',
+    'customer.bookings.find',
+    'stylist.bookings.find',
+  ],
   limit: 5,
   timeRange: 1000,
 });

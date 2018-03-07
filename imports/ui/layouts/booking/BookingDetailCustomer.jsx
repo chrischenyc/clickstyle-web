@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { withLoading } from '../../components/HOC';
-import BookingDetailPage from './BookingDetailPage';
+import BookingDetailCustomerPage from './BookingDetailCustomerPage';
 
-class BookingDetail extends Component {
+class BookingDetailCustomer extends Component {
   constructor(props) {
     super(props);
 
@@ -27,7 +27,7 @@ class BookingDetail extends Component {
 
     this.props.showLoading();
 
-    Meteor.call('bookings.find', { _id }, (error, booking) => {
+    Meteor.call('customer.bookings.find', _id, (error, booking) => {
       this.props.hideLoading();
 
       if (booking) {
@@ -40,15 +40,15 @@ class BookingDetail extends Component {
 
   render() {
     if (!_.isNil(this.state.booking)) {
-      return <BookingDetailPage booking={this.state.booking} />;
+      return <BookingDetailCustomerPage booking={this.state.booking} />;
     }
     return '';
   }
 }
 
-BookingDetail.propTypes = {
+BookingDetailCustomer.propTypes = {
   showLoading: PropTypes.func.isRequired,
   hideLoading: PropTypes.func.isRequired,
 };
 
-export default withLoading(BookingDetail);
+export default withLoading(BookingDetailCustomer);
