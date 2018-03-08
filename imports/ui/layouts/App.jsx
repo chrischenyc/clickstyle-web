@@ -32,9 +32,10 @@ import ResetPassword from '../layouts/user/ResetPassword/ResetPassword';
 import Search from '../layouts/search/Search';
 import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 
-import Booking from '../layouts/booking/Booking';
+import BookingCheckout from '../layouts/booking/BookingCheckout';
 import BookingRequested from '../layouts/booking/BookingRequested';
-import BookingDetailCustomer from '../layouts/booking/BookingDetailCustomer';
+import CustomerBooking from '../layouts/booking/CustomerBooking';
+import CustomerBookings from '../layouts/booking/CustomerBookings';
 
 import Dashboard from '../layouts/user/DashboardPage';
 import EditProfile from '../layouts/user/Profile/EditProfile';
@@ -109,7 +110,7 @@ class App extends Component {
               <Route path="/help" component={withHeaderAndFooter(HelpPage)} />
               <Route path="/about" component={withHeaderAndFooter(AboutPage)} />
 
-              <Route path="/booking" component={withHeaderAndFooter(Booking)} />
+              <Route path="/booking" component={withHeaderAndFooter(BookingCheckout)} />
               <Route
                 path="/booking-requested/:_id/:userId?"
                 component={withHeaderAndFooter(BookingRequested)}
@@ -139,8 +140,13 @@ class App extends Component {
                 component={withSideMenuAndHeader(FavouredStylists)}
               />
               <SecureRoute
+                exact
+                path="/users/bookings"
+                component={withSideMenuAndHeader(CustomerBookings)}
+              />
+              <SecureRoute
                 path="/users/bookings/:_id"
-                component={withSideMenuAndHeader(BookingDetailCustomer)}
+                component={withSideMenuAndHeader(CustomerBooking)}
               />
               <SecureRoute
                 path="/users/stylist/application"
@@ -164,7 +170,7 @@ class App extends Component {
               />
               <SecureRoute
                 path="/users/stylist/bookings/:_id"
-                component={withSideMenuAndHeader(BookingDetailCustomer)}
+                component={withSideMenuAndHeader(CustomerBooking)}
               />
 
               <Route component={withHeaderAndFooter(NotFoundPage)} />

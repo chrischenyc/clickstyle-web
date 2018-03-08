@@ -43,6 +43,11 @@ const SideMenu = ({ isStylist }) => (
 
       <ul data-submenu-title="Booking">
         <li>
+          <NavLink to="/users/bookings">
+            <i className="im im-icon-Calendar" /> Bookings
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/users/booking/stylists">
             <i className="im im-icon-Heart" /> Favoured stylists
           </NavLink>

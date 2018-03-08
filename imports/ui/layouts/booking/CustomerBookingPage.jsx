@@ -7,9 +7,10 @@ import { formatDateDisplayString, parseDateQueryString } from '../../../modules/
 import servicesSummary from '../../../modules/format-services';
 import formatPrice from '../../../modules/format-price';
 
-import scaledImageURL from '../../../modules/scaled-image-url.js';
+import scaledImageURL from '../../../modules/scaled-image-url';
+import userProfileLink from '../../../modules/user-profile-link';
 
-const BookingDetailCustomerPage = props => (
+const CustomerBookingPage = props => (
   <Container>
     <div className="pending-booking">
       <div className="list-box-listing bookings">
@@ -25,11 +26,7 @@ const BookingDetailCustomerPage = props => (
         <div className="list-box-listing-content">
           <div className="inner">
             <h3>
-              <Link
-                to={`/users/show/${props.booking.stylist.owner}/${
-                  props.booking.stylist.name.first
-                }${props.booking.stylist.name.last}`}
-              >
+              <Link to={userProfileLink(props.booking.stylist)}>
                 {`${props.booking.stylist.name.first} ${props.booking.stylist.name.last}`}
               </Link>{' '}
               <span className="booking-status pending">Pending</span>
@@ -108,8 +105,8 @@ const BookingDetailCustomerPage = props => (
   </Container>
 );
 
-BookingDetailCustomerPage.propTypes = {
+CustomerBookingPage.propTypes = {
   booking: PropTypes.object.isRequired,
 };
 
-export default BookingDetailCustomerPage;
+export default CustomerBookingPage;

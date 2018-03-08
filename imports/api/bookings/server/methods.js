@@ -321,6 +321,7 @@ Meteor.methods({
             address: 1,
             date: 1,
             time: 1,
+            status: 1,
           },
         },
       );
@@ -358,6 +359,7 @@ Meteor.methods({
             address: 1,
             date: 1,
             time: 1,
+            status: 1,
           },
         },
       );
@@ -392,7 +394,9 @@ Meteor.methods({
             address: 1,
             date: 1,
             time: 1,
+            status: 1,
           },
+          sort: { createdAt: -1 },
         },
       ).fetch();
 
@@ -428,7 +432,9 @@ Meteor.methods({
             address: 1,
             date: 1,
             time: 1,
+            status: 1,
           },
+          sort: { createdAt: -1 },
         },
       );
 

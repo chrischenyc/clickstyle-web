@@ -7,10 +7,10 @@ import { StripeProvider, Elements } from 'react-stripe-elements';
 import scriptLoader from 'react-async-script-loader';
 
 import { setUserInfo } from '../../../modules/client/redux/cart';
-import BookingPage from './BookingPage';
+import BookingCheckoutPage from './BookingCheckoutPage';
 import { validateBooking } from '../../../modules/validate';
 
-class Booking extends Component {
+class BookingCheckout extends Component {
   constructor(props) {
     super(props);
 
@@ -91,7 +91,7 @@ class Booking extends Component {
     return this.props.isScriptLoaded && this.props.isScriptLoadSucceed ? (
       <StripeProvider apiKey={Meteor.settings.public.StripePublishableKey}>
         <Elements>
-          <BookingPage
+          <BookingCheckoutPage
             onChange={this.handleChange}
             onValidate={this.handleValidate}
             onSubmit={this.handleSubmit}
@@ -110,11 +110,11 @@ class Booking extends Component {
   }
 }
 
-Booking.defaultProps = {
+BookingCheckout.defaultProps = {
   profile: null,
 };
 
-Booking.propTypes = {
+BookingCheckout.propTypes = {
   cart: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
   profile: PropTypes.object,
@@ -129,4 +129,4 @@ const mapStateToProps = state => ({
   profile: state.user.profile,
 });
 
-export default connect(mapStateToProps, { setUserInfo })(scriptLoader('https://js.stripe.com/v3/')(Booking));
+export default connect(mapStateToProps, { setUserInfo })(scriptLoader('https://js.stripe.com/v3/')(BookingCheckout));

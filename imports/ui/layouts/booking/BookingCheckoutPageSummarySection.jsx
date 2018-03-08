@@ -6,7 +6,7 @@ import CartSummary from '../../components/CartSummary';
 
 import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
 
-const BookingPageSummarySection = props => (
+const BookingCheckoutPageSummarySection = props => (
   <div className="boxed-widget opening-hours summary">
     <h3>
       <i className="fa fa-calendar-check-o" /> Booking Summary
@@ -40,8 +40,8 @@ const BookingPageSummarySection = props => (
   </div>
 );
 
-BookingPageSummarySection.propTypes = {
+BookingCheckoutPageSummarySection.propTypes = {
   cart: PropTypes.object.isRequired,
 };
 
-export default BookingPageSummarySection;
+export default BookingCheckoutPageSummarySection;

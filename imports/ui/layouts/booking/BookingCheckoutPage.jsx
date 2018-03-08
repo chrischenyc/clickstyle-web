@@ -15,13 +15,13 @@ import { connect } from 'react-redux';
 import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ModalLink from '../../components/ModalLink';
 import Login from '../user/Login/Login';
-import BookingPageSummarySection from './BookingPageSummarySection';
+import BookingCheckoutPageSummarySection from './BookingCheckoutPageSummarySection';
 import { FormInputField, FormFieldErrorMessage } from '../../components/FormInputField';
 import { withMediaQuery } from '../../components/HOC';
 import { openModal, closeModal } from '../../../modules/client/redux/ui';
 import BookingDateTimePicker from '../../components/BookingDateTimePicker';
 
-class BookingPage extends Component {
+class BookingCheckoutPage extends Component {
   constructor(props) {
     super(props);
 
@@ -96,7 +96,7 @@ class BookingPage extends Component {
             })}
           >
             <Responsive maxWidth={1024} className="margin-bottom-20">
-              <BookingPageSummarySection cart={this.props.cart} />
+              <BookingCheckoutPageSummarySection cart={this.props.cart} />
             </Responsive>
 
             <Form error={!_.isEmpty(this.state.errors) || !_.isEmpty(this.props.error)}>
@@ -299,7 +299,7 @@ class BookingPage extends Component {
           </div>
 
           <Responsive minWidth={1025} className="col-lg-4 col-md-4">
-            <BookingPageSummarySection cart={this.props.cart} />
+            <BookingCheckoutPageSummarySection cart={this.props.cart} />
           </Responsive>
         </div>
       </div>
@@ -307,7 +307,7 @@ class BookingPage extends Component {
   }
 }
 
-BookingPage.propTypes = {
+BookingCheckoutPage.propTypes = {
   onChange: PropTypes.func.isRequired,
   onValidate: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -327,4 +327,4 @@ const mapStateToProps = state => ({
   modalOpen: state.ui.modalOpen,
 });
 
-export default connect(mapStateToProps, { openModal, closeModal })(injectStripe(withMediaQuery(BookingPage)));
+export default connect(mapStateToProps, { openModal, closeModal })(injectStripe(withMediaQuery(BookingCheckoutPage)));
