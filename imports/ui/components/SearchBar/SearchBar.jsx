@@ -8,7 +8,6 @@ import { formatDate, parseDate } from 'react-day-picker/moment';
 import 'react-day-picker/lib/style.css';
 import './react-day-picker-custom.css';
 
-
 import TimeInput from '../TimeInput';
 import {
   formatDateQueryString,
@@ -66,7 +65,7 @@ class SearchBar extends Component {
   }
 
   componentDidMount() {
-    Meteor.call('services.keywords', {}, (error, services) => {
+    Meteor.call('services.keywords', (error, services) => {
       if (services) {
         this.setState({
           services,

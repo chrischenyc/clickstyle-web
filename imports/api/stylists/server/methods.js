@@ -171,12 +171,10 @@ Meteor.methods({
     }
   },
 
-  'stylists.favoured': function favouredStylist(data) {
+  'stylists.favoured': function favouredStylist() {
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
-
-    check(data, Object);
 
     try {
       const { favouredStylists } = Profiles.findOne(
@@ -211,12 +209,10 @@ Meteor.methods({
     }
   },
 
-  'stylists.portfolio.photos': function stylistPortfolioPhotos(data) {
+  'stylists.portfolio.photos': function stylistPortfolioPhotos() {
     if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
       throw new Meteor.Error(403, 'unauthorized');
     }
-
-    check(data, Object);
 
     try {
       const stylist = Stylists.findOne(

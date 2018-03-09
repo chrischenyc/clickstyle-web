@@ -82,8 +82,6 @@ class Search extends Component {
       this.setState({ stylists: [] });
     }
 
-    // TODO: GA tracking
-
     this.props.showLoading();
 
     Meteor.call(

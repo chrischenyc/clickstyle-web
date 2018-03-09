@@ -32,6 +32,7 @@ class Home extends Component {
 
     Promise.all([
       new Promise((resolve, reject) => {
+        // TODO: get user geo location from browser, pass the suburb as method parameter
         Meteor.call('featured.home.services', {}, (error, services) => {
           if (error) {
             reject(error);
@@ -42,6 +43,7 @@ class Home extends Component {
         });
       }),
       new Promise((resolve, reject) => {
+        // TODO: get user geo location from browser, pass the suburb as method parameter
         Meteor.call('featured.home.stylists', {}, (error, { stylists, locationBased }) => {
           if (error) {
             reject(error);

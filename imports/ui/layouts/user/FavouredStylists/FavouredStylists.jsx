@@ -23,7 +23,7 @@ class FavouredStylists extends Component {
   loadStylists() {
     this.props.showLoading();
 
-    Meteor.call('stylists.favoured', {}, (error, stylists) => {
+    Meteor.call('stylists.favoured', (error, stylists) => {
       this.props.hideLoading();
       this.setState({ stylists });
     });

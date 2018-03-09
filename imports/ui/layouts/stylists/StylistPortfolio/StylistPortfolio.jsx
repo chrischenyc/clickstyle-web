@@ -74,7 +74,7 @@ class StylistPortfolio extends Component {
 
   loadPortfolioPhotos() {
     this.props.showLoading();
-    Meteor.call('stylists.portfolio.photos', {}, (error, portfolioPhotos) => {
+    Meteor.call('stylists.portfolio.photos', (error, portfolioPhotos) => {
       this.props.hideLoading();
 
       const remotePhotos = portfolioPhotos.map(portfolioPhoto => ({

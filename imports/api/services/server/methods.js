@@ -29,9 +29,8 @@ Meteor.methods({
       throw new Meteor.Error('500');
     }
   },
-  'services.keywords': function servicesAndAddons(data) {
-    check(data, Object);
 
+  'services.keywords': function servicesAndAddons() {
     try {
       const services = Services.find(
         {},
