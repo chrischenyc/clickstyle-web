@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import ScaledImageURL from '../../../modules/scaled-image-url';
+import scaledImageURL from '../../../modules/scaled-image-url';
 import userProfileLink from '../../../modules/user-profile-link';
 import { formatDateDisplayString } from '../../../modules/format-date';
 import StarRating from '../../components/StarRating';
@@ -21,7 +21,7 @@ const StylistReviewsSection = ({ reviews }) => (
             <div className="avatar">
               <Link to={userProfileLink(review.reviewer)}>
                 <img
-                  src={ScaledImageURL(
+                  src={scaledImageURL(
                     review.reviewer.photo || Meteor.settings.public.defaultAvatar,
                     'tiny',
                   )}

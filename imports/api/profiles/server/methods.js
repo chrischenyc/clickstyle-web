@@ -50,9 +50,8 @@ Meteor.methods({
 
       Profiles.update({ owner: this.userId }, { $set: profileToUpdate });
 
-      // normalise data
+      // denormalise some data to Stylists record if it exists
       const { name, photo, address } = profileToUpdate;
-
       Stylists.update({ owner: this.userId }, { $set: { name, photo, address } });
 
       log.info(

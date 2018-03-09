@@ -16,10 +16,10 @@ const CustomerBookingPage = props => (
       <div className="list-box-listing bookings">
         <div className="list-box-listing-img">
           <img
-            src={
-              (scaledImageURL(props.booking.stylist.photo || Meteor.settings.public.defaultAvatar),
-              'small')
-            }
+            src={scaledImageURL(
+              props.booking.stylist.photo || Meteor.settings.public.defaultAvatar,
+              'small',
+            )}
             alt=""
           />
         </div>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Container } from 'semantic-ui-react';
 
-import ScaledImageURL from '../../../../modules/scaled-image-url';
+import scaledImageURL from '../../../../modules/scaled-image-url';
 import userProfileLink from '../../../../modules/user-profile-link';
 
 const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
@@ -20,7 +20,7 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
                   <Link to={userProfileLink(stylist)}>
                     <div className="medium-avatar">
                       <img
-                        src={ScaledImageURL(
+                        src={scaledImageURL(
                           stylist.photo || Meteor.settings.public.defaultAvatar,
                           'small',
                         )}

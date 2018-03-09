@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import ScaledImageURL from '../../../modules/scaled-image-url';
+import scaledImageURL from '../../../modules/scaled-image-url';
 import userProfileLink from '../../../modules/user-profile-link';
 
 const limitedArray = (objects, size) => {
@@ -23,7 +23,7 @@ const StylistsListItem = ({ stylist }) => (
         <div className="listing-item-content vertical-centered">
           <div id="avatar" className="small-avatar">
             <img
-              src={ScaledImageURL(stylist.photo || Meteor.settings.public.defaultAvatar, 'tiny')}
+              src={scaledImageURL(stylist.photo || Meteor.settings.public.defaultAvatar, 'tiny')}
               alt=""
             />
           </div>

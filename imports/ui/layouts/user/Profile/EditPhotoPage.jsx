@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { UploadField as FileField } from '@navjobs/upload';
 import AvatarEditor from 'react-avatar-editor';
 
-import ScaledImageURL from '../../../../modules/scaled-image-url';
+import scaledImageURL from '../../../../modules/scaled-image-url';
 
 const ImageSize = 280;
 
@@ -131,7 +131,7 @@ class EditPhotoPage extends Component {
           </div>
         ) : (
           <div>
-            <img src={ScaledImageURL(displayPhotoUrl, 'medium')} width={ImageSize} alt="" />
+            <img src={scaledImageURL(displayPhotoUrl, 'medium')} width={ImageSize} alt="" />
 
             <p>Your photo will appear on your public profile</p>
 

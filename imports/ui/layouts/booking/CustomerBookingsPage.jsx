@@ -3,9 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Container } from 'semantic-ui-react';
+import classnames from 'classnames';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
-import userProfileLink from '../../../modules/user-profile-link';
 import { formatDateDisplayString, parseDateQueryString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import formatPrice from '../../../modules/format-price';
@@ -23,19 +23,17 @@ const CustomerBookingsPage = ({ bookings }) => (
                   <div className="list-box-listing bookings">
                     <div className="list-box-listing-img">
                       <img
-                        src={
-                          (scaledImageURL(booking.stylist.photo || Meteor.settings.public.defaultAvatar),
-                          'small')
-                        }
+                        src={scaledImageURL(
+                          booking.stylist.photo || Meteor.settings.public.defaultAvatar,
+                          'small',
+                        )}
                         alt=""
                       />
                     </div>
                     <div className="list-box-listing-content">
                       <div className="inner">
                         <h3>
-                          <Link to={userProfileLink(booking.stylist)}>
-                            {`${booking.stylist.name.first} ${booking.stylist.name.last}`}
-                          </Link>{' '}
+                          {`${booking.stylist.name.first} ${booking.stylist.name.last}`}{' '}
                           <span className="booking-status pending">{booking.status}</span>
                         </h3>
 

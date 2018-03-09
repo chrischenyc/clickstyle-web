@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import ScaledImageURL from '../../../modules/scaled-image-url';
+import scaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import { formatMonthYear } from '../../../modules/format-date';
@@ -21,7 +21,7 @@ const UserProfilePage = ({ profile }) => {
         <div className="large-avatar" id="avatar">
           <img
             alt=""
-            src={ScaledImageURL(profile.photo || Meteor.settings.public.defaultAvatar, 'tiny')}
+            src={scaledImageURL(profile.photo || Meteor.settings.public.defaultAvatar, 'tiny')}
           />
         </div>
 

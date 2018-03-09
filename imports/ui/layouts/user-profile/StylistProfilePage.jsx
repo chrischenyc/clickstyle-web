@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
-import ScaledImageURL from '../../../modules/scaled-image-url';
+import scaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
 import { formatMonthYear } from '../../../modules/format-date';
 import { openModal, closeModal } from '../../../modules/client/redux/ui';
@@ -54,7 +54,7 @@ class UserProfilePage extends Component {
           <div className="large-avatar" id="avatar">
             <img
               alt=""
-              src={ScaledImageURL(profile.photo || Meteor.settings.public.defaultAvatar, 'tiny')}
+              src={scaledImageURL(profile.photo || Meteor.settings.public.defaultAvatar, 'tiny')}
             />
           </div>
 

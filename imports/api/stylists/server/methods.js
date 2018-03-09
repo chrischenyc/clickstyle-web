@@ -16,7 +16,7 @@ import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file
 import isTimeQueryValid from '../../../modules/validate-time-query';
 import { parseDateQueryString } from '../../../modules/format-date';
 import updateStylistOccupiedTimeSlots from '../../../modules/server/update-stylist-occupied-timeslots';
-import scaledImageUrl from '../../../modules/scaled-image-url';
+import scaledImageURL from '../../../modules/scaled-image-url';
 
 Meteor.methods({
   'stylists.update.services': function updateStylistsServices(services) {
@@ -464,7 +464,7 @@ Meteor.methods({
         ...stylist,
         bannerPhotos: stylist.bannerPhotos
           .filter(url => !_.isNil(url))
-          .map(url => scaledImageUrl(url, 'small')),
+          .map(url => scaledImageURL(url, 'small')),
       }));
 
       return {
