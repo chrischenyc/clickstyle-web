@@ -22,7 +22,7 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
                       <img
                         src={ScaledImageURL(
                           stylist.photo || Meteor.settings.public.defaultAvatar,
-                          'tiny',
+                          'small',
                         )}
                         alt=""
                       />
