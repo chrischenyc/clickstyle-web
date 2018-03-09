@@ -16,63 +16,71 @@ const CustomerBookingsPage = ({ bookings }) => (
       <div className="col-lg-12 col-md-12">
         <div className="dashboard-list-box margin-top-0">
           <h4>Bookings</h4>
-          <ul>
-            {bookings.map(booking => (
-              <li key={booking.owner} className="pending-booking">
-                <Link to={`/users/bookings/${booking._id}`}>
-                  <div className="list-box-listing bookings">
-                    <div className="list-box-listing-img">
-                      <img
-                        src={scaledImageURL(
-                          booking.stylist.photo || Meteor.settings.public.defaultAvatar,
-                          'small',
-                        )}
-                        alt=""
-                      />
-                    </div>
-                    <div className="list-box-listing-content">
-                      <div className="inner">
-                        <h3>
-                          {`${booking.stylist.name.first} ${booking.stylist.name.last}`}{' '}
-                          <span className="booking-status pending">{booking.status}</span>
-                        </h3>
+          {bookings.length > 0 && (
+            <ul>
+              {bookings.map(booking => (
+                <li key={booking.owner} className="pending-booking">
+                  <Link to={`/users/bookings/${booking._id}`}>
+                    <div className="list-box-listing bookings">
+                      <div className="list-box-listing-img">
+                        <img
+                          src={scaledImageURL(
+                            booking.stylist.photo || Meteor.settings.public.defaultAvatar,
+                            'small',
+                          )}
+                          alt=""
+                        />
+                      </div>
+                      <div className="list-box-listing-content">
+                        <div className="inner">
+                          <h3>
+                            {`${booking.stylist.name.first} ${booking.stylist.name.last}`}{' '}
+                            <span className="booking-status pending">{booking.status}</span>
+                          </h3>
 
-                        <div className="inner-booking-list">
-                          <h5>Booking Date:</h5>
-                          <ul className="booking-list">
-                            <li className="highlighted">
-                              {`${formatDateDisplayString(parseDateQueryString(booking.date))} - ${
-                                booking.time
-                              }`}
-                            </li>
-                          </ul>
-                        </div>
+                          <div className="inner-booking-list">
+                            <h5>Booking Date:</h5>
+                            <ul className="booking-list">
+                              <li className="highlighted">
+                                {`${formatDateDisplayString(parseDateQueryString(booking.date))} - ${booking.time}`}
+                              </li>
+                            </ul>
+                          </div>
 
-                        <div className="inner-booking-list">
-                          <h5>Booking Details:</h5>
-                          <ul className="booking-list">
-                            <li className="highlighted">{servicesSummary(booking.services)}</li>
-                          </ul>
-                        </div>
+                          <div className="inner-booking-list">
+                            <h5>Booking Details:</h5>
+                            <ul className="booking-list">
+                              <li className="highlighted">{servicesSummary(booking.services)}</li>
+                            </ul>
+                          </div>
 
-                        <div className="inner-booking-list">
-                          <h5>Total:</h5>
-                          <ul className="booking-list">
-                            <li className="highlighted">{formatPrice(booking.total)}</li>
-                          </ul>
+                          <div className="inner-booking-list">
+                            <h5>Total:</h5>
+                            <ul className="booking-list">
+                              <li className="highlighted">{formatPrice(booking.total)}</li>
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="buttons-to-right">
-                    <a href="#" className="button gray reject">
-                      <i className="sl sl-icon-close" /> Cancel
-                    </a>
-                  </div>
-                </Link>
+                    <div className="buttons-to-right">
+                      <a href="#" className="button gray reject">
+                        <i className="sl sl-icon-close" /> Cancel
+                      </a>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {bookings.length === 0 && (
+            <ul>
+              <li>
+                You haven&apos;t booked any stylist yet. <Link to="/search">Find a stylist</Link>
               </li>
-            ))}
-          </ul>
+            </ul>
+          )}
         </div>
       </div>
     </div>
