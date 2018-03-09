@@ -63,11 +63,6 @@ const CustomerBookingsPage = ({ bookings }) => (
                         </div>
                       </div>
                     </div>
-                    <div className="buttons-to-right">
-                      <a href="#" className="button gray reject">
-                        <i className="sl sl-icon-close" /> Cancel
-                      </a>
-                    </div>
                   </Link>
                 </li>
               ))}

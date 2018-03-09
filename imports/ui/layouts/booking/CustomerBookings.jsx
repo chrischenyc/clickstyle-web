@@ -10,7 +10,7 @@ class CustomerBookings extends Component {
     super(props);
 
     this.state = {
-      bookings: [],
+      bookings: null,
     };
   }
 
@@ -28,7 +28,7 @@ class CustomerBookings extends Component {
   }
 
   render() {
-    return <CustomerBookingsPage bookings={this.state.bookings} />;
+    return this.state.bookings ? <CustomerBookingsPage bookings={this.state.bookings} /> : '';
   }
 }
 
