@@ -6,13 +6,22 @@ import { Container } from 'semantic-ui-react';
 import { formatDateDisplayString, parseDateQueryString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import formatPrice from '../../../modules/format-price';
+import classnames from 'classnames';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
 import userProfileLink from '../../../modules/user-profile-link';
 
 const CustomerBookingPage = props => (
   <Container>
-    <div className="pending-booking">
+    <div
+      className={classnames({
+        'pending-booking': props.booking.status === 'pending',
+        'canceled-booking':
+          props.booking.status === 'cancelled' || props.booking.status === 'declined',
+        'approved-booking':
+          props.booking.status === 'confirmed' || props.booking.status === 'completed',
+      })}
+    >
       <div className="list-box-listing bookings">
         <div className="list-box-listing-img">
           <img
@@ -29,7 +38,7 @@ const CustomerBookingPage = props => (
               <Link to={userProfileLink(props.booking.stylist)}>
                 {`${props.booking.stylist.name.first} ${props.booking.stylist.name.last}`}
               </Link>{' '}
-              <span className="booking-status pending">Pending</span>
+              <span className="booking-status">Pending</span>
             </h3>
 
             <div className="inner-booking-list">

@@ -48,7 +48,7 @@ const BookingsSchema = new SimpleSchema({
   date: String,
   time: String,
   stripeCustomerId: String,
-  status: String, // pending, approved/declined, cancelled, completed
+  status: String, // pending, approved, declined, cancelled, completed
 });
 
 Bookings.attachSchema(BookingsSchema);

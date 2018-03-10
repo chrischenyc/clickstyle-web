@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, Container } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import classnames from 'classnames';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
@@ -19,7 +19,16 @@ const CustomerBookingsPage = ({ bookings }) => (
           {bookings.length > 0 && (
             <ul>
               {bookings.map(booking => (
-                <li key={booking.owner} className="pending-booking">
+                <li
+                  key={booking.owner}
+                  className={classnames({
+                    'pending-booking': booking.status === 'pending',
+                    'canceled-booking':
+                      booking.status === 'cancelled' || booking.status === 'declined',
+                    'approved-booking':
+                      booking.status === 'confirmed' || booking.status === 'completed',
+                  })}
+                >
                   <Link to={`/users/bookings/${booking._id}`}>
                     <div className="list-box-listing bookings">
                       <div className="list-box-listing-img">
@@ -35,7 +44,7 @@ const CustomerBookingsPage = ({ bookings }) => (
                         <div className="inner">
                           <h3>
                             {`${booking.stylist.name.first} ${booking.stylist.name.last}`}{' '}
-                            <span className="booking-status pending">{booking.status}</span>
+                            <span className="booking-status">{booking.status}</span>
                           </h3>
 
                           <div className="inner-booking-list">
