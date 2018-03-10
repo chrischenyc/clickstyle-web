@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Confirm, Button } from 'semantic-ui-react';
+import { Confirm, Button, Message } from 'semantic-ui-react';
 import _ from 'lodash';
 import { UploadField as FileField } from '@navjobs/upload';
 import AvatarEditor from 'react-avatar-editor';
@@ -176,7 +176,7 @@ class EditPhotoPage extends Component {
           </div>
         )}
 
-        {!_.isEmpty(photoError) && <div className="notification error"> {photoError} </div>}
+        {!_.isEmpty(photoError) && <Message error>{photoError}</Message>}
       </div>
     );
   }

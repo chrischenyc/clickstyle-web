@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -13,15 +13,9 @@ const ChangePasswordPage = ({
     return <Redirect to="/" />;
   } else if (success) {
     return (
-      <div className="container centered-content">
-        <div className="col-md-offset-3 col-md-6">
-          <div className="notification success">
-            <p>
-              <span>Success!</span> Password has been changed, thanks!
-            </p>
-          </div>
-        </div>
-      </div>
+      <Message success size="huge">
+        Success! Password has been changed, thanks!
+      </Message>
     );
   }
 
@@ -67,9 +61,7 @@ const ChangePasswordPage = ({
             errors={errors}
           />
 
-          {!_.isEmpty(errors.message) && (
-            <div className="notification error"> {errors.message} </div>
-          )}
+          {!_.isEmpty(errors.message) && <Message error>{errors.message}</Message>}
 
           <Button color="teal" size="huge" circular type="submit">
             Change password

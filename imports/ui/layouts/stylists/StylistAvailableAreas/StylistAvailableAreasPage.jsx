@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Form, Checkbox, Search, Dropdown, Popup, Button } from 'semantic-ui-react';
+import {
+  Container,
+  Form,
+  Checkbox,
+  Search,
+  Dropdown,
+  Popup,
+  Button,
+  Message,
+} from 'semantic-ui-react';
 import _ from 'lodash';
 
 const StylistAvailableAreasPage = ({
@@ -88,7 +97,7 @@ const StylistAvailableAreasPage = ({
       >
         Save
       </Button>
-      {!_.isEmpty(error) && <div className="notification error"> {error} </div>}
+      {!_.isEmpty(error) && <Message error>{error}</Message>}
     </Form>
   </Container>
 );

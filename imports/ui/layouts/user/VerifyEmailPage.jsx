@@ -1,6 +1,7 @@
 import { Accounts } from 'meteor/accounts-base';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Message } from 'semantic-ui-react';
 
 class VerifyEmailPage extends React.Component {
   constructor(props) {
@@ -28,28 +29,22 @@ class VerifyEmailPage extends React.Component {
   renderMessage() {
     if (this.state.loading) {
       return (
-        <div className="notification notice">
-          <p>
-            <span>Just one second,</span> we are verifying your email..
-          </p>
-        </div>
+        <Message size="huge" warning>
+          Just one second, we are verifying your email..
+        </Message>
       );
     } else if (this.state.error) {
       return (
-        <div className="notification error">
-          <p>
-            <span>Error!</span> {this.state.error}
-          </p>
-        </div>
+        <Message size="huge" error>
+          {this.state.error}
+        </Message>
       );
     }
 
     return (
-      <div className="notification success">
-        <p>
-          <span>All set, thank!</span> Sending you to Dashboard...
-        </p>
-      </div>
+      <Message size="huge" success>
+        All set, thank!
+      </Message>
     );
   }
 

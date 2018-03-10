@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Form, Grid, Divider, Button, Container } from 'semantic-ui-react';
+import { Form, Grid, Divider, Button, Container, Message } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import ModalLink from '../../../components/ModalLink';
@@ -51,9 +51,7 @@ const LoginPage = ({
               Login
             </Button>
 
-            {!_.isEmpty(errors.message) && (
-              <div className="notification error"> {errors.message} </div>
-            )}
+            {!_.isEmpty(errors.message) && <Message error>{errors.message}</Message>}
           </Form>
 
           {modal ? (

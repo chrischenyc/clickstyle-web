@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
+import EmailVerificationAlert from './EmailVerificationAlert/EmailVerificationAlert';
 import Header from './Header';
 import Footer from './Footer';
 import SideMenu from './SideMenu';
@@ -29,6 +30,8 @@ export const withSideMenuAndHeader = WrappedComponent => props => (
     <div className="dashboard-content">
       <Header fullContent={false} />
 
+      <EmailVerificationAlert />
+
       <div className="margin-top-50">
         <WrappedComponent {...props} />
       </div>
@@ -47,12 +50,13 @@ export const withLoading = (WrappedComponent) => {
   return connect(null, { showLoading, hideLoading })(hoc);
 };
 
-export const withMediaQuery = WrappedComponent => class extends Component {
-  componentWillMount() {
-    this.setState({ screenWidth: window.innerWidth });
-  }
+export const withMediaQuery = WrappedComponent =>
+  class extends Component {
+    componentWillMount() {
+      this.setState({ screenWidth: window.innerWidth });
+    }
 
-  render() {
-    return <WrappedComponent screenWidth={this.state.screenWidth} {...this.props} />;
-  }
-};
+    render() {
+      return <WrappedComponent screenWidth={this.state.screenWidth} {...this.props} />;
+    }
+  };

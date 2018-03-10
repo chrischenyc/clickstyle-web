@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -17,11 +17,9 @@ const ResetPasswordPage = ({
         className="container centered-content margin-top-70 margin-bottom-70"
         style={{ maxWidth: 450 }}
       >
-        <div className="notification success">
-          <p>
-            <span>All set,</span> thanks!
-          </p>
-        </div>
+        <Message size="huge" success>
+          All set, thank!
+        </Message>
       </div>
     );
   }
@@ -58,7 +56,7 @@ const ResetPasswordPage = ({
           errors={errors}
         />
 
-        {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
+        {!_.isEmpty(errors.message) && <Message error>{errors.message}</Message>}
 
         <Button circular color="teal" size="huge" type="submit">
           Save and continue

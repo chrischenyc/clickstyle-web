@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Table, Checkbox, Button, Container } from 'semantic-ui-react';
+import { Form, Table, Checkbox, Button, Container, Message } from 'semantic-ui-react';
 import _ from 'lodash';
 
 import TimeInput from '../../../components/TimeInput';
@@ -85,7 +85,7 @@ const StylistAvailableTimePage = ({
         Save
       </Button>
 
-      {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
+      {!_.isEmpty(errors.message) && <Message error>{errors.message}</Message>}
     </Form>
   </Container>
 );

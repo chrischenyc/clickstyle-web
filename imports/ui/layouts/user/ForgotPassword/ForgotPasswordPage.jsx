@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -11,13 +11,9 @@ const ForgotPasswordPage = ({
     return <Redirect to="/" />;
   } else if (success) {
     return (
-      <div className="container centered-content" style={{ maxWidth: 450 }}>
-        <div className="notification success">
-          <p>
-            <span>All set</span> check your email for a reset link!
-          </p>
-        </div>
-      </div>
+      <Message success size="huge">
+        All set, check your email for a change password link!
+      </Message>
     );
   }
 
@@ -44,9 +40,9 @@ const ForgotPasswordPage = ({
           onChange={onChange}
           error={!_.isEmpty(errors.email)}
         />
-        {!_.isEmpty(errors.email) && <div className="notification error"> {errors.email} </div>}
+        {!_.isEmpty(errors.email) && <Message error>{errors.email}</Message>}
 
-        {!_.isEmpty(errors.message) && <div className="notification error"> {errors.message} </div>}
+        {!_.isEmpty(errors.message) && <Message error>{errors.message}</Message>}
 
         <Button color="teal" circular size="huge" type="submit">
           Send reset link
