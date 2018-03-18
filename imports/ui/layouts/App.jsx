@@ -55,6 +55,7 @@ import TermsPage from '../layouts/static/TermsPage';
 import PrivacyPage from '../layouts/static/PrivacyPage';
 import HelpPage from '../layouts/static/HelpPage';
 import AboutPage from '../layouts/static/AboutPage';
+import StylistFAQPage from '../layouts/static/StylistFAQPage';
 
 // scroll to page top when route changes
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-292711226
@@ -171,6 +172,10 @@ class App extends Component {
               <SecureRoute
                 path="/users/stylist/bookings/:_id"
                 component={withSideMenuAndHeader(CustomerBooking)}
+              />
+              <SecureRoute
+                path="/users/stylist/faq"
+                component={withSideMenuAndHeader(StylistFAQPage)}
               />
 
               <Route component={withHeaderAndFooter(NotFoundPage)} />

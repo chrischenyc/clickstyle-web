@@ -194,6 +194,16 @@ const SlideMenu = props => (
                 Portfolio
               </Link>
             </li>
+            <li>
+              <Link
+                to="/users/stylist/faq"
+                onClick={() => {
+                  props.toggleSlideMenu();
+                }}
+              >
+                FAQ
+              </Link>
+            </li>
           </ul>
         </li>
       )}
