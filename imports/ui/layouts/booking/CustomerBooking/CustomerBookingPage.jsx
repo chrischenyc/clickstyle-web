@@ -3,13 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Container } from 'semantic-ui-react';
-import { formatDateDisplayString, parseDateQueryString } from '../../../modules/format-date';
-import servicesSummary from '../../../modules/format-services';
-import formatPrice from '../../../modules/format-price';
 import classnames from 'classnames';
 
-import scaledImageURL from '../../../modules/scaled-image-url';
-import userProfileLink from '../../../modules/user-profile-link';
+import { formatDateDisplayString, parseDateQueryString } from '../../../../modules/format-date';
+import servicesSummary from '../../../../modules/format-services';
+import formatPrice from '../../../../modules/format-price';
+import scaledImageURL from '../../../../modules/scaled-image-url';
+import userProfileLink from '../../../../modules/user-profile-link';
 
 const CustomerBookingPage = props => (
   <Container>

@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import classnames from 'classnames';
 
-import scaledImageURL from '../../../modules/scaled-image-url';
-import { formatDateDisplayString, parseDateQueryString } from '../../../modules/format-date';
-import servicesSummary from '../../../modules/format-services';
-import formatPrice from '../../../modules/format-price';
+import scaledImageURL from '../../../../modules/scaled-image-url';
+import { formatDateDisplayString, parseDateQueryString } from '../../../../modules/format-date';
+import servicesSummary from '../../../../modules/format-services';
+import formatPrice from '../../../../modules/format-price';
 
 const CustomerBookingsPage = ({ bookings }) => (
   <Container>
@@ -34,7 +34,8 @@ const CustomerBookingsPage = ({ bookings }) => (
                       <div className="list-box-listing-img">
                         <img
                           src={scaledImageURL(
-                            booking.stylist.photo || Meteor.settings.public.defaultAvatar,
+                            (booking.stylist && booking.stylist.photo) ||
+                              Meteor.settings.public.defaultAvatar,
                             'small',
                           )}
                           alt=""
@@ -43,7 +44,7 @@ const CustomerBookingsPage = ({ bookings }) => (
                       <div className="list-box-listing-content">
                         <div className="inner">
                           <h3>
-                            {`${booking.stylist.name.first} ${booking.stylist.name.last}`}{' '}
+                            {`${booking.firstName} ${booking.lastName}`}{' '}
                             <span className="booking-status">{booking.status}</span>
                           </h3>
 

@@ -81,6 +81,12 @@ const SideMenu = ({ isStylist }) => (
           </li>
 
           <li>
+            <NavLink to="/users/stylist/bookings">
+              <i className="im im-icon-Calendar" /> Customer Bookings
+            </NavLink>
+          </li>
+
+          <li>
             <NavLink to="/users/stylist/faq">
               <i className="im im-icon-Information" /> FAQ
             </NavLink>

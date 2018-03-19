@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { withLoading } from '../../components/HOC';
-import BookingRequestedPage from './BookingRequestedPage';
+import { withLoading } from '../../../components/HOC';
+import StylistBookingPage from './StylistBookingPage';
 
-class BookingRequested extends Component {
+class StylistBooking extends Component {
   constructor(props) {
     super(props);
 
@@ -16,10 +16,10 @@ class BookingRequested extends Component {
   }
 
   componentDidMount() {
-    this.loadBooking(this.props.match.params._id, this.props.match.params.userId);
+    this.loadBooking(this.props.match.params._id);
   }
 
-  loadBooking(_id, userId) {
+  loadBooking(_id) {
     if (_.isNil(_id)) {
       this.props.history.push('/404');
       return;
@@ -27,7 +27,7 @@ class BookingRequested extends Component {
 
     this.props.showLoading();
 
-    Meteor.call('requested.booking.find', { _id, userId }, (error, booking) => {
+    Meteor.call('stylist.booking.find', _id, (error, booking) => {
       this.props.hideLoading();
 
       if (booking) {
@@ -40,15 +40,15 @@ class BookingRequested extends Component {
 
   render() {
     if (!_.isNil(this.state.booking)) {
-      return <BookingRequestedPage booking={this.state.booking} />;
+      return <StylistBookingPage booking={this.state.booking} />;
     }
     return '';
   }
 }
 
-BookingRequested.propTypes = {
+StylistBooking.propTypes = {
   showLoading: PropTypes.func.isRequired,
   hideLoading: PropTypes.func.isRequired,
 };
 
-export default withLoading(BookingRequested);
+export default withLoading(StylistBooking);

@@ -12,14 +12,14 @@ import {
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 
-import SemanticGeoSuggest from '../../components/SemanticGeoSuggest/SemanticGeoSuggest';
-import ModalLink from '../../components/ModalLink';
-import Login from '../user/Login/Login';
+import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
+import ModalLink from '../../../components/ModalLink';
+import Login from '../../user/Login/Login';
 import BookingCheckoutPageSummarySection from './BookingCheckoutPageSummarySection';
-import { FormInputField, FormFieldErrorMessage } from '../../components/FormInputField';
-import { withMediaQuery } from '../../components/HOC';
-import { openModal, closeModal } from '../../../modules/client/redux/ui';
-import BookingDateTimePicker from '../../components/BookingDateTimePicker';
+import { FormInputField, FormFieldErrorMessage } from '../../../components/FormInputField';
+import { withMediaQuery } from '../../../components/HOC';
+import { openModal, closeModal } from '../../../../modules/client/redux/ui';
+import BookingDateTimePicker from '../../../components/BookingDateTimePicker';
 
 class BookingCheckoutPage extends Component {
   constructor(props) {

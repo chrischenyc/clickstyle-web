@@ -6,9 +6,9 @@ import _ from 'lodash';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import scriptLoader from 'react-async-script-loader';
 
-import { setUserInfo } from '../../../modules/client/redux/cart';
+import { setUserInfo } from '../../../../modules/client/redux/cart';
 import BookingCheckoutPage from './BookingCheckoutPage';
-import { validateBooking } from '../../../modules/validate';
+import { validateBooking } from '../../../../modules/validate';
 
 class BookingCheckout extends Component {
   constructor(props) {

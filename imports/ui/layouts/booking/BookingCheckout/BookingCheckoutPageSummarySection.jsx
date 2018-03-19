@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import CartSummary from '../../components/CartSummary';
+import CartSummary from '../../../components/CartSummary';
 
-import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
+import { parseDateQueryString, formatDateDisplayString } from '../../../../modules/format-date';
 
 const BookingCheckoutPageSummarySection = props => (
   <div className="boxed-widget opening-hours summary">

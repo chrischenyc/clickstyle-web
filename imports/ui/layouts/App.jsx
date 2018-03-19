@@ -32,10 +32,12 @@ import ResetPassword from '../layouts/user/ResetPassword/ResetPassword';
 import Search from '../layouts/search/Search';
 import StylistsJoin from '../layouts/stylists/StylistsJoinPage';
 
-import BookingCheckout from '../layouts/booking/BookingCheckout';
-import BookingRequested from '../layouts/booking/BookingRequested';
-import CustomerBooking from '../layouts/booking/CustomerBooking';
-import CustomerBookings from '../layouts/booking/CustomerBookings';
+import BookingCheckout from '../layouts/booking/BookingCheckout/BookingCheckout';
+import BookingRequested from '../layouts/booking/BookingRequested/BookingRequested';
+import CustomerBooking from '../layouts/booking/CustomerBooking/CustomerBooking';
+import CustomerBookings from '../layouts/booking/CustomerBookings/CustomerBookings';
+import StylistBooking from '../layouts/booking/StylistBooking/StylistBooking';
+import StylistBookings from '../layouts/booking/StylistBookings/StylistBookings';
 
 import Dashboard from '../layouts/user/DashboardPage';
 import EditProfile from '../layouts/user/Profile/EditProfile';
@@ -170,8 +172,13 @@ class App extends Component {
                 component={withSideMenuAndHeader(StylistPortfolio)}
               />
               <SecureRoute
+                exact
+                path="/users/stylist/bookings"
+                component={withSideMenuAndHeader(StylistBookings)}
+              />
+              <SecureRoute
                 path="/users/stylist/bookings/:_id"
-                component={withSideMenuAndHeader(CustomerBooking)}
+                component={withSideMenuAndHeader(StylistBooking)}
               />
               <SecureRoute
                 path="/users/stylist/faq"

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { withLoading } from '../../components/HOC';
+import { withLoading } from '../../../components/HOC';
 import CustomerBookingsPage from './CustomerBookingsPage';
 
 class CustomerBookings extends Component {
