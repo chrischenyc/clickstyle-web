@@ -67,10 +67,11 @@ class BookingCheckout extends Component {
     Meteor.call(
       'bookings.create',
       { ..._.omit(this.props.cart, ['showCartInHeader', 'count']), stripePayload },
-      (error, { bookingsId, userId }) => {
+      (error, result) => {
         if (error) {
           this.setState({ loading: false, error: error.reason.error });
-        } else {
+        } else if (result) {
+          const { bookingsId, userId } = result;
           this.setState({ loading: false });
 
           let url = `booking-requested/${bookingsId}`;
