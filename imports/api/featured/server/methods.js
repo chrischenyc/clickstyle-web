@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import _ from 'lodash';
+import log from 'winston';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Stylists from '../../stylists/stylists';
@@ -89,10 +90,8 @@ Meteor.methods({
         locationBased,
       };
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 });

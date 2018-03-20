@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Container } from 'semantic-ui-react';
 import classnames from 'classnames';
 
-import { formatDateDisplayString, parseDateQueryString } from '../../../../modules/format-date';
+import { dateString, parseUrlQueryDate } from '../../../../modules/format-date';
 import servicesSummary from '../../../../modules/format-services';
 import formatPrice from '../../../../modules/format-price';
 import scaledImageURL from '../../../../modules/scaled-image-url';
@@ -38,7 +38,7 @@ const CustomerBookingPage = props => (
               <Link to={userProfileLink(props.booking.stylist)}>
                 {`${props.booking.stylist.name.first} ${props.booking.stylist.name.last}`}
               </Link>{' '}
-              <span className="booking-status">Pending</span>
+              <span className="booking-status">{props.booking.status}</span>
             </h3>
 
             <div className="inner-booking-list">
@@ -52,9 +52,7 @@ const CustomerBookingPage = props => (
               <h5>Booking Date:</h5>
               <ul className="booking-list">
                 <li className="highlighted">
-                  {`${formatDateDisplayString(parseDateQueryString(props.booking.date))} - ${
-                    props.booking.time
-                  }`}
+                  {`${dateString(parseUrlQueryDate(props.booking.date))} - ${props.booking.time}`}
                 </li>
               </ul>
             </div>
@@ -95,20 +93,8 @@ const CustomerBookingPage = props => (
                 <li className="highlighted">{props.booking.address}</li>
               </ul>
             </div>
-
-            <a href="#small-dialog" className="rate-review popup-with-zoom-anim">
-              <i className="sl sl-icon-envelope-open" /> Send Message
-            </a>
           </div>
         </div>
-      </div>
-      <div className="buttons-to-right">
-        <a href="#" className="button gray reject">
-          <i className="sl sl-icon-close" /> Cancel
-        </a>
-        <a href="#" className="button gray approve">
-          <i className="sl sl-icon-check" /> Approve
-        </a>
       </div>
     </div>
   </Container>

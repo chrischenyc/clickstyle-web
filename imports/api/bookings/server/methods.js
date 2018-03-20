@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { check } from 'meteor/check';
+import log from 'winston';
+import moment from 'moment';
 
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
@@ -10,8 +12,9 @@ import {
   sendStylistBookingRequestedEmail,
 } from '../../../modules/server/send-email';
 
-import { parseDateQueryString, formatDateDisplayString } from '../../../modules/format-date';
+import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
+import Stylists from '../../stylists/stylists';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
@@ -24,6 +27,20 @@ const calculateTotal = (services) => {
 
     service.addons.forEach((addon) => {
       total += addon.price;
+    });
+  });
+
+  return total;
+};
+
+const calculateTotalDuration = (services) => {
+  let total = 0;
+
+  services.forEach((service) => {
+    total += service.baseDuration;
+
+    service.addons.forEach((addon) => {
+      total += addon.duration;
     });
   });
 
@@ -102,6 +119,7 @@ Meteor.methods({
       }
 
       const total = calculateTotal(services);
+      const duration = calculateTotalDuration(services);
 
       if (stripePayload) {
         // ---------- pre-processing new card ----------
@@ -149,6 +167,7 @@ Meteor.methods({
           time,
           stripeCustomerId: stripeCustomer.id,
           status: 'pending',
+          duration,
         });
 
         sendCustomerBookingRequestedEmail({
@@ -160,7 +179,7 @@ Meteor.methods({
           email,
           mobile,
           address,
-          time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
+          time: `${dateString(parseUrlQueryDate(date))} ${time}`,
           bookingsId,
           bookingUrl: `users/bookings/${bookingsId}`,
         });
@@ -175,7 +194,7 @@ Meteor.methods({
           email,
           mobile,
           address,
-          time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
+          time: `${dateString(parseUrlQueryDate(date))} ${time}`,
           bookingsId,
           bookingUrl: `users/stylist/bookings/${bookingsId}`,
         });
@@ -201,6 +220,7 @@ Meteor.methods({
           time,
           stripeCustomerId: stripeCustomer.id,
           status: 'pending',
+          duration,
         });
 
         sendCustomerBookingRequestedEmail({
@@ -212,7 +232,7 @@ Meteor.methods({
           email,
           mobile,
           address,
-          time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
+          time: `${dateString(parseUrlQueryDate(date))} ${time}`,
           bookingsId,
           bookingUrl: `users/bookings/${bookingsId}`,
         });
@@ -227,7 +247,7 @@ Meteor.methods({
           email,
           mobile,
           address,
-          time: `${formatDateDisplayString(parseDateQueryString(date))} ${time}`,
+          time: `${dateString(parseUrlQueryDate(date))} ${time}`,
           bookingsId,
           bookingUrl: `users/stylist/bookings/${bookingsId}`,
         });
@@ -243,10 +263,8 @@ Meteor.methods({
     } catch (exception) {
       // TODO: in case of any error, revoke user/profile and Stripe account created
 
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500', exception);
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -291,10 +309,8 @@ Meteor.methods({
 
       return booking;
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500', exception);
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -330,10 +346,8 @@ Meteor.methods({
 
       return { ...booking, stylist };
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500', exception);
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -368,10 +382,8 @@ Meteor.methods({
 
       return { ...booking, customer };
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500', exception);
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -405,10 +417,8 @@ Meteor.methods({
         return { ...booking, stylist };
       });
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500', exception);
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -444,10 +454,70 @@ Meteor.methods({
         return { ...booking, customer };
       });
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500', exception);
+      log.error(exception);
+      throw exception;
+    }
+  },
+
+  'stylist.booking.pending.confirm': function stylistConfirmPendingBooking(_id) {
+    check(_id, String);
+
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    try {
+      const booking = Bookings.findOne({ _id, stylist: this.userId });
+      if (!booking) {
+        throw new Meteor.Error(403, 'unauthorized');
+      }
+
+      // date validation, booked date shouldn't pass current date
+      const bookingStartDateTime = parseBookingDateTime(booking.date + booking.time);
+      if (bookingStartDateTime.isBefore(moment())) {
+        throw new Meteor.Error('the booked date is in the past, cannot proceed');
+      }
+
+      // stylist calendar validation
+      const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration, 'minutes');
+      const bookingStartTimeslot = parseInt(bookingStartDateTime.format('YYMMDDHHmm'), 10);
+      const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
+      const { occupiedTimeSlots } = Stylists.findOne({ owner: this.userId });
+      const overlappedTimeslots = occupiedTimeSlots.filter(timeslot =>
+        (timeslot.from >= bookingStartTimeslot && timeslot.from <= bookingEndTimeslot) ||
+          (timeslot.to >= bookingStartTimeslot && timeslot.to <= bookingEndTimeslot) ||
+          (timeslot.from < bookingStartTimeslot && timeslot.to > bookingEndTimeslot));
+
+      if (overlappedTimeslots.length > 0) {
+        throw new Meteor.Error('there is a conflict in your calendar, cannot proceed');
+      }
+
+      // update bookings record, insert timestamp
+      Bookings.update(
+        { _id, stylist: this.userId },
+        { $set: { status: 'confirmed', stylistConfirmedAt: Date.now() } },
+      );
+
+      // block stylist timeslot
+      Stylists.update(
+        { owner: this.userId },
+        {
+          $push: {
+            occupiedTimeSlots: {
+              from: bookingStartTimeslot,
+              to: bookingEndTimeslot,
+              state: 'booked',
+              bookingId: _id,
+            },
+          },
+        },
+      );
+
+      // TODO: notify customer
+    } catch (exception) {
+      log.error(exception);
+
+      throw exception;
     }
   },
 });
@@ -460,6 +530,7 @@ rateLimit({
     'stylist.booking.find',
     'customer.bookings.find',
     'stylist.bookings.find',
+    'stylist.booking.pending.confirm',
   ],
   limit: 5,
   timeRange: 1000,

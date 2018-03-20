@@ -14,7 +14,7 @@ import { SearchLimit } from '../../../modules/server/constants';
 import coordinatesDistance from '../../../modules/server/coordinates-distance';
 import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
 import isTimeQueryValid from '../../../modules/validate-time-query';
-import { parseDateQueryString } from '../../../modules/format-date';
+import { parseUrlQueryDate } from '../../../modules/format-date';
 import updateStylistOccupiedTimeSlots from '../../../modules/server/update-stylist-occupied-timeslots';
 import scaledImageURL from '../../../modules/scaled-image-url';
 
@@ -55,10 +55,8 @@ Meteor.methods({
         `param: ${JSON.stringify(services)}`,
       );
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -79,10 +77,8 @@ Meteor.methods({
         `param: ${JSON.stringify(openHours)}`,
       );
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -138,10 +134,8 @@ Meteor.methods({
         `param: ${JSON.stringify(areas)}`,
       );
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -164,10 +158,8 @@ Meteor.methods({
         Profiles.update({ owner: this.userId }, { $pull: { favouredStylists: owner } });
       }
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -202,10 +194,8 @@ Meteor.methods({
         },
       ).fetch();
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -230,10 +220,8 @@ Meteor.methods({
 
       return [];
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -272,10 +260,8 @@ Meteor.methods({
         },
       );
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 
@@ -354,7 +340,7 @@ Meteor.methods({
       }
 
       // ----------- SELECTOR FOR OPEN HOURS -----------------
-      const isDateValid = parseDateQueryString(date).isValid();
+      const isDateValid = parseUrlQueryDate(date).isValid();
       const isTimeValid = isTimeQueryValid(time);
 
       if (isDateValid && isTimeValid) {
@@ -472,10 +458,8 @@ Meteor.methods({
         hasMore: stylists.length >= SearchLimit,
       };
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 });

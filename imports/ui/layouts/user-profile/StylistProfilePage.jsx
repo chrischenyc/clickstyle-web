@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import scaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
-import { formatMonthYear } from '../../../modules/format-date';
+import { monthYearString } from '../../../modules/format-date';
 import { openModal, closeModal } from '../../../modules/client/redux/ui';
 import { withMediaQuery } from '../../components/HOC';
 
@@ -68,7 +68,7 @@ class UserProfilePage extends Component {
               {profile.address &&
                 profile.address.suburb &&
                 profile.createdAt && <span style={{ padding: '0 8px' }}>&middot;</span>}
-              {profile.createdAt && <span>Joined in {formatMonthYear(profile.createdAt)}</span>}
+              {profile.createdAt && <span>Joined in {monthYearString(profile.createdAt)}</span>}
             </div>
           </div>
         </div>

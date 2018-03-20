@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { ServiceNameToSEOName } from '../../modules/seo-name';
-import { formatYear } from '../../modules/format-date';
+import { yearString } from '../../modules/format-date';
 
 const Footer = () => {
   const {
@@ -108,7 +108,7 @@ const Footer = () => {
           <div className="col-md-3 col-sm-12">
             <p>{about}</p>
             <p>
-              &copy; 2017-{formatYear(new Date())} {legalName}. All Rights Reserved.
+              &copy; 2017-{yearString(new Date())} {legalName}. All Rights Reserved.
             </p>
           </div>
         </div>

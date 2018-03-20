@@ -8,9 +8,9 @@ import 'react-day-picker/lib/style.css';
 import './SearchBar/react-day-picker-custom.css';
 
 import {
-  formatDateQueryString,
-  parseDateQueryString,
-  formatDateDisplayString,
+  urlQueryDateString,
+  parseUrlQueryDate,
+  dateString,
   datePickerFormat,
 } from '../../modules/format-date';
 import { setUserInfo } from '../../modules/client/redux/cart';
@@ -26,13 +26,13 @@ const BookingDateTimePicker = props => (
           readOnly: 'true',
         }}
         value={
-          parseDateQueryString(props.cart.date).isValid()
-            ? formatDateDisplayString(parseDateQueryString(props.cart.date))
+          parseUrlQueryDate(props.cart.date).isValid()
+            ? dateString(parseUrlQueryDate(props.cart.date))
             : ''
         }
         placeholder="Select date"
         onDayChange={(date) => {
-          props.setUserInfo({ date: _.isNil(date) ? '' : formatDateQueryString(date) });
+          props.setUserInfo({ date: _.isNil(date) ? '' : urlQueryDateString(date) });
         }}
         format={datePickerFormat}
         formatDate={formatDate}
@@ -40,7 +40,7 @@ const BookingDateTimePicker = props => (
         dayPickerProps={{
           modifiers: {
             disabled: { before: new Date() },
-            selected: day => formatDateQueryString(day) === props.cart.date,
+            selected: day => urlQueryDateString(day) === props.cart.date,
           },
         }}
       />

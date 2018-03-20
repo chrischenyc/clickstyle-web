@@ -6,7 +6,7 @@ import { Container } from 'semantic-ui-react';
 import classnames from 'classnames';
 
 import scaledImageURL from '../../../../modules/scaled-image-url';
-import { formatDateDisplayString, parseDateQueryString } from '../../../../modules/format-date';
+import { dateString, parseUrlQueryDate } from '../../../../modules/format-date';
 import servicesSummary from '../../../../modules/format-services';
 import formatPrice from '../../../../modules/format-price';
 
@@ -15,7 +15,7 @@ const StylistBookingsPage = ({ bookings }) => (
     <div className="row">
       <div className="col-lg-12 col-md-12">
         <div className="dashboard-list-box margin-top-0">
-          <h4>Bookings</h4>
+          <h4>Customer Bookings</h4>
           {bookings.length > 0 && (
             <ul>
               {bookings.map(booking => (
@@ -52,7 +52,7 @@ const StylistBookingsPage = ({ bookings }) => (
                             <h5>Booking Date:</h5>
                             <ul className="booking-list">
                               <li className="highlighted">
-                                {`${formatDateDisplayString(parseDateQueryString(booking.date))} - ${booking.time}`}
+                                {`${dateString(parseUrlQueryDate(booking.date))} - ${booking.time}`}
                               </li>
                             </ul>
                           </div>

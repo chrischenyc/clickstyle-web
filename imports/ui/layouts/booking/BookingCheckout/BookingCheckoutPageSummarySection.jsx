@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import CartSummary from '../../../components/CartSummary';
 
-import { parseDateQueryString, formatDateDisplayString } from '../../../../modules/format-date';
+import { parseUrlQueryDate, dateString } from '../../../../modules/format-date';
 
 const BookingCheckoutPageSummarySection = props => (
   <div className="boxed-widget opening-hours summary">
@@ -25,8 +25,8 @@ const BookingCheckoutPageSummarySection = props => (
       <li>
         Date{' '}
         <span>
-          {parseDateQueryString(props.cart.date).isValid() &&
-            formatDateDisplayString(parseDateQueryString(props.cart.date))}
+          {parseUrlQueryDate(props.cart.date).isValid() &&
+            dateString(parseUrlQueryDate(props.cart.date))}
         </span>
       </li>
       <li>

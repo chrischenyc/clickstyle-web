@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { dayOfWeekAsString } from '../../../modules/format-date';
+import { weekdayString } from '../../../modules/format-date';
 import OpenHourString from '../../../modules/client/OpenHourString';
 
 const StylistHoursSection = props => (
@@ -12,7 +12,7 @@ const StylistHoursSection = props => (
     <ul>
       {props.openHours.map(openHour => (
         <li key={openHour.day}>
-          {dayOfWeekAsString(openHour.day)}
+          {weekdayString(openHour.day)}
           <span>{OpenHourString(openHour)}</span>
         </li>
       ))}

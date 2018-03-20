@@ -26,10 +26,6 @@ const SocialLoginButtons = props => (
               if (props.onSocialSignedIn) {
                 props.onSocialSignedIn();
               }
-            } else {
-              /* eslint-disable no-console */
-              console.error(`Facebook sign in error: ${error}`);
-              /* eslint-enable no-console */
             }
           },
         );

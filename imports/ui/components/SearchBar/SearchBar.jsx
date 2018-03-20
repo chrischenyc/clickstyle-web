@@ -10,9 +10,9 @@ import './react-day-picker-custom.css';
 
 import TimeInput from '../TimeInput';
 import {
-  formatDateQueryString,
-  parseDateQueryString,
-  formatDateDisplayString,
+  urlQueryDateString,
+  parseUrlQueryDate,
+  dateString,
   datePickerFormat,
 } from '../../../modules/format-date';
 
@@ -181,7 +181,7 @@ class SearchBar extends Component {
       searchUrl += `/${postcode}`;
     }
 
-    if (parseDateQueryString(date).isValid()) {
+    if (parseUrlQueryDate(date).isValid()) {
       searchUrl += `?date=${date}`;
 
       if (!_.isNil(time) && time.length > 0) {
@@ -271,13 +271,13 @@ class SearchBar extends Component {
               readOnly: 'true',
             }}
             value={
-              parseDateQueryString(this.state.date).isValid()
-                ? formatDateDisplayString(parseDateQueryString(this.state.date))
+              parseUrlQueryDate(this.state.date).isValid()
+                ? dateString(parseUrlQueryDate(this.state.date))
                 : ''
             }
             placeholder="Any date, any time"
             onDayChange={(date) => {
-              this.setState({ date: _.isNil(date) ? '' : formatDateQueryString(date) });
+              this.setState({ date: _.isNil(date) ? '' : urlQueryDateString(date) });
             }}
             format={datePickerFormat}
             formatDate={formatDate}
@@ -285,7 +285,7 @@ class SearchBar extends Component {
             dayPickerProps={{
               modifiers: {
                 disabled: { before: new Date() },
-                selected: day => formatDateQueryString(day) === this.state.date,
+                selected: day => urlQueryDateString(day) === this.state.date,
               },
             }}
           />

@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Roles } from 'meteor/alanning:roles';
+import log from 'winston';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Suburbs from '../suburbs';
@@ -22,10 +23,8 @@ Meteor.methods({
         sort: { postcode: 1 },
       }).fetch();
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 });
@@ -50,10 +49,8 @@ Meteor.methods({
         sort: { postcode: 1 },
       }).fetch();
     } catch (exception) {
-      /* eslint-disable no-console */
-      console.error(exception);
-      /* eslint-enable no-console */
-      throw new Meteor.Error('500');
+      log.error(exception);
+      throw exception;
     }
   },
 });

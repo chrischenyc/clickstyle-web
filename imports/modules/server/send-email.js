@@ -3,6 +3,7 @@ import { Email } from 'meteor/email';
 import getPrivateFile from './get-private-file';
 import templateToText from './handlebars-email-to-text';
 import templateToHTML from './handlebars-email-to-html';
+import log from 'winston';
 
 import Profiles from '../../api/profiles/profiles';
 
@@ -98,9 +99,7 @@ export const sendWelcomeEmail = (userId) => {
         ...templateConstants,
       },
     }).catch((error) => {
-      /* eslint-disable no-console */
-      console.error(error);
-      /* eslint-enable no-console */
+      log.error(error);
     });
   }
 };
@@ -119,9 +118,7 @@ export const sendPasswordChangedEmail = (userId) => {
         ...templateConstants,
       },
     }).catch((error) => {
-      /* eslint-disable no-console */
-      console.error(error);
-      /* eslint-enable no-console */
+      log.error(error);
     });
   }
 };
@@ -140,9 +137,7 @@ export const sendStylistJoinConfirmEmail = (userId) => {
         ...templateConstants,
       },
     }).catch((error) => {
-      /* eslint-disable no-console */
-      console.error(error);
-      /* eslint-enable no-console */
+      log.error(error);
     });
   }
 };
@@ -180,9 +175,7 @@ export const sendCustomerBookingRequestedEmail = ({
       ...templateConstants,
     },
   }).catch((error) => {
-    /* eslint-disable no-console */
-    console.error(error);
-    /* eslint-enable no-console */
+    log.error(error);
   });
 };
 
@@ -220,9 +213,7 @@ export const sendStylistBookingRequestedEmail = ({
       ...templateConstants,
     },
   }).catch((error) => {
-    /* eslint-disable no-console */
-    console.error(error);
-    /* eslint-enable no-console */
+    log.error(error);
   });
 };
 
@@ -248,9 +239,7 @@ export const sendAdminEmailStylistApplication = (applicationId) => {
       });
     });
   } catch (error) {
-    /* eslint-disable no-console */
-    console.error(error);
-    /* eslint-enable no-console */
+    log.error(error);
   }
 };
 
@@ -277,8 +266,6 @@ export const sendAdminEmailContactForm = (name, email, phone, subject, message) 
       });
     });
   } catch (error) {
-    /* eslint-disable no-console */
-    console.error(error);
-    /* eslint-enable no-console */
+    log.error(error);
   }
 };

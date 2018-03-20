@@ -12,7 +12,13 @@ class StylistBooking extends Component {
 
     this.state = {
       booking: null,
+      loading: false,
+      error: '',
     };
+
+    this.handleAcceptPendingBooking = this.handleAcceptPendingBooking.bind(this);
+    this.handleDeclinePendingBooking = this.handleDeclinePendingBooking.bind(this);
+    this.handleCancelConfirmedBooking = this.handleCancelConfirmedBooking.bind(this);
   }
 
   componentDidMount() {
@@ -38,9 +44,42 @@ class StylistBooking extends Component {
     });
   }
 
+  handleAcceptPendingBooking() {
+    this.setState({ loading: true });
+
+    const { _id } = this.props.match.params;
+
+    Meteor.call('stylist.booking.pending.confirm', _id, (error) => {
+      this.setState({ loading: false });
+
+      if (error) {
+        this.setState({ error: error.error });
+      } else {
+        this.loadBooking(_id);
+      }
+    });
+  }
+
+  handleDeclinePendingBooking() {
+    this.setState({ loading: true });
+  }
+
+  handleCancelConfirmedBooking() {
+    this.setState({ loading: true });
+  }
+
   render() {
     if (!_.isNil(this.state.booking)) {
-      return <StylistBookingPage booking={this.state.booking} />;
+      return (
+        <StylistBookingPage
+          booking={this.state.booking}
+          onAcceptPendingBooking={this.handleAcceptPendingBooking}
+          onDeclinePendingBooking={this.handleDeclinePendingBooking}
+          onCancelConfirmedBooking={this.handleCancelConfirmedBooking}
+          loading={this.state.loading}
+          error={this.state.error}
+        />
+      );
     }
     return '';
   }

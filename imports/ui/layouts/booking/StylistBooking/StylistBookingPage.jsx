@@ -2,10 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Container } from 'semantic-ui-react';
+import { Container, Button, Message } from 'semantic-ui-react';
 import classnames from 'classnames';
+import _ from 'lodash';
 
-import { formatDateDisplayString, parseDateQueryString } from '../../../../modules/format-date';
+import { dateString, parseUrlQueryDate } from '../../../../modules/format-date';
 import servicesSummary from '../../../../modules/format-services';
 import formatPrice from '../../../../modules/format-price';
 import scaledImageURL from '../../../../modules/scaled-image-url';
@@ -39,7 +40,7 @@ const StylistBookingPage = props => (
               <Link to={userProfileLink(props.booking.customer)}>
                 {`${props.booking.firstName} ${props.booking.lastName}`}
               </Link>{' '}
-              <span className="booking-status">Pending</span>
+              <span className="booking-status">{props.booking.status}</span>
             </h3>
 
             <div className="inner-booking-list">
@@ -53,9 +54,7 @@ const StylistBookingPage = props => (
               <h5>Booking Date:</h5>
               <ul className="booking-list">
                 <li className="highlighted">
-                  {`${formatDateDisplayString(parseDateQueryString(props.booking.date))} - ${
-                    props.booking.time
-                  }`}
+                  {`${dateString(parseUrlQueryDate(props.booking.date))} - ${props.booking.time}`}
                 </li>
               </ul>
             </div>
@@ -96,27 +95,63 @@ const StylistBookingPage = props => (
                 <li className="highlighted">{props.booking.address}</li>
               </ul>
             </div>
-
-            <a href="#small-dialog" className="rate-review popup-with-zoom-anim">
-              <i className="sl sl-icon-envelope-open" /> Send Message
-            </a>
           </div>
         </div>
       </div>
-      <div className="buttons-to-right">
-        <a href="#" className="button gray reject">
-          <i className="sl sl-icon-close" /> Cancel
-        </a>
-        <a href="#" className="button gray approve">
-          <i className="sl sl-icon-check" /> Approve
-        </a>
-      </div>
+
+      {!_.isEmpty(props.error) && (
+        <Message compact error>
+          {props.error}
+        </Message>
+      )}
+
+      {props.booking.status === 'pending' && (
+        <div>
+          <Button
+            rounded
+            color="teal"
+            size="large"
+            onClick={props.onAcceptPendingBooking}
+            loading={props.loading}
+          >
+            Accept Booking
+          </Button>
+          <Button
+            rounded
+            negative
+            size="large"
+            onClick={props.onDeclinePendingBooking}
+            loading={props.loading}
+          >
+            Decline Booking
+          </Button>
+        </div>
+      )}
+
+      {props.booking.status === 'confirmed' && (
+        <div>
+          <Button
+            rounded
+            negative
+            size="large"
+            onClick={props.onDeclinePendingBooking}
+            loading={props.loading}
+          >
+            Cancel Booking
+          </Button>
+        </div>
+      )}
     </div>
   </Container>
 );
 
 StylistBookingPage.propTypes = {
   booking: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  onAcceptPendingBooking: PropTypes.func.isRequired,
+  onDeclinePendingBooking: PropTypes.func.isRequired,
+  onCancelConfirmedBooking: PropTypes.func.isRequired,
 };
 
 export default StylistBookingPage;

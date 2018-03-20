@@ -4,7 +4,7 @@ import { Form, Table, Checkbox, Button, Container, Message } from 'semantic-ui-r
 import _ from 'lodash';
 
 import TimeInput from '../../../components/TimeInput';
-import { dayOfWeekAsString } from '../../../../modules/format-date';
+import { weekdayString } from '../../../../modules/format-date';
 
 const StylistAvailableTimePage = ({
   openHours,
@@ -36,7 +36,7 @@ const StylistAvailableTimePage = ({
 
               return (
                 <Table.Row key={openHour.day}>
-                  <Table.Cell>{dayOfWeekAsString(openHour.day)}</Table.Cell>
+                  <Table.Cell>{weekdayString(openHour.day)}</Table.Cell>
 
                   <Table.Cell error={!_.isEmpty(error)}>
                     <TimeInput
