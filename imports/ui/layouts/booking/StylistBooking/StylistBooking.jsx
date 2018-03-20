@@ -62,6 +62,18 @@ class StylistBooking extends Component {
 
   handleDeclinePendingBooking() {
     this.setState({ loading: true });
+
+    const { _id } = this.props.match.params;
+
+    Meteor.call('stylist.booking.pending.decline', _id, (error) => {
+      this.setState({ loading: false });
+
+      if (error) {
+        this.setState({ error: error.error });
+      } else {
+        this.loadBooking(_id);
+      }
+    });
   }
 
   handleCancelConfirmedBooking() {

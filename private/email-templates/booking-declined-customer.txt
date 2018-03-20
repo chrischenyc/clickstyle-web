@@ -1,6 +1,6 @@
 Hi {{firstName}},
 
-Your booking has been confirmed by {{stylist}}.
+Your booking has been declined by {{stylist}}.
 
 Booking number: {{bookingsId}}
 Stylist: {{stylist}}

@@ -1,6 +1,6 @@
 Hi {{firstName}},
 
-Your booking has been confirmed by {{stylist}}.
+This is not a confirmed booking - at least not yet. You will get a response within 24 hours.
 
 Booking number: {{bookingsId}}
 Stylist: {{stylist}}
