@@ -10,6 +10,7 @@ import rateLimit from '../../../modules/server/rate-limit';
 import {
   sendCustomerBookingRequestedEmail,
   sendStylistBookingRequestedEmail,
+  sendCustomerBookingConfirmedEmail,
 } from '../../../modules/server/send-email';
 
 import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
@@ -513,7 +514,24 @@ Meteor.methods({
         },
       );
 
-      // TODO: notify customer
+      // notify customer
+      const stylist = Stylists.findOne({ owner: this.userId });
+      const {
+        services, total, firstName, lastName, email, mobile, address, date, time,
+      } = booking;
+      sendCustomerBookingConfirmedEmail({
+        stylist: `${stylist.name.first} ${stylist.name.last}`,
+        services: servicesSummary(services),
+        total,
+        firstName,
+        lastName,
+        email,
+        mobile,
+        address,
+        time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+        bookingsId: _id,
+        bookingUrl: `users/bookings/${_id}`,
+      });
     } catch (exception) {
       log.error(exception);
 

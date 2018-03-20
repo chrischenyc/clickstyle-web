@@ -179,6 +179,43 @@ export const sendCustomerBookingRequestedEmail = ({
   });
 };
 
+export const sendCustomerBookingConfirmedEmail = ({
+  stylist,
+  services,
+  total,
+  firstName,
+  lastName,
+  email,
+  mobile,
+  address,
+  time,
+  bookingsId,
+  bookingUrl,
+}) => {
+  sendEmail({
+    to: email,
+    from: fromAddress,
+    subject: `Booking confirmed by ${stylist}`,
+    template: 'booking-confirmed-customer',
+    templateConstants: {
+      stylist,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      bookingsId,
+      bookingUrl: Meteor.absoluteUrl(bookingUrl),
+      ...templateConstants,
+    },
+  }).catch((error) => {
+    log.error(error);
+  });
+};
+
 export const sendStylistBookingRequestedEmail = ({
   stylistFirstName,
   stylistEmail,
