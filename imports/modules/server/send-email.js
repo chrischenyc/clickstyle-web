@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Email } from 'meteor/email';
+import log from 'winston';
+
 import getPrivateFile from './get-private-file';
 import templateToText from './handlebars-email-to-text';
 import templateToHTML from './handlebars-email-to-html';
-import log from 'winston';
-
 import Profiles from '../../api/profiles/profiles';
 
 // core function to send email
