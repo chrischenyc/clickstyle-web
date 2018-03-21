@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, List, Header } from 'semantic-ui-react';
 
-const HelpPage = () => (
+const FAQPage = () => (
   <Container className="margin-top-40 margin-bottom-40">
     <div className="margin-bottom-40">
       <Header as="h2">FAQ</Header>
@@ -70,4 +70,4 @@ const HelpPage = () => (
   </Container>
 );
 
-export default HelpPage;
+export default FAQPage;

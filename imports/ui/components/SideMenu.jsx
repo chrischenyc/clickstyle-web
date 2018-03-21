@@ -88,7 +88,7 @@ const SideMenu = ({ isStylist }) => (
 
           <li>
             <NavLink to="/users/stylist/faq">
-              <i className="im im-icon-Information" /> FAQ
+              <i className="im im-icon-Information" /> Stylist FAQ
             </NavLink>
           </li>
         </ul>
@@ -103,8 +103,8 @@ const SideMenu = ({ isStylist }) => (
           </li>
         )}
         <li>
-          <NavLink to="/help">
-            <i className="im im-icon-Information" /> Help
+          <NavLink to="/faq">
+            <i className="im im-icon-Information" /> FAQ
           </NavLink>
         </li>
 

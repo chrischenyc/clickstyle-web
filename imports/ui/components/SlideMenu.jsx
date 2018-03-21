@@ -211,7 +211,7 @@ const SlideMenu = props => (
                   props.toggleSlideMenu();
                 }}
               >
-                FAQ
+                Stylist FAQ
               </Link>
             </li>
           </ul>
@@ -221,12 +221,12 @@ const SlideMenu = props => (
 
       <li>
         <Link
-          to="/help"
+          to="/faq"
           onClick={() => {
             props.toggleSlideMenu();
           }}
         >
-          Help
+          FAQ
         </Link>
       </li>
 

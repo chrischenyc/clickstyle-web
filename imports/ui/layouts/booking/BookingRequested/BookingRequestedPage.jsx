@@ -18,7 +18,7 @@ const BookingRequestedPage = props => (
         <Link to="/contact">contact us</Link>.
       </p>
 
-      <Link to="/help" className="button margin-top-30">
+      <Link to="/faq" className="button margin-top-30">
         Frequently Asked Questions
       </Link>
     </div>

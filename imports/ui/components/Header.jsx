@@ -87,8 +87,8 @@ class Header extends Component {
               )}
 
               {fullContent && (
-                <Menu.Item as={Link} to="/help">
-                  Help
+                <Menu.Item as={Link} to="/faq">
+                  FAQ
                 </Menu.Item>
               )}
 

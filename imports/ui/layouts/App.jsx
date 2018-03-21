@@ -55,7 +55,7 @@ import StylistPortfolio from '../layouts/stylists/StylistPortfolio/StylistPortfo
 
 import TermsPage from '../layouts/static/TermsPage';
 import PrivacyPage from '../layouts/static/PrivacyPage';
-import HelpPage from '../layouts/static/HelpPage';
+import FAQPage from '../layouts/static/FAQPage';
 import AboutPage from '../layouts/static/AboutPage';
 import StylistFAQPage from '../layouts/static/StylistFAQPage';
 
@@ -110,7 +110,7 @@ class App extends Component {
               <Route path="/join" component={withHeaderAndFooter(StylistsJoin)} />
               <Route path="/terms" component={withHeaderAndFooter(TermsPage)} />
               <Route path="/privacy" component={withHeaderAndFooter(PrivacyPage)} />
-              <Route path="/help" component={withHeaderAndFooter(HelpPage)} />
+              <Route path="/faq" component={withHeaderAndFooter(FAQPage)} />
               <Route path="/about" component={withHeaderAndFooter(AboutPage)} />
 
               <Route path="/booking" component={withHeaderAndFooter(BookingCheckout)} />
