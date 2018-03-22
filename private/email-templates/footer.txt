@@ -9,6 +9,7 @@ Email: {{supportEmail}}
 &copy; {{legalName}} 2017-2018. All right reserved.
 Privacy: privacyUrl
 Terms: termsUrl
+FAQ: faqUrl
 Contact: contactUrl
 
 {{about}}
