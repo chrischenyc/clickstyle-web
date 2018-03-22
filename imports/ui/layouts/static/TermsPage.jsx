@@ -1,54 +1,53 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, List, Header } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
 
 const TermsPage = () => (
-  <Container className="margin-top-40 margin-bottom-40">
-    <Header as="h2">
-      {Meteor.settings.public.appName} Terms of Service For Clients &amp; Stylist
-    </Header>
-    <List size="large">
-      <List.Item>
+  <Container>
+    <div className="margin-top-40 margin-bottom-40">
+      <Header as="h2">
+        {Meteor.settings.public.appName} Terms of Service For Clients &amp; Stylist
+      </Header>
+
+      <p>
         Welcome to <Link to="/">{Meteor.settings.public.siteUrl}</Link>, a website owned by{' '}
         {Meteor.settings.public.legalName}. Below we have outlined terms of service and use for both
         clients and stylist. For any further clarity please contact us through the contact form
         located on <Link to="/contact">contact us</Link> page.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Terms</List.Header>
+      <p>
+        Terms<br />
         By accessing the website at <Link to="/">{Meteor.settings.public.siteUrl}</Link>, you are
         agreeing to be bound by these terms of service, all applicable laws and regulations, and
         agree that you are responsible for compliance with any applicable local laws. If you do not
         agree with any of these terms, you are prohibited from using or accessing this site. The
         materials contained in this website are protected by applicable copyright and trademark law.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Use License</List.Header>
+      <p>
+        Use License<br />
         Permission is granted to temporarily download one copy of the materials (information or
         software) on {Meteor.settings.public.appName}&apos;s website for personal, non-commercial
         transitory viewing only. This is the grant of a license, not a transfer of title, and under
         this license you may not:
-        <List>
-          <List.Item>A. modify or copy the materials;</List.Item>
-          <List.Item>
-            B. use the materials for any commercial purpose, or for any public display (commercial
-            or non-commercial);
-          </List.Item>
-          <List.Item>
-            C. attempt to decompile or reverse engineer any software contained on{' '}
+        <ol>
+          <li>modify or copy the materials;</li>
+          <li>
+            use the materials for any commercial purpose, or for any public display (commercial or
+            non-commercial);
+          </li>
+          <li>
+            attempt to decompile or reverse engineer any software contained on{' '}
             {Meteor.settings.public.appName}&apos;s website;
-          </List.Item>
-          <List.Item>
-            D. remove any copyright or other proprietary notations from the materials; or
-          </List.Item>
-          <List.Item>
-            E. transfer the materials to another person or &quot;mirror&quot; the materials on any
+          </li>
+          <li>remove any copyright or other proprietary notations from the materials; or</li>
+          <li>
+            transfer the materials to another person or &quot;mirror&quot; the materials on any
             other server.
-          </List.Item>
-        </List>
+          </li>
+        </ol>
         <br />
         This license shall automatically terminate if you violate any of these restrictions and may
         be terminated by {Meteor.settings.public.appName} at any time. Upon terminating your viewing
@@ -60,10 +59,10 @@ const TermsPage = () => (
         and stylist (by and large or separately, &quot;Stylists&quot;) giving hair, beauty and other
         well-being and health services (&quot;Styling Services&quot;) with customers looking for
         such services(&quot;Clients&quot; or &quot;you&quot;).
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Disclaimer</List.Header>
+      <p>
+        Disclaimer<br />
         The materials on {Meteor.settings.public.appName}&apos;s website are provided on an &apos;as
         is&apos; basis. {Meteor.settings.public.appName} makes no warranties, expressed or implied,
         and hereby disclaims and negates all other warranties including, without limitation, implied
@@ -74,42 +73,43 @@ const TermsPage = () => (
         Further, {Meteor.settings.public.appName} does not warrant or make any representations
         concerning the accuracy, likely results, or reliability of the use of the materials on its
         website or otherwise relating to such materials or on any sites linked to this site.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Accuracy of materials</List.Header>
+      <p>
+        Accuracy of materials<br />
         The materials appearing on {Meteor.settings.public.appName} website could include technical,
         typographical, or photographic errors. {Meteor.settings.public.appName} does not warrant
         that any of the materials on its website are accurate, complete or current.{' '}
         {Meteor.settings.public.appName} may make changes to the materials contained on its website
         at any time without notice. However {Meteor.settings.public.appName} does not make any
         commitment to update the materials.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Links</List.Header>
+      <p>
+        Links<br />
         {Meteor.settings.public.appName} has not reviewed all of the sites linked to its website and
         is not responsible for the contents of any such linked site. The inclusion of any link does
         not imply endorsement by {Meteor.settings.public.appName} of the site. Use of any such
         linked website is at the user&apos;s own risk.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Modifications</List.Header>
+      <p>
+        Modifications<br />
         {Meteor.settings.public.appName} may revise these terms of service for its website at any
         time without notice. By using this website you are agreeing to be bound by the then current
         version of these terms of service.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Governing Law</List.Header>
+      <p>
+        Governing Law<br />
         These terms and conditions are governed by and construed in accordance with the laws of
         Melbourne, Australia and you irrevocably submit to the exclusive jurisdiction of the courts
         in that State or location.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Stylist on {Meteor.settings.public.appName}</List.Header>
+      <p>
+        Stylist on {Meteor.settings.public.appName}
+        <br />
         {Meteor.settings.public.appName} does not autonomously affirm that Stylists are authorized
         to perform out the Styling Services offered by them on our Site. Notwithstanding, when
         stylist make accounts with {Meteor.settings.public.appName}, stylists affirm to{' '}
@@ -121,10 +121,10 @@ const TermsPage = () => (
         {Meteor.settings.public.appName}. {Meteor.settings.public.appName} maintains whatever
         authority is needed to evacuate or shroud any erroneous, obsolete, or illicit data from
         profiles, and additionally expel or conceal the whole profile itself whenever.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Use of {Meteor.settings.public.appName} Services &amp; Website</List.Header>
+      <p>
+        Use of {Meteor.settings.public.appName} Services &amp; Website<br />
         We may change, alter, suspend, or cease all or any piece of the Services whenever, with or
         without reason. You recognize that the operation of the Services may now and again
         experience specialized or different issues and may not really proceed continue or without
@@ -137,55 +137,55 @@ const TermsPage = () => (
         <br />
         We do our best to keep {Meteor.settings.public.appName} safe and spam free, however, cannot
         promise it. Keeping in mind the end goal to enable us to do as such, you agree not to:
-        <List>
-          <List.Item>
-            A. Send or generally post unapproved business interchanges, (for example, spam) on the
+        <ol>
+          <li>
+            Send or generally post unapproved business interchanges, (for example, spam) on the
             Services
-          </List.Item>
-          <List.Item>B. Encourage or empower any infringement of these Terms of Service.</List.Item>
-          <List.Item>
-            C. Post content that is scornful, debilitating, obscene or that contains nudity or
+          </li>
+          <li>Encourage or empower any infringement of these Terms of Service.</li>
+          <li>
+            Post content that is scornful, debilitating, obscene or that contains nudity or
             realistic or needless savagery.
-          </List.Item>
-          <List.Item>D. Upload infectious virus or different noxious code</List.Item>
-          <List.Item>
-            E. Gather Users&apos; information or data, or generally get to the Services, utilizing
+          </li>
+          <li>Upload infectious virus or different noxious code</li>
+          <li>
+            Gather Users&apos; information or data, or generally get to the Services, utilizing
             computerized implies, (for example, reaping bots, robots, creepy crawlies, or scrubbers)
             without our consent
-          </List.Item>
-          <List.Item>
-            F. Utilize {Meteor.settings.public.appName} to do anything unlawful, deceiving,
-            vindictive, or oppressive
-          </List.Item>
-          <List.Item>G. Harass, intimidate, or bully any User</List.Item>
-          <List.Item>H. Keep your Registration Data and contact data exact and forward</List.Item>
-          <List.Item>
-            I. Keep your Account IDs and Account data classified and to not share your login data or
+          </li>
+          <li>
+            Utilize {Meteor.settings.public.appName} to do anything unlawful, deceiving, vindictive,
+            or oppressive
+          </li>
+          <li>Harass, intimidate, or bully any User</li>
+          <li>Keep your Registration Data and contact data exact and forward</li>
+          <li>
+            Keep your Account IDs and Account data classified and to not share your login data or
             Account IDs, let any other individual access your Account, or do whatever else that may
             endanger the security of your Account.
-          </List.Item>
-          <List.Item>
-            J. You must not use the {Meteor.settings.public.appName} platform for any illegal or
+          </li>
+          <li>
+            You must not use the {Meteor.settings.public.appName} platform for any illegal or
             immoral purpose.
-          </List.Item>
-          <List.Item>
-            K. You give {Meteor.settings.public.appName}an unhindered, around the world, eminence
-            free permit to utilize, duplicate, alter and adjust any content and data posted on the{' '}
+          </li>
+          <li>
+            You give {Meteor.settings.public.appName}an unhindered, around the world, eminence free
+            permit to utilize, duplicate, alter and adjust any content and data posted on the{' '}
             {Meteor.settings.public.appName} to publish material on the{' '}
             {Meteor.settings.public.appName} and as generally might be required to give the{' '}
             {Meteor.settings.public.appName} service, for the general advancement of the{' '}
             {Meteor.settings.public.appName} service, and as allowed by this Agreement.
-          </List.Item>
-          <List.Item>
-            L. You must not request payments outside of the {Meteor.settings.public.appName}
+          </li>
+          <li>
+            You must not request payments outside of the {Meteor.settings.public.appName}
             Platform from clients. Doing so can result in suspension of your account on{' '}
             <Link to="/">{Meteor.settings.public.siteUrl}</Link>
-          </List.Item>
-        </List>
-      </List.Item>
+          </li>
+        </ol>
+      </p>
 
-      <List.Item>
-        <List.Header>Refund</List.Header>
+      <p>
+        Refund<br />
         If you cancel or don&apos;t turn up for an appointment, you may still be charged full money
         in accordance with the cancellation policy of the Stylist that charges for cancel
         appointments and no show according to individual stylist terms and condition at the time of
@@ -207,10 +207,10 @@ const TermsPage = () => (
         accommodate you. Our stylists are instructed to wait at your home or office for 15 minutes
         after the appointment start time. Unless otherwise specified, all paid sums are
         non-refundable.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Booking Guarantee</List.Header>
+      <p>
+        Booking Guarantee<br />
         Despite the fact that the Services are proposed to give a stylists accessibility
         progressively, it is conceivable that a booking strife may happen that requires the stylist
         to reschedule your reservation. Creating a reservation utilizing the Services isn&apos;t a
@@ -218,10 +218,10 @@ const TermsPage = () => (
         {Meteor.settings.public.appName}
         cannot guarantee availability of the Services to any User until you receive a confirmation
         email, stating the booking is confirmed.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Account Privacy</List.Header>
+      <p>
+        Account Privacy<br />
         You consent to keep up your Account exclusively for your own particular use. You agree that
         you won&apos;t enable someone else to utilize your Account IDs to access or utilize the
         Services under any conditions. You are exclusively and totally in charge of keeping up the
@@ -234,10 +234,10 @@ const TermsPage = () => (
         consent to quickly inform us of any unapproved utilization of your Account or some other
         break of security known to you. You recognize that the entire protection of your information
         and messages transmitted while utilizing the Services can&apos;t be ensured.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Payments &amp; Services</List.Header>
+      <p>
+        Payments &amp; Services<br />
         Stylists, as a different entity from {Meteor.settings.public.appName}, are exclusively in
         charge of all client benefit issues identifying with such stylists products or
         administrations, including without impediment, any Styling Services, evaluating, appointment
@@ -247,39 +247,39 @@ const TermsPage = () => (
         {Meteor.settings.public.appName}, {Meteor.settings.public.appName} is exclusively in charge
         of client benefit issues identifying with any Account, payment, Card preparing, charging or
         crediting.
-        <List>
-          <List.Item>
-            A. Upon making a booking, the stylists owe {Meteor.settings.public.appName} the Fees.
-            Fees will naturally be deducted from the service payment.
-          </List.Item>
-          <List.Item>
-            B. In the event that, for any reason, a stylist Payment can&apos;t be transferred or
+        <ol>
+          <li>
+            Upon making a booking, the stylists owe {Meteor.settings.public.appName} the Fees. Fees
+            will naturally be deducted from the service payment.
+          </li>
+          <li>
+            In the event that, for any reason, a stylist Payment can&apos;t be transferred or
             generally made to the {Meteor.settings.public.appName} stylist or came back to the
             Client (as the case may be) or no claim is otherwise made for a Stylist Payment, the
             Stylist Payment will stay in
             {Meteor.settings.public.appName} Account until paid or generally for up to three months
             from the date the Client at first paid the Task Payment into the{' '}
             {Meteor.settings.public.appName} Account.
-          </List.Item>
-          <List.Item>
-            C. As a client you agree that the payment information you provide is correct and has
+          </li>
+          <li>
+            As a client you agree that the payment information you provide is correct and has
             sufficient funds to complete payment once the service has been provided by stylist.
-          </List.Item>
-        </List>
-      </List.Item>
+          </li>
+        </ol>
+      </p>
 
-      <List.Item>
-        <List.Header>Intellectual Property</List.Header>
+      <p>
+        Intellectual Property<br />
         The Services contains substance and innovation of the Company that is ensured by copyright,
         trademark, patent, competitive advantage and different laws. The Company possesses licensed
         innovation rights to any protectable piece of the Services, including yet not constrained to
         the outline, work of art, logos, usefulness, and documentation (all things considered, the
         &quot;Organization Property&quot;). You may not duplicate, alter, or figure out any piece of
         the Services or the Company Property.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Client responsibility</List.Header>
+      <p>
+        Client responsibility<br />
         As the beneficiary of in-home excellence service given by stylists, you consent to accept
         certain obligations. When you book an arrangement, you consent to agree to any standards or
         prerequisites of the specialist organization pertinent to the service acquired and that you
@@ -306,20 +306,20 @@ const TermsPage = () => (
         work business ventures particular and unmistakable from {Meteor.settings.public.appName}. No
         Support or Maintenance. You recognize and concur that we will have no commitment to furnish
         you with any help or support regarding the Services.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Suggestions</List.Header>
+      <p>
+        Suggestions<br />
         In the event that you give us any feedback or proposals with respect to the Services
         (&quot;Feedback&quot;), you therefore dole out to every one of us rights in the Feedback and
         concur that we will have the privilege to utilize such Feedback and related data in any way
         we consider proper. We will treat any Feedback you give to us as non-classified and
         non-exclusive. You concur that you won&apos;t submit to us any data or thoughts that you
         consider to be secret or restrictive.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Insurance</List.Header>
+      <p>
+        Insurance<br />
         {Meteor.settings.public.appName}, may likewise take out some coincidental property and
         injury insurance itself and that insurance may extent cover {Meteor.settings.public.appName}{' '}
         Stylist for specific sorts of work. You recognize and agree that if a claim is made
@@ -351,21 +351,22 @@ const TermsPage = () => (
         {Meteor.settings.public.appName} from the {Meteor.settings.public.appName} Stylist.{' '}
         {Meteor.settings.public.appName} may likewise choose to set this sum off against future
         funds it might owe to the {Meteor.settings.public.appName} Stylist.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Promo Codes</List.Header>
+      <p>
+        Promo Codes<br />
         Limited time codes qualify you for a discount as set out by the special terms and
         conditions. Promo codes can only be used once by the customer and not in conjunction with
         any other offer. Clients esteemed to abusing the terms of these promo codes will have promo
         codes expelled from their account as well as their account closed.
-      </List.Item>
-    </List>
+      </p>
+    </div>
 
-    <Header as="h2">Stylist Terms &amp; Conditions</Header>
-    <List size="large">
-      <List.Item>
-        <List.Header>Limitations</List.Header>
+    <div className="margin-bottom-40">
+      <Header as="h2">Stylist Terms &amp; Conditions</Header>
+
+      <p>
+        Limitations<br />
         In no event shall {Meteor.settings.public.appName} or its suppliers be liable for any
         damages (including, without limitation, damages for loss of data or profit, or due to
         business interruption) arising out of the use or inability to use the materials on{' '}
@@ -397,31 +398,35 @@ const TermsPage = () => (
         On the off chance that you are accepting these Terms of Service and utilizing the Services
         on behalf of an organization, association or company, you speak to and warrant to the
         Company that you have full power and expert to do as such.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Account</List.Header>
+      <p>
+        Account<br />
         You may request to close your account and delete your stylist profile at anytime. If a
         booking has been made and confirmed prior to your request than you agree to provide service
         to any existing booking.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Currency</List.Header>
+      <p>
+        Currency<br />
         All adjustments, charges, and any transaction on {Meteor.settings.public.appName} are in
         Australian dollars.
-      </List.Item>
+      </p>
 
-      <List.Item>
-        <List.Header>Service</List.Header>
+      <p>
+        Service<br />
         When you receive a notification of a service request by client, you agree to respond in
         timely manner. Once agreed, you are liable to provide service as requested and agreed upon.
         If for any circumstances you are unable to provide the service, you are required to
         communicate with the client explain the circumstances and organise a replacing stylist if
         the client agrees too. If you do not show up for an appointment, you will be charged
         penalty.
-      </List.Item>
-    </List>
+      </p>
+    </div>
+
+    <div className="margin-bottom-40">
+      <p>Last update: 19 March 2018.</p>
+    </div>
   </Container>
 );
 
