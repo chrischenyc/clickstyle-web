@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Container, Confirm, Button } from 'semantic-ui-react';
 import classnames from 'classnames';
 
-import { dateString, parseUrlQueryDate } from '../../../../modules/format-date';
+import { dateTimeString, parseBookingDateTime } from '../../../../modules/format-date';
 import servicesSummary from '../../../../modules/format-services';
 import formatPrice from '../../../../modules/format-price';
 import scaledImageURL from '../../../../modules/scaled-image-url';
@@ -25,7 +25,9 @@ class CustomerBookingPage extends Component {
       <Container>
         <Confirm
           open={this.state.showCancelConfirm}
-          content="This booking has been confirmed. Are you sure you want to cancel this booking?"
+          content={`To cancel this booking will cost you ${formatPrice(this.props.booking.cancellationFee)} ${
+            this.props.booking.cancellationFeeReason
+          }. Are you sure you want to cancel this booking?`}
           onCancel={() => {
             this.setState({ showCancelConfirm: false });
           }}
@@ -77,9 +79,7 @@ class CustomerBookingPage extends Component {
                   <h5>Booking Date:</h5>
                   <ul className="booking-list">
                     <li className="highlighted">
-                      {`${dateString(parseUrlQueryDate(this.props.booking.date))} - ${
-                        this.props.booking.time
-                      }`}
+                      {dateTimeString(parseBookingDateTime(this.props.booking.date + this.props.booking.time))}
                     </li>
                   </ul>
                 </div>

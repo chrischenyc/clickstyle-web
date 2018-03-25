@@ -53,30 +53,47 @@ const calculateTotalDuration = (services) => {
 };
 
 const canStylistCompleteBooking = (booking) => {
-if (booking.status !== "confirmed") {
-  return false;
-}
+  if (booking.status !== 'confirmed') {
+    return false;
+  }
 
-const bookingStartDateTime = parseBookingDateTime(booking.date + booking.time);
-const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration, 'minutes');
+  const bookingStartDateTime = parseBookingDateTime(booking.date + booking.time);
+  const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration, 'minutes');
+
   return bookingEndDateTime.isBefore(moment());
 };
 
 const customerCancellationFee = (booking) => {
-  if (booking.status !== "confirmed") {
+  if (booking.status !== 'confirmed') {
     return 0;
   }
 
-  const bookingStartDateTime = parseBookingDateTime(booking.date + booking.time);
-  if (bookingStartDateTime.isBefore(moment().subtract(1, "day"))) {
+  const now = moment();
+  const prior24Hours = parseBookingDateTime(booking.date + booking.time).subtract(1, 'days');
+  const prior4Hours = parseBookingDateTime(booking.date + booking.time).subtract(4, 'hours');
+  if (now.isBefore(prior24Hours)) {
     return 0;
-  }
-  else if (bookingStartDateTime.isBefore(moment().subtract(4, "hour"))) {
+  } else if (now.isBefore(prior4Hours)) {
     return booking.total * 0.5;
   }
-  else {
-    return booking.total;
+  return booking.total;
+};
+
+const customerCancellationFeeReason = (booking) => {
+  if (booking.status !== 'confirmed') {
+    return '';
   }
+
+  const now = moment();
+  const prior24Hours = parseBookingDateTime(booking.date + booking.time).subtract(1, 'days');
+  const prior4Hours = parseBookingDateTime(booking.date + booking.time).subtract(4, 'hours');
+
+  if (now.isBefore(prior24Hours)) {
+    return "as it's 24 hours before booked time";
+  } else if (now.isBefore(prior4Hours)) {
+    return "as it's less than 24 hours before booked time";
+  }
+  return "as it's less than 4 hours before booked time";
 };
 
 Meteor.methods({
@@ -376,7 +393,12 @@ Meteor.methods({
 
       const stylist = Profiles.findOne({ owner: booking.stylist });
 
-      return { ...booking, stylist, cancellationFee: customerCancellationFee(booking) };
+      return {
+        ...booking,
+        stylist,
+        cancellationFee: customerCancellationFee(booking),
+        cancellationFeeReason: customerCancellationFeeReason(booking),
+      };
     } catch (exception) {
       log.error(exception);
       throw exception;
