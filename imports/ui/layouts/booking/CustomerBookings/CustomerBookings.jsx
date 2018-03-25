@@ -21,7 +21,7 @@ class CustomerBookings extends Component {
   loadBookings() {
     this.props.showLoading();
 
-    Meteor.call('customer.bookings.find', (error, bookings) => {
+    Meteor.call('bookings.customer.find', (error, bookings) => {
       this.props.hideLoading();
       this.setState({ bookings });
     });

@@ -52,6 +52,33 @@ const calculateTotalDuration = (services) => {
   return total;
 };
 
+const canStylistCompleteBooking = (booking) => {
+if (booking.status !== "confirmed") {
+  return false;
+}
+
+const bookingStartDateTime = parseBookingDateTime(booking.date + booking.time);
+const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration, 'minutes');
+  return bookingEndDateTime.isBefore(moment());
+};
+
+const customerCancellationFee = (booking) => {
+  if (booking.status !== "confirmed") {
+    return 0;
+  }
+
+  const bookingStartDateTime = parseBookingDateTime(booking.date + booking.time);
+  if (bookingStartDateTime.isBefore(moment().subtract(1, "day"))) {
+    return 0;
+  }
+  else if (bookingStartDateTime.isBefore(moment().subtract(4, "hour"))) {
+    return booking.total * 0.5;
+  }
+  else {
+    return booking.total;
+  }
+};
+
 Meteor.methods({
   'bookings.create': async function bookingsCreate(cart) {
     check(cart, {
@@ -273,7 +300,7 @@ Meteor.methods({
     }
   },
 
-  'requested.booking.find': function requestedBookingFind(object) {
+  'bookings.requested.find': function requestedBookingFind(object) {
     check(object, Object);
 
     const { _id, userId } = object;
@@ -319,7 +346,7 @@ Meteor.methods({
     }
   },
 
-  'customer.booking.find': function customerBookingFind(_id) {
+  'bookings.customer.findOne': function customerBookingFind(_id) {
     check(_id, String);
 
     if (!this.userId) {
@@ -349,14 +376,14 @@ Meteor.methods({
 
       const stylist = Profiles.findOne({ owner: booking.stylist });
 
-      return { ...booking, stylist };
+      return { ...booking, stylist, cancellationFee: customerCancellationFee(booking) };
     } catch (exception) {
       log.error(exception);
       throw exception;
     }
   },
 
-  'stylist.booking.find': function stylistBookingFind(_id) {
+  'bookings.stylist.findOne': function stylistBookingFind(_id) {
     check(_id, String);
 
     if (!this.userId) {
@@ -385,14 +412,14 @@ Meteor.methods({
 
       const customer = Profiles.findOne({ owner: booking.customer });
 
-      return { ...booking, customer };
+      return { ...booking, customer, canBeCompleted: canStylistCompleteBooking(booking) };
     } catch (exception) {
       log.error(exception);
       throw exception;
     }
   },
 
-  'customer.bookings.find': function customerBookingsFind() {
+  'bookings.customer.find': function customerBookingsFind() {
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
@@ -427,7 +454,7 @@ Meteor.methods({
     }
   },
 
-  'stylist.bookings.find': function stylistBookingsFind() {
+  'bookings.stylist.find': function stylistBookingsFind() {
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
@@ -464,7 +491,7 @@ Meteor.methods({
     }
   },
 
-  'stylist.booking.pending.confirm': function stylistConfirmPendingBooking(_id) {
+  'bookings.stylist.confirm.pending': function stylistConfirmPendingBooking(_id) {
     check(_id, String);
 
     if (!this.userId) {
@@ -543,7 +570,7 @@ Meteor.methods({
     }
   },
 
-  'stylist.booking.pending.decline': function stylistDeclinePendingBooking(_id) {
+  'bookings.stylist.decline.pending': function stylistDeclinePendingBooking(_id) {
     check(_id, String);
 
     if (!this.userId) {
@@ -587,7 +614,7 @@ Meteor.methods({
     }
   },
 
-  'stylist.booking.confirmed.cancel': function stylistCancelConfirmedBooking(_id) {
+  'bookings.stylist.cancel.confirmed': function stylistCancelConfirmedBooking(_id) {
     check(_id, String);
 
     if (!this.userId) {
@@ -635,7 +662,7 @@ Meteor.methods({
     }
   },
 
-  'customer.booking.cancel': function customerCancelBooking(_id) {
+  'bookings.customer.cancel': function customerCancelBooking(_id) {
     check(_id, String);
 
     if (!this.userId) {
@@ -687,14 +714,15 @@ Meteor.methods({
 rateLimit({
   methods: [
     'bookings.create',
-    'requested.booking.find',
-    'customer.booking.find',
-    'stylist.booking.find',
-    'customer.bookings.find',
-    'stylist.bookings.find',
-    'stylist.booking.pending.confirm',
-    'stylist.booking.confirmed.cancel',
-    'customer.booking.cancel',
+    'bookings.requested.find',
+    'bookings.customer.findOne',
+    'bookings.stylist.findOne',
+    'bookings.customer.find',
+    'bookings.stylist.find',
+    'bookings.stylist.confirm.pending',
+    'bookings.stylist.decline.pending',
+    'bookings.stylist.cancel.confirmed',
+    'bookings.customer.cancel',
   ],
   limit: 5,
   timeRange: 1000,

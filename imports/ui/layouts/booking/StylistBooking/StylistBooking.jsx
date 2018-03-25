@@ -34,7 +34,7 @@ class StylistBooking extends Component {
 
     this.props.showLoading();
 
-    Meteor.call('stylist.booking.find', _id, (error, booking) => {
+    Meteor.call('bookings.stylist.findOne', _id, (error, booking) => {
       this.props.hideLoading();
 
       if (booking) {
@@ -50,7 +50,7 @@ class StylistBooking extends Component {
 
     const { _id } = this.props.match.params;
 
-    Meteor.call('stylist.booking.pending.confirm', _id, (error) => {
+    Meteor.call('bookings.stylist.confirm.pending', _id, (error) => {
       this.setState({ loading: false });
 
       if (error) {
@@ -66,7 +66,7 @@ class StylistBooking extends Component {
 
     const { _id } = this.props.match.params;
 
-    Meteor.call('stylist.booking.pending.decline', _id, (error) => {
+    Meteor.call('bookings.stylist.decline.pending', _id, (error) => {
       this.setState({ loading: false });
 
       if (error) {
@@ -82,7 +82,7 @@ class StylistBooking extends Component {
 
     const { _id } = this.props.match.params;
 
-    Meteor.call('stylist.booking.confirmed.cancel', _id, (error) => {
+    Meteor.call('bookings.stylist.cancel.confirmed', _id, (error) => {
       this.setState({ loading: false });
 
       if (error) {
@@ -98,7 +98,7 @@ class StylistBooking extends Component {
 
     const { _id } = this.props.match.params;
 
-    // Meteor.call('stylist.booking.confirmed.cancel', _id, (error) => {
+    // Meteor.call('bookings.stylist.cancel.confirmed', _id, (error) => {
     //   this.setState({ loading: false });
 
     //   if (error) {

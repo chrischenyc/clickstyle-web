@@ -197,7 +197,7 @@ class StylistBookingPage extends Component {
             </Button>
           )}
 
-          {this.props.booking.status === 'confirmed' && (
+          {this.props.booking.canBeCompleted && (
             <Button
               rounded
               color="teal"

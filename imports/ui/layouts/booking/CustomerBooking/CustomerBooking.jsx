@@ -31,7 +31,7 @@ class CustomerBooking extends Component {
 
     this.props.showLoading();
 
-    Meteor.call('customer.booking.find', _id, (error, booking) => {
+    Meteor.call('bookings.customer.findOne', _id, (error, booking) => {
       this.props.hideLoading();
 
       if (booking) {
@@ -47,7 +47,7 @@ class CustomerBooking extends Component {
 
     const { _id } = this.props.match.params;
 
-    Meteor.call('customer.booking.cancel', _id, (error) => {
+    Meteor.call('bookings.customer.cancel', _id, (error) => {
       this.setState({ loading: false });
 
       if (error) {
