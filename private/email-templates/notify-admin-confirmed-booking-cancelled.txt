@@ -1,0 +1,5 @@
+Booking {{bookingId}} was cancelled by stylist. This booking had been confirmed by stylist previously. You may want to contact the stylist.
+Review the booking: {{adminUrl}}
+
+You received this email because you are one of the admin users on {{appName}}.
+

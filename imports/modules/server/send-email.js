@@ -253,6 +253,43 @@ export const sendCustomerBookingDeclinedEmail = ({
   });
 };
 
+export const sendCustomerBookingCancelledByStylistEmail = ({
+  stylist,
+  services,
+  total,
+  firstName,
+  lastName,
+  email,
+  mobile,
+  address,
+  time,
+  bookingsId,
+  bookingUrl,
+}) => {
+  sendEmail({
+    to: email,
+    from: fromAddress,
+    subject: `Booking cancelled by ${stylist}`,
+    template: 'booking-cancelled-by-stylist-customer',
+    templateConstants: {
+      stylist,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      bookingsId,
+      bookingUrl: Meteor.absoluteUrl(bookingUrl),
+      ...templateConstants,
+    },
+  }).catch((error) => {
+    log.error(error);
+  });
+};
+
 export const sendStylistBookingRequestedEmail = ({
   stylistFirstName,
   stylistEmail,
@@ -335,6 +372,33 @@ export const sendAdminEmailContactForm = (name, email, phone, subject, message) 
           phone,
           subject,
           message,
+          ...templateConstants,
+        },
+      });
+    });
+  } catch (error) {
+    log.error(error);
+  }
+};
+
+export const sendAdminEmailConfirmedBookingCancelledByStylist = (bookingId) => {
+  const adminHost = Meteor.settings.AdminHost;
+  const adminUrl = `${adminHost}/bookings/${bookingId}`;
+
+  const adminUsers = Meteor.users
+    .find({ roles: Meteor.settings.public.roles.admin }, { fields: { emails: 1 } })
+    .fetch();
+
+  try {
+    adminUsers.forEach((adminUser) => {
+      sendEmail({
+        to: adminUser.emails[0],
+        from: fromAddress,
+        subject: `Confirmed booking ${bookingId} has been cancelled by stylist`,
+        template: 'notify-admin-confirmed-booking-cancelled',
+        templateConstants: {
+          adminUrl,
+          bookingId,
           ...templateConstants,
         },
       });

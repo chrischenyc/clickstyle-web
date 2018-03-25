@@ -11,7 +11,9 @@ import {
   sendCustomerBookingRequestedEmail,
   sendStylistBookingRequestedEmail,
   sendCustomerBookingConfirmedEmail,
-  sendCustomerBookingDeclinedEmail
+  sendCustomerBookingDeclinedEmail,
+  sendCustomerBookingCancelledByStylistEmail,
+  sendAdminEmailConfirmedBookingCancelledByStylist,
 } from '../../../modules/server/send-email';
 
 import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
@@ -583,6 +585,54 @@ Meteor.methods({
       throw exception;
     }
   },
+
+  'stylist.booking.confirmed.cancel': function stylistCancelConfirmedBooking(_id) {
+    check(_id, String);
+
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    try {
+      const booking = Bookings.findOne({ _id, stylist: this.userId });
+      if (!booking) {
+        throw new Meteor.Error(403, 'unauthorized');
+      }
+
+      // update bookings record, insert timestamp
+      Bookings.update(
+        { _id, stylist: this.userId },
+        { $set: { status: 'cancelled', stylistCancelledAt: Date.now() } },
+      );
+
+      // notify customer
+      const stylist = Stylists.findOne({ owner: this.userId });
+      const {
+        services, total, firstName, lastName, email, mobile, address, date, time,
+      } = booking;
+
+      sendCustomerBookingCancelledByStylistEmail({
+        stylist: `${stylist.name.first} ${stylist.name.last}`,
+        services: servicesSummary(services),
+        total,
+        firstName,
+        lastName,
+        email,
+        mobile,
+        address,
+        time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+        bookingsId: _id,
+        bookingUrl: `users/bookings/${_id}`,
+      });
+
+      // notify admin
+      sendAdminEmailConfirmedBookingCancelledByStylist(_id);
+    } catch (exception) {
+      log.error(exception);
+
+      throw exception;
+    }
+  },
 });
 
 rateLimit({
@@ -594,7 +644,7 @@ rateLimit({
     'customer.bookings.find',
     'stylist.bookings.find',
     'stylist.booking.pending.confirm',
-    'stylist.booking.pending.decline',
+    'stylist.booking.confirmed.cancel',
   ],
   limit: 5,
   timeRange: 1000,
