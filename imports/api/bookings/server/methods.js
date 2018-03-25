@@ -14,6 +14,7 @@ import {
   sendCustomerBookingDeclinedEmail,
   sendCustomerBookingCancelledByStylistEmail,
   sendAdminEmailConfirmedBookingCancelledByStylist,
+  sendStylistBookingCancelledByCustomerEmail,
 } from '../../../modules/server/send-email';
 
 import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
@@ -633,6 +634,54 @@ Meteor.methods({
       throw exception;
     }
   },
+
+  'customer.booking.cancel': function customerCancelBooking(_id) {
+    check(_id, String);
+
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    try {
+      const booking = Bookings.findOne({ _id, customer: this.userId });
+      if (!booking) {
+        throw new Meteor.Error(403, 'unauthorized');
+      }
+
+      // update bookings record, insert timestamp
+      Bookings.update(
+        { _id, customer: this.userId },
+        { $set: { status: 'cancelled', customerCancelledAt: Date.now() } },
+      );
+
+      // charge customer if needed
+
+      // notify stylist
+      const stylist = Profiles.findOne({ owner: booking.stylist });
+      const {
+        services, total, firstName, lastName, email, mobile, address, date, time,
+      } = booking;
+
+      sendStylistBookingCancelledByCustomerEmail({
+        stylistFirstName: stylist.name.first,
+        stylistEmail: stylist.email,
+        services: servicesSummary(services),
+        total,
+        firstName,
+        lastName,
+        email,
+        mobile,
+        address,
+        time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+        bookingsId: _id,
+        bookingUrl: `users/bookings/${_id}`,
+      });
+    } catch (exception) {
+      log.error(exception);
+
+      throw exception;
+    }
+  },
 });
 
 rateLimit({
@@ -645,6 +694,7 @@ rateLimit({
     'stylist.bookings.find',
     'stylist.booking.pending.confirm',
     'stylist.booking.confirmed.cancel',
+    'customer.booking.cancel',
   ],
   limit: 5,
   timeRange: 1000,

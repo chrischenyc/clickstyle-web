@@ -12,7 +12,11 @@ class CustomerBooking extends Component {
 
     this.state = {
       booking: null,
+      loading: false,
+      error: '',
     };
+
+    this.handleCancelBooking = this.handleCancelBooking.bind(this);
   }
 
   componentDidMount() {
@@ -38,9 +42,32 @@ class CustomerBooking extends Component {
     });
   }
 
+  handleCancelBooking() {
+    this.setState({ loading: true });
+
+    const { _id } = this.props.match.params;
+
+    Meteor.call('customer.booking.cancel', _id, (error) => {
+      this.setState({ loading: false });
+
+      if (error) {
+        this.setState({ error: error.error });
+      } else {
+        this.loadBooking(_id);
+      }
+    });
+  }
+
   render() {
     if (!_.isNil(this.state.booking)) {
-      return <CustomerBookingPage booking={this.state.booking} />;
+      return (
+        <CustomerBookingPage
+          booking={this.state.booking}
+          onCancelBooking={this.handleCancelBooking}
+          loading={this.state.loading}
+          error={this.state.error}
+        />
+      );
     }
     return '';
   }

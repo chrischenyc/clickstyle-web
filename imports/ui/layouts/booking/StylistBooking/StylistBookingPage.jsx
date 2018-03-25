@@ -155,61 +155,61 @@ class StylistBookingPage extends Component {
               {this.props.error}
             </Message>
           )}
+        </div>
 
-          {this.props.booking.status === 'pending' && (
-            <div>
-              <Button
-                rounded
-                color="teal"
-                size="large"
-                onClick={this.props.onAcceptPendingBooking}
-                loading={this.props.loading}
-              >
-                Accept Booking
-              </Button>
-              <Button
-                rounded
-                negative
-                size="large"
-                onClick={() => {
-                  this.setState({ showDeclineConfirm: true });
-                }}
-                loading={this.props.loading}
-              >
-                Decline Booking
-              </Button>
-            </div>
+        {this.props.booking.status === 'pending' && (
+          <div>
+            <Button
+              rounded
+              color="teal"
+              size="large"
+              onClick={this.props.onAcceptPendingBooking}
+              loading={this.props.loading}
+            >
+              Accept Booking
+            </Button>
+            <Button
+              rounded
+              negative
+              size="large"
+              onClick={() => {
+                this.setState({ showDeclineConfirm: true });
+              }}
+              loading={this.props.loading}
+            >
+              Decline Booking
+            </Button>
+          </div>
+        )}
+
+        <div>
+          {this.props.booking.status === 'confirmed' && (
+            <Button
+              rounded
+              negative
+              size="large"
+              onClick={() => {
+                this.setState({ showCancelConfirm: true });
+              }}
+              loading={this.props.loading}
+            >
+              Cancel Booking
+            </Button>
           )}
 
-          <div>
-            {this.props.booking.status === 'confirmed' && (
-              <Button
-                rounded
-                negative
-                size="large"
-                onClick={() => {
-                  this.setState({ showCancelConfirm: true });
-                }}
-                loading={this.props.loading}
-              >
-                Cancel Booking
-              </Button>
-            )}
-
-            {this.props.booking.status === 'confirmed' && (
-              <Button
-                rounded
-                color="teal"
-                size="large"
-                onClick={() => {
-                  this.setState({ showCompleteConfirm: true });
-                }}
-                loading={this.props.loading}
-              >
-                Complete Booking
-              </Button>
-            )}
-          </div>
+          {this.props.booking.status === 'confirmed' && (
+            <Button
+              rounded
+              color="teal"
+              size="large"
+              onClick={() => {
+                this.setState({ showCompleteConfirm: true });
+              }}
+              loading={this.props.loading}
+            >
+              Complete Booking
+            </Button>
+          )}
         </div>
       </Container>
     );

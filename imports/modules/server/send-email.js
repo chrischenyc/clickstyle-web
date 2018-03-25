@@ -328,6 +328,44 @@ export const sendStylistBookingRequestedEmail = ({
   });
 };
 
+export const sendStylistBookingCancelledByCustomerEmail = ({
+  stylistFirstName,
+  stylistEmail,
+  services,
+  total,
+  firstName,
+  lastName,
+  email,
+  mobile,
+  address,
+  time,
+  bookingsId,
+  bookingUrl,
+}) => {
+  sendEmail({
+    to: stylistEmail,
+    from: fromAddress,
+    subject: `${firstName} ${lastName} cancelled booking ${{ bookingsId }}`,
+    template: 'booking-cancelled-by-customer-stylist',
+    templateConstants: {
+      stylistFirstName,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      bookingsId,
+      bookingUrl: Meteor.absoluteUrl(bookingUrl),
+      ...templateConstants,
+    },
+  }).catch((error) => {
+    log.error(error);
+  });
+};
+
 export const sendAdminEmailStylistApplication = (applicationId) => {
   const adminHost = Meteor.settings.AdminHost;
   const adminUrl = `${adminHost}/stylists/applications/${applicationId}`;
