@@ -77,7 +77,7 @@ const BookingsSchema = new SimpleSchema({
   informedAdminOfLongPendingAt: {
     type: Date,
     optional: true,
-  }
+  },
 });
 
 Bookings.attachSchema(BookingsSchema);
