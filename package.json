@@ -26,13 +26,13 @@
     "juice": "^4.2.3",
     "lodash": "^4.17.5",
     "mailchimp-api-v3": "^1.8.0",
-    "meteor-node-stubs": "^0.3.2",
+    "meteor-node-stubs": "^0.3.3",
     "moment": "^2.22.0",
     "prop-types": "^15.6.1",
-    "query-string": "^5.1.1",
+    "query-string": "^6.0.0",
     "react": "^16.3.0",
     "react-async-script-loader": "^0.3.0",
-    "react-avatar-editor": "^10.3.0",
+    "react-avatar-editor": "^11.0.2",
     "react-burger-menu": "^2.4.1",
     "react-collapse": "^4.0.3",
     "react-day-picker": "^7.1.4",
@@ -61,7 +61,7 @@
     "eslint-config-airbnb": "^16.0.0",
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-meteor": "^4.2.0",
+    "eslint-plugin-meteor": "^4.2.1",
     "eslint-plugin-react": "^7.7.0"
   }
 }
