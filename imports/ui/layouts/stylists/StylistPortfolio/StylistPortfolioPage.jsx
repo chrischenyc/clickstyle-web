@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { UploadField } from '@navjobs/upload';
 import { Grid, Button, Container, Icon } from 'semantic-ui-react';
@@ -37,13 +37,13 @@ const StylistPortfolioPage = ({
           )}
 
           {photos.length >= Meteor.settings.public.maxPortfolioPhotos && (
-            <div>
+            <Fragment>
               <Button size="large" basic circular color="teal" disabled>
                 <Icon name="plus" />
                 upload photos
               </Button>
               <p>you can only upload {Meteor.settings.public.maxPortfolioPhotos} photos</p>
-            </div>
+            </Fragment>
           )}
         </Grid.Column>
       </Grid.Row>

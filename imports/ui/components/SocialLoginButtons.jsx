@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
@@ -7,7 +7,7 @@ import { Button } from 'semantic-ui-react';
 import { userSignedIn } from '../../modules/client/redux/user';
 
 const SocialLoginButtons = props => (
-  <div>
+  <Fragment>
     <Button
       circular
       fluid
@@ -65,7 +65,7 @@ const SocialLoginButtons = props => (
     >
       {props.isSignUp ? 'Sign up with Google' : 'Log in with Google'}
     </Button>
-  </div>
+  </Fragment>
 );
 
 SocialLoginButtons.defaultProps = {

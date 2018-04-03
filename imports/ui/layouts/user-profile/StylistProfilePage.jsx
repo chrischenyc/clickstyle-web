@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Responsive } from 'semantic-ui-react';
@@ -40,7 +40,7 @@ class UserProfilePage extends Component {
     const { profile, stylist } = this.props.user;
 
     return (
-      <div>
+      <Fragment>
         <div className="profile-header">
           {stylist.portfolioPhotos &&
             stylist.portfolioPhotos.length > 0 && (
@@ -175,7 +175,7 @@ class UserProfilePage extends Component {
             </Responsive>
           </div>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -14,7 +14,7 @@ const UserProfilePage = ({ profile }) => {
   }
 
   return (
-    <div>
+    <Fragment>
       <div className="profile-header">
         <div className="profile-header-bg" />
 
@@ -68,7 +68,7 @@ const UserProfilePage = ({ profile }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 

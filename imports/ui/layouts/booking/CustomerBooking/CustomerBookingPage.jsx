@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Container, Confirm, Button } from 'semantic-ui-react';
@@ -125,7 +125,7 @@ class CustomerBookingPage extends Component {
           </div>
         </div>
 
-        <div>
+        <Fragment>
           {(this.props.booking.status === 'confirmed' ||
             this.props.booking.status === 'pending') && (
             <Button
@@ -140,7 +140,7 @@ class CustomerBookingPage extends Component {
               Cancel Booking
             </Button>
           )}
-        </div>
+        </Fragment>
       </Container>
     );
   }

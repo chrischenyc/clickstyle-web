@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Slick from 'react-slick';
 import Lightbox from 'react-images';
@@ -50,7 +50,7 @@ class StylistPortfolioSection extends Component {
     };
 
     return (
-      <div>
+      <Fragment>
         <Slick {...slickSettings}>
           {photos.map((photo, index) => (
             <div
@@ -95,7 +95,7 @@ class StylistPortfolioSection extends Component {
             this.setState({ openLightbox: false });
           }}
         />
-      </div>
+      </Fragment>
     );
   }
 }

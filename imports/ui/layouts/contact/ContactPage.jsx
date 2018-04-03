@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Modal } from 'semantic-ui-react';
 import _ from 'lodash';
@@ -11,7 +11,7 @@ const ContactPage = props => (
     <div className="row">
       <div className="col-md-offset-2 col-md-8">
         {!props.suggestStylist && (
-          <div>
+          <Fragment>
             <p>Contact us by filling in the form below and we will get in touch with you ASAP.</p>
 
             <p>
@@ -24,11 +24,11 @@ const ContactPage = props => (
               Regards<br />
               {Meteor.settings.public.appName} Family
             </p>
-          </div>
+          </Fragment>
         )}
 
         {props.suggestStylist && (
-          <div>
+          <Fragment>
             <h3>Are we missing a stylist?</h3>
             <p>Please let us know if we are missing a stylist (TODO: copy writing)</p>
 
@@ -36,7 +36,7 @@ const ContactPage = props => (
               Regards<br />
               {Meteor.settings.public.appName} Family
             </p>
-          </div>
+          </Fragment>
         )}
 
         <section id="contact" className="margin-top-20">

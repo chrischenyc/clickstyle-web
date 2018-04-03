@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Container, Button, Message, Confirm } from 'semantic-ui-react';
@@ -158,7 +158,7 @@ class StylistBookingPage extends Component {
         </div>
 
         {this.props.booking.status === 'pending' && (
-          <div>
+          <Fragment>
             <Button
               rounded
               color="teal"
@@ -179,10 +179,10 @@ class StylistBookingPage extends Component {
             >
               Decline Booking
             </Button>
-          </div>
+          </Fragment>
         )}
 
-        <div>
+        <Fragment>
           {this.props.booking.status === 'confirmed' && (
             <Button
               rounded
@@ -210,7 +210,7 @@ class StylistBookingPage extends Component {
               Complete Booking
             </Button>
           )}
-        </div>
+        </Fragment>
       </Container>
     );
   }

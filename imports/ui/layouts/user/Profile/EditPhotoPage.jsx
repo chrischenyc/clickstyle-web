@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Confirm, Button, Message } from 'semantic-ui-react';
 import _ from 'lodash';
@@ -41,9 +41,9 @@ class EditPhotoPage extends Component {
 
     // if file selected, show photo editor UI
     return (
-      <div>
+      <Fragment>
         {file && !photoPristine ? (
-          <div>
+          <Fragment>
             <AvatarEditor
               image={file}
               width={ImageSize}
@@ -89,48 +89,46 @@ class EditPhotoPage extends Component {
               />
             </div>
 
-            <div>
-              <Button
-                circular
-                onClick={(event) => {
-                  event.preventDefault();
+            <Button
+              circular
+              onClick={(event) => {
+                event.preventDefault();
 
-                  this.setState({
-                    file: null,
-                    scale: 1.0,
-                  });
-                }}
-                disabled={photoUploading}
-              >
-                Cancel
-              </Button>
+                this.setState({
+                  file: null,
+                  scale: 1.0,
+                });
+              }}
+              disabled={photoUploading}
+            >
+              Cancel
+            </Button>
 
-              <Button
-                circular
-                color="teal"
-                onClick={(event) => {
-                  event.preventDefault();
+            <Button
+              circular
+              color="teal"
+              onClick={(event) => {
+                event.preventDefault();
 
-                  const canvas = this.editor.getImage();
+                const canvas = this.editor.getImage();
 
-                  // convert to jpeg format
-                  // rename file name to photo.jpeg
-                  canvas.toBlob(
-                    (blob) => {
-                      onPhotoUpload(blob);
-                    },
-                    'image/jpeg',
-                    1,
-                  );
-                }}
-                loading={photoUploading}
-              >
-                Save
-              </Button>
-            </div>
-          </div>
+                // convert to jpeg format
+                // rename file name to photo.jpeg
+                canvas.toBlob(
+                  (blob) => {
+                    onPhotoUpload(blob);
+                  },
+                  'image/jpeg',
+                  1,
+                );
+              }}
+              loading={photoUploading}
+            >
+              Save
+            </Button>
+          </Fragment>
         ) : (
-          <div>
+          <Fragment>
             <img src={scaledImageURL(displayPhotoUrl, 'medium')} width={ImageSize} alt="" />
 
             <p>Your photo will appear on your public profile</p>
@@ -173,11 +171,11 @@ class EditPhotoPage extends Component {
                 onPhotoRemove();
               }}
             />
-          </div>
+          </Fragment>
         )}
 
         {!_.isEmpty(photoError) && <Message error>{photoError}</Message>}
-      </div>
+      </Fragment>
     );
   }
 }

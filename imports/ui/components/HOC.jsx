@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
@@ -9,19 +9,19 @@ import Footer from './Footer';
 import SideMenu from './SideMenu';
 
 export const withHeaderAndFooter = WrappedComponent => props => (
-  <div>
+  <Fragment>
     <Header />
     <WrappedComponent {...props} />
     <Footer />
-  </div>
+  </Fragment>
 );
 
 export const withSearchHeaderAndFooter = WrappedComponent => props => (
-  <div>
+  <Fragment>
     <Header searchBar />
     <WrappedComponent {...props} />
     <Footer />
-  </div>
+  </Fragment>
 );
 
 export const withSideMenuAndHeader = WrappedComponent => props => (

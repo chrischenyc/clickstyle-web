@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import HomeSearch from './HomeSearch';
@@ -7,7 +7,7 @@ import HomeStylists from './HomeStylists';
 import HomeJoin from './HomeJoin';
 
 const HomePage = props => (
-  <div>
+  <Fragment>
     <HomeSearch />
 
     {!props.isStylistsLocationBased && <HomeServices services={props.services} />}
@@ -17,7 +17,7 @@ const HomePage = props => (
     {props.isStylistsLocationBased && <HomeServices services={props.services} />}
 
     <HomeJoin />
-  </div>
+  </Fragment>
 );
 
 HomePage.propTypes = {

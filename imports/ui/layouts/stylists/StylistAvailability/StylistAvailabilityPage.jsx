@@ -46,7 +46,7 @@ const StylistAvailableTimePage = ({
                       }}
                       disabled={!openHour.open}
                     />
-                    {!_.isEmpty(error) && <div>{error}</div>}
+                    {!_.isEmpty(error) && <span>{error}</span>}
                   </Table.Cell>
 
                   <Table.Cell>
