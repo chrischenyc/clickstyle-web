@@ -667,6 +667,9 @@ Meteor.methods({
         { $set: { status: 'cancelled', stylistCancelledAt: Date.now() } },
       );
 
+      // unblock occupied timeslots
+      Stylists.update({ owner: booking.stylist }, { $pull: { occupiedTimeSlots: { bookingId: _id } } });
+
       // notify customer
       const stylist = Stylists.findOne({ owner: this.userId });
       const {
@@ -714,6 +717,9 @@ Meteor.methods({
         { _id, customer: this.userId },
         { $set: { status: 'cancelled', customerCancelledAt: Date.now() } },
       );
+
+      // unblock occupied timeslots
+      Stylists.update({ owner: booking.stylist }, { $pull: { occupiedTimeSlots: { bookingId: _id } } });
 
       // charge customer if needed
 
