@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
 import store from '../imports/modules/client/redux/store';
-import App from '../imports/ui/layouts/App';
+import App from '../imports/ui/App';
 
 Meteor.startup(() => {
   render(
