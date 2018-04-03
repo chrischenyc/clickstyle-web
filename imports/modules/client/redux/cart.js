@@ -68,6 +68,12 @@ const calculateCount = (services) => {
 };
 
 // --------- actions ----------
+export function resetCart() {
+  return {
+    type: 'CART_RESET',
+  };
+}
+
 export function selectStylist(stylist) {
   return {
     type: 'CART_SELECT_STYLIST',
@@ -126,6 +132,10 @@ const defaultState = {
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
+    case 'CART_RESET': {
+      return { ...defaultState };
+    }
+
     case 'CART_SELECT_STYLIST': {
       const { stylist } = action;
 

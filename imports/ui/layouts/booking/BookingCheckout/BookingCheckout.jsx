@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import scriptLoader from 'react-async-script-loader';
 
-import { setUserInfo } from '../../../../modules/client/redux/cart';
+import { setUserInfo, resetCart } from '../../../../modules/client/redux/cart';
 import BookingCheckoutPage from './BookingCheckoutPage';
 import { validateBooking } from '../../../../modules/validate';
 
@@ -74,6 +74,8 @@ class BookingCheckout extends Component {
           const { bookingsId, userId } = result;
           this.setState({ loading: false });
 
+          this.props.resetCart();
+
           let url = `booking-requested/${bookingsId}`;
           if (userId) {
             url += `/${userId}`;
@@ -120,6 +122,7 @@ BookingCheckout.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   profile: PropTypes.object,
   setUserInfo: PropTypes.func.isRequired,
+  resetCart: PropTypes.func.isRequired,
   isScriptLoaded: PropTypes.bool.isRequired,
   isScriptLoadSucceed: PropTypes.bool.isRequired,
 };
@@ -130,4 +133,4 @@ const mapStateToProps = state => ({
   profile: state.user.profile,
 });
 
-export default connect(mapStateToProps, { setUserInfo })(scriptLoader('https://js.stripe.com/v3/')(BookingCheckout));
+export default connect(mapStateToProps, { setUserInfo, resetCart })(scriptLoader('https://js.stripe.com/v3/')(BookingCheckout));
