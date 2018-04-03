@@ -51,8 +51,8 @@ Meteor.methods({
       Profiles.update({ owner: this.userId }, { $set: profileToUpdate });
 
       // denormalise some data to Stylists record if it exists
-      const { name, photo, address } = profileToUpdate;
-      Stylists.update({ owner: this.userId }, { $set: { name, photo, address } });
+      const { name, address } = profileToUpdate;
+      Stylists.update({ owner: this.userId }, { $set: { name, address } });
 
       log.info(
         'Meteor.methods: profiles.update',
@@ -83,6 +83,9 @@ Meteor.methods({
       // update Profile.photo data
       Profiles.update({ owner: this.userId }, { $set: { photo: URL } });
 
+      // denormalise photo data to Stylists record if it exists
+      Stylists.update({ owner: this.userId }, { $set: { photo: URL } });
+
       log.info('Meteor.methods: profiles.photo.add', `userId: ${this.userId}`, `param: ${URL}`);
     } catch (exception) {
       log.error(exception);
@@ -105,6 +108,9 @@ Meteor.methods({
 
       // update Profile.photo data
       Profiles.update({ owner: this.userId }, { $unset: { photo: '' } });
+
+      // denormalise photo data to Stylists record if it exists
+      Stylists.update({ owner: this.userId }, { $unset: { photo: '' } });
 
       log.info('Meteor.methods: profiles.photo.remove', `userId: ${this.userId}`);
     } catch (exception) {
