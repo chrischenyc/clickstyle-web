@@ -28,6 +28,9 @@
         "specialLink": ["to", "hrefLeft", "hrefRight"],
         "aspects": ["noHref", "invalidHref", "preferButton"]
       }
-    ]
+    ],
+
+    "import/no-unresolved": ["error", { "ignore": ["^meteor/", "^/"] }],
+    "import/extensions": ["off", "never"]
   }
 }
