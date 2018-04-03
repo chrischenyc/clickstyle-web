@@ -131,7 +131,7 @@ export const sendStylistJoinConfirmEmail = (userId) => {
       to: profile.email,
       from: fromAddress,
       subject: `We received your application to become a stylist on ${appName}`,
-      template: 'stylist-applicationApproved',
+      template: 'stylist-applicationConfirmed',
       templateConstants: {
         firstName: profile.name.first,
         ...templateConstants,
