@@ -6,7 +6,7 @@ import { Container } from 'semantic-ui-react';
 import classnames from 'classnames';
 
 import scaledImageURL from '../../../../modules/scaled-image-url';
-import { dateString, parseUrlQueryDate } from '../../../../modules/format-date';
+import { dateTimeString, parseBookingDateTime } from '../../../../modules/format-date';
 import servicesSummary from '../../../../modules/format-services';
 import formatPrice from '../../../../modules/format-price';
 
@@ -52,7 +52,7 @@ const CustomerBookingsPage = ({ bookings }) => (
                             <h5>Booking Date:</h5>
                             <ul className="booking-list">
                               <li className="highlighted">
-                                {`${dateString(parseUrlQueryDate(booking.date))} - ${booking.time}`}
+                                {dateTimeString(parseBookingDateTime(booking.date + booking.time))}
                               </li>
                             </ul>
                           </div>
