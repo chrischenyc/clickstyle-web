@@ -17,7 +17,7 @@ emailTemplates.verifyEmail = {
   ...emailTemplates.resetPassword,
   html(user, url) {
     const urlWithoutHash = url.replace('#/', '');
-    return templateToHTML(getPrivateFile('email-templates/verify-email.html'), {
+    return templateToHTML(getPrivateFile('email-templates/user-verifyEmail.html'), {
       firstName: user.profile.name.first,
       verifyUrl: urlWithoutHash,
       ...templateConstants,
@@ -26,7 +26,7 @@ emailTemplates.verifyEmail = {
   text(user, url) {
     const urlWithoutHash = url.replace('#/', '');
 
-    return templateToText(getPrivateFile('email-templates/verify-email.txt'), {
+    return templateToText(getPrivateFile('email-templates/user-verifyEmail.txt'), {
       firstName: user.profile.name.first,
       verifyUrl: urlWithoutHash,
       ...templateConstants,
@@ -38,7 +38,7 @@ emailTemplates.resetPassword = {
   ...emailTemplates.resetPassword,
   html(user, url) {
     const urlWithoutHash = url.replace('#/', '');
-    return templateToHTML(getPrivateFile('email-templates/reset-password.html'), {
+    return templateToHTML(getPrivateFile('email-templates/user-resetPassword.html'), {
       firstName: user.profile.name.first,
       emailAddress: user.emails[0].address,
       resetUrl: urlWithoutHash,
@@ -48,7 +48,7 @@ emailTemplates.resetPassword = {
   text(user, url) {
     const urlWithoutHash = url.replace('#/', '');
 
-    return templateToText(getPrivateFile('email-templates/reset-password.txt'), {
+    return templateToText(getPrivateFile('email-templates/user-resetPassword.txt'), {
       firstName: user.profile.name.first,
       emailAddress: user.emails[0].address,
       resetUrl: urlWithoutHash,
@@ -61,7 +61,7 @@ emailTemplates.enrollAccount = {
   ...emailTemplates.enrollAccount,
   html(user, url) {
     const urlWithoutHash = url.replace('#/', '');
-    return templateToHTML(getPrivateFile('email-templates/enroll-account.html'), {
+    return templateToHTML(getPrivateFile('email-templates/user-enrollAccount.html'), {
       firstName: user.profile.name.first,
       enrollUrl: urlWithoutHash,
       ...templateConstants,
@@ -70,7 +70,7 @@ emailTemplates.enrollAccount = {
   text(user, url) {
     const urlWithoutHash = url.replace('#/', '');
 
-    return templateToText(getPrivateFile('email-templates/enroll-account.txt'), {
+    return templateToText(getPrivateFile('email-templates/user-enrollAccount.txt'), {
       firstName: user.profile.name.first,
       enrollUrl: urlWithoutHash,
       ...templateConstants,

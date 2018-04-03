@@ -93,7 +93,7 @@ export const sendWelcomeEmail = (userId) => {
       to: profile.email,
       from: fromAddress,
       subject: `Welcome to ${appName}!`,
-      template: 'welcome',
+      template: 'user-welcome',
       templateConstants: {
         firstName: profile.name.first,
         ...templateConstants,
@@ -112,7 +112,7 @@ export const sendPasswordChangedEmail = (userId) => {
       to: profile.email,
       from: fromAddress,
       subject: `Account alert: ${appName} password updated`,
-      template: 'password-changed',
+      template: 'user-passwordChanged',
       templateConstants: {
         firstName: profile.name.first,
         ...templateConstants,
@@ -131,7 +131,7 @@ export const sendStylistJoinConfirmEmail = (userId) => {
       to: profile.email,
       from: fromAddress,
       subject: `We received your application to become a stylist on ${appName}`,
-      template: 'stylist-join-confirm',
+      template: 'stylist-applicationApproved',
       templateConstants: {
         firstName: profile.name.first,
         ...templateConstants,
@@ -159,7 +159,7 @@ export const sendCustomerBookingRequestedEmail = ({
     to: email,
     from: fromAddress,
     subject: `Booking request sent for ${stylist}`,
-    template: 'booking-requested-customer',
+    template: 'customer-bookingRequested',
     templateConstants: {
       stylist,
       services,
@@ -196,7 +196,7 @@ export const sendCustomerBookingConfirmedEmail = ({
     to: email,
     from: fromAddress,
     subject: `Booking confirmed by ${stylist}`,
-    template: 'booking-confirmed-customer',
+    template: 'customer-bookingConfirmedByStylist',
     templateConstants: {
       stylist,
       services,
@@ -233,7 +233,7 @@ export const sendCustomerBookingDeclinedEmail = ({
     to: email,
     from: fromAddress,
     subject: `Booking declined by ${stylist}`,
-    template: 'booking-declined-customer',
+    template: 'customer-bookingDeclinedByStylist',
     templateConstants: {
       stylist,
       services,
@@ -270,7 +270,7 @@ export const sendCustomerBookingCancelledByStylistEmail = ({
     to: email,
     from: fromAddress,
     subject: `Booking cancelled by ${stylist}`,
-    template: 'booking-cancelled-by-stylist-customer',
+    template: 'customer-bookingCancelledByStylist',
     templateConstants: {
       stylist,
       services,
@@ -308,7 +308,7 @@ export const sendStylistBookingRequestedEmail = ({
     to: stylistEmail,
     from: fromAddress,
     subject: `${firstName} ${lastName} sent you a booking request`,
-    template: 'booking-requested-stylist',
+    template: 'stylist-bookingRequested',
     templateConstants: {
       stylistFirstName,
       services,
@@ -346,7 +346,7 @@ export const sendStylistBookingCancelledByCustomerEmail = ({
     to: stylistEmail,
     from: fromAddress,
     subject: `${firstName} ${lastName} cancelled booking ${{ bookingsId }}`,
-    template: 'booking-cancelled-by-customer-stylist',
+    template: 'stylist-bookingCancelledByCustomer',
     templateConstants: {
       stylistFirstName,
       services,
@@ -380,7 +380,7 @@ export const sendAdminEmailStylistApplication = (applicationId) => {
         to: adminUser.emails[0],
         from: fromAddress,
         subject: 'New stylist join application',
-        template: 'stylist-join-notify-admin',
+        template: 'admin-newStylistApplication',
         templateConstants: {
           adminUrl,
           ...templateConstants,
@@ -403,7 +403,7 @@ export const sendAdminEmailContactForm = (name, email, phone, subject, message) 
         to: adminUser.emails[0],
         from: fromAddress,
         subject: 'New contact us form submit',
-        template: 'contact-form-admin',
+        template: 'admin-contactFormSubmitted',
         templateConstants: {
           name,
           email,
@@ -433,7 +433,7 @@ export const sendAdminEmailConfirmedBookingCancelledByStylist = (bookingId) => {
         to: adminUser.emails[0],
         from: fromAddress,
         subject: `Confirmed booking ${bookingId} has been cancelled by stylist`,
-        template: 'notify-admin-confirmed-booking-cancelled',
+        template: 'admin-confirmedBookingCancelledByStylist',
         templateConstants: {
           adminUrl,
           bookingId,
