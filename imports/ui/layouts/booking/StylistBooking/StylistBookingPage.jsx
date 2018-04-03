@@ -11,6 +11,7 @@ import servicesSummary from '../../../../modules/format-services';
 import formatPrice from '../../../../modules/format-price';
 import scaledImageURL from '../../../../modules/scaled-image-url';
 import userProfileLink from '../../../../modules/user-profile-link';
+import BookingStatus from '../BookingStatus';
 
 class StylistBookingPage extends Component {
   constructor(props) {
@@ -146,6 +147,8 @@ class StylistBookingPage extends Component {
                     <li className="highlighted">{this.props.booking.address}</li>
                   </ul>
                 </div>
+
+                <BookingStatus booking={this.props.booking} />
               </div>
             </div>
           </div>
