@@ -48,7 +48,7 @@ class BookingCheckoutPage extends Component {
     }
   }
 
-  handleSubmit() {
+  async handleSubmit() {
     // 1. validate form
     const errors = this.props.onValidate();
     this.setState({ errors });
@@ -57,28 +57,25 @@ class BookingCheckoutPage extends Component {
       // 2. get Stripe token
       this.setState({ loading: true });
       if (this.props.stripe) {
-        this.props.stripe
-          .createToken()
-          .then((payload) => {
-            this.setState({
-              loading: false,
-            });
+        try {
+          const payload = await this.props.stripe.createToken();
 
-            if (_.isNil(payload.error)) {
-              // 3. inform container component to handle payment
-              this.props.onSubmit(payload);
-            } else {
-              this.setState({
-                errors: { ...this.state.errors, stripe: payload.error.message },
-              });
-            }
-          })
-          .catch((error) => {
+          this.setState({ loading: false });
+
+          if (_.isNil(payload.error)) {
+            // 3. inform container component to handle payment
+            this.props.onSubmit(payload);
+          } else {
             this.setState({
-              loading: false,
-              errors: { ...this.state.errors, stripe: error.message },
+              errors: { ...this.state.errors, stripe: payload.error.message },
             });
+          }
+        } catch (error) {
+          this.setState({
+            loading: false,
+            errors: { ...this.state.errors, stripe: error.message },
           });
+        }
       } else {
         this.setState({ errors: { ...this.state.errors, stripe: "Stripe.js hasn't loaded yet." } });
       }
