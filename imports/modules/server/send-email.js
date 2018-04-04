@@ -345,7 +345,7 @@ export const sendStylistBookingCancelledByCustomerEmail = ({
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `${firstName} ${lastName} cancelled booking ${{ bookingsId }}`,
+    subject: `${firstName} ${lastName} cancelled booking ${bookingsId}`,
     template: 'stylist-bookingCancelledByCustomer',
     templateConstants: {
       stylistFirstName,
