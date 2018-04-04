@@ -34,7 +34,7 @@ class StylistBooking extends Component {
 
     this.props.showLoading();
 
-    Meteor.call('bookings.stylist.findOne', _id, (error, booking) => {
+    Meteor.call('bookings.stylist.find', _id, (error, booking) => {
       this.props.hideLoading();
 
       if (booking) {

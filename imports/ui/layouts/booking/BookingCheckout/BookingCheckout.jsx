@@ -65,7 +65,7 @@ class BookingCheckout extends Component {
     this.setState({ loading: true });
 
     Meteor.call(
-      'bookings.create',
+      'bookings.customer.create',
       { ..._.omit(this.props.cart, ['showCartInHeader', 'count']), stripePayload },
       (error, result) => {
         if (error) {

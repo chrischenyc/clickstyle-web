@@ -27,15 +27,29 @@ class BookingRequested extends Component {
 
     this.props.showLoading();
 
-    Meteor.call('bookings.requested.find', { _id, userId }, (error, booking) => {
-      this.props.hideLoading();
+    if (userId) {
+      // guest check out
+      Meteor.call('bookings.guest.find', { _id, userId }, (error, booking) => {
+        this.props.hideLoading();
 
-      if (booking) {
-        this.setState({ booking });
-      } else {
-        this.props.history.push('/404');
-      }
-    });
+        if (booking) {
+          this.setState({ booking });
+        } else {
+          this.props.history.push('/404');
+        }
+      });
+    } else {
+      // login user check out
+      Meteor.call('bookings.customer.find', _id, (error, booking) => {
+        this.props.hideLoading();
+
+        if (booking) {
+          this.setState({ booking });
+        } else {
+          this.props.history.push('/404');
+        }
+      });
+    }
   }
 
   render() {
