@@ -33,12 +33,6 @@ const SideMenu = ({ isStylist }) => (
             <i className="im im-icon-Profile" /> Profile
           </NavLink>
         </li>
-
-        <li>
-          <NavLink to="/users/settings">
-            <i className="im im-icon-Gear" /> Settings
-          </NavLink>
-        </li>
       </ul>
 
       <ul data-submenu-title="Booking">
@@ -86,8 +80,6 @@ const SideMenu = ({ isStylist }) => (
             </NavLink>
           </li>
 
-          
-
           <li>
             <NavLink to="/users/stylist/faq">
               <i className="im im-icon-Information" /> Stylist FAQ
@@ -107,6 +99,12 @@ const SideMenu = ({ isStylist }) => (
         <li>
           <NavLink to="/faq">
             <i className="im im-icon-Information" /> FAQ
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink to="/users/settings">
+            <i className="im im-icon-Gear" /> Settings
           </NavLink>
         </li>
 

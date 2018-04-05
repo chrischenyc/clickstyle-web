@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { push as Menu } from 'react-burger-menu';
 import { connect } from 'react-redux';
@@ -44,181 +44,6 @@ const SlideMenu = props => (
         </Link>
       </li>
 
-      {!props.authenticated && (
-        <li>
-          <Link
-            to="/signup"
-            onClick={() => {
-              props.toggleSlideMenu();
-            }}
-          >
-            Sign up
-          </Link>
-        </li>
-      )}
-
-      {!props.authenticated && (
-        <li>
-          <Link
-            to="/login"
-            onClick={() => {
-              props.toggleSlideMenu();
-            }}
-          >
-            Log in
-          </Link>
-        </li>
-      )}
-      <Divider />
-
-      {props.authenticated && (
-        <li>
-          <p>Accounts</p>
-          <ul>
-            <li>
-              <Link
-                to="/users/dashboard"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Dashboard
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/users/inbox"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Inbox
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/users/profile"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/users/settings"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Settings
-              </Link>
-            </li>
-          </ul>
-        </li>
-      )}
-      {props.authenticated && <Divider />}
-
-      {props.authenticated && (
-        <li>
-          <p>Booking</p>
-          <ul>
-            <li>
-              <Link
-                to="/users/bookings"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Bookings
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/users/booking/stylists"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Favoured stylists
-              </Link>
-            </li>
-          </ul>
-        </li>
-      )}
-      {props.authenticated && <Divider />}
-
-      {props.isStylist && (
-        <li>
-          <p>Stylist</p>
-          <ul>
-            <li>
-              <Link
-                to="/users/stylist/bookings"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Customer Bookings
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/users/stylist/services"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/users/stylist/calendar"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Calendar
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/users/stylist/areas"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Areas
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/users/stylist/portfolio"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Portfolio
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/users/stylist/faq"
-                onClick={() => {
-                  props.toggleSlideMenu();
-                }}
-              >
-                Stylist FAQ
-              </Link>
-            </li>
-          </ul>
-        </li>
-      )}
-      {props.isStylist && <Divider />}
-
       <li>
         <Link
           to="/faq"
@@ -230,20 +55,200 @@ const SlideMenu = props => (
         </Link>
       </li>
 
-      <li>
-        {props.authenticated && (
-          <Link
-            to="/logout"
-            onClick={(e) => {
-              e.preventDefault();
-              Meteor.logout();
-              props.toggleSlideMenu();
-            }}
-          >
-            Logout
-          </Link>
-        )}
-      </li>
+      {!props.authenticated && (
+        <Fragment>
+          <li>
+            <Link
+              to="/signup"
+              onClick={() => {
+                props.toggleSlideMenu();
+              }}
+            >
+              Sign up
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              to="/login"
+              onClick={() => {
+                props.toggleSlideMenu();
+              }}
+            >
+              Log in
+            </Link>
+          </li>
+        </Fragment>
+      )}
+
+      <Divider />
+
+      {props.authenticated && (
+        <Fragment>
+          <li>
+            <p>Accounts</p>
+            <ul>
+              <li>
+                <Link
+                  to="/users/dashboard"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Dashboard
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/users/inbox"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Inbox
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/users/profile"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Profile
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <Divider />
+
+          <li>
+            <p>Booking</p>
+            <ul>
+              <li>
+                <Link
+                  to="/users/bookings"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Bookings
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/users/booking/stylists"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Favoured stylists
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <Divider />
+        </Fragment>
+      )}
+
+      {props.isStylist && (
+        <Fragment>
+          <li>
+            <p>Stylist</p>
+            <ul>
+              <li>
+                <Link
+                  to="/users/stylist/bookings"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Customer Bookings
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/users/stylist/services"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/users/stylist/calendar"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Calendar
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/users/stylist/areas"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Areas
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/users/stylist/portfolio"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Portfolio
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/users/stylist/faq"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Stylist FAQ
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <Divider />
+        </Fragment>
+      )}
+
+      {props.authenticated && (
+        <Fragment>
+          <li>
+            <Link
+              to="/users/settings"
+              onClick={() => {
+                props.toggleSlideMenu();
+              }}
+            >
+              Settings
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/logout"
+              onClick={(e) => {
+                e.preventDefault();
+                Meteor.logout();
+                props.toggleSlideMenu();
+              }}
+            >
+              Logout
+            </Link>
+          </li>
+        </Fragment>
+      )}
     </ul>
   </Menu>
 );

@@ -123,7 +123,7 @@ class Header extends Component {
                     <Dropdown.Item as={Link} to="/users/bookings" text="Bookings" />
                     <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
                     <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
-                    <Dropdown.Item as={Link} to="/users/settings" text="Settings" />
+
                     {isStylist && (
                       <Fragment>
                         <Dropdown.Divider />
@@ -132,9 +132,16 @@ class Header extends Component {
                           to="/users/stylist/bookings"
                           text="Customer Bookings"
                         />
+                        <Dropdown.Item as={Link} to="/users/stylist/services" text="Services" />
+                        <Dropdown.Item as={Link} to="/users/stylist/calendar" text="Calendar" />
+                        <Dropdown.Item as={Link} to="/users/stylist/areas" text="Areas" />
+                        <Dropdown.Item as={Link} to="/users/stylist/portfolio" text="Portfolio" />
+                        <Dropdown.Item as={Link} to="/users/stylist/faq" text="Stylist FAQ" />
                       </Fragment>
                     )}
+
                     <Dropdown.Divider />
+                    <Dropdown.Item as={Link} to="/users/settings" text="Settings" />
                     <Dropdown.Item
                       text="Logout"
                       onClick={() => {
