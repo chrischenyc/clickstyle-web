@@ -5,6 +5,15 @@ import { dateTimeString } from '../../../modules/format-date';
 
 const BookingStatus = props => (
   <Fragment>
+    {props.booking.createdAt && (
+      <div className="inner-booking-list">
+        <h5>Booking requested:</h5>
+        <ul className="booking-list">
+          <li className="highlighted">{dateTimeString(props.booking.createdAt)}</li>
+        </ul>
+      </div>
+    )}
+
     {props.booking.stylistConfirmedAt && (
       <div className="inner-booking-list">
         <h5>Stylist confirmed:</h5>

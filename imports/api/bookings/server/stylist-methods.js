@@ -227,6 +227,8 @@ export function stylistFindBooking(_id) {
           date: 1,
           time: 1,
           status: 1,
+          duration: 1,
+          createdAt: 1,
           stylistConfirmedAt: 1,
           stylistDeclinedAt: 1,
           stylistCancelledAt: 1,

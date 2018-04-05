@@ -93,6 +93,13 @@ class CustomerBookingPage extends Component {
                 </div>
 
                 <div className="inner-booking-list">
+                  <h5>Estimated Duration:</h5>
+                  <ul className="booking-list">
+                    <li className="highlighted">{`${this.props.booking.duration} mins`}</li>
+                  </ul>
+                </div>
+
+                <div className="inner-booking-list">
                   <h5>Total:</h5>
                   <ul className="booking-list">
                     <li className="highlighted">{formatPrice(this.props.booking.total)}</li>
