@@ -138,7 +138,7 @@ export async function customerCreateBooking(cart) {
     const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
 
     // find existing Stripe customer record, or create a new one
-    const { stripeCustomerId, stripeCardId } = Profiles.findOne({
+    const { stripeCustomerId, stripeDefaultCardId } = Profiles.findOne({
       owner: userId,
     });
 
@@ -180,9 +180,9 @@ export async function customerCreateBooking(cart) {
           { owner: userId },
           {
             $set: {
-              stripeCardId: card.id,
-              stripeCardLast4: card.last4,
-              stripeCardName: creditCardNameOnCard,
+              stripeDefaultCardId: card.id,
+              stripeDefaultCardLast4: card.last4,
+              stripeDefaultCardName: creditCardNameOnCard,
             },
           },
         );
@@ -202,6 +202,7 @@ export async function customerCreateBooking(cart) {
         date,
         time,
         stripeCustomerId: stripeCustomer.id,
+        stripeCardId: card.id,
         status: 'pending',
         duration,
       });
@@ -240,7 +241,7 @@ export async function customerCreateBooking(cart) {
       }
 
       return { bookingsId, userId };
-    } else if (stripeCustomer.default_source === stripeCardId) {
+    } else if (stripeCustomer.default_source === stripeDefaultCardId) {
       // user's existing card record is valid, create Bookings record directly
       const bookingsId = Bookings.insert({
         stylist: stylist.owner,
@@ -255,6 +256,7 @@ export async function customerCreateBooking(cart) {
         date,
         time,
         stripeCustomerId: stripeCustomer.id,
+        stripeCardId: stripeDefaultCardId,
         status: 'pending',
         duration,
       });
@@ -337,14 +339,16 @@ export async function customerCancelBooking(_id) {
           amount: cancellationFee * 100,
           currency: 'aud',
           customer: booking.stripeCustomerId,
-          description: `booking_id: ${booking._id}`,
+          source: booking.stripeCardId,
+          description: `booking cancellation: ${booking._id}`,
         });
 
         const description = `Booking cancellation fee ${customerCancellationFeeReason(booking)}`;
 
         const paymentId = Payments.insert({
           booking: booking._id,
-          amount: booking.total,
+          amount: charge.amount / 100,
+          currency: charge.currency,
           stripeChargeId: charge.id,
           status: charge.status,
           description,

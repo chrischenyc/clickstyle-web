@@ -34,6 +34,7 @@ Payments.attachBehaviour('timestampable', {
 const PaymentsSchema = new SimpleSchema({
   booking: String, // Bookings _id
   amount: Number,
+  currency: String,
   stripeChargeId: String,
   status: String,
   description: String,
