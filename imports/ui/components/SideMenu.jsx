@@ -57,6 +57,12 @@ const SideMenu = ({ isStylist }) => (
       {isStylist && (
         <ul data-submenu-title="Stylist">
           <li>
+            <NavLink to="/users/stylist/bookings">
+              <i className="im im-icon-Calendar" /> Customer Bookings
+            </NavLink>
+          </li>
+
+          <li>
             <NavLink to="/users/stylist/services">
               <i className="im im-icon-Pricing" /> Services
             </NavLink>
@@ -80,11 +86,7 @@ const SideMenu = ({ isStylist }) => (
             </NavLink>
           </li>
 
-          <li>
-            <NavLink to="/users/stylist/bookings">
-              <i className="im im-icon-Calendar" /> Customer Bookings
-            </NavLink>
-          </li>
+          
 
           <li>
             <NavLink to="/users/stylist/faq">

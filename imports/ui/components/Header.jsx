@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -42,7 +42,7 @@ class Header extends Component {
   render() {
     const { menuFixed } = this.state;
     const {
-      authenticated, firstName, fullContent, searchBar, cart,
+      authenticated, firstName, fullContent, searchBar, cart, isStylist,
     } = this.props;
 
     return (
@@ -120,10 +120,21 @@ class Header extends Component {
                 <Dropdown text={firstName || ''} className="item">
                   <Dropdown.Menu>
                     <Dropdown.Item as={Link} to="/users/dashboard" text="Dashboard" />
+                    <Dropdown.Item as={Link} to="/users/bookings" text="Bookings" />
                     <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
                     <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
                     <Dropdown.Item as={Link} to="/users/settings" text="Settings" />
-                    <Dropdown.Item as={Link} to="/users/bookings" text="Bookings" />
+                    {isStylist && (
+                      <Fragment>
+                        <Dropdown.Divider />
+                        <Dropdown.Item
+                          as={Link}
+                          to="/users/stylist/bookings"
+                          text="Customer Bookings"
+                        />
+                      </Fragment>
+                    )}
+                    <Dropdown.Divider />
                     <Dropdown.Item
                       text="Logout"
                       onClick={() => {
@@ -161,6 +172,7 @@ Header.defaultProps = {
   firstName: '',
   fullContent: true,
   searchBar: false,
+  isStylist: false,
 };
 
 Header.propTypes = {
@@ -171,12 +183,14 @@ Header.propTypes = {
   fullContent: PropTypes.bool, // if false, header links only contain user menu
   searchBar: PropTypes.bool,
   cart: PropTypes.object.isRequired,
+  isStylist: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
   firstName: state.user.profile && state.user.profile.name && state.user.profile.name.first,
   cart: state.cart,
+  isStylist: state.user.isStylist,
 });
 
 export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(Header);
