@@ -10,6 +10,7 @@ import Payments from '../../payments/payments';
 
 import {
   sendCustomerBookingRequestedEmail,
+  sendCustomerPaymentEmail,
   sendStylistBookingRequestedEmail,
   sendStylistBookingCancelledByCustomerEmail,
 } from '../../../modules/server/send-email';
@@ -17,6 +18,7 @@ import {
 import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import Stylists from '../../stylists/stylists';
+import formatPrice from '../../../modules/format-price';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
@@ -338,12 +340,24 @@ export async function customerCancelBooking(_id) {
           description: `booking_id: ${booking._id}`,
         });
 
-        Payments.insert({
+        const description = `Booking cancellation fee ${customerCancellationFeeReason(booking)}`;
+
+        const paymentId = Payments.insert({
           booking: booking._id,
           amount: booking.total,
           stripeChargeId: charge.id,
           status: charge.status,
-          description: `Booking cancellation fee ${customerCancellationFeeReason(booking)}`,
+          description,
+        });
+
+        sendCustomerPaymentEmail({
+          paymentId,
+          total: formatPrice(cancellationFee),
+          description,
+          firstName: booking.firstName,
+          email: booking.email,
+          bookingsId: booking._id,
+          bookingUrl: `users/bookings/${booking._id}`,
         });
       } catch (error) {
         log.error(`bookings.customer.cancel error: ${error}`);

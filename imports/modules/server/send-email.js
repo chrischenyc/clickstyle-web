@@ -290,6 +290,35 @@ export const sendCustomerBookingCancelledByStylistEmail = ({
   });
 };
 
+export const sendCustomerPaymentEmail = ({
+  paymentId,
+  total,
+  description,
+  firstName,
+  email,
+  bookingsId,
+  bookingUrl,
+}) => {
+  sendEmail({
+    to: email,
+    from: fromAddress,
+    subject: `Billing receipt for booking ${bookingsId}`,
+    template: 'customer-bookingPayment',
+    templateConstants: {
+      paymentId,
+      total,
+      description,
+      firstName,
+      email,
+      bookingsId,
+      bookingUrl: Meteor.absoluteUrl(bookingUrl),
+      ...templateConstants,
+    },
+  }).catch((error) => {
+    log.error(error);
+  });
+};
+
 export const sendStylistBookingRequestedEmail = ({
   stylistFirstName,
   stylistEmail,
@@ -366,7 +395,7 @@ export const sendStylistBookingCancelledByCustomerEmail = ({
   });
 };
 
-export const sendAdminEmailStylistApplication = (applicationId) => {
+export const sendAdminStylistApplicationEmail = (applicationId) => {
   const adminHost = Meteor.settings.AdminHost;
   const adminUrl = `${adminHost}/stylists/applications/${applicationId}`;
 
@@ -392,7 +421,7 @@ export const sendAdminEmailStylistApplication = (applicationId) => {
   }
 };
 
-export const sendAdminEmailContactForm = (name, email, phone, subject, message) => {
+export const sendAdminContactFormEmail = (name, email, phone, subject, message) => {
   const adminUsers = Meteor.users
     .find({ roles: Meteor.settings.public.roles.admin }, { fields: { emails: 1 } })
     .fetch();
@@ -419,7 +448,7 @@ export const sendAdminEmailContactForm = (name, email, phone, subject, message) 
   }
 };
 
-export const sendAdminEmailConfirmedBookingCancelledByStylist = (bookingId) => {
+export const sendAdminConfirmedBookingCancelledByStylistEmail = (bookingId) => {
   const adminHost = Meteor.settings.AdminHost;
   const adminUrl = `${adminHost}/bookings/${bookingId}`;
 

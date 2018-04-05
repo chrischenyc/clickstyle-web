@@ -8,7 +8,7 @@ import {
   sendCustomerBookingConfirmedEmail,
   sendCustomerBookingDeclinedEmail,
   sendCustomerBookingCancelledByStylistEmail,
-  sendAdminEmailConfirmedBookingCancelledByStylist,
+  sendAdminConfirmedBookingCancelledByStylistEmail,
 } from '../../../modules/server/send-email';
 
 import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
@@ -196,7 +196,7 @@ export function stylistCancelConfirmedBooking(_id) {
     });
 
     // notify admin
-    sendAdminEmailConfirmedBookingCancelledByStylist(_id);
+    sendAdminConfirmedBookingCancelledByStylistEmail(_id);
   } catch (exception) {
     log.error(exception);
 
