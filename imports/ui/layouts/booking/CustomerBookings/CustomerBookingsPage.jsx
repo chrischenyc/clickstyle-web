@@ -44,7 +44,7 @@ const CustomerBookingsPage = ({ bookings }) => (
                       <div className="list-box-listing-content">
                         <div className="inner">
                           <h3>
-                            {`${booking.firstName} ${booking.lastName}`}{' '}
+                            {`${booking.stylist.name.first} ${booking.stylist.name.last}`}{' '}
                             <span className="booking-status">{booking.status}</span>
                           </h3>
 
