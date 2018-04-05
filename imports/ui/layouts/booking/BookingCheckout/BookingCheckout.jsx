@@ -9,6 +9,7 @@ import scriptLoader from 'react-async-script-loader';
 import { setUserInfo, resetCart } from '../../../../modules/client/redux/cart';
 import BookingCheckoutPage from './BookingCheckoutPage';
 import { validateBooking } from '../../../../modules/validate';
+import Loading from '../../../components/Loading';
 
 class BookingCheckout extends Component {
   constructor(props) {
@@ -108,7 +109,7 @@ class BookingCheckout extends Component {
         </Elements>
       </StripeProvider>
     ) : (
-      ''
+      <Loading />
     );
   }
 }
