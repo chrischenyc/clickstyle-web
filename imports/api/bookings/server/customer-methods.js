@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { check } from 'meteor/check';
 import log from 'winston';
 import moment from 'moment';
@@ -330,7 +331,7 @@ export async function customerCancelBooking(_id) {
     const cancellationFee = customerCancellationFee(booking);
     if (cancellationFee > 0) {
       try {
-        const charge = await stripe.charge.create({
+        const charge = await stripe.charges.create({
           amount: cancellationFee * 100,
           currency: 'aud',
           customer: booking.stripeCustomerId,
