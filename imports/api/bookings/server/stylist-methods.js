@@ -15,7 +15,7 @@ import {
 import Stylists from '../../stylists/stylists';
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
-import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
+import { parseBookingDateTime, dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
 
@@ -98,7 +98,7 @@ export function stylistConfirmPendingBooking(_id) {
       email,
       mobile,
       address,
-      time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+      time: dateTimeString(parseBookingDateTime(date + time)),
       bookingsId: _id,
       bookingUrl: `users/bookings/${_id}`,
     });
@@ -142,7 +142,7 @@ export function stylistDeclinePendingBooking(_id) {
       email,
       mobile,
       address,
-      time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+      time: dateTimeString(parseBookingDateTime(date + time)),
       bookingsId: _id,
       bookingUrl: `users/bookings/${_id}`,
     });
@@ -193,7 +193,7 @@ export function stylistCancelConfirmedBooking(_id) {
       email,
       mobile,
       address,
-      time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+      time: dateTimeString(parseBookingDateTime(date + time)),
       bookingsId: _id,
       bookingUrl: `users/bookings/${_id}`,
     });
@@ -227,7 +227,7 @@ export async function stylistCompleteConfirmedBooking(_id) {
     );
 
     // notify customer
-    const stylist = Stylists.findOne({ owner: this.userId });
+    const stylist = Profiles.findOne({ owner: this.userId });
     const {
       services, total, firstName, lastName, email, mobile, address, date, time,
     } = booking;
@@ -241,7 +241,7 @@ export async function stylistCompleteConfirmedBooking(_id) {
       email,
       mobile,
       address,
-      time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+      time: dateTimeString(parseBookingDateTime(date + time)),
       bookingsId: _id,
       bookingUrl: `users/bookings/${_id}`,
     });
@@ -257,9 +257,9 @@ export async function stylistCompleteConfirmedBooking(_id) {
       email,
       mobile,
       address,
-      time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+      time: dateTimeString(parseBookingDateTime(date + time)),
       bookingsId: _id,
-      bookingUrl: `users/bookings/${_id}`,
+      bookingUrl: `users/stylist/bookings/${_id}`,
     });
 
     // charge customer

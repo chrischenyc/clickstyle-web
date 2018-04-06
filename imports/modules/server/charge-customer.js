@@ -28,7 +28,7 @@ export default async function chargeCustomer(booking, amount, stripeDescription,
 
     sendCustomerPaymentEmail({
       paymentId,
-      total: formatPrice(charge.amount),
+      total: formatPrice(charge.amount / 100),
       description,
       firstName: booking.firstName,
       email: booking.email,

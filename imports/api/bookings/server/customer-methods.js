@@ -12,7 +12,7 @@ import {
   sendStylistBookingRequestedEmail,
   sendStylistBookingCancelledByCustomerEmail,
 } from '../../../modules/server/send-email';
-import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
+import { parseBookingDateTime, dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
 
@@ -212,7 +212,7 @@ export async function customerCreateBooking(cart) {
         email,
         mobile,
         address,
-        time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+        time: dateTimeString(parseBookingDateTime(date + time)),
         bookingsId,
         bookingUrl: `users/bookings/${bookingsId}`,
       });
@@ -227,7 +227,7 @@ export async function customerCreateBooking(cart) {
         email,
         mobile,
         address,
-        time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+        time: dateTimeString(parseBookingDateTime(date + time)),
         bookingsId,
         bookingUrl: `users/stylist/bookings/${bookingsId}`,
       });
@@ -266,7 +266,7 @@ export async function customerCreateBooking(cart) {
         email,
         mobile,
         address,
-        time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+        time: dateTimeString(parseBookingDateTime(date + time)),
         bookingsId,
         bookingUrl: `users/bookings/${bookingsId}`,
       });
@@ -281,7 +281,7 @@ export async function customerCreateBooking(cart) {
         email,
         mobile,
         address,
-        time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+        time: dateTimeString(parseBookingDateTime(date + time)),
         bookingsId,
         bookingUrl: `users/stylist/bookings/${bookingsId}`,
       });
@@ -354,9 +354,9 @@ export async function customerCancelBooking(_id) {
       email,
       mobile,
       address,
-      time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+      time: dateTimeString(parseBookingDateTime(date + time)),
       bookingsId: _id,
-      bookingUrl: `users/bookings/${_id}`,
+      bookingUrl: `users/stylist/bookings/${_id}`,
     });
   } catch (exception) {
     log.error(exception);
