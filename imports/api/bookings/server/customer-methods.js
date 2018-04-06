@@ -6,19 +6,15 @@ import moment from 'moment';
 
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
-import Payments from '../../payments/payments';
-
+import Stylists from '../../stylists/stylists';
 import {
   sendCustomerBookingRequestedEmail,
-  sendCustomerPaymentEmail,
   sendStylistBookingRequestedEmail,
   sendStylistBookingCancelledByCustomerEmail,
 } from '../../../modules/server/send-email';
-
 import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
-import Stylists from '../../stylists/stylists';
-import formatPrice from '../../../modules/format-price';
+import chargeCustomer from '../../../modules/server/charge-customer';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
@@ -334,38 +330,12 @@ export async function customerCancelBooking(_id) {
     // charge customer if needed
     const cancellationFee = customerCancellationFee(booking);
     if (cancellationFee > 0) {
-      try {
-        const charge = await stripe.charges.create({
-          amount: cancellationFee * 100,
-          currency: 'aud',
-          customer: booking.stripeCustomerId,
-          source: booking.stripeCardId,
-          description: `booking cancellation: ${booking._id}`,
-        });
-
-        const description = `Booking cancellation fee ${customerCancellationFeeReason(booking)}`;
-
-        const paymentId = Payments.insert({
-          booking: booking._id,
-          amount: charge.amount / 100,
-          currency: charge.currency,
-          stripeChargeId: charge.id,
-          status: charge.status,
-          description,
-        });
-
-        sendCustomerPaymentEmail({
-          paymentId,
-          total: formatPrice(cancellationFee),
-          description,
-          firstName: booking.firstName,
-          email: booking.email,
-          bookingsId: booking._id,
-          bookingUrl: `users/bookings/${booking._id}`,
-        });
-      } catch (error) {
-        log.error(`bookings.customer.cancel error: ${error}`);
-      }
+      chargeCustomer(
+        booking,
+        cancellationFee,
+        `booking cancelled: ${booking._id}`,
+        `Booking cancellation fee ${customerCancellationFeeReason(booking)}`,
+      );
     }
 
     // notify stylist

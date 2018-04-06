@@ -98,15 +98,15 @@ class StylistBooking extends Component {
 
     const { _id } = this.props.match.params;
 
-    // Meteor.call('bookings.stylist.cancel.confirmed', _id, (error) => {
-    //   this.setState({ loading: false });
+    Meteor.call('bookings.stylist.complete.confirmed', _id, (error) => {
+      this.setState({ loading: false });
 
-    //   if (error) {
-    //     this.setState({ error: error.error });
-    //   } else {
-    //     this.loadBooking(_id);
-    //   }
-    // });
+      if (error) {
+        this.setState({ error: error.error });
+      } else {
+        this.loadBooking(_id);
+      }
+    });
   }
 
   render() {

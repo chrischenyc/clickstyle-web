@@ -53,7 +53,7 @@ class StylistBookingPage extends Component {
 
         <Confirm
           open={this.state.showCompleteConfirm}
-          content="You are supposed to complete the booking only after you have fulfilled the booked service(s). Continue?"
+          content="You are supposed to complete the booking only after you have fulfilled the booked services. Customer will be charged once you complete this booking. Continue?"
           onCancel={() => {
             this.setState({ showCompleteConfirm: false });
           }}

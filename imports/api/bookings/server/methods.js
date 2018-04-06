@@ -13,6 +13,7 @@ import {
   stylistConfirmPendingBooking,
   stylistDeclinePendingBooking,
   stylistCancelConfirmedBooking,
+  stylistCompleteConfirmedBooking,
   stylistFindBooking,
   stylistListBookings,
 } from './stylist-methods';
@@ -28,6 +29,7 @@ Meteor.methods({
   'bookings.stylist.confirm.pending': stylistConfirmPendingBooking,
   'bookings.stylist.decline.pending': stylistDeclinePendingBooking,
   'bookings.stylist.cancel.confirmed': stylistCancelConfirmedBooking,
+  'bookings.stylist.complete.confirmed': stylistCompleteConfirmedBooking,
 });
 
 rateLimit({
@@ -42,6 +44,7 @@ rateLimit({
     'bookings.stylist.confirm.pending',
     'bookings.stylist.decline.pending',
     'bookings.stylist.cancel.confirmed',
+    'bookings.stylist.complete.confirmed',
   ],
   limit: 5,
   timeRange: 1000,

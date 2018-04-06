@@ -3,18 +3,21 @@ import { check } from 'meteor/check';
 import log from 'winston';
 import moment from 'moment';
 
-import Bookings from '../bookings';
 import {
   sendCustomerBookingConfirmedEmail,
   sendCustomerBookingDeclinedEmail,
   sendCustomerBookingCancelledByStylistEmail,
+  sendCustomerBookingCompletedEmail,
+  sendStylistBookingCompletedEmail,
   sendAdminConfirmedBookingCancelledByStylistEmail,
 } from '../../../modules/server/send-email';
 
-import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
-import servicesSummary from '../../../modules/format-services';
 import Stylists from '../../stylists/stylists';
 import Profiles from '../../profiles/profiles';
+import Bookings from '../bookings';
+import { parseUrlQueryDate, dateString, parseBookingDateTime } from '../../../modules/format-date';
+import servicesSummary from '../../../modules/format-services';
+import chargeCustomer from '../../../modules/server/charge-customer';
 
 const canStylistCompleteBooking = (booking) => {
   if (booking.status !== 'confirmed') {
@@ -197,6 +200,75 @@ export function stylistCancelConfirmedBooking(_id) {
 
     // notify admin
     sendAdminConfirmedBookingCancelledByStylistEmail(_id);
+  } catch (exception) {
+    log.error(exception);
+
+    throw exception;
+  }
+}
+
+export async function stylistCompleteConfirmedBooking(_id) {
+  check(_id, String);
+
+  if (!this.userId) {
+    throw new Meteor.Error(403, 'unauthorized');
+  }
+
+  try {
+    const booking = Bookings.findOne({ _id, stylist: this.userId });
+    if (!booking) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    // update bookings record, insert timestamp
+    Bookings.update(
+      { _id, stylist: this.userId },
+      { $set: { status: 'completed', stylistCompletedAt: Date.now() } },
+    );
+
+    // notify customer
+    const stylist = Stylists.findOne({ owner: this.userId });
+    const {
+      services, total, firstName, lastName, email, mobile, address, date, time,
+    } = booking;
+
+    sendCustomerBookingCompletedEmail({
+      stylist: `${stylist.name.first} ${stylist.name.last}`,
+      services: servicesSummary(services),
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+      bookingsId: _id,
+      bookingUrl: `users/bookings/${_id}`,
+    });
+
+    // notify stylist
+    sendStylistBookingCompletedEmail({
+      stylistFirstName: stylist.name.first,
+      stylistEmail: stylist.email,
+      services: servicesSummary(services),
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time: `${dateString(parseUrlQueryDate(date))} ${time}`,
+      bookingsId: _id,
+      bookingUrl: `users/bookings/${_id}`,
+    });
+
+    // charge customer
+    chargeCustomer(
+      booking,
+      booking.total,
+      `booking completed: ${booking._id}`,
+      `Booking completed with total charge ${booking.total}`,
+    );
   } catch (exception) {
     log.error(exception);
 
