@@ -5,10 +5,12 @@ import HomeSearch from './HomeSearch';
 import HomeServices from './HomeServices';
 import HomeStylists from './HomeStylists';
 import HomeJoin from './HomeJoin';
+import HomeHowItWorks from './HomeHowItWorks';
 
 const HomePage = props => (
   <Fragment>
     <HomeSearch />
+    <HomeHowItWorks />
 
     {!props.isStylistsLocationBased && <HomeServices services={props.services} />}
 
