@@ -119,6 +119,16 @@ const SlideMenu = props => (
                   Profile
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/users/payment-methods"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Payment methods
+                </Link>
+              </li>
             </ul>
           </li>
           <Divider />

@@ -33,6 +33,12 @@ const SideMenu = ({ isStylist }) => (
             <i className="im im-icon-Profile" /> Profile
           </NavLink>
         </li>
+
+        <li>
+          <NavLink to="/users/payment-methods">
+            <i className="im im-icon-Credit-Card" /> Payment methods
+          </NavLink>
+        </li>
       </ul>
 
       <ul data-submenu-title="Booking">

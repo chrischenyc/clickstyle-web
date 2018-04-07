@@ -33,6 +33,7 @@ import EditProfile from './layouts/user/Profile/EditProfile';
 import SettingsPage from './layouts/user/SettingsPage';
 import ChangePassword from './layouts/user/ChangePassword/ChangePassword';
 import InboxPage from './layouts/user/InboxPage';
+import PaymentMethods from './layouts/user/PaymentMethods/PaymentMethods';
 
 import FavouredStylists from './layouts/user/FavouredStylists/FavouredStylists';
 
@@ -79,6 +80,7 @@ export default () => (
     <SecureRoute path="/users/dashboard" component={withSideMenuAndHeader(Dashboard)} />
     <SecureRoute path="/users/profile" component={withSideMenuAndHeader(EditProfile)} />
     <SecureRoute path="/users/inbox" component={withSideMenuAndHeader(InboxPage)} />
+    <SecureRoute path="/users/payment-methods" component={withSideMenuAndHeader(PaymentMethods)} />
     <SecureRoute path="/users/settings" component={withSideMenuAndHeader(SettingsPage)} />
     <SecureRoute path="/users/change-password" component={withSideMenuAndHeader(ChangePassword)} />
     <SecureRoute path="/users/reset-password" component={withSideMenuAndHeader(ForgotPassword)} />

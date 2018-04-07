@@ -184,10 +184,60 @@ Meteor.methods({
       throw exception;
     }
   },
+
+  'profiles.savedCards': function getSavedCards() {
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    const cards = [];
+
+    const { stripeDefaultCardId, stripeDefaultCardLast4, stripeDefaultCardName } = Profiles.findOne({ owner: this.userId });
+
+    if (stripeDefaultCardId && stripeDefaultCardLast4 && stripeDefaultCardName) {
+      cards.push({
+        id: stripeDefaultCardId,
+        last4: stripeDefaultCardLast4,
+        name: stripeDefaultCardName,
+      });
+    }
+
+    return cards;
+  },
+
+  'profiles.remove.savedCard': function removeSavedCard(id) {
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(id, String);
+
+    const { stripeDefaultCardId } = Profiles.findOne({ owner: this.userId });
+
+    if (stripeDefaultCardId === id) {
+      Profiles.update(
+        { owner: this.userId },
+        {
+          $unset: {
+            stripeDefaultCardId: '',
+            stripeDefaultCardLast4: '',
+            stripeDefaultCardName: '',
+          },
+        },
+      );
+    }
+  },
 });
 
 rateLimit({
-  methods: ['profiles.update', 'profiles.photo.add', 'profiles.photo.remove', 'users.profile'],
+  methods: [
+    'profiles.update',
+    'profiles.photo.add',
+    'profiles.photo.remove',
+    'users.profile',
+    'profiles.savedCards',
+    'profiles.remove.savedCard',
+  ],
   limit: 5,
   timeRange: 1000,
 });

@@ -123,6 +123,7 @@ class Header extends Component {
                     <Dropdown.Item as={Link} to="/users/bookings" text="Bookings" />
                     <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
                     <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
+                    <Dropdown.Item as={Link} to="/users/payment-methods" text="Payment methods" />
 
                     {isStylist && (
                       <Fragment>
