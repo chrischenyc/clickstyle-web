@@ -191,7 +191,15 @@ export const validateStylistOpenHours = (openHours) => {
 
 export const validateBooking = (cart) => {
   const {
-    email, firstName, lastName, mobile, address, date, time, creditCardNameOnCard,
+    email,
+    firstName,
+    lastName,
+    mobile,
+    address,
+    date,
+    time,
+    creditCardNameOnCard,
+    useSavedCard,
   } = cart;
 
   const errors = {};
@@ -210,8 +218,12 @@ export const validateBooking = (cart) => {
     errors.mobile = 'Invalid mobile number';
   } else if (validator.isEmpty(address)) {
     errors.address = 'Address is required';
-  } else if (validator.isEmpty(creditCardNameOnCard)) {
+  } else if (!useSavedCard && validator.isEmpty(creditCardNameOnCard)) {
     errors.creditCardNameOnCard = 'Name on Card is required';
+  } else if (validator.isEmpty(date)) {
+    errors.creditCardNameOnCard = 'Booking date is required';
+  } else if (validator.isEmpty(time)) {
+    errors.creditCardNameOnCard = 'Booking time is required';
   }
 
   return errors;

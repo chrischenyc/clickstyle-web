@@ -27,18 +27,40 @@ class BookingCheckout extends Component {
 
     // load user info into cart if logged in
     if (props.authenticated && _.isEmpty(props.cart.email)) {
+      const savedCardInfo =
+        (props.profile &&
+          props.profile.stripeDefaultCardId &&
+          props.profile.stripeDefaultCardLast4 &&
+          props.profile.stripeDefaultCardName &&
+          `${props.profile.stripeDefaultCardName} xxxx xxxx xxxx ${
+            props.profile.stripeDefaultCardLast4
+          }`) ||
+        '';
+
       props.setUserInfo({
         firstName: (props.profile && props.profile.name && props.profile.name.first) || '',
         lastName: (props.profile && props.profile.name && props.profile.name.last) || '',
         email: (props.profile && props.profile.email) || '',
         mobile: (props.profile && props.profile.mobile) || '',
         address: (props.profile && props.profile.address && props.profile.address.raw) || '',
+        savedCardInfo,
+        useSavedCard: !_.isEmpty(savedCardInfo),
       });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(this.props.profile, nextProps.profile)) {
+      const savedCardInfo =
+        (nextProps.profile &&
+          nextProps.profile.stripeDefaultCardId &&
+          nextProps.profile.stripeDefaultCardLast4 &&
+          nextProps.profile.stripeDefaultCardName &&
+          `${nextProps.profile.stripeDefaultCardName} xxxx xxxx xxxx ${
+            nextProps.profile.stripeDefaultCardLast4
+          }`) ||
+        '';
+
       this.props.setUserInfo({
         firstName:
           (nextProps.profile && nextProps.profile.name && nextProps.profile.name.first) || '',
@@ -48,12 +70,18 @@ class BookingCheckout extends Component {
         mobile: (nextProps.profile && nextProps.profile.mobile) || '',
         address:
           (nextProps.profile && nextProps.profile.address && nextProps.profile.address.raw) || '',
+        savedCardInfo,
+        useSavedCard: !_.isEmpty(savedCardInfo),
       });
     }
   }
 
   handleChange(event) {
-    this.props.setUserInfo({ [event.target.name]: event.target.value });
+    if (event.target.name === 'cardType') {
+      this.props.setUserInfo({ useSavedCard: event.target.value === 'savedCard' });
+    } else {
+      this.props.setUserInfo({ [event.target.name]: event.target.value });
+    }
   }
 
   handleValidate() {

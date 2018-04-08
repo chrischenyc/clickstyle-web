@@ -81,21 +81,7 @@ const customerCancellationFeeReason = (booking) => {
 };
 
 export async function customerCreateBooking(cart) {
-  check(cart, {
-    stylist: Object,
-    services: Array,
-    total: Number,
-    firstName: String,
-    lastName: String,
-    email: String,
-    mobile: String,
-    address: String,
-    date: String,
-    time: String,
-    creditCardNameOnCard: String,
-    creditCardSaveCard: Boolean,
-    stripePayload: Object,
-  });
+  check(cart, Object);
 
   try {
     const {
@@ -111,6 +97,7 @@ export async function customerCreateBooking(cart) {
       creditCardNameOnCard,
       creditCardSaveCard,
       stripePayload,
+      useSavedCard
     } = cart;
 
     let { userId } = this;

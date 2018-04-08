@@ -49,35 +49,42 @@ class BookingCheckoutPage extends Component {
   }
 
   async handleSubmit() {
-    // 1. validate form
+    // validate form
     const errors = this.props.onValidate();
     this.setState({ errors });
 
     if (_.isEmpty(errors)) {
-      // 2. get Stripe token
       this.setState({ loading: true });
-      if (this.props.stripe) {
-        try {
-          const payload = await this.props.stripe.createToken();
 
-          this.setState({ loading: false });
+      if (!this.props.cart.useSavedCard) {
+        // get Stripe token for new card then submit
+        if (this.props.stripe) {
+          try {
+            const payload = await this.props.stripe.createToken();
 
-          if (_.isNil(payload.error)) {
-            // 3. inform container component to handle payment
-            this.props.onSubmit(payload);
-          } else {
+            this.setState({ loading: false });
+
+            if (_.isNil(payload.error)) {
+              // 3. inform container component to handle payment
+              this.props.onSubmit(payload);
+            } else {
+              this.setState({
+                errors: { ...this.state.errors, stripe: payload.error.message },
+              });
+            }
+          } catch (error) {
             this.setState({
-              errors: { ...this.state.errors, stripe: payload.error.message },
+              loading: false,
+              errors: { ...this.state.errors, stripe: error.message },
             });
           }
-        } catch (error) {
+        } else {
           this.setState({
-            loading: false,
-            errors: { ...this.state.errors, stripe: error.message },
+            errors: { ...this.state.errors, stripe: "Stripe.js hasn't loaded yet." },
           });
         }
       } else {
-        this.setState({ errors: { ...this.state.errors, stripe: "Stripe.js hasn't loaded yet." } });
+        this.props.onSubmit();
       }
     }
   }
@@ -190,21 +197,47 @@ class BookingCheckoutPage extends Component {
               <h3 className="margin-top-55 margin-bottom-30">Payment Method</h3>
 
               <div className="payment">
-                <p>You will only be charged after service is complete.</p>
+                {/* saved credit card */}
+                {this.props.cart.savedCardInfo && (
+                  <div
+                    className={classNames('payment-tab', {
+                      'payment-tab-active': this.props.cart.useSavedCard,
+                    })}
+                  >
+                    <div className="payment-tab-trigger">
+                      <input
+                        defaultChecked={this.props.cart.useSavedCard}
+                        id="savedCard"
+                        name="cardType"
+                        type="radio"
+                        value="savedCard"
+                        onChange={this.props.onChange}
+                      />
+                      <label htmlFor="savedCard">Saved Card</label>
+                    </div>
 
-                <div className="payment-tab payment-tab-active">
+                    <div className="payment-tab-content">
+                      <p>{this.props.cart.savedCardInfo}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* new credit card */}
+                <div
+                  className={classNames('payment-tab', {
+                    'payment-tab-active': !this.props.cart.useSavedCard,
+                  })}
+                >
                   <div className="payment-tab-trigger">
                     <input
-                      checked
-                      disabled
+                      defaultChecked={!this.props.cart.useSavedCard}
                       type="radio"
                       name="cardType"
-                      id="creditCart"
-                      value="creditCard"
+                      id="newCard"
+                      value="newCard"
+                      onChange={this.props.onChange}
                     />
-                    <label htmlFor="creditCart">Credit / Debit Card</label>
-                    {/* TODO: host card logo png on CDN */}
-                    <img className="payment-logo" src="https://i.imgur.com/IHEKLgm.png" alt="" />
+                    <label htmlFor="newCard">Credit / Debit Card</label>
                   </div>
 
                   <div className="payment-tab-content">
@@ -263,6 +296,8 @@ class BookingCheckoutPage extends Component {
               </div>
 
               <div className="margin-top-20">
+                <p>* You will only be charged after booked service is completed.</p>
+
                 <FormFieldErrorMessage
                   className="margin-bottom-10"
                   compact={false}
