@@ -12,7 +12,7 @@
     "start": "meteor run",
     "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001",
 
-    "predeploy": "heroku config:add METEOR_SETTINGS='$(cat settings-production.json)'",
+    "predeploy": "heroku config:add METEOR_SETTINGS=\"$(cat settings-production.json)\"",
     "deploy": "git push heroku master",
 
     "cloc": "cloc imports client server private --exclude-ext=json"
