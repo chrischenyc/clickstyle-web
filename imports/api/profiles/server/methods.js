@@ -119,7 +119,7 @@ Meteor.methods({
     }
   },
 
-  'users.profile': function usersProfile(owner) {
+  'profiles.find.user': function usersProfile(owner) {
     check(owner, String);
 
     try {
@@ -227,6 +227,20 @@ Meteor.methods({
       );
     }
   },
+
+  'profiles.self': function profilesOwner() {
+    if (!this.userId) {
+      return null;
+    }
+
+    return Profiles.findOne(
+      { owner: this.userId },
+      {
+        // hide fields in the return
+        fields: { createdAt: 0, updatedAt: 0 },
+      },
+    );
+  },
 });
 
 rateLimit({
@@ -234,9 +248,10 @@ rateLimit({
     'profiles.update',
     'profiles.photo.add',
     'profiles.photo.remove',
-    'users.profile',
+    'profiles.find.user',
     'profiles.savedCards',
     'profiles.remove.savedCard',
+    'profiles.self',
   ],
   limit: 5,
   timeRange: 1000,

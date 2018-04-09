@@ -39,7 +39,7 @@ class UserProfile extends Component {
     }
 
     this.props.showLoading();
-    Meteor.call('users.profile', _id, (error, user) => {
+    Meteor.call('profiles.find.user', _id, (error, user) => {
       this.props.hideLoading();
       if (user) {
         if (_.isNil(user.profile)) {

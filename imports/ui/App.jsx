@@ -32,7 +32,7 @@ class App extends Component {
           this.props.userSignedIn(user);
 
           // get user profile
-          Meteor.subscribe('profiles.owner');
+          Meteor.subscribe('profiles.self');
           const profile = Profiles.findOne({});
           if (profile) {
             this.props.userProfileFetched(profile);

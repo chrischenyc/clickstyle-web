@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Profiles from '../profiles';
 
-Meteor.publish('profiles.owner', function profilesOwner() {
+Meteor.publish('profiles.self', function profilesOwner() {
   if (!this.userId) {
     return null;
   }
