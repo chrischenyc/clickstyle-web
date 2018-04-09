@@ -140,13 +140,6 @@ class StylistBookingPage extends Component {
                 </div>
 
                 <div className="inner-booking-list">
-                  <h5>Customer mobile:</h5>
-                  <ul className="booking-list">
-                    <li className="highlighted">{this.props.booking.mobile}</li>
-                  </ul>
-                </div>
-
-                <div className="inner-booking-list">
                   <h5>Customer address:</h5>
                   <ul className="booking-list">
                     <li className="highlighted">{this.props.booking.address}</li>

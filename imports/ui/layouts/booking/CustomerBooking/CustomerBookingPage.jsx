@@ -107,18 +107,11 @@ class CustomerBookingPage extends Component {
                 </div>
 
                 <div className="inner-booking-list">
-                  <h5>Customer name:</h5>
+                  <h5>Customer:</h5>
                   <ul className="booking-list">
                     <li className="highlighted">
                       {`${this.props.booking.firstName} ${this.props.booking.lastName}`}
                     </li>
-                  </ul>
-                </div>
-
-                <div className="inner-booking-list">
-                  <h5>Customer mobile:</h5>
-                  <ul className="booking-list">
-                    <li className="highlighted">{this.props.booking.mobile}</li>
                   </ul>
                 </div>
 

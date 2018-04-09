@@ -1,4 +1,4 @@
-Hi {{stylistFirsName}},
+Hi {{stylistFirstName}},
 
 {{firstName}} {{lastName}} has requested a booking, please response within TBD...
 

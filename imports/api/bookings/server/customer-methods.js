@@ -7,6 +7,7 @@ import moment from 'moment';
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
 import Stylists from '../../stylists/stylists';
+import Payments from '../../payments/payments';
 import {
   sendCustomerBookingRequestedEmail,
   sendStylistBookingRequestedEmail,
@@ -324,11 +325,8 @@ export function customerFindBooking(_id) {
           stylist: 1,
           services: 1,
           total: 1,
-          customer: 1,
           firstName: 1,
           lastName: 1,
-          email: 1,
-          mobile: 1,
           address: 1,
           date: 1,
           time: 1,
@@ -345,11 +343,26 @@ export function customerFindBooking(_id) {
       },
     );
 
-    const stylist = Profiles.findOne({ owner: booking.stylist });
+    const stylist = Profiles.findOne(
+      { owner: booking.stylist },
+      { fields: { owner: 1, name: 1, photo: 1 } },
+    );
+    const payments = Payments.find(
+      { booking: booking._id },
+      {
+        fields: {
+          amount: 1,
+          createdAt: 1,
+          description: 1,
+          status: 1,
+        },
+      },
+    ).fetch();
 
     return {
       ...booking,
       stylist,
+      payments,
       cancellationFee: customerCancellationFee(booking),
       cancellationFeeReason: customerCancellationFeeReason(booking),
     };

@@ -1,4 +1,4 @@
-Hi {{stylistFirsName}},
+Hi {{stylistFirstName}},
 
 Well done, you've just confirmed the booked services have been delivered.
 

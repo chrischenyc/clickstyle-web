@@ -1,4 +1,4 @@
-Hi {{stylistFirsName}},
+Hi {{stylistFirstName}},
 
 Unfortunately, {{firstName}} {{lastName}} has cancelled following booking:
 

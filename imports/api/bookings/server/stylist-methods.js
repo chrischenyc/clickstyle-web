@@ -15,6 +15,7 @@ import {
 import Stylists from '../../stylists/stylists';
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
+import Payments from '../../payments/payments';
 import { parseBookingDateTime, dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
@@ -293,8 +294,6 @@ export function stylistFindBooking(_id) {
           customer: 1,
           firstName: 1,
           lastName: 1,
-          email: 1,
-          mobile: 1,
           address: 1,
           date: 1,
           time: 1,
@@ -311,9 +310,28 @@ export function stylistFindBooking(_id) {
       },
     );
 
-    const customer = Profiles.findOne({ owner: booking.customer });
+    const customer = Profiles.findOne(
+      { owner: booking.customer },
+      { fields: { owner: 1, name: 1, photo: 1 } },
+    );
+    const payments = Payments.find(
+      { booking: booking._id },
+      {
+        fields: {
+          amount: 1,
+          createdAt: 1,
+          description: 1,
+          status: 1,
+        },
+      },
+    ).fetch();
 
-    return { ...booking, customer, canBeCompleted: canStylistCompleteBooking(booking) };
+    return {
+      ...booking,
+      customer,
+      payments,
+      canBeCompleted: canStylistCompleteBooking(booking),
+    };
   } catch (exception) {
     log.error(exception);
     throw exception;

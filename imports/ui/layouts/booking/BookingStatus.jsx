@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { dateTimeString } from '../../../modules/format-date';
+import formatPrice from '../../../modules/format-price';
 
 const BookingStatus = props => (
   <Fragment>
@@ -67,6 +68,19 @@ const BookingStatus = props => (
         </ul>
       </div>
     )}
+
+    {props.booking.payments.map(payment => (
+      <div className="inner-booking-list" key={payment._id}>
+        <h5>Payment:</h5>
+        <ul className="booking-list">
+          <li className="highlighted">
+            {`${dateTimeString(payment.createdAt)} - ${formatPrice(payment.amount)} (${
+              payment.description
+            })`}
+          </li>
+        </ul>
+      </div>
+    ))}
   </Fragment>
 );
 
