@@ -48,37 +48,33 @@ const calculateTotalDuration = (services) => {
   return total;
 };
 
+/**
+ * return {fee: Number, description: String}
+ * @param {Bookings object} booking
+ */
 const customerCancellationFee = (booking) => {
   if (booking.status !== 'confirmed') {
-    return 0;
+    return { fee: 0, description: 'free cancellation 12 hours prior booking time' };
   }
 
   const now = moment();
-  const prior24Hours = parseBookingDateTime(booking.date + booking.time).subtract(1, 'days');
-  const prior4Hours = parseBookingDateTime(booking.date + booking.time).subtract(4, 'hours');
-  if (now.isBefore(prior24Hours)) {
-    return 0;
-  } else if (now.isBefore(prior4Hours)) {
-    return booking.total * 0.5;
-  }
-  return booking.total;
-};
-
-const customerCancellationFeeReason = (booking) => {
-  if (booking.status !== 'confirmed') {
-    return '';
-  }
-
-  const now = moment();
-  const prior24Hours = parseBookingDateTime(booking.date + booking.time).subtract(1, 'days');
+  const prior12Hours = parseBookingDateTime(booking.date + booking.time).subtract(12, 'hours');
   const prior4Hours = parseBookingDateTime(booking.date + booking.time).subtract(4, 'hours');
 
-  if (now.isBefore(prior24Hours)) {
-    return "as it's 24 hours before booked time";
+  if (now.isBefore(prior12Hours)) {
+    return { fee: 0, description: 'free cancellation 12 hours prior booking time' };
   } else if (now.isBefore(prior4Hours)) {
-    return "as it's less than 24 hours before booked time";
+    return {
+      fee: booking.total * 0.5,
+      description:
+        'fee is 50% of booking value if cancelled in less than 12 hours prior booking time',
+    };
   }
-  return "as it's less than 4 hours before booked time";
+  return {
+    fee: booking.total,
+    description:
+      'fee is 100% of booking value if cancelled in less than 4 hours prior booking time',
+  };
 };
 
 function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
@@ -273,13 +269,13 @@ export async function customerCancelBooking(_id) {
     );
 
     // charge customer if needed
-    const cancellationFee = customerCancellationFee(booking);
-    if (cancellationFee > 0) {
+    const { fee, description } = customerCancellationFee(booking);
+    if (fee > 0) {
       chargeCustomer(
         booking,
-        cancellationFee,
+        fee,
         `booking cancelled: ${booking._id}`,
-        `Booking cancellation fee ${customerCancellationFeeReason(booking)}`,
+        `Booking cancellation ${description}`,
       );
     }
 
@@ -359,12 +355,14 @@ export function customerFindBooking(_id) {
       },
     ).fetch();
 
+    const { fee, description } = customerCancellationFee(booking);
+
     return {
       ...booking,
       stylist,
       payments,
-      cancellationFee: customerCancellationFee(booking),
-      cancellationFeeReason: customerCancellationFeeReason(booking),
+      cancellationFee: fee,
+      cancellationFeeReason: description,
     };
   } catch (exception) {
     log.error(exception);

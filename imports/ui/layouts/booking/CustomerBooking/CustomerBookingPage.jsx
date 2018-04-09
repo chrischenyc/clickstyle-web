@@ -26,9 +26,9 @@ class CustomerBookingPage extends Component {
       <Container>
         <Confirm
           open={this.state.showCancelConfirm}
-          content={`To cancel this booking will cost you ${formatPrice(this.props.booking.cancellationFee)} ${
+          content={`Cancelling this booking will cost you ${formatPrice(this.props.booking.cancellationFee)} (${
             this.props.booking.cancellationFeeReason
-          }. Are you sure you want to cancel this booking?`}
+          }). Are you sure you want to cancel this booking?`}
           onCancel={() => {
             this.setState({ showCancelConfirm: false });
           }}
