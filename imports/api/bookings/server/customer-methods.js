@@ -80,6 +80,68 @@ const customerCancellationFeeReason = (booking) => {
   return "as it's less than 4 hours before booked time";
 };
 
+function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
+  const {
+    firstName, lastName, email, stylist, services, mobile, address, date, time,
+  } = cart;
+
+  const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
+  const total = calculateTotal(services);
+  const duration = calculateTotalDuration(services);
+
+  // create Bookings record
+  const bookingsId = Bookings.insert({
+    stylist: stylist.owner,
+    services,
+    total,
+    customer: userId,
+    firstName,
+    lastName,
+    email,
+    mobile,
+    address,
+    date,
+    time,
+    stripeCustomerId,
+    stripeCardId,
+    status: 'pending',
+    duration,
+  });
+
+  // inform customer
+  sendCustomerBookingRequestedEmail({
+    stylist: `${stylist.name.first} ${stylist.name.last}`,
+    services: servicesSummary(services),
+    total,
+    firstName,
+    lastName,
+    email,
+    mobile,
+    address,
+    time: dateTimeString(parseBookingDateTime(date + time)),
+    bookingsId,
+    bookingUrl: `users/bookings/${bookingsId}`,
+  });
+
+  // inform stylist
+  sendStylistBookingRequestedEmail({
+    stylistEmail,
+    stylistFirstName: stylist.name.first,
+    services: servicesSummary(services),
+    total,
+    firstName,
+    lastName,
+    email,
+    mobile,
+    address,
+    time: dateTimeString(parseBookingDateTime(date + time)),
+    bookingsId,
+    bookingUrl: `users/stylist/bookings/${bookingsId}`,
+  });
+
+  return bookingsId;
+}
+
 export async function customerCreateBooking(cart) {
   check(cart, Object);
 
@@ -88,16 +150,10 @@ export async function customerCreateBooking(cart) {
       firstName,
       lastName,
       email,
-      stylist,
-      services,
-      mobile,
-      address,
-      date,
-      time,
       creditCardNameOnCard,
       creditCardSaveCard,
       stripePayload,
-      useSavedCard
+      useSavedCard,
     } = cart;
 
     let { userId } = this;
@@ -118,8 +174,6 @@ export async function customerCreateBooking(cart) {
       Accounts.sendEnrollmentEmail(userId);
     }
 
-    const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
-
     // find existing Stripe customer record, or create a new one
     const { stripeCustomerId, stripeDefaultCardId } = Profiles.findOne({
       owner: userId,
@@ -137,17 +191,15 @@ export async function customerCreateBooking(cart) {
       Profiles.update({ owner: userId }, { $set: { stripeCustomerId: stripeCustomer.id } });
     }
 
-    const total = calculateTotal(services);
-    const duration = calculateTotalDuration(services);
-
     if (stripePayload) {
-      // ---------- pre-processing new card ----------
+      // ========== check-out with a new card ===========
 
+      // save new card on Stripe
       const card = await stripe.customers.createSource(stripeCustomer.id, {
         source: stripePayload.token.id,
       });
 
-      // set saved card as customer's default_source
+      // set saved card as customer's default_source on Stripe
       stripe.customers.update(stripeCustomer.id, {
         default_source: card.id,
       });
@@ -171,113 +223,18 @@ export async function customerCreateBooking(cart) {
         );
       }
 
-      // ---------- create Bookings record ----------
-      const bookingsId = Bookings.insert({
-        stylist: stylist.owner,
-        services,
-        total,
-        customer: userId,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        address,
-        date,
-        time,
-        stripeCustomerId: stripeCustomer.id,
-        stripeCardId: card.id,
-        status: 'pending',
-        duration,
-      });
+      const bookingsId = createBooking(cart, userId, stripeCustomerId, card.id);
 
-      sendCustomerBookingRequestedEmail({
-        stylist: `${stylist.name.first} ${stylist.name.last}`,
-        services: servicesSummary(services),
-        total,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        address,
-        time: dateTimeString(parseBookingDateTime(date + time)),
-        bookingsId,
-        bookingUrl: `users/bookings/${bookingsId}`,
-      });
-
-      sendStylistBookingRequestedEmail({
-        stylistEmail,
-        stylistFirstName: stylist.name.first,
-        services: servicesSummary(services),
-        total,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        address,
-        time: dateTimeString(parseBookingDateTime(date + time)),
-        bookingsId,
-        bookingUrl: `users/stylist/bookings/${bookingsId}`,
-      });
-
+      // method response depends on user login status
       if (this.userId) {
         return { bookingsId };
       }
-
       return { bookingsId, userId };
-    } else if (stripeCustomer.default_source === stripeDefaultCardId) {
-      // user's existing card record is valid, create Bookings record directly
-      const bookingsId = Bookings.insert({
-        stylist: stylist.owner,
-        services,
-        total,
-        customer: userId,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        address,
-        date,
-        time,
-        stripeCustomerId: stripeCustomer.id,
-        stripeCardId: stripeDefaultCardId,
-        status: 'pending',
-        duration,
-      });
+    } else if (useSavedCard && stripeCustomer.default_source === stripeDefaultCardId) {
+      // ========== check-out with a saved card ===========
+      const bookingsId = createBooking(cart, userId, stripeCustomerId, stripeDefaultCardId);
 
-      sendCustomerBookingRequestedEmail({
-        stylist: `${stylist.name.first} ${stylist.name.last}`,
-        services: servicesSummary(services),
-        total,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        address,
-        time: dateTimeString(parseBookingDateTime(date + time)),
-        bookingsId,
-        bookingUrl: `users/bookings/${bookingsId}`,
-      });
-
-      sendStylistBookingRequestedEmail({
-        stylistEmail,
-        stylistFirstName: stylist.name.first,
-        services: servicesSummary(services),
-        total,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        address,
-        time: dateTimeString(parseBookingDateTime(date + time)),
-        bookingsId,
-        bookingUrl: `users/stylist/bookings/${bookingsId}`,
-      });
-
-      if (this.userId) {
-        return { bookingsId };
-      }
-
-      return { bookingsId, userId };
+      return { bookingsId };
     }
     // invalid saved card, throw exception
     throw new Error('Invalid payment method, please try with a new credit/debit card.');
