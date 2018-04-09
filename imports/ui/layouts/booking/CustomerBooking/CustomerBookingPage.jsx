@@ -5,12 +5,11 @@ import PropTypes from 'prop-types';
 import { Container, Confirm, Button } from 'semantic-ui-react';
 import classnames from 'classnames';
 
-import { dateTimeString, parseBookingDateTime } from '../../../../modules/format-date';
-import servicesSummary from '../../../../modules/format-services';
 import formatPrice from '../../../../modules/format-price';
 import scaledImageURL from '../../../../modules/scaled-image-url';
 import userProfileLink from '../../../../modules/user-profile-link';
-import BookingStatus from '../BookingStatus';
+import BookingSummary from '../BookingSummary';
+import BookingLogs from '../BookingLogs';
 
 class CustomerBookingPage extends Component {
   constructor(props) {
@@ -69,60 +68,9 @@ class CustomerBookingPage extends Component {
                   <span className="booking-status">{this.props.booking.status}</span>
                 </h3>
 
-                <div className="inner-booking-list">
-                  <h5>Booking Number:</h5>
-                  <ul className="booking-list">
-                    <li className="highlighted">{this.props.booking._id}</li>
-                  </ul>
-                </div>
+                <BookingSummary booking={this.props.booking} />
 
-                <div className="inner-booking-list">
-                  <h5>Booking Date:</h5>
-                  <ul className="booking-list">
-                    <li className="highlighted">
-                      {dateTimeString(parseBookingDateTime(this.props.booking.date + this.props.booking.time))}
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="inner-booking-list">
-                  <h5>Booking Details:</h5>
-                  <ul className="booking-list">
-                    <li className="highlighted">{servicesSummary(this.props.booking.services)}</li>
-                  </ul>
-                </div>
-
-                <div className="inner-booking-list">
-                  <h5>Estimated Duration:</h5>
-                  <ul className="booking-list">
-                    <li className="highlighted">{`${this.props.booking.duration} mins`}</li>
-                  </ul>
-                </div>
-
-                <div className="inner-booking-list">
-                  <h5>Total:</h5>
-                  <ul className="booking-list">
-                    <li className="highlighted">{formatPrice(this.props.booking.total)}</li>
-                  </ul>
-                </div>
-
-                <div className="inner-booking-list">
-                  <h5>Customer:</h5>
-                  <ul className="booking-list">
-                    <li className="highlighted">
-                      {`${this.props.booking.firstName} ${this.props.booking.lastName}`}
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="inner-booking-list">
-                  <h5>Customer address:</h5>
-                  <ul className="booking-list">
-                    <li className="highlighted">{this.props.booking.address}</li>
-                  </ul>
-                </div>
-
-                <BookingStatus booking={this.props.booking} />
+                <BookingLogs booking={this.props.booking} />
               </div>
             </div>
           </div>

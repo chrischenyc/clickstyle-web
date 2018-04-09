@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { dateTimeString } from '../../../modules/format-date';
 import formatPrice from '../../../modules/format-price';
 
-const BookingStatus = props => (
+const BookingLogs = props => (
   <Fragment>
     {props.booking.createdAt && (
       <div className="inner-booking-list">
@@ -84,8 +84,8 @@ const BookingStatus = props => (
   </Fragment>
 );
 
-BookingStatus.propTypes = {
+BookingLogs.propTypes = {
   booking: PropTypes.object.isRequired,
 };
 
-export default BookingStatus;
+export default BookingLogs;
