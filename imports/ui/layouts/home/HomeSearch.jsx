@@ -1,9 +1,9 @@
 import React from 'react';
 import Typist from 'react-typist';
+import _ from 'lodash';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
 
-// TODO: prioritise keywords sorting
 const animatedKeywords = [
   'Airbrush Makeup',
   'Special Effects Makeup',
@@ -27,7 +27,7 @@ const animatedKeywords = [
   'Blowout with Iron',
   'Curling',
   'Beard Trim',
-  'Mens Haircut',
+  "Men's Haircut",
   'Hot Towel Massage',
   'Cut & Side design',
   'Children Hair Cut',
@@ -48,7 +48,7 @@ const animatedKeywords = [
   'Eyebrow Threading',
   'Eyebrow Tinting',
   'Eyebrow Shaping',
-  'Waxing,Lashes',
+  'Waxing Lashes',
   'Bottom Lashes',
   'Mink Lashes',
   'Eyelash Extension',
@@ -85,7 +85,7 @@ const HomeSearch = () => (
             <h4>
               <Typist>
                 Search here for&nbsp;
-                {animatedKeywords.map(keyword => (
+                {_.shuffle(animatedKeywords).map(keyword => (
                   <span key={keyword}>
                     {keyword}
                     <Typist.Backspace count={keyword.length} delay={keyword.length * 40} />

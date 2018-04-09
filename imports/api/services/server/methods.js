@@ -19,7 +19,7 @@ Meteor.methods({
       const selector = {};
 
       if (suburbName) {
-        // TODO: alter services selector to be location based
+        // TODO: services selector to be location based
       }
 
       return Services.find(selector, { sort: { displayOrder: 1 } }).fetch();

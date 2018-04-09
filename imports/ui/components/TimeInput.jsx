@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Search } from 'semantic-ui-react';
 import _ from 'lodash';
 
-// TODO: support exclusive hours
 const timeOptions = () => {
   const options = [];
 

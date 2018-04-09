@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Responsive, Button } from 'semantic-ui-react';
@@ -26,9 +26,6 @@ const SearchPage = ({
 
     <div className="row margin-top-50 margin-bottom-50">
       <div className="col-md-12 centered-content">
-        {!searched &&
-          !searching && <p>TODO: we need to display something on the empty search page</p>}
-
         {hasMore && (
           <div>
             <LoadMore searching={searching} onLoadMore={onLoadMore} />
@@ -36,10 +33,13 @@ const SearchPage = ({
         )}
 
         {foundNothing && (
-          <h2>
-            Sorry, there are no stylists that offer what you are looking for in area and time you
-            selected.
-          </h2>
+          <Fragment>
+            <h2>
+              Sorry, there are no stylists that offer what you are looking for in area and time you
+              selected.
+            </h2>
+            <p>TODO: we need to display something on the empty search page</p>
+          </Fragment>
         )}
 
         {searched &&

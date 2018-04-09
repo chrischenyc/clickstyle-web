@@ -11,8 +11,6 @@ const parseGoogleData = (options, user) => ({
     first: user.services.google.given_name,
     last: user.services.google.family_name,
   },
-  // TODO: re-save google avatar to cloudinary, then update profile.photo
-  // photo: user.services.google.picture,
   gender: user.services.google.gender,
 });
 

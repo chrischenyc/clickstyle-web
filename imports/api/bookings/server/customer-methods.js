@@ -236,8 +236,6 @@ export async function customerCreateBooking(cart) {
     // invalid saved card, throw exception
     throw new Error('Invalid payment method, please try with a new credit/debit card.');
   } catch (exception) {
-    // TODO: in case of any error, revoke user/profile and Stripe account created
-
     log.error(exception);
     throw exception;
   }

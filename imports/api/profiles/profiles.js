@@ -106,7 +106,7 @@ const ProfilesSchema = new SimpleSchema({
   },
   mobile: {
     type: String,
-    regEx: SimpleSchema.RegEx.Phone, // TODO: enhance regex to aussie mobile regex
+    regEx: SimpleSchema.RegEx.Phone,
     max: 20,
     optional: true,
   },

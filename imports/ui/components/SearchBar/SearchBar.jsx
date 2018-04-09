@@ -149,9 +149,7 @@ class SearchBar extends Component {
         time,
         duration,
       });
-    } else {
-      // TODO: prompt user to select service
-    }
+    } 
   }
 
   /**
