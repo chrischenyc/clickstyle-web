@@ -14,9 +14,13 @@ class CustomerBooking extends Component {
       booking: null,
       loading: false,
       error: '',
+      rating: 0,
+      review: '',
     };
 
     this.handleCancelBooking = this.handleCancelBooking.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleSubmitReview = this.handleSubmitReview.bind(this);
   }
 
   componentDidMount() {
@@ -58,14 +62,42 @@ class CustomerBooking extends Component {
     });
   }
 
+  handleOnChange(name, value) {
+    this.setState({ [name]: value });
+  }
+
+  handleSubmitReview() {
+    this.setState({ loading: true });
+
+    const { _id } = this.props.match.params;
+
+    Meteor.call(
+      'reviews.create',
+      { _id, rating: this.state.rating, review: this.state.review },
+      (error) => {
+        this.setState({ loading: false });
+
+        if (error) {
+          this.setState({ error: error.error });
+        } else {
+          this.loadBooking(_id);
+        }
+      },
+    );
+  }
+
   render() {
     if (!_.isNil(this.state.booking)) {
       return (
         <CustomerBookingPage
           booking={this.state.booking}
           onCancelBooking={this.handleCancelBooking}
+          onChange={this.handleOnChange}
           loading={this.state.loading}
           error={this.state.error}
+          rating={this.state.rating}
+          review={this.state.review}
+          onSubmitReview={this.handleSubmitReview}
         />
       );
     }

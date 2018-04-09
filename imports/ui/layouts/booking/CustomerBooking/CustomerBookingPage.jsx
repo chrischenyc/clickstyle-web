@@ -2,8 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Container, Confirm, Button } from 'semantic-ui-react';
+import { Container, Confirm, Button, TextArea, Rating, Header } from 'semantic-ui-react';
 import classnames from 'classnames';
+import _ from 'lodash';
 
 import formatPrice from '../../../../modules/format-price';
 import scaledImageURL from '../../../../modules/scaled-image-url';
@@ -92,6 +93,45 @@ class CustomerBookingPage extends Component {
             </Button>
           )}
         </Fragment>
+
+        {this.props.booking.status === 'completed' &&
+          !this.props.booking.review && (
+            <Fragment>
+              <Header as="h3">Review your experience</Header>
+              <div style={{ marginBottom: '1em' }}>
+                <p>Your rating for this stylist</p>
+                <Rating
+                  icon="star"
+                  defaultRating={this.props.rating}
+                  maxRating={5}
+                  onRate={(event, data) => {
+                    this.props.onChange('rating', data.rating);
+                  }}
+                />
+              </div>
+              <div style={{ marginBottom: '1em' }}>
+                <p>Write a review:</p>
+                <TextArea
+                  style={{ maxWidth: '10rem' }}
+                  value={this.props.review}
+                  onChange={(event, data) => {
+                    this.props.onChange('review', data.value);
+                  }}
+                />
+              </div>
+              <Button
+                color="teal"
+                size="large"
+                loading={this.props.loading}
+                disabled={this.props.rating === 0 || _.isEmpty(this.props.review)}
+                onClick={() => {
+                  this.props.onSubmitReview();
+                }}
+              >
+                Submit Review
+              </Button>
+            </Fragment>
+          )}
       </Container>
     );
   }
@@ -102,6 +142,10 @@ CustomerBookingPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   onCancelBooking: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  rating: PropTypes.number.isRequired,
+  review: PropTypes.string.isRequired,
+  onSubmitReview: PropTypes.func.isRequired,
 };
 
 export default CustomerBookingPage;
