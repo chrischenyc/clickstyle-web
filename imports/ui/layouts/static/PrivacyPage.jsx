@@ -3,7 +3,7 @@ import React from 'react';
 import { Container, Header } from 'semantic-ui-react';
 
 const PrivacyPage = () => (
-  <Container className="margin-top-40 margin-bottom-40">
+  <Container text className="margin-top-40 margin-bottom-40">
     <Header as="h2">Privacy Policy</Header>
     <p>
       Privacy Policy Introduction: {Meteor.settings.public.siteUrl} is a owned and registered domain

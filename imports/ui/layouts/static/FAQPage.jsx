@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container, Header } from 'semantic-ui-react';
 
 const FAQPage = () => (
-  <Container className="margin-top-40 margin-bottom-40">
+  <Container text className="margin-top-40 margin-bottom-40">
     <Header as="h2">FAQ</Header>
     <p>
       When do I get charged?

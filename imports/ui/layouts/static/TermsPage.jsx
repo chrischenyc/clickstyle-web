@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container, Header } from 'semantic-ui-react';
 
 const TermsPage = () => (
-  <Container>
+  <Container text>
     <div className="margin-top-40 margin-bottom-40">
       <Header as="h2">
         {Meteor.settings.public.appName} Terms of Service For Clients &amp; Stylist

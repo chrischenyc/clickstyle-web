@@ -8,7 +8,7 @@ import scaledImageURL from '../../../../modules/scaled-image-url';
 import userProfileLink from '../../../../modules/user-profile-link';
 
 const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
-  <Container>
+  <Container text>
     <div className="row">
       <div className="col-lg-12 col-md-12">
         <div className="dashboard-list-box margin-top-0">
