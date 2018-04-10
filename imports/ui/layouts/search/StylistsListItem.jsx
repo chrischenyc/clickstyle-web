@@ -17,7 +17,7 @@ const limitedArray = (objects, size) => {
 
 const StylistsListItem = ({ stylist }) => (
   <div className="col-lg-4 col-md-6 margin-bottom-20">
-    <Link target="_blank" to={userProfileLink(stylist)} className="listing-item-container">
+    <Link to={userProfileLink(stylist)} className="listing-item-container">
       <div className="listing-item">
         <img src={stylist.bannerPhotos[0]} alt="" />
 
