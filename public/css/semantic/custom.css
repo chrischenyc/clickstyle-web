@@ -15,3 +15,8 @@
   overflow-y: auto;
   max-height: 300px;
 }
+
+/*Override Semantic-UI inactive rating star color */
+.ui.star.rating .icon {
+  color: rgb(168, 168, 168);
+}

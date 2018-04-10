@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Responsive } from 'semantic-ui-react';
+import { Responsive, Rating } from 'semantic-ui-react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 
@@ -21,7 +21,7 @@ import StylistHoursSection from './StylistHoursSection';
 import StylistShareSection from './StylistShareSection';
 import BookingDateTimePicker from '../../components/BookingDateTimePicker';
 
-class UserProfilePage extends Component {
+class StylistProfilePage extends Component {
   componentWillReceiveProps(nextProps) {
     if (
       !_.isEmpty(nextProps.cart.date) &&
@@ -69,6 +69,19 @@ class UserProfilePage extends Component {
                 profile.address.suburb &&
                 profile.createdAt && <span style={{ padding: '0 8px' }}>&middot;</span>}
               {profile.createdAt && <span>Joined in {monthYearString(profile.createdAt)}</span>}
+
+              {stylist.reviewsCount &&
+                stylist.averageRating && (
+                  <div>
+                    <Rating
+                      icon="star"
+                      maxRating={5}
+                      defaultRating={stylist.averageRating}
+                      disabled
+                    />
+                    {` (${stylist.reviewsCount} reviews)`}
+                  </div>
+                )}
             </div>
           </div>
         </div>
@@ -180,12 +193,12 @@ class UserProfilePage extends Component {
   }
 }
 
-UserProfilePage.defaultProps = {
+StylistProfilePage.defaultProps = {
   user: null,
   userId: null,
 };
 
-UserProfilePage.propTypes = {
+StylistProfilePage.propTypes = {
   user: PropTypes.object,
   favourStylist: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
@@ -204,4 +217,4 @@ const mapStateToProps = state => ({
   modalOpen: state.ui.modalOpen,
 });
 
-export default connect(mapStateToProps, { openModal, closeModal })(withMediaQuery(UserProfilePage));
+export default connect(mapStateToProps, { openModal, closeModal })(withMediaQuery(StylistProfilePage));

@@ -7,6 +7,7 @@ import rateLimit from '../../../modules/server/rate-limit';
 import Profiles from '../profiles';
 import Stylists from '../../stylists/stylists';
 import Products from '../../products/products';
+import Reviews from '../../reviews/reviews';
 import deleteCloudinaryFile from '../../../modules/server/delete-cloudinary-file';
 
 Meteor.methods({
@@ -137,6 +138,7 @@ Meteor.methods({
           },
         },
       );
+
       let stylist = Stylists.findOne(
         { owner, published: true },
         {
@@ -144,8 +146,8 @@ Meteor.methods({
             openHours: 1,
             services: 1,
             favourites: 1,
-            reviews: 1,
             averageRating: 1,
+            reviewsCount: 1,
             portfolioPhotos: 1,
             owner: 1,
           },
@@ -153,18 +155,33 @@ Meteor.methods({
       );
 
       if (!_.isEmpty(stylist)) {
-        // normalise data
+        // normalise reviews data
+        let reviews = Reviews.find(
+          { stylist: owner },
+          {
+            fields: {
+              createdAt: 1,
+              rating: 1,
+              review: 1,
+              customer: 1,
+            },
+            sort: {
+              createdAt: -1,
+            },
+          },
+        ).fetch();
 
-        if (stylist.reviews) {
-          stylist.reviews = stylist.reviews.map((review) => {
-            const reviewer = Profiles.findOne(
-              { owner: review.reviewer },
-              { fields: { owner: 1, name: 1, photo: 1 } },
-            );
-            return { ...review, reviewer };
-          });
-        }
+        reviews = reviews.map((review) => {
+          const customer = Profiles.findOne(
+            { owner: review.customer },
+            { fields: { owner: 1, name: 1, photo: 1 } },
+          );
+          return { ...review, customer };
+        });
 
+        stylist = { ...stylist, reviews };
+
+        // normalise whether logged user has favoured this stylist
         if (this.userId) {
           const { favouredStylists } = Profiles.findOne({ owner: this.userId });
 

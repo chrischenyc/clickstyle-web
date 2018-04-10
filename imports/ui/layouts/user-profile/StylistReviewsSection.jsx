@@ -2,27 +2,25 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Rating } from 'semantic-ui-react';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
 import userProfileLink from '../../../modules/user-profile-link';
 import { dateString } from '../../../modules/format-date';
-import StarRating from '../../components/StarRating';
 
 const StylistReviewsSection = ({ reviews }) => (
   <div id="stylist-profile-reviews" className="listing-section margin-bottom-50">
-    <h3 className="listing-desc-headline">
-      Reviews&nbsp;<span>{reviews.length}</span>
-    </h3>
+    <h3 className="listing-desc-headline">Customer Reviews</h3>
 
     <section className="comments listing-reviews">
       <ul>
         {reviews.map(review => (
           <li key={review._id}>
             <div className="avatar">
-              <Link to={userProfileLink(review.reviewer)}>
+              <Link to={userProfileLink(review.customer)}>
                 <img
                   src={scaledImageURL(
-                    review.reviewer.photo || Meteor.settings.public.defaultAvatar,
+                    review.customer.photo || Meteor.settings.public.defaultAvatar,
                     'tiny',
                   )}
                   alt=""
@@ -31,11 +29,11 @@ const StylistReviewsSection = ({ reviews }) => (
             </div>
             <div className="comment-content">
               <div className="comment-by">
-                {`${review.reviewer.name.first} ${review.reviewer.name.last}`}
+                {`${review.customer.name.first} ${review.customer.name.last}`}
                 <span className="date">{dateString(review.createdAt)}</span>
-                <StarRating rating={review.rating} />
+                <Rating icon="star" maxRating={5} defaultRating={review.rating} disabled />
               </div>
-              <p>{review.comment}</p>
+              <p>{review.review}</p>
             </div>
           </li>
         ))}

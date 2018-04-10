@@ -6,7 +6,6 @@ import { Rating } from 'semantic-ui-react';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
 import userProfileLink from '../../../modules/user-profile-link';
-import './stylists-list-item.css';
 
 const limitedArray = (objects, size) => {
   if (objects.length >= size) {
