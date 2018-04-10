@@ -38,6 +38,7 @@ Meteor.methods({
         'address.suburb': 1,
         photo: 1,
         averageRating: 1,
+        reviewsCount: 1,
       };
 
       if (suburbName) {
