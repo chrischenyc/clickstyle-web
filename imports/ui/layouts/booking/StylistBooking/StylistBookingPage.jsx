@@ -74,19 +74,21 @@ class StylistBookingPage extends Component {
         >
           <div className="list-box-listing bookings">
             <div className="list-box-listing-img">
-              <img
-                src={scaledImageURL(
-                  (this.props.booking.customer && this.props.booking.customer.photo) ||
-                    Meteor.settings.public.defaultAvatar,
-                  'small',
-                )}
-                alt=""
-              />
+              <Link target="_blank" to={userProfileLink(this.props.booking.customer)}>
+                <img
+                  src={scaledImageURL(
+                    (this.props.booking.customer && this.props.booking.customer.photo) ||
+                      Meteor.settings.public.defaultAvatar,
+                    'small',
+                  )}
+                  alt=""
+                />
+              </Link>
             </div>
             <div className="list-box-listing-content">
               <div className="inner">
                 <h3>
-                  <Link to={userProfileLink(this.props.booking.customer)}>
+                  <Link target="_blank" to={userProfileLink(this.props.booking.customer)}>
                     {`${this.props.booking.firstName} ${this.props.booking.lastName}`}
                   </Link>{' '}
                   <span className="booking-status">{this.props.booking.status}</span>

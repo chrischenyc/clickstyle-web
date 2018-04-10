@@ -10,14 +10,16 @@ import { dateString } from '../../../modules/format-date';
 
 const StylistReviewsSection = ({ reviews }) => (
   <div id="stylist-profile-reviews" className="listing-section margin-bottom-50">
-    <h3 className="listing-desc-headline">Customer Reviews</h3>
+    <h3 className="listing-desc-headline">
+      Customer Reviews<span>{`(${reviews.length})`}</span>
+    </h3>
 
     <section className="comments listing-reviews">
       <ul>
         {reviews.map(review => (
           <li key={review._id}>
             <div className="avatar">
-              <Link to={userProfileLink(review.customer)}>
+              <Link target="_blank" to={userProfileLink(review.customer)}>
                 <img
                   src={scaledImageURL(
                     review.customer.photo || Meteor.settings.public.defaultAvatar,

@@ -17,7 +17,7 @@ const FavouredStylistsPage = ({ stylists, unFavourStylist }) => (
             {stylists.map(stylist => (
               <li key={stylist.owner}>
                 <div className="list-box-listing">
-                  <Link to={userProfileLink(stylist)}>
+                  <Link target="_blank" to={userProfileLink(stylist)}>
                     <div className="medium-avatar">
                       <img
                         src={scaledImageURL(
