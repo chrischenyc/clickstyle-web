@@ -26,6 +26,7 @@ Meteor.methods({
         throw new Meteor.Error(404, 'invalid booking number');
       }
 
+      // create Reviews record
       Reviews.insert({
         booking: _id,
         customer,
@@ -34,6 +35,7 @@ Meteor.methods({
         review,
       });
 
+      // update Stylists record about avgRating and counts
       const stylistRecord = Stylists.findOne({ owner: stylist });
       let reviewsCount = stylistRecord.reviewsCount || 0;
       let averageRating = stylistRecord.averageRating || 0;
@@ -41,6 +43,10 @@ Meteor.methods({
       reviewsCount += 1;
       Stylists.update({ owner: stylist }, { $set: { reviewsCount, averageRating } });
 
+      // update Bookings record about reviewedAt
+      Bookings.update({ _id }, { $set: { customerReviewedAt: Date.now() } });
+
+      // email notify stylist about new review
       const { name: stylistName, email: stylistEmail } = Profiles.findOne({
         owner: stylist,
       });
