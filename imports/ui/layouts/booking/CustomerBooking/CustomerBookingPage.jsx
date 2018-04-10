@@ -11,6 +11,7 @@ import scaledImageURL from '../../../../modules/scaled-image-url';
 import userProfileLink from '../../../../modules/user-profile-link';
 import BookingSummary from '../BookingSummary';
 import BookingLogs from '../BookingLogs';
+import BookingReview from '../BookingReview';
 
 class CustomerBookingPage extends Component {
   constructor(props) {
@@ -132,6 +133,8 @@ class CustomerBookingPage extends Component {
               </Button>
             </Fragment>
           )}
+
+        {this.props.booking.review && <BookingReview review={this.props.booking.review} />}
       </Container>
     );
   }

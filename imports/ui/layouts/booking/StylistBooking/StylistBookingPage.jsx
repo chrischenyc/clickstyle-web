@@ -10,6 +10,7 @@ import scaledImageURL from '../../../../modules/scaled-image-url';
 import userProfileLink from '../../../../modules/user-profile-link';
 import BookingLogs from '../BookingLogs';
 import BookingSummary from '../BookingSummary';
+import BookingReview from '../BookingReview';
 
 class StylistBookingPage extends Component {
   constructor(props) {
@@ -159,6 +160,8 @@ class StylistBookingPage extends Component {
             </Button>
           )}
         </Fragment>
+
+        {this.props.booking.review && <BookingReview review={this.props.booking.review} />}
       </Container>
     );
   }

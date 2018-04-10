@@ -8,6 +8,7 @@ import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
 import Stylists from '../../stylists/stylists';
 import Payments from '../../payments/payments';
+import Reviews from '../../reviews/reviews';
 import {
   sendCustomerBookingRequestedEmail,
   sendStylistBookingRequestedEmail,
@@ -353,12 +354,18 @@ export function customerFindBooking(_id) {
       },
     ).fetch();
 
+    const review = Reviews.findOne(
+      { booking: booking._id },
+      { fields: { createdAt: 1, rating: 1, review: 1 } },
+    );
+
     const { fee, description } = customerCancellationFee(booking);
 
     return {
       ...booking,
       stylist,
       payments,
+      review,
       cancellationFee: fee,
       cancellationFeeReason: description,
     };

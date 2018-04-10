@@ -24,10 +24,12 @@ class CustomerBooking extends Component {
   }
 
   componentDidMount() {
-    this.loadBooking(this.props.match.params._id);
+    this.loadBooking();
   }
 
-  loadBooking(_id) {
+  loadBooking() {
+    const { _id } = this.props.match.params;
+
     if (_.isNil(_id)) {
       this.props.history.push('/404');
       return;
@@ -49,15 +51,13 @@ class CustomerBooking extends Component {
   handleCancelBooking() {
     this.setState({ loading: true });
 
-    const { _id } = this.props.match.params;
-
-    Meteor.call('bookings.customer.cancel', _id, (error) => {
+    Meteor.call('bookings.customer.cancel', this.state.booking._id, (error) => {
       this.setState({ loading: false });
 
       if (error) {
         this.setState({ error: error.error });
       } else {
-        this.loadBooking(_id);
+        this.loadBooking();
       }
     });
   }
@@ -69,18 +69,22 @@ class CustomerBooking extends Component {
   handleSubmitReview() {
     this.setState({ loading: true });
 
-    const { _id } = this.props.match.params;
+    const { _id } = this.state.booking;
 
     Meteor.call(
       'reviews.create',
-      { _id, rating: this.state.rating, review: this.state.review },
+      {
+        _id,
+        rating: this.state.rating,
+        review: this.state.review,
+      },
       (error) => {
         this.setState({ loading: false });
 
         if (error) {
           this.setState({ error: error.error });
         } else {
-          this.loadBooking(_id);
+          this.loadBooking();
         }
       },
     );
