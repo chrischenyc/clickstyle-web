@@ -2,9 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Rating } from 'semantic-ui-react';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
 import userProfileLink from '../../../modules/user-profile-link';
+import './stylists-list-item.css';
 
 const limitedArray = (objects, size) => {
   if (objects.length >= size) {
@@ -28,10 +30,25 @@ const StylistsListItem = ({ stylist }) => (
             />
           </div>
           <div>
-            <h3>{`${stylist.name.first} ${stylist.name.last}`}</h3>
-            <span>
-              {stylist.address.suburb && `${stylist.address.suburb}, ${stylist.address.state}`}
-            </span>
+            <h3>
+              {`${stylist.name.first} ${stylist.name.last}`}
+              <span style={{ marginLeft: '1rem' }}>
+                {stylist.address.suburb && `${stylist.address.suburb}, ${stylist.address.state}`}
+              </span>
+            </h3>
+
+            {stylist.reviewsCount &&
+              stylist.averageRating && (
+                <span>
+                  <Rating
+                    icon="star"
+                    maxRating={5}
+                    defaultRating={stylist.averageRating}
+                    disabled
+                  />
+                  {` (${stylist.reviewsCount} reviews)`}
+                </span>
+              )}
           </div>
         </div>
       </div>

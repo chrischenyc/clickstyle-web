@@ -421,6 +421,7 @@ Meteor.methods({
           'address.state': 1,
           'address.suburb': 1,
           photo: 1,
+          reviewsCount: 1,
           averageRating: 1,
           portfolioPhotos: 1,
         },
