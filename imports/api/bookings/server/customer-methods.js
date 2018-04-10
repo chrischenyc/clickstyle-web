@@ -448,7 +448,8 @@ export function customerListBookings() {
 
     return bookings.map((booking) => {
       const stylist = Profiles.findOne({ owner: booking.stylist });
-      return { ...booking, stylist };
+      const review = Reviews.findOne({ booking: booking._id }, { fields: { rating: 1 } });
+      return { ...booking, stylist, review };
     });
   } catch (exception) {
     log.error(exception);

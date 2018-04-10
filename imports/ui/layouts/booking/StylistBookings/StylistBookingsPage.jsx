@@ -6,9 +6,7 @@ import { Container } from 'semantic-ui-react';
 import classnames from 'classnames';
 
 import scaledImageURL from '../../../../modules/scaled-image-url';
-import { dateTimeString, parseBookingDateTime } from '../../../../modules/format-date';
-import servicesSummary from '../../../../modules/format-services';
-import formatPrice from '../../../../modules/format-price';
+import BookingsItemSummary from '../BookingsItemSummary';
 
 const StylistBookingsPage = ({ bookings }) => (
   <Container>
@@ -48,28 +46,7 @@ const StylistBookingsPage = ({ bookings }) => (
                             <span className="booking-status">{booking.status}</span>
                           </h3>
 
-                          <div className="inner-booking-list">
-                            <h5>Booking Date:</h5>
-                            <ul className="booking-list">
-                              <li className="highlighted">
-                                {dateTimeString(parseBookingDateTime(booking.date + booking.time))}
-                              </li>
-                            </ul>
-                          </div>
-
-                          <div className="inner-booking-list">
-                            <h5>Booking Details:</h5>
-                            <ul className="booking-list">
-                              <li className="highlighted">{servicesSummary(booking.services)}</li>
-                            </ul>
-                          </div>
-
-                          <div className="inner-booking-list">
-                            <h5>Total:</h5>
-                            <ul className="booking-list">
-                              <li className="highlighted">{formatPrice(booking.total)}</li>
-                            </ul>
-                          </div>
+                          <BookingsItemSummary booking={booking} />
                         </div>
                       </div>
                     </div>
