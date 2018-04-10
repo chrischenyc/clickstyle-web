@@ -470,6 +470,34 @@ export const sendStylistBookingCompletedEmail = ({
   });
 };
 
+export const sendStylistBookingReviewedEmail = ({
+  stylistFirstName,
+  stylistEmail,
+  firstName,
+  bookingsId,
+  bookingUrl,
+  rating,
+  review,
+}) => {
+  sendEmail({
+    to: stylistEmail,
+    from: fromAddress,
+    subject: `Read ${firstName}'s review`,
+    template: 'stylist-bookingReviewed',
+    templateConstants: {
+      stylistFirstName,
+      firstName,
+      bookingsId,
+      bookingUrl: Meteor.absoluteUrl(bookingUrl),
+      rating,
+      review,
+      ...templateConstants,
+    },
+  }).catch((error) => {
+    log.error(error);
+  });
+};
+
 export const sendAdminStylistApplicationEmail = (applicationId) => {
   const adminHost = Meteor.settings.AdminHost;
   const adminUrl = `${adminHost}/stylists/applications/${applicationId}`;
