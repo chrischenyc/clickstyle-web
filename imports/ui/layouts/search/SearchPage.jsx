@@ -38,7 +38,6 @@ const SearchPage = ({
               Sorry, there are no stylists that offer what you are looking for in area and time you
               selected.
             </h2>
-            <p>TODO: we need to display something on the empty search page</p>
           </Fragment>
         )}
 
