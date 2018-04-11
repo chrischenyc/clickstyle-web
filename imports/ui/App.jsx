@@ -8,6 +8,7 @@ import { Responsive } from 'semantic-ui-react';
 
 import Profiles from '../api/profiles/profiles';
 import { userSignedIn, userSignedOut, userProfileFetched } from '../modules/client/redux/user';
+import { resetCart } from '../modules/client/redux/cart';
 
 import Routes from './Routes';
 import SlideMenu from './components/SlideMenu';
@@ -39,6 +40,7 @@ class App extends Component {
           }
         } else {
           this.props.userSignedOut();
+          this.props.resetCart();
         }
       }
     });
@@ -67,6 +69,7 @@ App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
   userProfileFetched: PropTypes.func.isRequired,
+  resetCart: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool.isRequired,
 };
 
@@ -78,4 +81,5 @@ export default connect(mapStateToProps, {
   userSignedIn,
   userSignedOut,
   userProfileFetched,
+  resetCart,
 })(App);

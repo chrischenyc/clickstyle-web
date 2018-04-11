@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dropdown, Menu, Responsive, Button, Container, Icon } from 'semantic-ui-react';
 import Sticky from 'react-stickynode';
@@ -147,6 +147,7 @@ class Header extends Component {
                       text="Logout"
                       onClick={() => {
                         Meteor.logout();
+                        this.props.history.push('/');
                       }}
                     />
                   </Dropdown.Menu>
@@ -201,4 +202,4 @@ const mapStateToProps = state => ({
   isStylist: state.user.isStylist,
 });
 
-export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(Header);
+export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(withRouter(Header));
