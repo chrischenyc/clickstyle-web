@@ -98,7 +98,7 @@ class BookingCheckout extends Component {
       { ..._.omit(this.props.cart, ['showCartInHeader', 'count']), stripePayload },
       (error, result) => {
         if (error) {
-          this.setState({ loading: false, error: error.reason.error });
+          this.setState({ loading: false, error: error.reason });
         } else if (result) {
           const { bookingsId, userId } = result;
           this.setState({ loading: false });

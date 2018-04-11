@@ -234,11 +234,11 @@ export async function customerCreateBooking(cart) {
 
       return { bookingsId };
     }
+
     // invalid saved card, throw exception
-    throw new Error('Invalid payment method, please try with a new credit/debit card.');
+    throw new Meteor.Error('Invalid payment method, please try with a new credit/debit card.');
   } catch (exception) {
-    log.error(exception);
-    throw exception;
+    throw new Meteor.Error(exception.statusCode, exception.message);
   }
 }
 

@@ -9,13 +9,28 @@ const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
 export default async function chargeCustomer(booking, amount, stripeDescription, description) {
   try {
-    const charge = await stripe.charges.create({
-      amount: amount * 100,
-      currency: 'aud',
-      customer: booking.stripeCustomerId,
-      source: booking.stripeCardId,
-      description: stripeDescription,
-    });
+    let charge;
+    try {
+      charge = await stripe.charges.create({
+        amount: amount * 100,
+        currency: 'aud',
+        customer: booking.stripeCustomerId,
+        source: booking.stripeCardId,
+        description: stripeDescription,
+      });
+    } catch (error) {
+      // keep a failed charge anyway
+      Payments.insert({
+        booking: booking._id,
+        amount,
+        currency: 'aud',
+        stripeChargeId: error.raw.charge,
+        status: error.code,
+        description,
+      });
+
+      throw error;
+    }
 
     const paymentId = Payments.insert({
       booking: booking._id,
