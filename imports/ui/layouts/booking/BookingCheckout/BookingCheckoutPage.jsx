@@ -205,7 +205,7 @@ class BookingCheckoutPage extends Component {
                   >
                     <div className="payment-tab-trigger">
                       <input
-                        defaultChecked={this.props.cart.useSavedCard}
+                        checked={this.props.cart.useSavedCard}
                         id="savedCard"
                         name="cardType"
                         type="radio"
@@ -229,7 +229,7 @@ class BookingCheckoutPage extends Component {
                 >
                   <div className="payment-tab-trigger">
                     <input
-                      defaultChecked={!this.props.cart.useSavedCard}
+                      checked={!this.props.cart.useSavedCard}
                       type="radio"
                       name="cardType"
                       id="newCard"
