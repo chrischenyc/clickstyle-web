@@ -18,37 +18,9 @@ import { dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
 import formatOccupiedTimeSlot from '../../../modules/server/format-occupied-time-slot';
+import { calculateTotal, calculateTotalDuration } from '../../../modules/cart-calculator';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
-
-// re-calculate total on server side
-const calculateTotal = (services) => {
-  let total = 0;
-
-  services.forEach((service) => {
-    total += service.basePrice;
-
-    service.addons.forEach((addon) => {
-      total += addon.price;
-    });
-  });
-
-  return total;
-};
-
-const calculateTotalDuration = (services) => {
-  let total = 0;
-
-  services.forEach((service) => {
-    total += service.baseDuration;
-
-    service.addons.forEach((addon) => {
-      total += addon.duration;
-    });
-  });
-
-  return total;
-};
 
 /**
  * return {fee: Number, description: String}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { deleteService, deleteAddon } from '../../modules/client/redux/cart';
 import formatPrice from '../../modules/format-price';
+import { calculateTotalDuration } from '../../modules/cart-calculator';
 
 const CartSummary = props => (
   <ul>
@@ -18,6 +19,7 @@ const CartSummary = props => (
 
         {service.name}
         <span>{formatPrice(service.basePrice)}</span>
+
         <ul>
           {service.addons.map(addon => (
             <li key={addon._id}>
@@ -35,6 +37,10 @@ const CartSummary = props => (
         </ul>
       </li>
     ))}
+
+    <li>
+      Est. duration<span>{`${calculateTotalDuration(props.cart.services)} mins`}</span>
+    </li>
 
     {props.cart.total > 0 && (
       <li className="total-cost">

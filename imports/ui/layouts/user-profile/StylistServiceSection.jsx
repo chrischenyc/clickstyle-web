@@ -51,6 +51,7 @@ class StylistServiceSection extends Component {
                   title="Base price"
                   description={service.baseDescription}
                   price={service.basePrice}
+                  duration={service.baseDuration}
                 />
               </a>
             </li>
@@ -69,6 +70,7 @@ class StylistServiceSection extends Component {
                       title={addon.name}
                       description={addon.description}
                       price={addon.price}
+                      duration={addon.duration}
                     />
                   </a>
                 </li>

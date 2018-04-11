@@ -1,5 +1,7 @@
 import _ from 'lodash';
 
+import { calculateTotal, calculateCount } from '../../cart-calculator';
+
 /**
  * update current selected services data
  *
@@ -37,34 +39,6 @@ const updateServices = (currentServices, service, addon = null) => {
   }
 
   return newServices;
-};
-
-const calculateTotal = (services) => {
-  let total = 0;
-
-  services.forEach((service) => {
-    total += service.basePrice;
-
-    service.addons.forEach((addon) => {
-      total += addon.price;
-    });
-  });
-
-  return total;
-};
-
-const calculateCount = (services) => {
-  let count = 0;
-
-  services.forEach((service) => {
-    count += 1;
-
-    service.addons.forEach(() => {
-      count += 1;
-    });
-  });
-
-  return count;
 };
 
 // --------- actions ----------
