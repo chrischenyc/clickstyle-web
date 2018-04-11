@@ -16,21 +16,3 @@ import '../../api/suburbs/server/methods';
 import '../../api/featured/server/methods';
 import '../../api/user_contacts/server/methods';
 import '../../api/reviews/server/methods';
-
-// TODO: delete following after deploy to heroku once
-import Bookings from '../../api/bookings/bookings';
-import { parseBookingDateTime } from '../../modules/format-date';
-
-Bookings.find({ date: { $exists: 1 } })
-  .fetch()
-  .forEach((booking) => {
-    Bookings.update(
-      { _id: booking._id },
-      {
-        $set: { time: parseBookingDateTime(booking.date + booking.time).toDate() },
-        $unset: { date: '' },
-      },
-    );
-
-    console.log(booking._id);
-  });

@@ -14,7 +14,7 @@ import {
   sendStylistBookingRequestedEmail,
   sendStylistBookingCancelledByCustomerEmail,
 } from '../../../modules/server/send-email';
-import { parseBookingDateTime, dateTimeString } from '../../../modules/format-date';
+import { dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
 
@@ -86,7 +86,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
   const total = calculateTotal(services);
   const duration = calculateTotalDuration(services);
-  const bookingTime = parseBookingDateTime(date + time);
+  const bookingTime = moment(date + time, 'YYMMDDHH:mm');
 
   // TODO: if bookingTime is earlier than 2 hours from now, throw Error
 

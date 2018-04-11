@@ -10,7 +10,5 @@ const urlQueryDateFormat = 'YYMMDD';
 export const urlQueryDateString = date => moment(date).format(urlQueryDateFormat);
 export const parseUrlQueryDate = string => moment(string, urlQueryDateFormat);
 
-export const parseBookingDateTime = string => moment(string, 'YYMMDDHH:mm');
-
 export const weekdayString = dayIndex =>
   ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][dayIndex - 1];
