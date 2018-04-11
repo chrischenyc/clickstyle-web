@@ -33,7 +33,7 @@ const HomeHowItWorks = () => (
 
       <div className="col-md-4">
         <div className="icon-box-2">
-          <i className="im im-icon-Checked-User" />
+          <i className="im im-icon-MaleFemale" />
           <h3>Look and Feel AMAZING!</h3>
           <p>
             Your selected stylist will arrive at your desired location, whether its home, office or
