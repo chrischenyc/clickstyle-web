@@ -28,7 +28,7 @@ const canStylistCompleteBooking = (booking) => {
   }
 
   const bookingStartDateTime = moment(booking.time);
-  const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration, 'minutes');
+  const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration - 1, 'minutes');
 
   return bookingEndDateTime.isBefore(moment());
 };
