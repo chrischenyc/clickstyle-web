@@ -55,12 +55,12 @@ const calculateTotalDuration = (services) => {
  */
 const customerCancellationFee = (booking) => {
   if (booking.status !== 'confirmed') {
-    return { fee: 0, description: 'free cancellation 12 hours prior booking time' };
+    return { fee: 0, description: 'free cancellation for unconfirmed bookings' };
   }
 
   const now = moment();
-  const prior12Hours = parseBookingDateTime(booking.date + booking.time).subtract(12, 'hours');
-  const prior4Hours = parseBookingDateTime(booking.date + booking.time).subtract(4, 'hours');
+  const prior12Hours = moment(booking.time).subtract(12, 'hours');
+  const prior4Hours = moment(booking.time).subtract(4, 'hours');
 
   if (now.isBefore(prior12Hours)) {
     return { fee: 0, description: 'free cancellation 12 hours prior booking time' };
@@ -86,6 +86,9 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
   const total = calculateTotal(services);
   const duration = calculateTotalDuration(services);
+  const bookingTime = parseBookingDateTime(date + time);
+
+  // TODO: if bookingTime is earlier than 2 hours from now, throw Error
 
   // create Bookings record
   const bookingsId = Bookings.insert({
@@ -98,8 +101,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     email,
     mobile,
     address,
-    date,
-    time,
+    time: bookingTime.toDate(),
     stripeCustomerId,
     stripeCardId,
     status: 'pending',
@@ -116,7 +118,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     email,
     mobile,
     address,
-    time: dateTimeString(parseBookingDateTime(date + time)),
+    time: dateTimeString(bookingTime),
     bookingsId,
     bookingUrl: `users/bookings/${bookingsId}`,
   });
@@ -132,7 +134,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     email,
     mobile,
     address,
-    time: dateTimeString(parseBookingDateTime(date + time)),
+    time: dateTimeString(bookingTime),
     bookingsId,
     bookingUrl: `users/stylist/bookings/${bookingsId}`,
   });
@@ -281,7 +283,7 @@ export async function customerCancelBooking(_id) {
     // notify stylist
     const stylist = Profiles.findOne({ owner: booking.stylist });
     const {
-      services, total, firstName, lastName, email, mobile, address, date, time,
+      services, total, firstName, lastName, email, mobile, address, time,
     } = booking;
 
     sendStylistBookingCancelledByCustomerEmail({
@@ -294,7 +296,7 @@ export async function customerCancelBooking(_id) {
       email,
       mobile,
       address,
-      time: dateTimeString(parseBookingDateTime(date + time)),
+      time: dateTimeString(time),
       bookingsId: _id,
       bookingUrl: `users/stylist/bookings/${_id}`,
     });

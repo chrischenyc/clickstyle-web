@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import formatPrice from '../../../modules/format-price';
-import { dateTimeString, parseBookingDateTime } from '../../../modules/format-date';
+import { dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 
 const BookingSummary = props => (
@@ -17,9 +17,7 @@ const BookingSummary = props => (
     <div className="inner-booking-list">
       <h5>Booking Date:</h5>
       <ul className="booking-list">
-        <li className="highlighted">
-          {dateTimeString(parseBookingDateTime(props.booking.date + props.booking.time))}
-        </li>
+        <li className="highlighted">{dateTimeString(props.booking.time)}</li>
       </ul>
     </div>
 
