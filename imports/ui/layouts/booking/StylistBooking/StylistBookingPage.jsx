@@ -102,7 +102,7 @@ class StylistBookingPage extends Component {
           </div>
 
           {!_.isEmpty(this.props.error) && (
-            <Message compact error>
+            <Message compact error className="margin-bottom-20">
               {this.props.error}
             </Message>
           )}

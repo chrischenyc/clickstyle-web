@@ -20,6 +20,7 @@ import Reviews from '../../reviews/reviews';
 import { dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
+import formatOccupiedTimeSlot from '../../../modules/server/format-occupied-time-slot';
 
 const canStylistCompleteBooking = (booking) => {
   if (booking.status !== 'confirmed') {
@@ -45,24 +46,32 @@ export function stylistConfirmPendingBooking(_id) {
       throw new Meteor.Error(403, 'unauthorized');
     }
 
-    // date validation, booked date shouldn't pass current date
+    // if bookingTime was in the past, throw Error
     const bookingStartDateTime = moment(booking.time);
     if (bookingStartDateTime.isBefore(moment())) {
-      throw new Meteor.Error('the booked date is in the past, cannot proceed');
+      throw new Meteor.Error('the booking time was in the past, cannot proceed');
     }
 
-    // stylist calendar validation
-    const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration, 'minutes');
+    // stylist calendar availability validation
+    const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration - 1, 'minutes');
     const bookingStartTimeslot = parseInt(bookingStartDateTime.format('YYMMDDHHmm'), 10);
     const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
     const { occupiedTimeSlots } = Stylists.findOne({ owner: this.userId });
-    const overlappedTimeslots = occupiedTimeSlots.filter(timeslot =>
-      (timeslot.from >= bookingStartTimeslot && timeslot.from <= bookingEndTimeslot) ||
-        (timeslot.to >= bookingStartTimeslot && timeslot.to <= bookingEndTimeslot) ||
-        (timeslot.from < bookingStartTimeslot && timeslot.to > bookingEndTimeslot));
+    const conflictedSlots = occupiedTimeSlots.filter(occupiedSlot =>
+      (occupiedSlot.from >= bookingStartTimeslot && occupiedSlot.from < bookingEndTimeslot) ||
+        (occupiedSlot.to > bookingStartTimeslot && occupiedSlot.to <= bookingEndTimeslot) ||
+        (occupiedSlot.from <= bookingStartTimeslot && occupiedSlot.to >= bookingEndTimeslot));
 
-    if (overlappedTimeslots.length > 0) {
-      throw new Meteor.Error('there is a conflict in your calendar, cannot proceed');
+    if (conflictedSlots.length > 0) {
+      let message = 'cannot confirm this booking due to time conflicts on your calendar: ';
+      conflictedSlots.forEach((timeslot, index) => {
+        message += `• ${formatOccupiedTimeSlot(timeslot)}`;
+        if (index < conflictedSlots.length - 1) {
+          message += ' ';
+        }
+      });
+
+      throw new Meteor.Error(message);
     }
 
     // update bookings record, insert timestamp

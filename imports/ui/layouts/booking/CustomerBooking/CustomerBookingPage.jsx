@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Container, Confirm, Button, TextArea, Rating, Header } from 'semantic-ui-react';
+import { Container, Confirm, Button, TextArea, Rating, Header, Message } from 'semantic-ui-react';
 import classnames from 'classnames';
 import _ from 'lodash';
 
@@ -78,6 +78,12 @@ class CustomerBookingPage extends Component {
               </div>
             </div>
           </div>
+
+          {!_.isEmpty(this.props.error) && (
+            <Message compact error className="margin-bottom-20">
+              {this.props.error}
+            </Message>
+          )}
         </div>
 
         <Fragment>

@@ -17,6 +17,7 @@ import {
 import { dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
+import formatOccupiedTimeSlot from '../../../modules/server/format-occupied-time-slot';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
@@ -88,7 +89,32 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   const duration = calculateTotalDuration(services);
   const bookingTime = moment(date + time, 'YYMMDDHH:mm');
 
-  // TODO: if bookingTime is earlier than 2 hours from now, throw Error
+  // if bookingTime is earlier than 2 hours from now, throw Error
+  if (bookingTime.isBefore(moment().add(2, 'hours'))) {
+    throw new Meteor.Error('Booking time should be at least 2 hours from now.');
+  }
+
+  // stylist calendar availability validation
+  const bookingEndDateTime = bookingTime.add(duration - 1, 'minutes');
+  const bookingStartTimeslot = parseInt(bookingTime.format('YYMMDDHHmm'), 10);
+  const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
+  const { occupiedTimeSlots } = Stylists.findOne({ owner: stylist.owner });
+  const conflictedSlots = occupiedTimeSlots.filter(occupiedSlot =>
+    (occupiedSlot.from >= bookingStartTimeslot && occupiedSlot.from < bookingEndTimeslot) ||
+      (occupiedSlot.to > bookingStartTimeslot && occupiedSlot.to <= bookingEndTimeslot) ||
+      (occupiedSlot.from <= bookingStartTimeslot && occupiedSlot.to >= bookingEndTimeslot));
+
+  if (conflictedSlots.length > 0) {
+    let message = "cannot make this booking due to time conflicts on stylist's calendar: ";
+    conflictedSlots.forEach((timeslot, index) => {
+      message += `• ${formatOccupiedTimeSlot(timeslot)}`;
+      if (index < conflictedSlots.length - 1) {
+        message += ' ';
+      }
+    });
+
+    throw new Meteor.Error(message);
+  }
 
   // create Bookings record
   const bookingsId = Bookings.insert({

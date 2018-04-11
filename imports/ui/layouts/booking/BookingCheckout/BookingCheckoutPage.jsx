@@ -54,9 +54,8 @@ class BookingCheckoutPage extends Component {
     this.setState({ errors });
 
     if (_.isEmpty(errors)) {
-      this.setState({ loading: true });
-
       if (!this.props.cart.useSavedCard) {
+        this.setState({ loading: true });
         // get Stripe token for new card then submit
         if (this.props.stripe) {
           try {
@@ -313,7 +312,7 @@ class BookingCheckoutPage extends Component {
                   disabled={this.props.cart.total === 0}
                   onClick={this.handleSubmit}
                 >
-                  Confirm and Pay
+                  Confirm
                 </Button>
 
                 <Button
