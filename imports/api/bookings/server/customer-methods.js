@@ -95,7 +95,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   }
 
   // stylist calendar availability validation
-  const bookingEndDateTime = bookingTime.add(duration - 1, 'minutes');
+  const bookingEndDateTime = bookingTime.clone().add(duration, 'minutes');
   const bookingStartTimeslot = parseInt(bookingTime.format('YYMMDDHHmm'), 10);
   const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
   const { occupiedTimeSlots } = Stylists.findOne({ owner: stylist.owner });

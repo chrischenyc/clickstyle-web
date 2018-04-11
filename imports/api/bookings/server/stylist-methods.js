@@ -28,7 +28,7 @@ const canStylistCompleteBooking = (booking) => {
   }
 
   const bookingStartDateTime = moment(booking.time);
-  const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration - 1, 'minutes');
+  const bookingEndDateTime = bookingStartDateTime.clone().add(booking.duration - 1, 'minutes');
 
   return bookingEndDateTime.isBefore(moment());
 };
@@ -53,7 +53,7 @@ export function stylistConfirmPendingBooking(_id) {
     }
 
     // stylist calendar availability validation
-    const bookingEndDateTime = moment(bookingStartDateTime).add(booking.duration - 1, 'minutes');
+    const bookingEndDateTime = bookingStartDateTime.clone().add(booking.duration - 1, 'minutes');
     const bookingStartTimeslot = parseInt(bookingStartDateTime.format('YYMMDDHHmm'), 10);
     const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
     const { occupiedTimeSlots } = Stylists.findOne({ owner: this.userId });
