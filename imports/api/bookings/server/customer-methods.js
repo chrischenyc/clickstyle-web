@@ -351,7 +351,6 @@ export function customerFindBooking(_id) {
           firstName: 1,
           lastName: 1,
           address: 1,
-          date: 1,
           time: 1,
           status: 1,
           duration: 1,
@@ -436,7 +435,6 @@ export function guestFindBooking(object) {
           email: 1,
           mobile: 1,
           address: 1,
-          date: 1,
           time: 1,
         },
       },
@@ -455,7 +453,7 @@ export function customerListBookings() {
   }
 
   try {
-    const bookings = Bookings.find(
+    let bookings = Bookings.find(
       { customer: this.userId },
       {
         fields: {
@@ -466,13 +464,19 @@ export function customerListBookings() {
           lastName: 1,
           mobile: 1,
           address: 1,
-          date: 1,
           time: 1,
           status: 1,
         },
-        sort: { createdAt: -1 },
+        sort: { time: 1 },
       },
     ).fetch();
+
+    // group by status
+    bookings = [
+      ...bookings.filter(booking => booking.status === 'pending'),
+      ...bookings.filter(booking => booking.status === 'confirmed'),
+      ...bookings.filter(booking => booking.status !== 'pending' && booking.status !== 'confirmed'),
+    ];
 
     return bookings.map((booking) => {
       const stylist = Profiles.findOne({ owner: booking.stylist });
