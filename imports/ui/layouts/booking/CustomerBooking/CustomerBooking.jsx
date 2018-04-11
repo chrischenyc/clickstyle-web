@@ -57,6 +57,7 @@ class CustomerBooking extends Component {
       if (error) {
         this.setState({ error: error.error });
       } else {
+        this.setState({ error: '' });
         this.loadBooking();
       }
     });
@@ -84,6 +85,7 @@ class CustomerBooking extends Component {
         if (error) {
           this.setState({ error: error.error });
         } else {
+          this.setState({ error: '' });
           this.loadBooking();
         }
       },

@@ -56,6 +56,7 @@ class StylistBooking extends Component {
       if (error) {
         this.setState({ error: error.error });
       } else {
+        this.setState({ error: '' });
         this.loadBooking(_id);
       }
     });
@@ -72,6 +73,7 @@ class StylistBooking extends Component {
       if (error) {
         this.setState({ error: error.error });
       } else {
+        this.setState({ error: '' });
         this.loadBooking(_id);
       }
     });
@@ -88,6 +90,7 @@ class StylistBooking extends Component {
       if (error) {
         this.setState({ error: error.error });
       } else {
+        this.setState({ error: '' });
         this.loadBooking(_id);
       }
     });
@@ -104,6 +107,7 @@ class StylistBooking extends Component {
       if (error) {
         this.setState({ error: error.error });
       } else {
+        this.setState({ error: '' });
         this.loadBooking(_id);
       }
     });
