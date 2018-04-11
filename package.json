@@ -4,17 +4,16 @@
   "description": "stylesquad.com.au web/server app using meteor + react + semantic ",
   "private": true,
   "author": "Chris Chen",
-  "contributors": ["Chris Chen <chrischen79@gmail.com>"],
+  "contributors": [
+    "Chris Chen <chrischen79@gmail.com>"
+  ],
   "scripts": {
     "dev": "MONGO_URL=mongodb://localhost:27017/stylesquad meteor -s settings-development.json",
-    "debug":
-      "MONGO_URL=mongodb://localhost:27017/stylesquad meteor run --inspect -s settings-development.json",
+    "debug": "MONGO_URL=mongodb://localhost:27017/stylesquad meteor run --inspect -s settings-development.json",
     "start": "meteor run",
     "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001",
-
     "predeploy": "heroku config:add METEOR_SETTINGS=\"$(cat settings-production.json)\"",
     "deploy": "git push heroku master",
-
     "cloc": "cloc imports client server private --exclude-ext=json"
   },
   "dependencies": {
@@ -53,7 +52,7 @@
     "react-typist": "^2.0.4",
     "redux": "^3.7.2",
     "semantic-ui-react": "0.77.1",
-    "simpl-schema": "^1.4.2",
+    "simpl-schema": "^1.4.3",
     "stripe": "^5.8.0",
     "uuid": "^3.2.1",
     "validator": "^9.4.1",
