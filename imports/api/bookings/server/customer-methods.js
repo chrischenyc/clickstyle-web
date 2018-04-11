@@ -467,7 +467,7 @@ export function customerListBookings() {
           time: 1,
           status: 1,
         },
-        sort: { time: 1 },
+        sort: { createdAt: -1 },
       },
     ).fetch();
 
