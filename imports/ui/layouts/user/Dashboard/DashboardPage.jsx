@@ -33,82 +33,20 @@ const DashboardPage = props => (
       <div className="dashboard-list-box with-icons margin-top-20">
         <h4>Recent Activities</h4>
         <ul>
-          <li>
-            <i className="list-box-icon sl sl-icon-layers" /> Your listing{' '}
-            <strong>
-              <a href="#">Hotel Govendor</a>
-            </strong>{' '}
-            has been approved!
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-star" /> Kathy Brown left a review{' '}
-            <div className="numerical-rating" data-rating="5.0" /> on{' '}
-            <strong>
-              <a href="#">Burger House</a>
-            </strong>
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-heart" /> Someone bookmarked your{' '}
-            <strong>
-              <a href="#">Burger House</a>
-            </strong>{' '}
-            listing!
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-star" /> Kathy Brown left a review{' '}
-            <div className="numerical-rating" data-rating="3.0" /> on{' '}
-            <strong>
-              <a href="#">Airport</a>
-            </strong>
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-heart" /> Someone bookmarked your{' '}
-            <strong>
-              <a href="#">Burger House</a>
-            </strong>{' '}
-            listing!
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-star" /> John Doe left a review{' '}
-            <div className="numerical-rating" data-rating="4.0" /> on{' '}
-            <strong>
-              <a href="#">Burger House</a>
-            </strong>
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-star" /> Jack Perry left a review{' '}
-            <div className="numerical-rating" data-rating="2.5" /> on{' '}
-            <strong>
-              <a href="#">Tom's Restaurant</a>
-            </strong>
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
+          {props.activities.map((activity, index) => (
+            <li key={index}>
+              <i
+                className={classNames('list-box-icon', {
+                  'sl sl-icon-clock': activity.type === 'booking',
+                  'sl sl-icon-star': activity.type === 'review',
+                })}
+              />
+              <Link to="asdlfkj">{activity.content}</Link>
+              <a href="#" className="close-list-item">
+                <i className="fa fa-close" />
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
@@ -119,82 +57,12 @@ const DashboardPage = props => (
       <div className="dashboard-list-box with-icons margin-top-20">
         <h4>Upcoming bookings</h4>
         <ul>
-          <li>
-            <i className="list-box-icon sl sl-icon-layers" /> Your listing{' '}
-            <strong>
-              <a href="#">Hotel Govendor</a>
-            </strong>{' '}
-            has been approved!
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-star" /> Kathy Brown left a review{' '}
-            <div className="numerical-rating" data-rating="5.0" /> on{' '}
-            <strong>
-              <a href="#">Burger House</a>
-            </strong>
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-heart" /> Someone bookmarked your{' '}
-            <strong>
-              <a href="#">Burger House</a>
-            </strong>{' '}
-            listing!
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-star" /> Kathy Brown left a review{' '}
-            <div className="numerical-rating" data-rating="3.0" /> on{' '}
-            <strong>
-              <a href="#">Airport</a>
-            </strong>
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-heart" /> Someone bookmarked your{' '}
-            <strong>
-              <a href="#">Burger House</a>
-            </strong>{' '}
-            listing!
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-star" /> John Doe left a review{' '}
-            <div className="numerical-rating" data-rating="4.0" /> on{' '}
-            <strong>
-              <a href="#">Burger House</a>
-            </strong>
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
-
-          <li>
-            <i className="list-box-icon sl sl-icon-star" /> Jack Perry left a review{' '}
-            <div className="numerical-rating" data-rating="2.5" /> on{' '}
-            <strong>
-              <a href="#">Tom's Restaurant</a>
-            </strong>
-            <a href="#" className="close-list-item">
-              <i className="fa fa-close" />
-            </a>
-          </li>
+          {props.bookings.map((booking, index) => (
+            <li key={index}>
+              <i className="list-box-icon sl sl-icon-clock" />
+              <Link to="asdlfkj">{booking.content}</Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

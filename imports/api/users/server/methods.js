@@ -47,7 +47,7 @@ Meteor.methods({
       },
       {
         type: 'review',
-        content: 'Your booking has been cancelled!',
+        content: 'Someone left you a review',
         link: '/users/bookings/ddd',
       },
     ];
