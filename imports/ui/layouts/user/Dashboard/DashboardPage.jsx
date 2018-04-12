@@ -27,6 +27,22 @@ const DashboardPage = props => (
       </div>
     </div>
 
+    {/* ---------- Upcoming bookings ---------- */}
+
+    <div className="col-lg-6 col-md-12">
+      <div className="dashboard-list-box with-icons margin-top-20">
+        <h4>Upcoming bookings</h4>
+        <ul>
+          {props.bookings.map((booking, index) => (
+            <li key={index}>
+              <i className="list-box-icon sl sl-icon-clock" />
+              <Link to="asdlfkj">{booking.content}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
     {/* ---------- Recent Activities ---------- */}
 
     <div className="col-lg-6 col-md-12">
@@ -45,22 +61,6 @@ const DashboardPage = props => (
               <a href="#" className="close-list-item">
                 <i className="fa fa-close" />
               </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-
-    {/* ---------- Upcoming bookings ---------- */}
-
-    <div className="col-lg-6 col-md-12">
-      <div className="dashboard-list-box with-icons margin-top-20">
-        <h4>Upcoming bookings</h4>
-        <ul>
-          {props.bookings.map((booking, index) => (
-            <li key={index}>
-              <i className="list-box-icon sl sl-icon-clock" />
-              <Link to="asdlfkj">{booking.content}</Link>
             </li>
           ))}
         </ul>
