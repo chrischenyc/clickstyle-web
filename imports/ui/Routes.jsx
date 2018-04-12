@@ -28,7 +28,7 @@ import CustomerBookings from './layouts/booking/CustomerBookings/CustomerBooking
 import StylistBooking from './layouts/booking/StylistBooking/StylistBooking';
 import StylistBookings from './layouts/booking/StylistBookings/StylistBookings';
 
-import Dashboard from './layouts/user/DashboardPage';
+import Dashboard from './layouts/user/Dashboard/Dashboard';
 import EditProfile from './layouts/user/Profile/EditProfile';
 import SettingsPage from './layouts/user/SettingsPage';
 import ChangePassword from './layouts/user/ChangePassword/ChangePassword';
