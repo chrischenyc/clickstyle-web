@@ -100,12 +100,12 @@ class BookingCheckout extends Component {
         if (error) {
           this.setState({ loading: false, error: error.reason });
         } else if (result) {
-          const { bookingsId, userId } = result;
+          const { bookingId, userId } = result;
           this.setState({ loading: false });
 
           this.props.resetCart();
 
-          let url = `booking-requested/${bookingsId}`;
+          let url = `booking-requested/${bookingId}`;
           if (userId) {
             url += `/${userId}`;
           }

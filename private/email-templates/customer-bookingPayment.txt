@@ -1,7 +1,7 @@
 Hi {{firstName}},
 
 Customer Receipt
-Booking number: {{bookingsId}}
+Booking number: {{bookingId}}
 Payment number: {{paymentId}}
 Total: {{total}}
 Detail: {{description}}

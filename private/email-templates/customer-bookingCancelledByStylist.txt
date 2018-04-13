@@ -2,7 +2,7 @@ Hi {{firstName}},
 
 Unfortunately, your booking has been cancelled by {{stylist}}.
 
-Booking number: {{bookingsId}}
+Booking number: {{bookingId}}
 Stylist: {{stylist}}
 Customer: {{firstName}} {{lastName}}
 Time: {{time}}

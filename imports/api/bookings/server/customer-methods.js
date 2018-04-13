@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
+import BookingActivities from '../../booking_activities/booking_activities';
 import Stylists from '../../stylists/stylists';
 import Payments from '../../payments/payments';
 import Reviews from '../../reviews/reviews';
@@ -89,7 +90,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   }
 
   // create Bookings record
-  const bookingsId = Bookings.insert({
+  const bookingId = Bookings.insert({
     stylist: stylist.owner,
     services,
     total,
@@ -106,6 +107,15 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     duration,
   });
 
+  // create BookingActivities record
+  BookingActivities.insert({
+    booking: bookingId,
+    stylist: stylist.owner,
+    customer: userId,
+    user: userId,
+    action: 'requested',
+  });
+
   // inform customer
   sendCustomerBookingRequestedEmail({
     stylist: `${stylist.name.first} ${stylist.name.last}`,
@@ -117,8 +127,8 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     mobile,
     address,
     time: dateTimeString(bookingTime),
-    bookingsId,
-    bookingUrl: `users/bookings/${bookingsId}`,
+    bookingId,
+    bookingUrl: `users/bookings/${bookingId}`,
   });
 
   // inform stylist
@@ -133,11 +143,11 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     mobile,
     address,
     time: dateTimeString(bookingTime),
-    bookingsId,
-    bookingUrl: `users/stylist/bookings/${bookingsId}`,
+    bookingId,
+    bookingUrl: `users/stylist/bookings/${bookingId}`,
   });
 
-  return bookingsId;
+  return bookingId;
 }
 
 export async function customerCreateBooking(cart) {
@@ -221,18 +231,18 @@ export async function customerCreateBooking(cart) {
         );
       }
 
-      const bookingsId = createBooking(cart, userId, stripeCustomerId, card.id);
+      const bookingId = createBooking(cart, userId, stripeCustomerId, card.id);
 
       // method response depends on user login status
       if (this.userId) {
-        return { bookingsId };
+        return { bookingId };
       }
-      return { bookingsId, userId };
+      return { bookingId, userId };
     } else if (useSavedCard && stripeCustomer.default_source === stripeDefaultCardId) {
       // ========== check-out with a saved card ===========
-      const bookingsId = createBooking(cart, userId, stripeCustomerId, stripeDefaultCardId);
+      const bookingId = createBooking(cart, userId, stripeCustomerId, stripeDefaultCardId);
 
-      return { bookingsId };
+      return { bookingId };
     }
 
     // invalid saved card, throw exception
@@ -260,6 +270,15 @@ export async function customerCancelBooking(_id) {
       { _id, customer: this.userId },
       { $set: { status: 'cancelled', customerCancelledAt: Date.now() } },
     );
+
+    // create BookingActivities record
+    BookingActivities.insert({
+      booking: _id,
+      stylist: booking.stylist,
+      customer: booking.customer,
+      user: this.userId,
+      action: 'cancelled',
+    });
 
     // unblock occupied timeslots
     Stylists.update(
@@ -295,7 +314,7 @@ export async function customerCancelBooking(_id) {
       mobile,
       address,
       time: dateTimeString(time),
-      bookingsId: _id,
+      bookingId: _id,
       bookingUrl: `users/stylist/bookings/${_id}`,
     });
   } catch (exception) {

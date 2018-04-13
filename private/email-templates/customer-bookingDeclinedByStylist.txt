@@ -2,7 +2,7 @@ Hi {{firstName}},
 
 Your booking has been declined by {{stylist}}.
 
-Booking number: {{bookingsId}}
+Booking number: {{bookingId}}
 Stylist: {{stylist}}
 Customer: {{firstName}} {{lastName}}
 Time: {{time}}

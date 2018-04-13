@@ -4,7 +4,7 @@ Hi {{firstName}},
 
 Booking details
 =================
-Booking number: {{bookingsId}}
+Booking number: {{bookingId}}
 Stylist: {{stylist}}
 Customer: {{firstName}} {{lastName}}
 Time: {{time}}

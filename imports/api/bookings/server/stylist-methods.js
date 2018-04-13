@@ -15,6 +15,7 @@ import {
 import Stylists from '../../stylists/stylists';
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
+import BookingActivities from '../../booking_activities/booking_activities';
 import Payments from '../../payments/payments';
 import Reviews from '../../reviews/reviews';
 import { dateTimeString } from '../../../modules/format-date';
@@ -80,6 +81,15 @@ export function stylistConfirmPendingBooking(_id) {
       { $set: { status: 'confirmed', stylistConfirmedAt: Date.now() } },
     );
 
+    // create BookingActivities record
+    BookingActivities.insert({
+      booking: _id,
+      stylist: booking.stylist,
+      customer: booking.customer,
+      user: this.userId,
+      action: 'confirmed',
+    });
+
     // block stylist timeslot
     Stylists.update(
       { owner: this.userId },
@@ -110,7 +120,7 @@ export function stylistConfirmPendingBooking(_id) {
       mobile,
       address,
       time: dateTimeString(time),
-      bookingsId: _id,
+      bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
     });
   } catch (exception) {
@@ -139,6 +149,15 @@ export function stylistDeclinePendingBooking(_id) {
       { $set: { status: 'declined', stylistDeclinedAt: Date.now() } },
     );
 
+    // create BookingActivities record
+    BookingActivities.insert({
+      booking: _id,
+      stylist: booking.stylist,
+      customer: booking.customer,
+      user: this.userId,
+      action: 'declined',
+    });
+
     // notify customer
     const stylist = Stylists.findOne({ owner: this.userId });
     const {
@@ -154,7 +173,7 @@ export function stylistDeclinePendingBooking(_id) {
       mobile,
       address,
       time: dateTimeString(time),
-      bookingsId: _id,
+      bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
     });
   } catch (exception) {
@@ -183,6 +202,15 @@ export function stylistCancelConfirmedBooking(_id) {
       { $set: { status: 'cancelled', stylistCancelledAt: Date.now() } },
     );
 
+    // create BookingActivities record
+    BookingActivities.insert({
+      booking: _id,
+      stylist: booking.stylist,
+      customer: booking.customer,
+      user: this.userId,
+      action: 'cancelled',
+    });
+
     // unblock occupied timeslots
     Stylists.update(
       { owner: booking.stylist },
@@ -205,7 +233,7 @@ export function stylistCancelConfirmedBooking(_id) {
       mobile,
       address,
       time: dateTimeString(time),
-      bookingsId: _id,
+      bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
     });
 
@@ -237,6 +265,15 @@ export async function stylistCompleteConfirmedBooking(_id) {
       { $set: { status: 'completed', stylistCompletedAt: Date.now() } },
     );
 
+    // create BookingActivities record
+    BookingActivities.insert({
+      booking: _id,
+      stylist: booking.stylist,
+      customer: booking.customer,
+      user: this.userId,
+      action: 'completed',
+    });
+
     // notify customer
     const stylist = Profiles.findOne({ owner: this.userId });
     const {
@@ -253,7 +290,7 @@ export async function stylistCompleteConfirmedBooking(_id) {
       mobile,
       address,
       time: dateTimeString(time),
-      bookingsId: _id,
+      bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
     });
 
@@ -269,7 +306,7 @@ export async function stylistCompleteConfirmedBooking(_id) {
       mobile,
       address,
       time: dateTimeString(time),
-      bookingsId: _id,
+      bookingId: _id,
       bookingUrl: `users/stylist/bookings/${_id}`,
     });
 

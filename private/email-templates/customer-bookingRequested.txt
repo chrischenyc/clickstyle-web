@@ -2,7 +2,7 @@ Hi {{firstName}},
 
 This is not a confirmed booking - at least not yet. You will get a response within 24 hours.
 
-Booking number: {{bookingsId}}
+Booking number: {{bookingId}}
 Stylist: {{stylist}}
 Customer: {{firstName}} {{lastName}}
 Time: {{time}}

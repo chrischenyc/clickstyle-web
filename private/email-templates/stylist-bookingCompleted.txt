@@ -4,7 +4,7 @@ Well done, you've just confirmed the booked services have been delivered.
 
 Booking Details
 ================
-Booking number: {{bookingsId}}
+Booking number: {{bookingId}}
 Customer: {{firstName}} {{lastName}}
 Time: {{time}}
 Address: {{address}}

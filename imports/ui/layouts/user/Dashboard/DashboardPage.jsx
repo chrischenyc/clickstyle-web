@@ -4,6 +4,7 @@ import { Container, Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import classNames from 'classnames';
+import moment from 'moment';
 
 const DashboardPage = props => (
   <Container>
@@ -52,16 +53,20 @@ const DashboardPage = props => (
       <div className="dashboard-list-box with-icons margin-top-20">
         <h4>Recent Activities</h4>
         <ul>
-          {props.activities.map((activity, index) => (
-            <Link to="asdlfkj" key={index}>
+          {props.recentActivities.map(activity => (
+            <Link to={activity.link} key={activity._id}>
               <li>
                 <i
                   className={classNames('list-box-icon', {
-                    'sl sl-icon-clock': activity.type === 'booking',
-                    'sl sl-icon-star': activity.type === 'review',
+                    'sl sl-icon-question': activity.action === 'requested',
+                    'sl sl-icon-check': activity.action === 'confirmed',
+                    'sl sl-icon-close':
+                      activity.action === 'declined' || activity.action === 'cancelled',
+                    'sl sl-icon-star': activity.action === 'reviewed',
+                    'sl sl-icon-trophy': activity.action === 'completed',
                   })}
                 />
-                {activity.content}
+                {activity.content} <span>{moment(activity.createdAt).fromNow()}</span>
               </li>
             </Link>
           ))}
@@ -75,7 +80,7 @@ DashboardPage.propTypes = {
   firstName: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
   messages: PropTypes.array.isRequired,
-  activities: PropTypes.array.isRequired,
+  recentActivities: PropTypes.array.isRequired,
   upcomingBookings: PropTypes.array.isRequired,
 };
 

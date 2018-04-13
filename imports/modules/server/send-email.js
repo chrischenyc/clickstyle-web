@@ -152,7 +152,7 @@ export const sendCustomerBookingRequestedEmail = ({
   mobile,
   address,
   time,
-  bookingsId,
+  bookingId,
   bookingUrl,
 }) => {
   sendEmail({
@@ -170,7 +170,7 @@ export const sendCustomerBookingRequestedEmail = ({
       mobile,
       address,
       time,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
     },
@@ -189,7 +189,7 @@ export const sendCustomerBookingConfirmedEmail = ({
   mobile,
   address,
   time,
-  bookingsId,
+  bookingId,
   bookingUrl,
 }) => {
   sendEmail({
@@ -207,7 +207,7 @@ export const sendCustomerBookingConfirmedEmail = ({
       mobile,
       address,
       time,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
     },
@@ -226,7 +226,7 @@ export const sendCustomerBookingDeclinedEmail = ({
   mobile,
   address,
   time,
-  bookingsId,
+  bookingId,
   bookingUrl,
 }) => {
   sendEmail({
@@ -244,7 +244,7 @@ export const sendCustomerBookingDeclinedEmail = ({
       mobile,
       address,
       time,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
     },
@@ -263,7 +263,7 @@ export const sendCustomerBookingCancelledByStylistEmail = ({
   mobile,
   address,
   time,
-  bookingsId,
+  bookingId,
   bookingUrl,
 }) => {
   sendEmail({
@@ -281,7 +281,7 @@ export const sendCustomerBookingCancelledByStylistEmail = ({
       mobile,
       address,
       time,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
     },
@@ -300,13 +300,13 @@ export const sendCustomerBookingCompletedEmail = ({
   mobile,
   address,
   time,
-  bookingsId,
+  bookingId,
   bookingUrl,
 }) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `Booking ${bookingsId} has been completed`,
+    subject: `Booking ${bookingId} has been completed`,
     template: 'customer-bookingCompleted',
     templateConstants: {
       stylist,
@@ -318,7 +318,7 @@ export const sendCustomerBookingCompletedEmail = ({
       mobile,
       address,
       time,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
     },
@@ -333,13 +333,13 @@ export const sendCustomerPaymentEmail = ({
   description,
   firstName,
   email,
-  bookingsId,
+  bookingId,
   bookingUrl,
 }) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `Billing receipt for booking ${bookingsId}`,
+    subject: `Billing receipt for booking ${bookingId}`,
     template: 'customer-bookingPayment',
     templateConstants: {
       paymentId,
@@ -347,7 +347,7 @@ export const sendCustomerPaymentEmail = ({
       description,
       firstName,
       email,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
     },
@@ -367,7 +367,7 @@ export const sendStylistBookingRequestedEmail = ({
   mobile,
   address,
   time,
-  bookingsId,
+  bookingId,
   bookingUrl,
 }) => {
   sendEmail({
@@ -385,7 +385,7 @@ export const sendStylistBookingRequestedEmail = ({
       mobile,
       address,
       time,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
     },
@@ -405,13 +405,13 @@ export const sendStylistBookingCancelledByCustomerEmail = ({
   mobile,
   address,
   time,
-  bookingsId,
+  bookingId,
   bookingUrl,
 }) => {
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `${firstName} ${lastName} cancelled booking ${bookingsId}`,
+    subject: `${firstName} ${lastName} cancelled booking ${bookingId}`,
     template: 'stylist-bookingCancelledByCustomer',
     templateConstants: {
       stylistFirstName,
@@ -423,7 +423,7 @@ export const sendStylistBookingCancelledByCustomerEmail = ({
       mobile,
       address,
       time,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
     },
@@ -443,13 +443,13 @@ export const sendStylistBookingCompletedEmail = ({
   mobile,
   address,
   time,
-  bookingsId,
+  bookingId,
   bookingUrl,
 }) => {
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `Yay, booking ${bookingsId} has been completed!`,
+    subject: `Yay, booking ${bookingId} has been completed!`,
     template: 'stylist-bookingCompleted',
     templateConstants: {
       stylistFirstName,
@@ -461,7 +461,7 @@ export const sendStylistBookingCompletedEmail = ({
       mobile,
       address,
       time,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
     },
@@ -474,7 +474,7 @@ export const sendStylistBookingReviewedEmail = ({
   stylistFirstName,
   stylistEmail,
   firstName,
-  bookingsId,
+  bookingId,
   bookingUrl,
   rating,
   review,
@@ -487,7 +487,7 @@ export const sendStylistBookingReviewedEmail = ({
     templateConstants: {
       stylistFirstName,
       firstName,
-      bookingsId,
+      bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       rating,
       review,

@@ -6,6 +6,7 @@ import rateLimit from '../../../modules/server/rate-limit';
 import Reviews from '../reviews';
 import Stylists from '../../stylists/stylists';
 import Bookings from '../../bookings/bookings';
+import BookingActivities from '../../booking_activities/booking_activities';
 import Profiles from '../../profiles/profiles';
 import { sendStylistBookingReviewedEmail } from '../../../modules/server/send-email';
 
@@ -35,6 +36,15 @@ Meteor.methods({
         review,
       });
 
+      // create BookingActivities record
+      BookingActivities.insert({
+        booking: _id,
+        stylist,
+        customer,
+        user: this.userId,
+        action: 'reviewed',
+      });
+
       // update Stylists record about avgRating and counts
       const stylistRecord = Stylists.findOne({ owner: stylist });
       let reviewsCount = stylistRecord.reviewsCount || 0;
@@ -55,7 +65,7 @@ Meteor.methods({
         stylistFirstName: stylistName.first,
         stylistEmail,
         firstName: customerName.first,
-        bookingsId: _id,
+        bookingId: _id,
         bookingUrl: `users/stylist/bookings/${_id}`,
         rating,
         review,

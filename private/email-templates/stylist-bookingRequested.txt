@@ -2,7 +2,7 @@ Hi {{stylistFirstName}},
 
 {{firstName}} {{lastName}} has requested a booking, please response within TBD...
 
-Booking number: {{bookingsId}}
+Booking number: {{bookingId}}
 Customer: {{firstName}} {{lastName}}
 Time: {{time}}
 Address: {{address}}

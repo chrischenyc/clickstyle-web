@@ -12,7 +12,7 @@ class Dashboard extends Component {
     this.state = {
       error: '',
       messages: [],
-      activities: [],
+      recentActivities: [],
       upcomingBookings: [],
     };
   }
@@ -22,11 +22,10 @@ class Dashboard extends Component {
       if (error) {
         this.setState({ error: error.error });
       } else {
-        const { messages, activities } = response;
+        const { messages } = response;
         this.setState({
           error: '',
           messages,
-          activities,
         });
       }
     });
@@ -41,6 +40,17 @@ class Dashboard extends Component {
         });
       }
     });
+
+    Meteor.call('users.activities.recent', (error, recentActivities) => {
+      if (error) {
+        this.setState({ error: error.error });
+      } else {
+        this.setState({
+          error: '',
+          recentActivities,
+        });
+      }
+    });
   }
 
   render() {
@@ -49,7 +59,7 @@ class Dashboard extends Component {
         firstName={this.props.firstName}
         error={this.state.error}
         messages={this.state.messages}
-        activities={this.state.activities}
+        recentActivities={this.state.recentActivities}
         upcomingBookings={this.state.upcomingBookings}
       />
     );
