@@ -116,6 +116,16 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     action: 'requested',
   });
 
+  // create Notification to remind stylist
+  Meteor.call('notifications.create', {
+    recipient: stylist.owner,
+    content: `${firstName} requested a booking for you, please response`,
+    type: 'success',
+    dismissible: true,
+    dismissed: false,
+    link: `/users/stylist/bookings/${bookingId}`,
+  });
+
   // inform customer
   sendCustomerBookingRequestedEmail({
     stylist: `${stylist.name.first} ${stylist.name.last}`,
@@ -279,6 +289,18 @@ export async function customerCancelBooking(_id) {
       user: this.userId,
       action: 'cancelled',
     });
+
+    // create Notification for stylist
+    if (booking.status === 'confirmed') {
+      Meteor.call('notifications.create', {
+        recipient: booking.stylist,
+        content: `${booking.firstName} cancelled a confirmed booking with you`,
+        type: 'error',
+        dismissible: true,
+        dismissed: false,
+        link: `/users/stylist/bookings/${_id}`,
+      });
+    }
 
     // unblock occupied timeslots
     Stylists.update(

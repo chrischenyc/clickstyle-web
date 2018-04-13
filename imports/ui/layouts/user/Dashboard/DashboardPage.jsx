@@ -19,18 +19,30 @@ const DashboardPage = props => (
       <div className="col-md-12">
         <div className="margin-bottom-30">
           {props.notifications.map(notification => (
-            <Link to={notification.link} key={notification._id}>
+            <Link
+              to={notification.link}
+              key={notification._id}
+              onClick={() => {
+                props.onDismissNotification(notification._id);
+              }}
+            >
               <div
-                className={classNames('notification', {
+                className={classNames('notification', notification.type, {
                   closeable: notification.dismissible,
-                  success: notification.type !== 'warning' && notification.type !== 'error',
-                  warning: notification.type === 'warning',
-                  error: notification.type === 'error',
                 })}
               >
                 <p>{notification.content}</p>
 
-                {notification.dismissible && <a className="close" href="#" />}
+                {notification.dismissible && (
+                  <a
+                    className="close"
+                    href={`/notifications/${notification._id}/dismiss`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      props.onDismissNotification(notification._id);
+                    }}
+                  />
+                )}
               </div>
             </Link>
           ))}
@@ -91,6 +103,7 @@ DashboardPage.propTypes = {
   notifications: PropTypes.array.isRequired,
   recentActivities: PropTypes.array.isRequired,
   upcomingBookings: PropTypes.array.isRequired,
+  onDismissNotification: PropTypes.func.isRequired,
 };
 
 export default DashboardPage;

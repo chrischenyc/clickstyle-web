@@ -30,6 +30,7 @@ Meteor.methods({
       throw exception;
     }
   },
+
   'notifications.list': function listUserNotifications() {
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
@@ -47,10 +48,32 @@ Meteor.methods({
       throw exception;
     }
   },
+
+  'notifications.dismiss': function dismissUserNotification(_id) {
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(_id, String);
+
+    try {
+      Notifications.update(
+        { _id, recipient: this.userId },
+        {
+          $set: {
+            dismissed: true,
+          },
+        },
+      );
+    } catch (exception) {
+      log.error(exception);
+      throw exception;
+    }
+  },
 });
 
 rateLimit({
-  methods: ['notifications.list'],
+  methods: ['notifications.list', 'notifications.dismiss'],
   limit: 5,
   timeRange: 1000,
 });

@@ -15,19 +15,12 @@ class Dashboard extends Component {
       recentActivities: [],
       upcomingBookings: [],
     };
+
+    this.handleDismissNotification = this.handleDismissNotification.bind(this);
   }
 
   componentDidMount() {
-    Meteor.call('notifications.list', (error, notifications) => {
-      if (error) {
-        this.setState({ error: error.error });
-      } else {
-        this.setState({
-          error: '',
-          notifications,
-        });
-      }
-    });
+    this.loadNotifications();
 
     Meteor.call('bookings.upcoming', (error, upcomingBookings) => {
       if (error) {
@@ -52,6 +45,33 @@ class Dashboard extends Component {
     });
   }
 
+  loadNotifications() {
+    Meteor.call('notifications.list', (error, notifications) => {
+      if (error) {
+        this.setState({ error: error.error });
+      } else {
+        this.setState({
+          error: '',
+          notifications,
+        });
+      }
+    });
+  }
+
+  handleDismissNotification(_id) {
+    this.setState({
+      notifications: this.state.notifications.filter(notification => notification._id !== _id),
+    });
+
+    Meteor.call('notifications.dismiss', _id, (error) => {
+      if (error) {
+        this.setState({ error: error.error });
+      } else {
+        this.loadNotifications();
+      }
+    });
+  }
+
   render() {
     return (
       <DashboardPage
@@ -60,6 +80,7 @@ class Dashboard extends Component {
         notifications={this.state.notifications}
         recentActivities={this.state.recentActivities}
         upcomingBookings={this.state.upcomingBookings}
+        onDismissNotification={this.handleDismissNotification}
       />
     );
   }

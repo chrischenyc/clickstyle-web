@@ -45,6 +45,17 @@ Meteor.methods({
         action: 'reviewed',
       });
 
+      const { name: customerName } = Profiles.findOne({ owner: customer });
+
+      Meteor.call('notifications.create', {
+        recipient: stylist,
+        content: `${customerName.first} reviewed a booking with you`,
+        type: 'success',
+        dismissible: true,
+        dismissed: false,
+        link: `/users/stylist/bookings/${_id}`,
+      });
+
       // update Stylists record about avgRating and counts
       const stylistRecord = Stylists.findOne({ owner: stylist });
       let reviewsCount = stylistRecord.reviewsCount || 0;
@@ -60,7 +71,7 @@ Meteor.methods({
       const { name: stylistName, email: stylistEmail } = Profiles.findOne({
         owner: stylist,
       });
-      const { name: customerName } = Profiles.findOne({ owner: customer });
+
       sendStylistBookingReviewedEmail({
         stylistFirstName: stylistName.first,
         stylistEmail,

@@ -90,6 +90,18 @@ export function stylistConfirmPendingBooking(_id) {
       action: 'confirmed',
     });
 
+    // send notification to customer
+    const {name: stylistName} = Stylists.findOne({ owner: this.userId });
+
+    Meteor.call('notifications.create', {
+      recipient: booking.customer,
+      content: `${stylistName.first} confirmed your booking request`,
+      type: 'success',
+      dismissible: true,
+      dismissed: false,
+      link: `/users/bookings/${_id}`,
+    });
+
     // block stylist timeslot
     Stylists.update(
       { owner: this.userId },
@@ -105,13 +117,11 @@ export function stylistConfirmPendingBooking(_id) {
       },
     );
 
-    // notify customer
-    const stylist = Stylists.findOne({ owner: this.userId });
     const {
       services, total, firstName, lastName, email, mobile, address, time,
     } = booking;
     sendCustomerBookingConfirmedEmail({
-      stylist: `${stylist.name.first} ${stylist.name.last}`,
+      stylist: `${stylistName.first} ${stylistName.last}`,
       services: servicesSummary(services),
       total,
       firstName,
@@ -158,13 +168,24 @@ export function stylistDeclinePendingBooking(_id) {
       action: 'declined',
     });
 
+    // send notification to customer
+    const {name: stylistName} = Stylists.findOne({ owner: this.userId });
+
+    Meteor.call('notifications.create', {
+      recipient: booking.customer,
+      content: `${stylistName.first} declined your booking request`,
+      type: 'warning',
+      dismissible: true,
+      dismissed: false,
+      link: `/users/bookings/${_id}`,
+    });
+
     // notify customer
-    const stylist = Stylists.findOne({ owner: this.userId });
     const {
       services, total, firstName, lastName, email, mobile, address, time,
     } = booking;
     sendCustomerBookingDeclinedEmail({
-      stylist: `${stylist.name.first} ${stylist.name.last}`,
+      stylist: `${stylistName.first} ${stylistName.last}`,
       services: servicesSummary(services),
       total,
       firstName,
@@ -211,6 +232,18 @@ export function stylistCancelConfirmedBooking(_id) {
       action: 'cancelled',
     });
 
+    // send notification to customer
+    const {name: stylistName} = Stylists.findOne({ owner: this.userId });
+
+    Meteor.call('notifications.create', {
+      recipient: booking.customer,
+      content: `${stylistName.first} cancelled a booking with you`,
+      type: 'error',
+      dismissible: true,
+      dismissed: false,
+      link: `/users/bookings/${_id}`,
+    });
+
     // unblock occupied timeslots
     Stylists.update(
       { owner: booking.stylist },
@@ -218,13 +251,12 @@ export function stylistCancelConfirmedBooking(_id) {
     );
 
     // notify customer
-    const stylist = Stylists.findOne({ owner: this.userId });
     const {
       services, total, firstName, lastName, email, mobile, address, time,
     } = booking;
 
     sendCustomerBookingCancelledByStylistEmail({
-      stylist: `${stylist.name.first} ${stylist.name.last}`,
+      stylist: `${stylistName.first} ${stylistName.last}`,
       services: servicesSummary(services),
       total,
       firstName,
@@ -274,14 +306,25 @@ export async function stylistCompleteConfirmedBooking(_id) {
       action: 'completed',
     });
 
+    // send notification to customer
+    const {name: stylistName, email: stylistEmail} = Stylists.findOne({ owner: this.userId });
+
+    Meteor.call('notifications.create', {
+      recipient: booking.customer,
+      content: `${stylistName.first} marked a booking with you as completed`,
+      type: 'success',
+      dismissible: true,
+      dismissed: false,
+      link: `/users/bookings/${_id}`,
+    });
+
     // notify customer
-    const stylist = Profiles.findOne({ owner: this.userId });
     const {
       services, total, firstName, lastName, email, mobile, address, time,
     } = booking;
 
     sendCustomerBookingCompletedEmail({
-      stylist: `${stylist.name.first} ${stylist.name.last}`,
+      stylist: `${stylistName.first} ${stylistName.last}`,
       services: servicesSummary(services),
       total,
       firstName,
@@ -296,8 +339,8 @@ export async function stylistCompleteConfirmedBooking(_id) {
 
     // notify stylist
     sendStylistBookingCompletedEmail({
-      stylistFirstName: stylist.name.first,
-      stylistEmail: stylist.email,
+      stylistFirstName: stylistName.first,
+      stylistEmail,
       services: servicesSummary(services),
       total,
       firstName,
