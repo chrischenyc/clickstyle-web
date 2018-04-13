@@ -9,8 +9,13 @@ Meteor.publish('profiles.self', function profilesOwner() {
   return Profiles.find(
     { owner: this.userId },
     {
-      // hide fields in the return
-      fields: { createdAt: 0, updatedAt: 0 },
+      fields: {
+        name: 1,
+        mobile: 1,
+        address: 1,
+        photo: 1,
+        notifications: 1,
+      },
     },
   );
 });
