@@ -7,13 +7,15 @@ import BookingActivities from '../../booking_activities/booking_activities';
 import Profiles from '../../profiles/profiles';
 
 function bookingActivitySummary(activity, userId) {
-  if (activity.user !== userId) {
-    const { name } = Profiles.findOne({ owner: activity.user });
-
-    return `${name.first} ${activity.action} a booking`;
+  if (activity.user === userId) {
+    return `You ${activity.action} a booking`;
+  } else if (activity.user === 'system') {
+    return `System ${activity.action} a booking`;
   }
 
-  return `You ${activity.action} a booking`;
+  const { name } = Profiles.findOne({ owner: activity.user });
+
+  return `${name.first} ${activity.action} a booking`;
 }
 
 function bookingActivityLink(activity, userId) {
