@@ -49,6 +49,12 @@ Meteor.methods({
         });
       });
 
+      // remove notification which reminds stylist to setup services
+      Meteor.call('notifications.remove', {
+        recipient: this.userId,
+        link: '/users/stylist/services',
+      });
+
       log.info(
         'Meteor.methods: stylists.update.services',
         `userId: ${this.userId}`,
@@ -71,6 +77,12 @@ Meteor.methods({
       Stylists.update({ owner: this.userId }, { $set: { openHours } });
       updateStylistOccupiedTimeSlots(this.userId, 90);
 
+      // remove notification which reminds stylist to setup services
+      Meteor.call('notifications.remove', {
+        recipient: this.userId,
+        link: '/users/stylist/calendar',
+      });
+
       log.info(
         'Meteor.methods: stylists.update.openHours',
         `userId: ${this.userId}`,
@@ -91,6 +103,12 @@ Meteor.methods({
 
     try {
       Stylists.update({ owner: this.userId }, { $set: { areas } });
+
+      // remove notification which reminds stylist to setup services
+      Meteor.call('notifications.remove', {
+        recipient: this.userId,
+        link: '/users/stylist/areas',
+      });
 
       // calculate suburbs within reach
       Meteor.defer(() => {

@@ -8,7 +8,7 @@ import Notifications from '../../notifications/notifications';
 import Profiles from '../../profiles/profiles';
 
 Meteor.methods({
-  'notifications.create': function createNotifications(notification) {
+  'notifications.create': function createNotification(notification) {
     if (
       Meteor.isClient &&
       !Roles.userIsInRole(Meteor.userId(), [
@@ -25,6 +25,31 @@ Meteor.methods({
       Notifications.insert(notification);
 
       Profiles.update({ owner: notification.recipient }, { $inc: { notifications: 1 } });
+    } catch (exception) {
+      log.error(exception);
+      throw exception;
+    }
+  },
+
+  'notifications.remove': function removeNotification(data) {
+    if (
+      Meteor.isClient &&
+      !Roles.userIsInRole(Meteor.userId(), [
+        Meteor.settings.public.roles.admin,
+        Meteor.settings.public.roles.superAdmin,
+      ])
+    ) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(data, Object);
+
+    const { recipient, link } = data;
+    check(recipient, String);
+    check(link, String);
+
+    try {
+      Notifications.remove({ recipient, link });
     } catch (exception) {
       log.error(exception);
       throw exception;
