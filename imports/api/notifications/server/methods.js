@@ -58,7 +58,7 @@ Meteor.methods({
 
     try {
       Notifications.update(
-        { _id, recipient: this.userId },
+        { _id, recipient: this.userId, dismissible: true },
         {
           $set: {
             dismissed: true,
