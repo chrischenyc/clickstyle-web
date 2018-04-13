@@ -23,7 +23,9 @@ const DashboardPage = props => (
               to={notification.link}
               key={notification._id}
               onClick={() => {
-                props.onDismissNotification(notification._id);
+                if (notification.dismissible) {
+                  props.onDismissNotification(notification._id);
+                }
               }}
             >
               <div

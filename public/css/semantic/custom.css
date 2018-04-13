@@ -24,6 +24,7 @@
 /* override link color */
 a {
   color: #333;
+  font-weight: bold;
 }
 a:hover {
   color: #00aca4;
