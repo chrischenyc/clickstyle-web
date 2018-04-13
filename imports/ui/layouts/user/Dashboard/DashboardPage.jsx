@@ -17,12 +17,19 @@ const DashboardPage = props => (
     {/* ---------- messages ---------- */}
     <div className="col-md-12">
       <div className="margin-bottom-30">
-        {props.messages.map((message, index) => (
-          <Link to={message.link} key={index}>
-            <div className={classNames('notification closeable', message.type)}>
-              <p>{message.content}</p>
+        {props.notifications.map(notification => (
+          <Link to={notification.link} key={notification._id}>
+            <div
+              className={classNames('notification', {
+                closeable: notification.dismissible,
+                success: notification.type !== 'warning' && notification.type !== 'error',
+                warning: notification.type === 'warning',
+                error: notification.type === 'error',
+              })}
+            >
+              <p>{notification.content}</p>
 
-              <a className="close" href="#" />
+              {notification.dismissible && <a className="close" href="#" />}
             </div>
           </Link>
         ))}
@@ -79,7 +86,7 @@ const DashboardPage = props => (
 DashboardPage.propTypes = {
   firstName: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
-  messages: PropTypes.array.isRequired,
+  notifications: PropTypes.array.isRequired,
   recentActivities: PropTypes.array.isRequired,
   upcomingBookings: PropTypes.array.isRequired,
 };

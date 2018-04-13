@@ -11,26 +11,25 @@ class Dashboard extends Component {
 
     this.state = {
       error: '',
-      messages: [],
+      notifications: [],
       recentActivities: [],
       upcomingBookings: [],
     };
   }
 
   componentDidMount() {
-    Meteor.call('users.dashboardContent', (error, response) => {
+    Meteor.call('notifications.list', (error, notifications) => {
       if (error) {
         this.setState({ error: error.error });
       } else {
-        const { messages } = response;
         this.setState({
           error: '',
-          messages,
+          notifications,
         });
       }
     });
 
-    Meteor.call('users.bookings.upcoming', (error, upcomingBookings) => {
+    Meteor.call('bookings.upcoming', (error, upcomingBookings) => {
       if (error) {
         this.setState({ error: error.error });
       } else {
@@ -41,7 +40,7 @@ class Dashboard extends Component {
       }
     });
 
-    Meteor.call('users.activities.recent', (error, recentActivities) => {
+    Meteor.call('booking.activities.recent', (error, recentActivities) => {
       if (error) {
         this.setState({ error: error.error });
       } else {
@@ -58,7 +57,7 @@ class Dashboard extends Component {
       <DashboardPage
         firstName={this.props.firstName}
         error={this.state.error}
-        messages={this.state.messages}
+        notifications={this.state.notifications}
         recentActivities={this.state.recentActivities}
         upcomingBookings={this.state.upcomingBookings}
       />
