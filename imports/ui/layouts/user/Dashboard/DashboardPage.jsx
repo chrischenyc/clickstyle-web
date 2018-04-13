@@ -17,12 +17,13 @@ const DashboardPage = props => (
     <div className="col-md-12">
       <div className="margin-bottom-30">
         {props.messages.map((message, index) => (
-          <div key={index} className={classNames('notification closeable', message.type)}>
-            <Link to={message.link}>
+          <Link to={message.link} key={index}>
+            <div className={classNames('notification closeable', message.type)}>
               <p>{message.content}</p>
-            </Link>
-            <a className="close" href="#" />
-          </div>
+
+              <a className="close" href="#" />
+            </div>
+          </Link>
         ))}
       </div>
     </div>
@@ -34,10 +35,12 @@ const DashboardPage = props => (
         <h4>Upcoming Bookings</h4>
         <ul>
           {props.upcomingBookings.map(booking => (
-            <li key={booking._id}>
-              <i className="list-box-icon sl sl-icon-clock" />
-              <Link to={booking.link}>{booking.content}</Link>
-            </li>
+            <Link to={booking.link} key={booking._id}>
+              <li>
+                <i className="list-box-icon sl sl-icon-clock" />
+                {booking.content}
+              </li>
+            </Link>
           ))}
         </ul>
       </div>
@@ -50,18 +53,17 @@ const DashboardPage = props => (
         <h4>Recent Activities</h4>
         <ul>
           {props.activities.map((activity, index) => (
-            <li key={index}>
-              <i
-                className={classNames('list-box-icon', {
-                  'sl sl-icon-clock': activity.type === 'booking',
-                  'sl sl-icon-star': activity.type === 'review',
-                })}
-              />
-              <Link to="asdlfkj">{activity.content}</Link>
-              <a href="#" className="close-list-item">
-                <i className="fa fa-close" />
-              </a>
-            </li>
+            <Link to="asdlfkj" key={index}>
+              <li>
+                <i
+                  className={classNames('list-box-icon', {
+                    'sl sl-icon-clock': activity.type === 'booking',
+                    'sl sl-icon-star': activity.type === 'review',
+                  })}
+                />
+                {activity.content}
+              </li>
+            </Link>
           ))}
         </ul>
       </div>
