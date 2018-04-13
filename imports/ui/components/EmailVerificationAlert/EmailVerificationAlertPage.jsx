@@ -10,14 +10,9 @@ const EmailVerificationAlertPage = ({
   <div className="centered-content margin-top-10">
     <Message warning compact>
       <p>
-        <b>You account email has not been verified.</b>
-      </p>
-      <p>
-        Please check your email inbox for a verification email sent from&nbsp;
+        You account email has not been verified. Please check your email inbox for a verification
+        email sent from&nbsp;
         {Meteor.settings.public.supportEmail}.
-      </p>
-      <p>
-        You can request to&nbsp;
         <Button circular compact size="small" onClick={onSubmit} loading={loading}>
           re-send verification email
         </Button>
