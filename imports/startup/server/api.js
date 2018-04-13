@@ -18,7 +18,3 @@ import '../../api/user_contacts/server/methods';
 import '../../api/reviews/server/methods';
 import '../../api/notifications/server/methods';
 import '../../api/booking_activities/server/methods';
-
-import Profiles from '../../api/profiles/profiles';
-
-Profiles.update({}, { $set: { notifications: 0 } }, { multi: true });

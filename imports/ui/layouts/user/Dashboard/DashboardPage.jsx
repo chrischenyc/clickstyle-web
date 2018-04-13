@@ -15,26 +15,28 @@ const DashboardPage = props => (
     )}
 
     {/* ---------- messages ---------- */}
-    <div className="col-md-12">
-      <div className="margin-bottom-30">
-        {props.notifications.map(notification => (
-          <Link to={notification.link} key={notification._id}>
-            <div
-              className={classNames('notification', {
-                closeable: notification.dismissible,
-                success: notification.type !== 'warning' && notification.type !== 'error',
-                warning: notification.type === 'warning',
-                error: notification.type === 'error',
-              })}
-            >
-              <p>{notification.content}</p>
+    {props.notifications.length > 0 && (
+      <div className="col-md-12">
+        <div className="margin-bottom-30">
+          {props.notifications.map(notification => (
+            <Link to={notification.link} key={notification._id}>
+              <div
+                className={classNames('notification', {
+                  closeable: notification.dismissible,
+                  success: notification.type !== 'warning' && notification.type !== 'error',
+                  warning: notification.type === 'warning',
+                  error: notification.type === 'error',
+                })}
+              >
+                <p>{notification.content}</p>
 
-              {notification.dismissible && <a className="close" href="#" />}
-            </div>
-          </Link>
-        ))}
+                {notification.dismissible && <a className="close" href="#" />}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
-    </div>
+    )}
 
     {/* ---------- Upcoming bookings ---------- */}
 
