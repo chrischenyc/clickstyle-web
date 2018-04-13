@@ -31,12 +31,12 @@ const DashboardPage = props => (
 
     <div className="col-lg-6 col-md-12">
       <div className="dashboard-list-box with-icons margin-top-20">
-        <h4>Upcoming bookings</h4>
+        <h4>Upcoming Bookings</h4>
         <ul>
-          {props.bookings.map((booking, index) => (
-            <li key={index}>
+          {props.upcomingBookings.map(booking => (
+            <li key={booking._id}>
               <i className="list-box-icon sl sl-icon-clock" />
-              <Link to="asdlfkj">{booking.content}</Link>
+              <Link to={booking.link}>{booking.content}</Link>
             </li>
           ))}
         </ul>
@@ -74,7 +74,7 @@ DashboardPage.propTypes = {
   error: PropTypes.string.isRequired,
   messages: PropTypes.array.isRequired,
   activities: PropTypes.array.isRequired,
-  bookings: PropTypes.array.isRequired,
+  upcomingBookings: PropTypes.array.isRequired,
 };
 
 export default DashboardPage;

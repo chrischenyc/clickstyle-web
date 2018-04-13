@@ -16,7 +16,15 @@
   max-height: 300px;
 }
 
-/*Override Semantic-UI inactive rating star color */
+/* override rating component star color when inactive */
 .ui.star.rating .icon {
   color: rgb(168, 168, 168);
+}
+
+/* override link color */
+a {
+  color: #333;
+}
+a:hover {
+  color: #00aca4;
 }

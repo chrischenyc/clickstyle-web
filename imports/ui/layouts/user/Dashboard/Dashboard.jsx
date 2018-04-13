@@ -13,7 +13,7 @@ class Dashboard extends Component {
       error: '',
       messages: [],
       activities: [],
-      bookings: [],
+      upcomingBookings: [],
     };
   }
 
@@ -22,12 +22,22 @@ class Dashboard extends Component {
       if (error) {
         this.setState({ error: error.error });
       } else {
-        const { messages, activities, bookings } = response;
+        const { messages, activities } = response;
         this.setState({
           error: '',
           messages,
           activities,
-          bookings,
+        });
+      }
+    });
+
+    Meteor.call('users.bookings.upcoming', (error, upcomingBookings) => {
+      if (error) {
+        this.setState({ error: error.error });
+      } else {
+        this.setState({
+          error: '',
+          upcomingBookings,
         });
       }
     });
@@ -40,7 +50,7 @@ class Dashboard extends Component {
         error={this.state.error}
         messages={this.state.messages}
         activities={this.state.activities}
-        bookings={this.state.bookings}
+        upcomingBookings={this.state.upcomingBookings}
       />
     );
   }
