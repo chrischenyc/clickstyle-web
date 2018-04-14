@@ -120,7 +120,7 @@ Meteor.methods({
     }
   },
 
-  'profiles.find.user': function usersProfile(owner) {
+  'profiles.find': function usersProfile(owner) {
     check(owner, String);
 
     try {
@@ -202,7 +202,7 @@ Meteor.methods({
     }
   },
 
-  'profiles.savedCards': function getSavedCards() {
+  'profiles.cards': function getSavedCards() {
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
@@ -222,7 +222,7 @@ Meteor.methods({
     return cards;
   },
 
-  'profiles.remove.savedCard': function removeSavedCard(id) {
+  'profiles.card.remove': function removeSavedCard(id) {
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
@@ -258,6 +258,29 @@ Meteor.methods({
       },
     );
   },
+
+  'profiles.self.basic': function profilesOwnerBasic() {
+    if (!this.userId) {
+      return null;
+    }
+
+    return Profiles.findOne(
+      { owner: this.userId },
+      {
+        fields: {
+          email: 1,
+          name: 1,
+          mobile: 1,
+          address: 1,
+          photo: 1,
+          notifications: 1,
+          stripeDefaultCardId: 1,
+          stripeDefaultCardLast4: 1,
+          stripeDefaultCardName: 1,
+        },
+      },
+    );
+  },
 });
 
 rateLimit({
@@ -265,9 +288,9 @@ rateLimit({
     'profiles.update',
     'profiles.photo.add',
     'profiles.photo.remove',
-    'profiles.find.user',
-    'profiles.savedCards',
-    'profiles.remove.savedCard',
+    'profiles.find',
+    'profiles.cards',
+    'profiles.card.remove',
     'profiles.self',
   ],
   limit: 5,

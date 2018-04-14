@@ -23,7 +23,7 @@ class PaymentMethods extends Component {
   loadSavedCards() {
     this.props.showLoading();
 
-    Meteor.call('profiles.savedCards', (error, savedCards) => {
+    Meteor.call('profiles.cards', (error, savedCards) => {
       this.props.hideLoading();
       if (!error) {
         this.setState({ savedCards });
@@ -32,7 +32,7 @@ class PaymentMethods extends Component {
   }
 
   handleRemoveSavedCard(id) {
-    Meteor.call('profiles.remove.savedCard', id, (error) => {
+    Meteor.call('profiles.card.remove', id, (error) => {
       if (!error) {
         this.loadSavedCards();
       }

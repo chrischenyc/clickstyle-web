@@ -32,12 +32,11 @@ class App extends Component {
         if (user) {
           this.props.userSignedIn(user);
 
-          // get user profile
-          Meteor.subscribe('profiles.self');
-          const profile = Profiles.findOne({});
-          if (profile) {
-            this.props.userProfileFetched(profile);
-          }
+          Meteor.call('profiles.self.basic', (error, profile) => {
+            if (profile) {
+              this.props.userProfileFetched(profile);
+            }
+          });
         } else {
           this.props.userSignedOut();
           this.props.resetCart();
