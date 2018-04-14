@@ -21,7 +21,7 @@ Meteor.methods({
     check(review, String);
 
     try {
-      const { customer, stylist } = Bookings.findOne({ _id });
+      const { customer, stylist, time } = Bookings.findOne({ _id });
 
       if (!customer || !stylist) {
         throw new Meteor.Error(404, 'invalid booking number');
@@ -76,6 +76,7 @@ Meteor.methods({
         stylistFirstName: stylistName.first,
         stylistEmail,
         firstName: customerName.first,
+        time,
         bookingId: _id,
         bookingUrl: `users/stylist/bookings/${_id}`,
         rating,

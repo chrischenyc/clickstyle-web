@@ -6,6 +6,7 @@ import getPrivateFile from './get-private-file';
 import templateToText from './handlebars-email-to-text';
 import templateToHTML from './handlebars-email-to-html';
 import Profiles from '../../api/profiles/profiles';
+import { dateString } from '../format-date';
 
 // core function to send email
 const sendEmail = ({
@@ -158,7 +159,7 @@ export const sendCustomerBookingRequestedEmail = ({
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `Booking request sent for ${stylist}`,
+    subject: `You sent ${stylist} a request for booking on ${dateString(time)}`,
     template: 'customer-bookingRequested',
     templateConstants: {
       stylist,
@@ -195,7 +196,7 @@ export const sendCustomerBookingConfirmedEmail = ({
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `Booking confirmed by ${stylist}`,
+    subject: `${stylist} confirmed your request for a booking on ${dateString(time)}`,
     template: 'customer-bookingConfirmedByStylist',
     templateConstants: {
       stylist,
@@ -232,7 +233,7 @@ export const sendCustomerBookingDeclinedEmail = ({
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `Booking declined by ${stylist}`,
+    subject: `${stylist} declined your request for a booking on ${dateString(time)}`,
     template: 'customer-bookingDeclinedByStylist',
     templateConstants: {
       stylist,
@@ -269,7 +270,7 @@ export const sendCustomerBookingCancelledByStylistEmail = ({
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `Booking cancelled by ${stylist}`,
+    subject: `${stylist} cancelled a booking on ${dateString(time)}`,
     template: 'customer-bookingCancelledByStylist',
     templateConstants: {
       stylist,
@@ -306,7 +307,7 @@ export const sendCustomerBookingCompletedEmail = ({
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `Booking ${bookingId} has been completed`,
+    subject: `${stylist} completed a booking on ${dateString(time)}`,
     template: 'customer-bookingCompleted',
     templateConstants: {
       stylist,
@@ -333,13 +334,14 @@ export const sendCustomerPaymentEmail = ({
   description,
   firstName,
   email,
+  time,
   bookingId,
   bookingUrl,
 }) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `Billing receipt for booking ${bookingId}`,
+    subject: `Billing receipt for a booking on ${dateString(time)}`,
     template: 'customer-bookingPayment',
     templateConstants: {
       paymentId,
@@ -373,7 +375,7 @@ export const sendStylistBookingRequestedEmail = ({
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `${firstName} ${lastName} sent you a booking request`,
+    subject: `${firstName} requested a booking on ${dateString(time)}`,
     template: 'stylist-bookingRequested',
     templateConstants: {
       stylistFirstName,
@@ -411,7 +413,7 @@ export const sendStylistBookingCancelledByCustomerEmail = ({
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `${firstName} ${lastName} cancelled booking ${bookingId}`,
+    subject: `${firstName} cancelled a booking on ${dateString(time)}`,
     template: 'stylist-bookingCancelledByCustomer',
     templateConstants: {
       stylistFirstName,
@@ -449,7 +451,7 @@ export const sendStylistBookingCompletedEmail = ({
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `Yay, booking ${bookingId} has been completed!`,
+    subject: `Yay, you completed a booking on ${dateString(time)}`,
     template: 'stylist-bookingCompleted',
     templateConstants: {
       stylistFirstName,
@@ -476,13 +478,14 @@ export const sendStylistBookingReviewedEmail = ({
   firstName,
   bookingId,
   bookingUrl,
+  time,
   rating,
   review,
 }) => {
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `Read ${firstName}'s review`,
+    subject: `${firstName} reviewed a booking on ${dateString(time)}`,
     template: 'stylist-bookingReviewed',
     templateConstants: {
       stylistFirstName,
@@ -564,7 +567,7 @@ export const sendAdminConfirmedBookingCancelledByStylistEmail = (bookingId) => {
       sendEmail({
         to: adminUser.emails[0],
         from: fromAddress,
-        subject: `Confirmed booking ${bookingId} has been cancelled by stylist`,
+        subject: 'A confirmed booking has been cancelled by stylist',
         template: 'admin-confirmedBookingCancelledByStylist',
         templateConstants: {
           adminUrl,

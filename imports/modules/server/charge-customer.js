@@ -47,6 +47,7 @@ export default async function chargeCustomer(booking, amount, stripeDescription,
       description,
       firstName: booking.firstName,
       email: booking.email,
+      time: booking.time,
       bookingId: booking._id,
       bookingUrl: `users/bookings/${booking._id}`,
     });

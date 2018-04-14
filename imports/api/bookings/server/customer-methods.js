@@ -290,8 +290,45 @@ export async function customerCancelBooking(_id) {
       action: 'cancelled',
     });
 
-    // create Notification for stylist
     if (booking.status === 'confirmed') {
+      // charge customer if needed
+      const { fee, description } = customerCancellationFee(booking);
+      if (fee > 0) {
+        chargeCustomer(
+          booking,
+          fee,
+          `booking cancelled: ${booking._id}`,
+          `Booking cancellation ${description}`,
+        );
+      }
+
+      // unblock occupied timeslots
+      Stylists.update(
+        { owner: booking.stylist },
+        { $pull: { occupiedTimeSlots: { bookingId: _id } } },
+      );
+
+      // notify stylist
+      const stylist = Profiles.findOne({ owner: booking.stylist });
+      const {
+        services, total, firstName, lastName, email, mobile, address, time,
+      } = booking;
+
+      sendStylistBookingCancelledByCustomerEmail({
+        stylistFirstName: stylist.name.first,
+        stylistEmail: stylist.email,
+        services: servicesSummary(services),
+        total,
+        firstName,
+        lastName,
+        email,
+        mobile,
+        address,
+        time: dateTimeString(time),
+        bookingId: _id,
+        bookingUrl: `users/stylist/bookings/${_id}`,
+      });
+
       Meteor.call('notifications.create', {
         recipient: booking.stylist,
         content: `${booking.firstName} cancelled a confirmed booking with you`,
@@ -301,44 +338,6 @@ export async function customerCancelBooking(_id) {
         link: `/users/stylist/bookings/${_id}`,
       });
     }
-
-    // unblock occupied timeslots
-    Stylists.update(
-      { owner: booking.stylist },
-      { $pull: { occupiedTimeSlots: { bookingId: _id } } },
-    );
-
-    // charge customer if needed
-    const { fee, description } = customerCancellationFee(booking);
-    if (fee > 0) {
-      chargeCustomer(
-        booking,
-        fee,
-        `booking cancelled: ${booking._id}`,
-        `Booking cancellation ${description}`,
-      );
-    }
-
-    // notify stylist
-    const stylist = Profiles.findOne({ owner: booking.stylist });
-    const {
-      services, total, firstName, lastName, email, mobile, address, time,
-    } = booking;
-
-    sendStylistBookingCancelledByCustomerEmail({
-      stylistFirstName: stylist.name.first,
-      stylistEmail: stylist.email,
-      services: servicesSummary(services),
-      total,
-      firstName,
-      lastName,
-      email,
-      mobile,
-      address,
-      time: dateTimeString(time),
-      bookingId: _id,
-      bookingUrl: `users/stylist/bookings/${_id}`,
-    });
   } catch (exception) {
     log.error(exception);
 
