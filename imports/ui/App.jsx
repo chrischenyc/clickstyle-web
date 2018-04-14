@@ -32,7 +32,7 @@ class App extends Component {
         if (user) {
           this.props.userSignedIn(user);
 
-          Meteor.call('profiles.self.basic', (error, profile) => {
+          Meteor.call('profiles.self', (error, profile) => {
             if (profile) {
               this.props.userProfileFetched(profile);
             }

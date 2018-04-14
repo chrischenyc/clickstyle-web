@@ -6,7 +6,7 @@ import UserContacts from '../user_contacts';
 import { sendAdminContactFormEmail } from '../../../modules/server/send-email';
 
 Meteor.methods({
-  submitContact: function submitUserContactForm(data) {
+  'userContacts.create': function submitUserContactForm(data) {
     check(data, Object);
 
     const {
@@ -50,7 +50,7 @@ Meteor.methods({
 });
 
 rateLimit({
-  methods: ['submitContact'],
+  methods: ['userContacts.create'],
   limit: 5,
   timeRange: 1000,
 });

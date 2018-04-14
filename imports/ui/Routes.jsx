@@ -92,7 +92,7 @@ export default () => (
     <SecureRoute path="/users/bookings/:_id" component={withSideMenuAndHeader(CustomerBooking)} />
     <SecureRoute
       path="/users/stylist/application"
-      component={withSideMenuAndHeader(StylistsApplication)}
+      component={withHeaderAndFooter(StylistsApplication)}
     />
     <SecureRoute
       path="/users/stylist/services"

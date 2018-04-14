@@ -1,14 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
 import { Slingshot } from 'meteor/edgee:slingshot';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import Services from '../../../api/services/services';
-import StylistApplications from '../../../api/stylist_applications/stylist_applications';
 import StylistsApplicationPage from './StylistsApplicationPage';
 import { validateStylistJoin } from '../../../modules/validate';
 
@@ -20,6 +16,7 @@ class StylistApplication extends Component {
       mobile: props.mobile || '',
       address: props.address || '',
       services: [],
+      application: null,
       qualificationFile: null,
       referenceUrl: '',
       errors: {},
@@ -29,13 +26,47 @@ class StylistApplication extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleServiceSelected = this.handleServiceSelected.bind(this);
+    this.fetchCurrentApplication = this.fetchCurrentApplication.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchCurrentApplication();
+
+    Meteor.call('services.list', (error, services) => {
+      if (error) {
+        this.setState({
+          errors: {
+            message: error.reason,
+          },
+        });
+      } else {
+        this.setState({
+          services: services.map(service => ({ ...service, checked: false })),
+        });
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       mobile: nextProps.mobile,
       address: nextProps.address,
-      services: nextProps.services.map(service => ({ ...service, checked: false })),
+    });
+  }
+
+  fetchCurrentApplication() {
+    Meteor.call('stylistApplications.self', (error, application) => {
+      if (error) {
+        this.setState({
+          errors: {
+            message: error.reason,
+          },
+        });
+      } else {
+        this.setState({
+          application,
+        });
+      }
     });
   }
 
@@ -60,7 +91,7 @@ class StylistApplication extends Component {
   submitApplication(mobile, address, selectedServices, qualificationUrl, referenceUrl) {
     this.setState({ submitting: true });
     Meteor.call(
-      'stylists.join',
+      'stylistApplications.create',
       {
         mobile,
         address,
@@ -81,6 +112,8 @@ class StylistApplication extends Component {
             submitting: false,
             errors: {},
           });
+
+          this.fetchCurrentApplication();
         }
       },
     );
@@ -138,33 +171,27 @@ class StylistApplication extends Component {
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
         onServiceSelected={this.handleServiceSelected}
-        loading={this.props.loading || this.state.submitting}
+        loading={this.state.submitting}
         errors={this.state.errors}
         mobile={this.state.mobile}
         address={this.state.address}
         services={this.state.services}
         qualificationFile={this.state.qualificationFile}
         referenceUrl={this.state.referenceUrl}
-        application={this.props.application}
+        application={this.state.application}
       />
     );
   }
 }
 
 StylistApplication.defaultProps = {
-  loading: true,
   mobile: '',
   address: '',
-  services: [],
-  application: null,
 };
 
 StylistApplication.propTypes = {
-  loading: PropTypes.bool,
   mobile: PropTypes.string,
   address: PropTypes.string,
-  services: PropTypes.array,
-  application: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
@@ -172,16 +199,4 @@ const mapStateToProps = state => ({
   address: state.user.profile && state.user.profile.address && state.user.profile.address.raw,
 });
 
-export default compose(
-  connect(mapStateToProps),
-  withTracker(() => {
-    const handle = Meteor.subscribe('services');
-    Meteor.subscribe('stylists.application');
-
-    return {
-      loading: !handle.ready(),
-      services: Services.find({}, { sort: { displayOrder: 1 } }).fetch(),
-      application: StylistApplications.findOne(),
-    };
-  }),
-)(StylistApplication);
+export default connect(mapStateToProps)(StylistApplication);

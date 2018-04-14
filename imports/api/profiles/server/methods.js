@@ -245,21 +245,7 @@ Meteor.methods({
     }
   },
 
-  'profiles.self': function profilesOwner() {
-    if (!this.userId) {
-      return null;
-    }
-
-    return Profiles.findOne(
-      { owner: this.userId },
-      {
-        // hide fields in the return
-        fields: { createdAt: 0, updatedAt: 0 },
-      },
-    );
-  },
-
-  'profiles.self.basic': function profilesOwnerBasic() {
+  'profiles.self': function profilesOwnerBasic() {
     if (!this.userId) {
       return null;
     }
@@ -274,6 +260,8 @@ Meteor.methods({
           address: 1,
           photo: 1,
           notifications: 1,
+          about: 1,
+          products: 1,
           stripeDefaultCardId: 1,
           stripeDefaultCardLast4: 1,
           stripeDefaultCardName: 1,

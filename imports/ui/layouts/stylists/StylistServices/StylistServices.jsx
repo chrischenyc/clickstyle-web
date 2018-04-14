@@ -1,12 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import Services from '../../../../api/services/services';
-import Addons from '../../../../api/addons/addons';
-import Stylists from '../../../../api/stylists/stylists';
 import { validateStylistServices } from '../../../../modules/validate';
 import StylistServicesPage from './StylistServicesPage';
 
@@ -23,8 +18,10 @@ class StylistServices extends Component {
     super(props);
 
     this.state = {
-      selectedServices:
-        props.stylist && props.stylist.services ? _.cloneDeep(props.stylist.services) : [],
+      loading: false,
+      allServices: [],
+      publicAddons: [],
+      selectedServices: [],
       errors: {},
       saving: false,
       pristine: true,
@@ -34,16 +31,45 @@ class StylistServices extends Component {
     this.handleAddServices = this.handleAddServices.bind(this);
     this.handleChangeService = this.handleChangeService.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.loadStylistServices = this.loadStylistServices.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    // after Profile object is fetched, set it in state
-    this.setState({
-      pristine: true,
-      selectedServices:
-        nextProps.stylist && nextProps.stylist.services
-          ? _.cloneDeep(nextProps.stylist.services)
-          : [],
+  componentDidMount() {
+    Meteor.call('services.list', (error, allServices) => {
+      if (error) {
+        this.setState({ errors: { message: error.reason } });
+      } else {
+        this.setState({ allServices });
+      }
+    });
+
+    Meteor.call('addons.list.published', (error, publicAddons) => {
+      if (error) {
+        this.setState({ errors: { message: error.reason } });
+      } else {
+        this.setState({ publicAddons });
+      }
+    });
+
+    this.loadStylistServices();
+  }
+
+  loadStylistServices() {
+    this.setState({ loading: true });
+
+    Meteor.call('stylists.services', (error, services) => {
+      this.setState({ loading: false });
+
+      if (error) {
+        this.setState({
+          errors: { message: error.reason },
+        });
+      } else {
+        this.setState({
+          pristine: true,
+          selectedServices: services ? _.cloneDeep(services) : [],
+        });
+      }
     });
   }
 
@@ -64,7 +90,10 @@ class StylistServices extends Component {
       pristine: false,
       selectedServices: [
         ...this.state.selectedServices,
-        ...services.map(service => ({ ..._.omit(service, 'duration'), baseDuration: service.duration })),
+        ...services.map(service => ({
+          ..._.omit(service, 'duration'),
+          baseDuration: service.duration,
+        })),
       ],
     });
   }
@@ -95,12 +124,14 @@ class StylistServices extends Component {
     } else {
       this.setState({ saving: true });
 
-      Meteor.call('stylists.update.services', this.state.selectedServices, (error) => {
+      Meteor.call('stylists.services.update', this.state.selectedServices, (error) => {
         this.setState({ saving: false, errors: {}, pristine: true });
 
         if (error) {
           this.setState({ errors: { message: error.reason } });
         }
+
+        this.loadStylistServices();
       });
     }
   }
@@ -109,13 +140,13 @@ class StylistServices extends Component {
     return (
       <StylistServicesPage
         selectedServices={this.state.selectedServices}
-        availableServices={availableServices(this.props.allServices, this.state.selectedServices)}
-        publicAddons={this.props.publicAddons}
+        availableServices={availableServices(this.state.allServices, this.state.selectedServices)}
+        publicAddons={this.state.publicAddons}
         onSubmit={this.handleSubmit}
         onChangeService={this.handleChangeService}
         onDeleteService={this.handleDeleteService}
         onAddServices={this.handleAddServices}
-        loading={this.props.loading}
+        loading={this.state.loading}
         saving={this.state.saving}
         pristine={this.state.pristine}
         errors={this.state.errors}
@@ -124,34 +155,4 @@ class StylistServices extends Component {
   }
 }
 
-StylistServices.defaultProps = {
-  loading: false,
-  stylist: null,
-  allServices: [],
-  publicAddons: [],
-};
-
-StylistServices.propTypes = {
-  loading: PropTypes.bool,
-  stylist: PropTypes.object,
-  allServices: PropTypes.array,
-  publicAddons: PropTypes.array,
-};
-
-export default withTracker(() => {
-  const handleStylist = Meteor.subscribe('stylists.owner');
-  const handleServices = Meteor.subscribe('services');
-  const handleAddons = Meteor.subscribe('addons');
-
-  return {
-    loading: !handleServices.ready() || !handleStylist.ready() || !handleAddons.ready(),
-    stylist: Stylists.findOne(),
-    allServices: Services.find(
-      {},
-      {
-        sort: { displayOrder: 1 },
-      },
-    ).fetch(),
-    publicAddons: Addons.find().fetch(),
-  };
-})(StylistServices);
+export default StylistServices;

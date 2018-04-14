@@ -1,13 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Slingshot } from 'meteor/edgee:slingshot';
-import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
 import _ from 'lodash';
 
-import Products from '../../../../api/products/products';
 import { validateEditProfile } from '../../../../modules/validate';
 import GeoSuggestToAddress from '../../../../modules/geo-suggest-to-address';
 import EditProfilePage from './EditProfilePage';
@@ -41,10 +38,8 @@ class EditProfile extends Component {
       photoUploading: false,
       photoPristine: true,
       profile: _.cloneDeep(props.profile),
-      productsAvailable: availableProducts(
-        props.products,
-        props.profile ? props.profile.products : [],
-      ),
+      products: [],
+      productsAvailable: [],
       productsMatched: [],
       productsSearch: '',
       errors: {},
@@ -62,15 +57,27 @@ class EditProfile extends Component {
     this.handleDeselectProduct = this.handleDeselectProduct.bind(this);
   }
 
+  componentDidMount() {
+    Meteor.call('products.list', (error, products) => {
+      if (error) {
+        this.setState({ errors: { message: error.reason } });
+      } else {
+        this.setState({
+          products,
+          productsAvailable: availableProducts(
+            products,
+            this.props.profile ? this.props.profile.products : [],
+          ),
+        });
+      }
+    });
+  }
+
   componentWillReceiveProps(nextProps) {
     // after Profile object is fetched, set it in state
     this.setState({
       pristine: true,
       profile: _.cloneDeep(nextProps.profile),
-      productsAvailable: availableProducts(
-        nextProps.products,
-        nextProps.profile ? nextProps.profile.products : [],
-      ),
     });
   }
 
@@ -201,7 +208,7 @@ class EditProfile extends Component {
       productsSearch: '',
       productsMatched: [],
       pristine: _.isEqual(newProfile, this.props.profile),
-      productsAvailable: availableProducts(this.props.products, newProfile.products),
+      productsAvailable: availableProducts(this.state.products, newProfile.products),
     });
   }
 
@@ -213,7 +220,7 @@ class EditProfile extends Component {
     this.setState({
       profile: newProfile,
       pristine: _.isEqual(newProfile, this.props.profile),
-      productsAvailable: availableProducts(this.props.products, newProfile.products),
+      productsAvailable: availableProducts(this.state.products, newProfile.products),
     });
   }
 
@@ -242,24 +249,12 @@ class EditProfile extends Component {
   }
 }
 
-EditProfile.defaultProps = {
-  products: [],
-};
-
 EditProfile.propTypes = {
   profile: PropTypes.object.isRequired,
-  products: PropTypes.array,
 };
 
-export default compose(
-  connect(state => ({
-    profile: state.user.profile,
-  })),
-  withTracker(() => {
-    Meteor.subscribe('products');
+const mapStateToProps = state => ({
+  profile: state.user.profile,
+});
 
-    return {
-      products: Products.find().fetch(),
-    };
-  }),
-)(EditProfile);
+export default connect(mapStateToProps)(EditProfile);

@@ -53,7 +53,7 @@ class StylistsApplicationPage extends Component {
       }
 
       return (
-        <Container className="margin-top-35 margin-bottom-35">
+        <Container className="margin-top-60 margin-bottom-60">
           <h2>Relax and sit tight</h2>
 
           <p>

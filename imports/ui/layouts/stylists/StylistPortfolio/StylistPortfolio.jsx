@@ -74,7 +74,7 @@ class StylistPortfolio extends Component {
 
   loadPortfolioPhotos() {
     this.props.showLoading();
-    Meteor.call('stylists.portfolio.photos', (error, portfolioPhotos) => {
+    Meteor.call('stylists.portfolioPhotos', (error, portfolioPhotos) => {
       this.props.hideLoading();
 
       const remotePhotos = portfolioPhotos.map(portfolioPhoto => ({
@@ -101,7 +101,7 @@ class StylistPortfolio extends Component {
       displayOrder: photo.displayOrder,
     }));
 
-    Meteor.call('stylists.portfolio.photos.update', portfolioPhotos, () => {
+    Meteor.call('stylists.portfolioPhotos.update', portfolioPhotos, () => {
       this.setState({
         saving: false,
       });

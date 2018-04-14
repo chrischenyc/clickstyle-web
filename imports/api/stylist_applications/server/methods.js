@@ -5,9 +5,13 @@ import log from 'winston';
 import rateLimit from '../../../modules/server/rate-limit';
 import StylistApplications from '../stylist_applications';
 import Profiles from '../../profiles/profiles';
+import {
+  sendStylistJoinConfirmEmail,
+  sendAdminStylistApplicationEmail,
+} from '../../../modules/server/send-email';
 
 Meteor.methods({
-  'stylists.join': function stylistsJoin(data) {
+  'stylistApplications.create': function stylistsJoin(data) {
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
     }
@@ -28,7 +32,7 @@ Meteor.methods({
 
       const profile = Profiles.findOne({ owner: this.userId });
 
-      StylistApplications.insert({
+      const applicationId = StylistApplications.insert({
         userId: this.userId,
         name: `${profile.name.first} ${profile.name.last}`,
         email: profile.email,
@@ -40,20 +44,27 @@ Meteor.methods({
         approved: false,
       });
 
-      log.info(
-        'Meteor.methods: stylists.join',
-        `userId: ${this.userId}`,
-        `param: ${JSON.stringify(data)}`,
-      );
+      Meteor.defer(() => {
+        sendStylistJoinConfirmEmail(this.userId);
+        sendAdminStylistApplicationEmail(applicationId);
+      });
     } catch (exception) {
       log.error(exception);
       throw exception;
     }
   },
+
+  'stylistApplications.self': function stylistsApplication() {
+    if (!this.userId) {
+      return null;
+    }
+
+    return StylistApplications.findOne({ userId: this.userId });
+  },
 });
 
 rateLimit({
-  methods: ['stylists.join'],
+  methods: ['stylistApplications.create', 'stylistApplications.self'],
   limit: 5,
   timeRange: 1000,
 });

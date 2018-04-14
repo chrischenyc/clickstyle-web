@@ -1,10 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import Stylists from '../../../../api/stylists/stylists';
 import StylistAvailableAreasPage from './StylistAvailableAreasPage';
 
 // platform-independent stateful container component
@@ -14,39 +11,47 @@ class StylistAvailableAreas extends Component {
     super(props);
 
     this.state = {
+      loading: false,
       error: '',
       saving: false,
       pristine: true,
       searchingSuburbs: false,
       matchedSuburbs: [],
-      suburb:
-        (props.areas &&
-          props.areas.suburb &&
-          `${props.areas.suburb.name} ${props.areas.suburb.postcode}`) ||
-        '',
-      selectedSuburb: (props.areas && props.areas.suburb) || null,
-      radius: (props.areas && props.areas.radius) || 0,
-      canTravel: (props.areas && props.areas.canTravel) || false,
+      suburb: '',
+      selectedSuburb: null,
+      radius: 0,
+      canTravel: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSelectSuburb = this.handleSelectSuburb.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.loadStylistAreas = this.loadStylistAreas.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    // after Profile object is fetched, set it in state
+  componentDidMount() {
+    this.loadStylistAreas();
+  }
 
-    this.setState({
-      pristine: true,
-      suburb:
-        (nextProps.areas &&
-          nextProps.areas.suburb &&
-          `${nextProps.areas.suburb.name} ${nextProps.areas.suburb.postcode}`) ||
-        '',
-      selectedSuburb: (nextProps.areas && nextProps.areas.suburb) || null,
-      radius: (nextProps.areas && nextProps.areas.radius) || 0,
-      canTravel: (nextProps.areas && nextProps.areas.canTravel) || false,
+  loadStylistAreas() {
+    this.setState({ loading: true });
+
+    Meteor.call('stylists.areas', (error, areas) => {
+      this.setState({ loading: false });
+
+      if (error) {
+        this.setState({
+          error: error.reason,
+        });
+      } else {
+        this.setState({
+          pristine: true,
+          suburb: (areas && areas.suburb && `${areas.suburb.name} ${areas.suburb.postcode}`) || '',
+          selectedSuburb: (areas && areas.suburb) || null,
+          radius: (areas && areas.radius) || 0,
+          canTravel: (areas && areas.canTravel) || false,
+        });
+      }
     });
   }
 
@@ -100,12 +105,14 @@ class StylistAvailableAreas extends Component {
       };
 
       this.setState({ saving: true });
-      Meteor.call('stylists.update.areas', areas, (error) => {
+      Meteor.call('stylists.areas.update', areas, (error) => {
         this.setState({ saving: false, error: '', pristine: true });
 
         if (error) {
           this.setState({ error: error.reason });
         }
+
+        this.loadStylistAreas();
       });
     }
   }
@@ -117,7 +124,7 @@ class StylistAvailableAreas extends Component {
         onChange={this.handleChange}
         onSelectSuburb={this.handleSelectSuburb}
         onSubmit={this.handleSubmit}
-        loading={this.props.loading}
+        loading={this.state.loading}
         saving={this.state.saving}
         pristine={this.state.pristine}
         error={this.state.error}
@@ -130,21 +137,4 @@ class StylistAvailableAreas extends Component {
   }
 }
 
-StylistAvailableAreas.defaultProps = {
-  loading: false,
-  areas: null,
-};
-
-StylistAvailableAreas.propTypes = {
-  loading: PropTypes.bool,
-  areas: PropTypes.object,
-};
-
-export default withTracker(() => {
-  const handleStylist = Meteor.subscribe('stylists.owner');
-
-  return {
-    loading: !handleStylist.ready(),
-    areas: Stylists.findOne() && Stylists.findOne().areas,
-  };
-})(StylistAvailableAreas);
+export default StylistAvailableAreas;

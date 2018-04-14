@@ -91,7 +91,7 @@ export function stylistConfirmPendingBooking(_id) {
     });
 
     // send notification to customer
-    const {name: stylistName} = Stylists.findOne({ owner: this.userId });
+    const { name: stylistName } = Stylists.findOne({ owner: this.userId });
 
     Meteor.call('notifications.create', {
       recipient: booking.customer,
@@ -169,7 +169,7 @@ export function stylistDeclinePendingBooking(_id) {
     });
 
     // send notification to customer
-    const {name: stylistName} = Stylists.findOne({ owner: this.userId });
+    const { name: stylistName } = Stylists.findOne({ owner: this.userId });
 
     Meteor.call('notifications.create', {
       recipient: booking.customer,
@@ -233,7 +233,7 @@ export function stylistCancelConfirmedBooking(_id) {
     });
 
     // send notification to customer
-    const {name: stylistName} = Stylists.findOne({ owner: this.userId });
+    const { name: stylistName } = Stylists.findOne({ owner: this.userId });
 
     Meteor.call('notifications.create', {
       recipient: booking.customer,
@@ -307,7 +307,7 @@ export async function stylistCompleteConfirmedBooking(_id) {
     });
 
     // send notification to customer
-    const {name: stylistName, email: stylistEmail} = Stylists.findOne({ owner: this.userId });
+    const { name: stylistName, email: stylistEmail } = Stylists.findOne({ owner: this.userId });
 
     Meteor.call('notifications.create', {
       recipient: booking.customer,
@@ -449,9 +449,6 @@ export function stylistListBookings() {
           customer: 1,
           firstName: 1,
           lastName: 1,
-          email: 1,
-          mobile: 1,
-          address: 1,
           time: 1,
           status: 1,
         },
@@ -467,7 +464,7 @@ export function stylistListBookings() {
     ];
 
     return bookings.map((booking) => {
-      const customer = Profiles.findOne({ owner: booking.customer });
+      const customer = Profiles.findOne({ owner: booking.customer }, { fields: { photo: 1 } });
       const review = Reviews.findOne({ booking: booking._id }, { fields: { rating: 1 } });
       return { ...booking, customer, review };
     });

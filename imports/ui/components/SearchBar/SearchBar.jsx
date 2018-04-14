@@ -65,7 +65,7 @@ class SearchBar extends Component {
   }
 
   componentDidMount() {
-    Meteor.call('services.keywords', (error, services) => {
+    Meteor.call('services.searchKeywords', (error, services) => {
       if (services) {
         this.setState({
           services,

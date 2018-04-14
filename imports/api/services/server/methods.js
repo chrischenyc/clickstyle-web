@@ -7,7 +7,14 @@ import Services from '../services';
 import Addons from '../../addons/addons';
 
 Meteor.methods({
-  'featured.home.services': function searchFeaturedServicesOnHome(data) {
+  'services.list': function findAllServices() {
+    return Services.find(
+      {},
+      { sort: { displayOrder: 1 }, fields: { name: 1, duration: 1 } },
+    ).fetch();
+  },
+
+  'services.homeFeatured': function featuredServicesOnHome(data) {
     check(data, Object);
 
     const { suburb: suburbName } = data;
@@ -22,14 +29,17 @@ Meteor.methods({
         // TODO: services selector to be location based
       }
 
-      return Services.find(selector, { sort: { displayOrder: 1 } }).fetch();
+      return Services.find(selector, {
+        sort: { displayOrder: 1 },
+        fields: { name: 1, photo: 1 },
+      }).fetch();
     } catch (exception) {
       log.error(exception);
       throw exception;
     }
   },
 
-  'services.keywords': function servicesAndAddons() {
+  'services.searchKeywords': function servicesAndAddons() {
     try {
       const services = Services.find(
         {},
@@ -70,7 +80,7 @@ Meteor.methods({
 });
 
 rateLimit({
-  methods: ['featured.home.services', 'services.keywords'],
+  methods: ['services.list', 'services.homeFeatured', 'services.searchKeywords'],
   limit: 5,
   timeRange: 1000,
 });

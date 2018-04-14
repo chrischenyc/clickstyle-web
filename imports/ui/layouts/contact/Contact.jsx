@@ -57,7 +57,7 @@ class Contact extends Component {
       this.setState({ errors });
     } else {
       this.setState({ loading: true });
-      Meteor.call('submitContact', this.state, (error) => {
+      Meteor.call('userContacts.create', this.state, (error) => {
         this.setState({ loading: false });
 
         if (error) {

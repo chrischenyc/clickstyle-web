@@ -439,14 +439,6 @@ export function guestFindBooking(object) {
       {
         fields: {
           stylist: 1,
-          services: 1,
-          total: 1,
-          customer: 1,
-          firstName: 1,
-          lastName: 1,
-          email: 1,
-          mobile: 1,
-          address: 1,
           time: 1,
         },
       },
@@ -472,10 +464,6 @@ export function customerListBookings() {
           stylist: 1,
           services: 1,
           total: 1,
-          firstName: 1,
-          lastName: 1,
-          mobile: 1,
-          address: 1,
           time: 1,
           status: 1,
         },
@@ -491,7 +479,10 @@ export function customerListBookings() {
     ];
 
     return bookings.map((booking) => {
-      const stylist = Profiles.findOne({ owner: booking.stylist });
+      const stylist = Profiles.findOne(
+        { owner: booking.stylist },
+        { fields: { name: 1, photo: 1 } },
+      );
       const review = Reviews.findOne({ booking: booking._id }, { fields: { rating: 1 } });
       return { ...booking, stylist, review };
     });
