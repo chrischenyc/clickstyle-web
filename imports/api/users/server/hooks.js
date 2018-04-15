@@ -21,6 +21,7 @@ Meteor.users.after.insert((userId, user) => {
     completedBookings: 0,
     confirmedCustomerBookings: 0,
     pendingCustomerBookings: 0,
+    cancelledCustomerBookings: 0,
     declinedCustomerBookings: 0,
     completedCustomerBookings: 0,
   });

@@ -1,5 +1,6 @@
 import '../../api/addons/server/methods';
 import '../../api/booking_activities/server/methods';
+import '../../api/bookings/server/hooks';
 import '../../api/bookings/server/methods';
 import '../../api/featured/server/methods';
 import '../../api/notifications/server/hooks';

@@ -20,6 +20,7 @@ Meteor.publish('userStats', function findUserStats() {
         completedBookings: 1,
         confirmedCustomerBookings: 1,
         pendingCustomerBookings: 1,
+        cancelledCustomerBookings: 1,
         declinedCustomerBookings: 1,
         completedCustomerBookings: 1,
       },

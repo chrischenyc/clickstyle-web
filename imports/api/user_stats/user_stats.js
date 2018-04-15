@@ -42,6 +42,7 @@ const UserStatsSchema = new SimpleSchema({
   completedBookings: SimpleSchema.Integer,
   confirmedCustomerBookings: SimpleSchema.Integer,
   pendingCustomerBookings: SimpleSchema.Integer,
+  cancelledCustomerBookings: SimpleSchema.Integer,
   declinedCustomerBookings: SimpleSchema.Integer,
   completedCustomerBookings: SimpleSchema.Integer,
 });
