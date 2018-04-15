@@ -5,7 +5,6 @@ import log from 'winston';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Notifications from '../../notifications/notifications';
-import Profiles from '../../profiles/profiles';
 
 Meteor.methods({
   'notifications.create': function createNotification(notification) {
@@ -23,8 +22,6 @@ Meteor.methods({
 
     try {
       Notifications.insert(notification);
-
-      Profiles.update({ owner: notification.recipient }, { $inc: { notifications: 1 } });
     } catch (exception) {
       log.error(exception);
       throw exception;
