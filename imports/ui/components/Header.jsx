@@ -120,7 +120,7 @@ class Header extends Component {
                 <Dropdown text={firstName || ''} className="item">
                   <Dropdown.Menu>
                     <Dropdown.Item as={Link} to="/users/dashboard" text="Dashboard" />
-                    <Dropdown.Item as={Link} to="/users/bookings" text="Bookings" />
+                    <Dropdown.Item as={Link} to="/users/bookings" text="My Bookings" />
                     <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
                     <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
                     <Dropdown.Item as={Link} to="/users/payment-methods" text="Payment methods" />

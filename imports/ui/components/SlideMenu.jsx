@@ -134,7 +134,7 @@ const SlideMenu = props => (
           <Divider />
 
           <li>
-            <p>Booking</p>
+            <p>Customer</p>
             <ul>
               <li>
                 <Link
@@ -143,7 +143,7 @@ const SlideMenu = props => (
                     props.toggleSlideMenu();
                   }}
                 >
-                  Bookings
+                  My Bookings
                 </Link>
               </li>
               <li>

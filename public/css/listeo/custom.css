@@ -284,3 +284,11 @@ textarea:focus {
     line-height: 36px;
   }
 }
+
+/* side menu badges */
+.dashboard-nav ul li span.nav-tag.amber {
+  background-color: #ffc107;
+}
+.dashboard-nav ul li span.nav-tag.indigo {
+  background-color: #3f51b5;
+}
