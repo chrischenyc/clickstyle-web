@@ -22,6 +22,13 @@ export function userProfileFetched(profile) {
   };
 }
 
+export function userStatsFetched(stats) {
+  return {
+    type: 'USER_STATS_FETCHED',
+    stats,
+  };
+}
+
 // --------- reducer ----------
 const defaultState = {
   authenticated: localStorage.getItem('Meteor.userId') !== null,
@@ -60,6 +67,15 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         profile,
+      };
+    }
+
+    case 'USER_STATS_FETCHED': {
+      const { stats } = action;
+
+      return {
+        ...state,
+        ...stats,
       };
     }
 

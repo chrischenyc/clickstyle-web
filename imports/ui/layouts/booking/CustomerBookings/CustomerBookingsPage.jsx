@@ -18,7 +18,7 @@ const CustomerBookingsPage = ({ bookings }) => (
             <ul>
               {bookings.map(booking => (
                 <li
-                  key={booking.owner}
+                  key={booking._id}
                   className={classnames({
                     'pending-booking': booking.status === 'pending',
                     'canceled-booking':

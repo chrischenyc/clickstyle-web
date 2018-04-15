@@ -6,8 +6,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Responsive } from 'semantic-ui-react';
 
-import Profiles from '../api/profiles/profiles';
-import { userSignedIn, userSignedOut, userProfileFetched } from '../modules/client/redux/user';
+import {
+  userSignedIn,
+  userSignedOut,
+  userProfileFetched,
+  userStatsFetched,
+} from '../modules/client/redux/user';
 import { resetCart } from '../modules/client/redux/cart';
 
 import Routes from './Routes';
@@ -35,6 +39,12 @@ class App extends Component {
           Meteor.call('profiles.self', (error, profile) => {
             if (profile) {
               this.props.userProfileFetched(profile);
+            }
+          });
+
+          Meteor.call('users.stats', (error, stats) => {
+            if (stats) {
+              this.props.userStatsFetched(stats);
             }
           });
         } else {
@@ -68,6 +78,7 @@ App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
   userProfileFetched: PropTypes.func.isRequired,
+  userStatsFetched: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool.isRequired,
 };
@@ -80,5 +91,6 @@ export default connect(mapStateToProps, {
   userSignedIn,
   userSignedOut,
   userProfileFetched,
+  userStatsFetched,
   resetCart,
 })(App);
