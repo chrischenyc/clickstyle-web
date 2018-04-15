@@ -13,7 +13,6 @@ Meteor.publish('userStats', function findUserStats() {
       fields: {
         owner: 1,
         notifications: 1,
-        messages: 1,
         confirmedBookings: 1,
         pendingBookings: 1,
         cancelledBookings: 1,

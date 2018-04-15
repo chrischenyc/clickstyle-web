@@ -14,7 +14,6 @@ Meteor.users.after.insert((userId, user) => {
   UserStats.insert({
     owner: user._id,
     notifications: 0,
-    messages: 0,
     confirmedBookings: 0,
     pendingBookings: 0,
     cancelledBookings: 0,

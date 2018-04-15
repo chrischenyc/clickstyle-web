@@ -17,6 +17,7 @@ import '../../api/users/server/hooks';
 
 import UserStats from '../../api/user_stats/user_stats';
 import Bookings from '../../api/bookings/bookings';
+import Notifications from '../../api/notifications/notifications';
 
 Meteor.users
   .find({})
@@ -36,13 +37,14 @@ Meteor.users
       { fields: { status: 1 } },
     ).fetch();
 
+    const notifications = Notifications.find({ recipient: user._id, dismissed: false }).fetch();
+
     UserStats.upsert(
       { owner: user._id },
       {
         $set: {
           owner: user._id,
-          notifications: 0,
-          messages: 0,
+          notifications: notifications.length,
           confirmedBookings: bookings.filter(booking => booking.status === 'confirmed').length,
           pendingBookings: bookings.filter(booking => booking.status === 'pending').length,
           cancelledBookings: bookings.filter(booking => booking.status === 'cancelled').length,

@@ -35,7 +35,6 @@ UserStats.attachBehaviour('timestampable', {
 const UserStatsSchema = new SimpleSchema({
   owner: String, // Users._id
   notifications: SimpleSchema.Integer,
-  messages: SimpleSchema.Integer,
   confirmedBookings: SimpleSchema.Integer,
   pendingBookings: SimpleSchema.Integer,
   cancelledBookings: SimpleSchema.Integer,

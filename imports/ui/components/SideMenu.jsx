@@ -10,7 +10,6 @@ const SideMenu = ({
   isStylist,
   location,
   notifications,
-  messages,
   confirmedBookings,
   pendingBookings,
   cancelledBookings,
@@ -42,6 +41,7 @@ const SideMenu = ({
         <li className={classNames({ active: location.pathname === '/users/inbox' })}>
           <Link to="/users/inbox">
             <i className="im im-icon-Email" /> Inbox
+            {notifications > 0 && <span className="nav-tag messages">{notifications}</span>}
           </Link>
         </li>
 
@@ -288,41 +288,27 @@ const SideMenu = ({
 
 SideMenu.defaultProps = {
   isStylist: false,
-  notifications: null,
-  messages: null,
-  confirmedBookings: null,
-  pendingBookings: null,
-  cancelledBookings: null,
-  declinedBookings: null,
-  completedBookings: null,
-  confirmedCustomerBookings: null,
-  pendingCustomerBookings: null,
-  cancelledCustomerBookings: null,
-  declinedCustomerBookings: null,
-  completedCustomerBookings: null,
 };
 
 SideMenu.propTypes = {
   isStylist: PropTypes.bool,
-  notifications: PropTypes.number,
-  messages: PropTypes.number,
-  confirmedBookings: PropTypes.number,
-  pendingBookings: PropTypes.number,
-  cancelledBookings: PropTypes.number,
-  declinedBookings: PropTypes.number,
-  completedBookings: PropTypes.number,
-  confirmedCustomerBookings: PropTypes.number,
-  pendingCustomerBookings: PropTypes.number,
-  cancelledCustomerBookings: PropTypes.number,
-  declinedCustomerBookings: PropTypes.number,
-  completedCustomerBookings: PropTypes.number,
+  notifications: PropTypes.number.isRequired,
+  confirmedBookings: PropTypes.number.isRequired,
+  pendingBookings: PropTypes.number.isRequired,
+  cancelledBookings: PropTypes.number.isRequired,
+  declinedBookings: PropTypes.number.isRequired,
+  completedBookings: PropTypes.number.isRequired,
+  confirmedCustomerBookings: PropTypes.number.isRequired,
+  pendingCustomerBookings: PropTypes.number.isRequired,
+  cancelledCustomerBookings: PropTypes.number.isRequired,
+  declinedCustomerBookings: PropTypes.number.isRequired,
+  completedCustomerBookings: PropTypes.number.isRequired,
   location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   isStylist: state.user.isStylist,
   notifications: state.user.notifications,
-  messages: state.user.messages,
   confirmedBookings: state.user.confirmedBookings,
   pendingBookings: state.user.pendingBookings,
   cancelledBookings: state.user.cancelledBookings,
