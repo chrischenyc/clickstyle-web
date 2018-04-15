@@ -59,7 +59,7 @@ const SideMenu = ({
       </ul>
 
       <ul data-submenu-title="Customer">
-        <li className={classNames({ active: location.pathname === '/users/bookings' })}>
+        <li className={classNames({ active: location.pathname.startsWith('/users/bookings') })}>
           <Link to="/users/bookings">
             <i className="im im-icon-Calendar" /> My Bookings
           </Link>
@@ -140,7 +140,11 @@ const SideMenu = ({
 
       {isStylist && (
         <ul data-submenu-title="Stylist">
-          <li className={classNames({ active: location.pathname === '/users/stylist/bookings' })}>
+          <li
+            className={classNames({
+              active: location.pathname.startsWith('/users/stylist/bookings'),
+            })}
+          >
             <Link to="/users/stylist/bookings">
               <i className="im im-icon-Calendar" /> Customer Bookings
             </Link>
