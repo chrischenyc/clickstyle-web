@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 import { check, Match } from 'meteor/check';
 import log from 'winston';
 import moment from 'moment';
@@ -37,7 +38,7 @@ const canStylistCompleteBooking = (booking) => {
 export function stylistConfirmPendingBooking(_id) {
   check(_id, String);
 
-  if (!this.userId) {
+  if (!this.userId || !Roles.userIsInRole(this.userId, [Meteor.settings.public.roles.stylist])) {
     throw new Meteor.Error(403, 'unauthorized');
   }
 
@@ -143,7 +144,7 @@ export function stylistConfirmPendingBooking(_id) {
 export function stylistDeclinePendingBooking(_id) {
   check(_id, String);
 
-  if (!this.userId) {
+  if (!this.userId || !Roles.userIsInRole(this.userId, [Meteor.settings.public.roles.stylist])) {
     throw new Meteor.Error(403, 'unauthorized');
   }
 
@@ -207,7 +208,7 @@ export function stylistDeclinePendingBooking(_id) {
 export function stylistCancelConfirmedBooking(_id) {
   check(_id, String);
 
-  if (!this.userId) {
+  if (!this.userId || !Roles.userIsInRole(this.userId, [Meteor.settings.public.roles.stylist])) {
     throw new Meteor.Error(403, 'unauthorized');
   }
 
@@ -281,7 +282,7 @@ export function stylistCancelConfirmedBooking(_id) {
 export async function stylistCompleteConfirmedBooking(_id) {
   check(_id, String);
 
-  if (!this.userId) {
+  if (!this.userId || !Roles.userIsInRole(this.userId, [Meteor.settings.public.roles.stylist])) {
     throw new Meteor.Error(403, 'unauthorized');
   }
 
@@ -370,7 +371,7 @@ export async function stylistCompleteConfirmedBooking(_id) {
 export function stylistFindBooking(_id) {
   check(_id, String);
 
-  if (!this.userId) {
+  if (!this.userId || !Roles.userIsInRole(this.userId, [Meteor.settings.public.roles.stylist])) {
     throw new Meteor.Error(403, 'unauthorized');
   }
 
@@ -437,7 +438,7 @@ export function stylistFindBooking(_id) {
 export function stylistListBookings(bookingStatus) {
   check(bookingStatus, Match.Maybe(String));
 
-  if (!this.userId) {
+  if (!this.userId || !Roles.userIsInRole(this.userId, [Meteor.settings.public.roles.stylist])) {
     throw new Meteor.Error(403, 'unauthorized');
   }
 
