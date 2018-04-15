@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import log from 'winston';
 import moment from 'moment';
 
@@ -434,27 +434,32 @@ export function stylistFindBooking(_id) {
   }
 }
 
-export function stylistListBookings() {
+export function stylistListBookings(bookingStatus) {
+  check(bookingStatus, Match.Maybe(String));
+
+
   if (!this.userId) {
     throw new Meteor.Error(403, 'unauthorized');
   }
 
+  let selector = { stylist: this.userId };
+  if (bookingStatus) {
+    selector = { ...selector, status: bookingStatus };
+  }
+
   try {
-    let bookings = Bookings.find(
-      { stylist: this.userId },
-      {
-        fields: {
-          services: 1,
-          total: 1,
-          customer: 1,
-          firstName: 1,
-          lastName: 1,
-          time: 1,
-          status: 1,
-        },
-        sort: { createdAt: -1 },
+    let bookings = Bookings.find(selector, {
+      fields: {
+        services: 1,
+        total: 1,
+        customer: 1,
+        firstName: 1,
+        lastName: 1,
+        time: 1,
+        status: 1,
       },
-    ).fetch();
+      sort: { createdAt: -1 },
+    }).fetch();
 
     // group by status
     bookings = [

@@ -83,7 +83,7 @@ const SideMenu = ({ isStylist, location }) => (
                 })}
               >
                 <Link to="/users/stylist/bookings?status=pending">
-                  Pending <span className="nav-tag amber">1</span>
+                  Pending <span className="nav-tag lightblue">1</span>
                 </Link>
               </li>
               <li
@@ -94,7 +94,7 @@ const SideMenu = ({ isStylist, location }) => (
                 })}
               >
                 <Link to="/users/stylist/bookings?status=declined">
-                  Declined <span className="nav-tag indigo">2</span>
+                  Declined <span className="nav-tag red">2</span>
                 </Link>
               </li>
               <li

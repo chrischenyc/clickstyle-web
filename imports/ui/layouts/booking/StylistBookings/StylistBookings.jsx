@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 
 import { withLoading } from '../../../components/HOC';
 import StylistBookingsPage from './StylistBookingsPage';
@@ -21,7 +22,8 @@ class StylistBookings extends Component {
   loadBookings() {
     this.props.showLoading();
 
-    Meteor.call('bookings.stylist.list', (error, bookings) => {
+    const { status } = queryString.parse(this.props.location.search);
+    Meteor.call('bookings.stylist.list', status, (error, bookings) => {
       this.props.hideLoading();
       this.setState({ bookings });
     });
