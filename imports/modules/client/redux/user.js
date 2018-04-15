@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
+import _ from 'lodash';
 
 // --------- actions ----------
 export function userSignedIn(meteorUser) {
@@ -25,7 +26,7 @@ export function userProfileFetched(profile) {
 export function userStatsFetched(stats) {
   return {
     type: 'USER_STATS_FETCHED',
-    stats,
+    stats: _.omit(stats, ['_id', 'owner']),
   };
 }
 

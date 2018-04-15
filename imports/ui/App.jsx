@@ -13,6 +13,7 @@ import {
   userStatsFetched,
 } from '../modules/client/redux/user';
 import { resetCart } from '../modules/client/redux/cart';
+import UserStats from '../api/user_stats/user_stats';
 
 import Routes from './Routes';
 import SlideMenu from './components/SlideMenu';
@@ -42,11 +43,11 @@ class App extends Component {
             }
           });
 
-          Meteor.call('users.stats', (error, stats) => {
-            if (stats) {
-              this.props.userStatsFetched(stats);
-            }
-          });
+          const handle = Meteor.subscribe('userStats');
+          if (handle.ready()) {
+            const stats = UserStats.findOne({ owner: user._id });
+            this.props.userStatsFetched(stats);
+          }
         } else {
           this.props.userSignedOut();
           this.props.resetCart();
