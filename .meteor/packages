@@ -40,3 +40,5 @@ practicalmeteor:mocha           # testing
 practicalmeteor:chai
 aldeed:collection2-core@2.0.0
 aldeed:schema-index
+mixmax:smart-disconnect
+mizzao:user-status
