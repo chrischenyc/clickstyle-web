@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import log from 'winston';
 import moment from 'moment';
 
@@ -451,14 +451,21 @@ export function guestFindBooking(object) {
   }
 }
 
-export function customerListBookings() {
+export function customerListBookings(bookingStatus) {
+  check(bookingStatus, Match.Maybe(String));
+
   if (!this.userId) {
     throw new Meteor.Error(403, 'unauthorized');
   }
 
+  let selector = { customer: this.userId };
+  if (bookingStatus) {
+    selector = { ...selector, status: bookingStatus };
+  }
+
   try {
     let bookings = Bookings.find(
-      { customer: this.userId },
+      selector,
       {
         fields: {
           stylist: 1,

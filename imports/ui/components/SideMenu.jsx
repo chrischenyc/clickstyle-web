@@ -48,6 +48,63 @@ const SideMenu = ({ isStylist, location }) => (
           <Link to="/users/bookings">
             <i className="im im-icon-Calendar" /> My Bookings
           </Link>
+          <ul>
+            <li
+              className={classNames({
+                active:
+                  location.pathname === '/users/bookings' &&
+                  queryString.parse(location.search).status === 'confirmed',
+              })}
+            >
+              <Link to="/users/bookings?status=confirmed">
+                Confirmed <span className="nav-tag green">6</span>
+              </Link>
+            </li>
+            <li
+              className={classNames({
+                active:
+                  location.pathname === '/users/bookings' &&
+                  queryString.parse(location.search).status === 'pending',
+              })}
+            >
+              <Link to="/users/bookings?status=pending">
+                Pending <span className="nav-tag lightblue">1</span>
+              </Link>
+            </li>
+            <li
+              className={classNames({
+                active:
+                  location.pathname === '/users/bookings' &&
+                  queryString.parse(location.search).status === 'declined',
+              })}
+            >
+              <Link to="/users/bookings?status=declined">
+                Declined <span className="nav-tag red">2</span>
+              </Link>
+            </li>
+            <li
+              className={classNames({
+                active:
+                  location.pathname === '/users/bookings' &&
+                  queryString.parse(location.search).status === 'cancelled',
+              })}
+            >
+              <Link to="/users/bookings?status=cancelled">
+                Cancelled <span className="nav-tag red">2</span>
+              </Link>
+            </li>
+            <li
+              className={classNames({
+                active:
+                  location.pathname === '/users/bookings' &&
+                  queryString.parse(location.search).status === 'completed',
+              })}
+            >
+              <Link to="/users/bookings?status=completed">
+                Completed <span className="nav-tag green">2</span>
+              </Link>
+            </li>
+          </ul>
         </li>
         <li className={classNames({ active: location.pathname === '/users/booking/stylists' })}>
           <Link to="/users/booking/stylists">

@@ -437,7 +437,6 @@ export function stylistFindBooking(_id) {
 export function stylistListBookings(bookingStatus) {
   check(bookingStatus, Match.Maybe(String));
 
-
   if (!this.userId) {
     throw new Meteor.Error(403, 'unauthorized');
   }
