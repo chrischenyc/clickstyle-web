@@ -35,25 +35,19 @@ const SideMenu = ({
         <li className={classNames({ active: location.pathname === '/users/dashboard' })}>
           <Link to="/users/dashboard">
             <i className="im im-icon-Home" /> Dashboard
+            {notifications > 0 && <span className="nav-tag messages">{notifications}</span>}
           </Link>
         </li>
 
         <li className={classNames({ active: location.pathname === '/users/inbox' })}>
           <Link to="/users/inbox">
             <i className="im im-icon-Email" /> Inbox
-            {notifications > 0 && <span className="nav-tag messages">{notifications}</span>}
           </Link>
         </li>
 
         <li className={classNames({ active: location.pathname === '/users/profile' })}>
           <Link to="/users/profile">
             <i className="im im-icon-Profile" /> Profile
-          </Link>
-        </li>
-
-        <li className={classNames({ active: location.pathname === '/users/payment-methods' })}>
-          <Link to="/users/payment-methods">
-            <i className="im im-icon-Credit-Card" /> Payment methods
           </Link>
         </li>
       </ul>
@@ -131,9 +125,16 @@ const SideMenu = ({
             )}
           </ul>
         </li>
+
         <li className={classNames({ active: location.pathname === '/users/booking/stylists' })}>
           <Link to="/users/booking/stylists">
-            <i className="im im-icon-Heart" /> Favoured stylists
+            <i className="im im-icon-Heart" /> Favourite stylists
+          </Link>
+        </li>
+
+        <li className={classNames({ active: location.pathname === '/users/payment-methods' })}>
+          <Link to="/users/payment-methods">
+            <i className="im im-icon-Credit-Card" /> Payment methods
           </Link>
         </li>
       </ul>

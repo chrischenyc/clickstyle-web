@@ -3,12 +3,11 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Dropdown, Menu, Responsive, Button, Container, Icon } from 'semantic-ui-react';
+import { Dropdown, Menu, Responsive, Button, Container, Icon, Label } from 'semantic-ui-react';
 import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
 
-import { closeModal } from '../../modules/client/redux/ui';
-import { toggleSlideMenu } from '../../modules/client/redux/ui';
+import { closeModal, toggleSlideMenu } from '../../modules/client/redux/ui';
 import ModalLink from './ModalLink';
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
@@ -42,7 +41,15 @@ class Header extends Component {
   render() {
     const { menuFixed } = this.state;
     const {
-      authenticated, firstName, fullContent, searchBar, cart, isStylist,
+      authenticated,
+      firstName,
+      fullContent,
+      searchBar,
+      cart,
+      isStylist,
+      notifications,
+      pendingBookings,
+      pendingCustomerBookings,
     } = this.props;
 
     return (
@@ -119,10 +126,25 @@ class Header extends Component {
               {authenticated && (
                 <Dropdown text={firstName || ''} className="item">
                   <Dropdown.Menu>
-                    <Dropdown.Item as={Link} to="/users/dashboard" text="Dashboard" />
-                    <Dropdown.Item as={Link} to="/users/bookings" text="My Bookings" />
+                    <Dropdown.Item
+                      as={Link}
+                      to="/users/dashboard"
+                      text={`Dashboard ${notifications > 0 ? ` (${notifications})` : ''}`}
+                    />
                     <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
                     <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
+
+                    <Dropdown.Divider />
+                    <Dropdown.Item
+                      as={Link}
+                      to="/users/bookings"
+                      text={`My Bookings ${pendingBookings > 0 ? ` (${pendingBookings})` : ''}`}
+                    />
+                    <Dropdown.Item
+                      as={Link}
+                      to="/users/booking/stylists"
+                      text="Favourite Stylists"
+                    />
                     <Dropdown.Item as={Link} to="/users/payment-methods" text="Payment methods" />
 
                     {isStylist && (
@@ -131,7 +153,9 @@ class Header extends Component {
                         <Dropdown.Item
                           as={Link}
                           to="/users/stylist/bookings"
-                          text="Customer Bookings"
+                          text={`Customer Bookings ${
+                            pendingCustomerBookings > 0 ? ` (${pendingCustomerBookings})` : ''
+                          }`}
                         />
                         <Dropdown.Item as={Link} to="/users/stylist/services" text="Services" />
                         <Dropdown.Item as={Link} to="/users/stylist/calendar" text="Calendar" />
@@ -193,6 +217,9 @@ Header.propTypes = {
   searchBar: PropTypes.bool,
   cart: PropTypes.object.isRequired,
   isStylist: PropTypes.bool,
+  notifications: PropTypes.number.isRequired,
+  pendingBookings: PropTypes.number.isRequired,
+  pendingCustomerBookings: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -200,6 +227,9 @@ const mapStateToProps = state => ({
   firstName: state.user.profile && state.user.profile.name && state.user.profile.name.first,
   cart: state.cart,
   isStylist: state.user.isStylist,
+  notifications: state.user.notifications,
+  pendingBookings: state.user.pendingBookings,
+  pendingCustomerBookings: state.user.pendingCustomerBookings,
 });
 
 export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(withRouter(Header));

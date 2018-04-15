@@ -95,7 +95,7 @@ const SlideMenu = props => (
                     props.toggleSlideMenu();
                   }}
                 >
-                  Dashboard
+                  {`Dashboard ${props.notifications > 0 ? ` (${props.notifications})` : ''}`}
                 </Link>
               </li>
 
@@ -119,16 +119,6 @@ const SlideMenu = props => (
                   Profile
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/users/payment-methods"
-                  onClick={() => {
-                    props.toggleSlideMenu();
-                  }}
-                >
-                  Payment methods
-                </Link>
-              </li>
             </ul>
           </li>
           <Divider />
@@ -143,7 +133,7 @@ const SlideMenu = props => (
                     props.toggleSlideMenu();
                   }}
                 >
-                  My Bookings
+                  {`My Bookings ${props.pendingBookings > 0 ? ` (${props.pendingBookings})` : ''}`}
                 </Link>
               </li>
               <li>
@@ -153,7 +143,17 @@ const SlideMenu = props => (
                     props.toggleSlideMenu();
                   }}
                 >
-                  Favoured stylists
+                  Favourite stylists
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/users/payment-methods"
+                  onClick={() => {
+                    props.toggleSlideMenu();
+                  }}
+                >
+                  Payment methods
                 </Link>
               </li>
             </ul>
@@ -174,7 +174,9 @@ const SlideMenu = props => (
                     props.toggleSlideMenu();
                   }}
                 >
-                  Customer Bookings
+                  {`Customer Bookings ${
+                    props.pendingCustomerBookings > 0 ? ` (${props.pendingCustomerBookings})` : ''
+                  }`}
                 </Link>
               </li>
               <li>
@@ -271,6 +273,9 @@ SlideMenu.propTypes = {
   open: PropTypes.bool.isRequired,
   authenticated: PropTypes.bool.isRequired,
   isStylist: PropTypes.bool,
+  notifications: PropTypes.number.isRequired,
+  pendingBookings: PropTypes.number.isRequired,
+  pendingCustomerBookings: PropTypes.number.isRequired,
   toggleSlideMenu: PropTypes.func.isRequired,
 };
 
@@ -278,6 +283,9 @@ const mapStateToProps = state => ({
   open: state.ui.slideMenuOpen,
   authenticated: state.user.authenticated,
   isStylist: state.user.isStylist,
+  notifications: state.user.notifications,
+  pendingBookings: state.user.pendingBookings,
+  pendingCustomerBookings: state.user.pendingCustomerBookings,
 });
 
 export default connect(mapStateToProps, { toggleSlideMenu })(SlideMenu);
