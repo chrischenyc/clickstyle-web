@@ -3,9 +3,10 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Dropdown, Menu, Responsive, Button, Container, Icon, Label } from 'semantic-ui-react';
+import { Dropdown, Menu, Responsive, Button, Container, Icon } from 'semantic-ui-react';
 import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
+import _ from 'lodash';
 
 import { closeModal, toggleSlideMenu } from '../../modules/client/redux/ui';
 import ModalLink from './ModalLink';
@@ -123,60 +124,61 @@ class Header extends Component {
                 </Menu.Item>
               )}
 
-              {authenticated && (
-                <Dropdown text={firstName || ''} className="item">
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      as={Link}
-                      to="/users/dashboard"
-                      text={`Dashboard ${notifications > 0 ? ` (${notifications})` : ''}`}
-                    />
-                    <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
-                    <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
+              {authenticated &&
+                !_.isEmpty(firstName) && (
+                  <Dropdown text={firstName} className="item">
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        as={Link}
+                        to="/users/dashboard"
+                        text={`Dashboard ${notifications > 0 ? ` (${notifications})` : ''}`}
+                      />
+                      <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
+                      <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
 
-                    <Dropdown.Divider />
-                    <Dropdown.Item
-                      as={Link}
-                      to="/users/bookings"
-                      text={`My Bookings ${pendingBookings > 0 ? ` (${pendingBookings})` : ''}`}
-                    />
-                    <Dropdown.Item
-                      as={Link}
-                      to="/users/booking/stylists"
-                      text="Favourite Stylists"
-                    />
-                    <Dropdown.Item as={Link} to="/users/payment-methods" text="Payment methods" />
+                      <Dropdown.Divider />
+                      <Dropdown.Item
+                        as={Link}
+                        to="/users/bookings"
+                        text={`My Bookings ${pendingBookings > 0 ? ` (${pendingBookings})` : ''}`}
+                      />
+                      <Dropdown.Item
+                        as={Link}
+                        to="/users/booking/stylists"
+                        text="Favourite Stylists"
+                      />
+                      <Dropdown.Item as={Link} to="/users/payment-methods" text="Payment methods" />
 
-                    {isStylist && (
-                      <Fragment>
-                        <Dropdown.Divider />
-                        <Dropdown.Item
-                          as={Link}
-                          to="/users/stylist/bookings"
-                          text={`Customer Bookings ${
-                            pendingCustomerBookings > 0 ? ` (${pendingCustomerBookings})` : ''
-                          }`}
-                        />
-                        <Dropdown.Item as={Link} to="/users/stylist/services" text="Services" />
-                        <Dropdown.Item as={Link} to="/users/stylist/calendar" text="Calendar" />
-                        <Dropdown.Item as={Link} to="/users/stylist/areas" text="Areas" />
-                        <Dropdown.Item as={Link} to="/users/stylist/portfolio" text="Portfolio" />
-                        <Dropdown.Item as={Link} to="/users/stylist/faq" text="Stylist FAQ" />
-                      </Fragment>
-                    )}
+                      {isStylist && (
+                        <Fragment>
+                          <Dropdown.Divider />
+                          <Dropdown.Item
+                            as={Link}
+                            to="/users/stylist/bookings"
+                            text={`Customer Bookings ${
+                              pendingCustomerBookings > 0 ? ` (${pendingCustomerBookings})` : ''
+                            }`}
+                          />
+                          <Dropdown.Item as={Link} to="/users/stylist/services" text="Services" />
+                          <Dropdown.Item as={Link} to="/users/stylist/calendar" text="Calendar" />
+                          <Dropdown.Item as={Link} to="/users/stylist/areas" text="Areas" />
+                          <Dropdown.Item as={Link} to="/users/stylist/portfolio" text="Portfolio" />
+                          <Dropdown.Item as={Link} to="/users/stylist/faq" text="Stylist FAQ" />
+                        </Fragment>
+                      )}
 
-                    <Dropdown.Divider />
-                    <Dropdown.Item as={Link} to="/users/settings" text="Settings" />
-                    <Dropdown.Item
-                      text="Logout"
-                      onClick={() => {
-                        Meteor.logout();
-                        this.props.history.push('/');
-                      }}
-                    />
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
+                      <Dropdown.Divider />
+                      <Dropdown.Item as={Link} to="/users/settings" text="Settings" />
+                      <Dropdown.Item
+                        text="Logout"
+                        onClick={() => {
+                          Meteor.logout();
+                          this.props.history.push('/');
+                        }}
+                      />
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
             </Responsive>
 
             <Responsive maxWidth={1024} as={Menu.Menu} position="right">
