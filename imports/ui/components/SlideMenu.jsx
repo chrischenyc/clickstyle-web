@@ -106,7 +106,7 @@ const SlideMenu = props => (
                     props.toggleSlideMenu();
                   }}
                 >
-                  Inbox
+                  {`Inbox ${props.messages > 0 ? ` (${props.messages})` : ''}`}
                 </Link>
               </li>
               <li>
@@ -274,6 +274,7 @@ SlideMenu.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   isStylist: PropTypes.bool,
   notifications: PropTypes.number.isRequired,
+  messages: PropTypes.number.isRequired,
   pendingBookings: PropTypes.number.isRequired,
   pendingCustomerBookings: PropTypes.number.isRequired,
   toggleSlideMenu: PropTypes.func.isRequired,
@@ -284,6 +285,7 @@ const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
   isStylist: state.user.isStylist,
   notifications: state.user.notifications,
+  messages: state.user.messages,
   pendingBookings: state.user.pendingBookings,
   pendingCustomerBookings: state.user.pendingCustomerBookings,
 });

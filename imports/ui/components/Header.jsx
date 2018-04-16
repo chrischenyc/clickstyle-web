@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Dropdown, Menu, Responsive, Button, Container, Icon } from 'semantic-ui-react';
+import { Dropdown, Menu, Responsive, Button, Container, Icon, Label } from 'semantic-ui-react';
 import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
 import _ from 'lodash';
@@ -49,6 +49,7 @@ class Header extends Component {
       cart,
       isStylist,
       notifications,
+      messages,
       pendingBookings,
       pendingCustomerBookings,
     } = this.props;
@@ -66,6 +67,7 @@ class Header extends Component {
           style={menuFixed || !fullContent ? fixedMenuStyle : menuStyle}
         >
           <LoadingBar style={{ backgroundColor: '#00aca4' }} />
+
           <Container fluid>
             {fullContent && (
               <Menu.Item id="logo">
@@ -89,106 +91,120 @@ class Header extends Component {
 
             <Responsive minWidth={1025} as={Menu.Menu} position="right">
               {fullContent && (
-                <Menu.Item as={Link} to="/join">
-                  Become a stylist
-                </Menu.Item>
-              )}
-
-              {fullContent && (
-                <Menu.Item as={Link} to="/faq">
-                  FAQ
-                </Menu.Item>
-              )}
-
-              {!authenticated && (
-                <Menu.Item
-                  as={ModalLink}
-                  className="sign-in"
-                  to="/signup"
-                  component={<SignUp modal />}
-                  title="Join us"
-                >
-                  Sign Up
-                </Menu.Item>
+                <Fragment>
+                  <Menu.Item as={Link} to="/join">
+                    Become a stylist
+                  </Menu.Item>
+                  <Menu.Item as={Link} to="/faq">
+                    FAQ
+                  </Menu.Item>
+                </Fragment>
               )}
 
               {!authenticated && (
-                <Menu.Item
-                  as={ModalLink}
-                  className="sign-in"
-                  to="/login"
-                  component={<Login modal />}
-                  title="Log in to continue"
-                >
-                  Log In
-                </Menu.Item>
+                <Fragment>
+                  <Menu.Item
+                    as={ModalLink}
+                    className="sign-in"
+                    to="/signup"
+                    component={<SignUp modal />}
+                    title="Join us"
+                  >
+                    Sign Up
+                  </Menu.Item>
+                  <Menu.Item
+                    as={ModalLink}
+                    className="sign-in"
+                    to="/login"
+                    component={<Login modal />}
+                    title="Log in to continue"
+                  >
+                    Log In
+                  </Menu.Item>
+                </Fragment>
               )}
 
               {authenticated &&
                 !_.isEmpty(firstName) && (
-                  <Dropdown text={firstName} className="item">
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        as={Link}
-                        to="/users/dashboard"
-                        text={`Dashboard ${notifications > 0 ? ` (${notifications})` : ''}`}
-                      />
-                      <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
-                      <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
+                  <Fragment>
+                    <Menu.Item as={Link} to="/users/inbox" icon="inbox">
+                      Inbox {messages > 0 && <Label color="teal">{messages}</Label>}
+                    </Menu.Item>
 
-                      <Dropdown.Divider />
-                      <Dropdown.Item
-                        as={Link}
-                        to="/users/bookings"
-                        text={`My Bookings ${pendingBookings > 0 ? ` (${pendingBookings})` : ''}`}
-                      />
-                      <Dropdown.Item
-                        as={Link}
-                        to="/users/booking/stylists"
-                        text="Favourite Stylists"
-                      />
-                      <Dropdown.Item as={Link} to="/users/payment-methods" text="Payment methods" />
+                    <Dropdown text={firstName} className="item">
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          as={Link}
+                          to="/users/dashboard"
+                          text={`Dashboard ${notifications > 0 ? ` (${notifications})` : ''}`}
+                        />
+                        <Dropdown.Item as={Link} to="/users/inbox" text="Inbox" />
+                        <Dropdown.Item as={Link} to="/users/profile" text="Profile" />
 
-                      {isStylist && (
-                        <Fragment>
-                          <Dropdown.Divider />
-                          <Dropdown.Item
-                            as={Link}
-                            to="/users/stylist/bookings"
-                            text={`Customer Bookings ${
-                              pendingCustomerBookings > 0 ? ` (${pendingCustomerBookings})` : ''
-                            }`}
-                          />
-                          <Dropdown.Item as={Link} to="/users/stylist/services" text="Services" />
-                          <Dropdown.Item as={Link} to="/users/stylist/calendar" text="Calendar" />
-                          <Dropdown.Item as={Link} to="/users/stylist/areas" text="Areas" />
-                          <Dropdown.Item as={Link} to="/users/stylist/portfolio" text="Portfolio" />
-                          <Dropdown.Item as={Link} to="/users/stylist/faq" text="Stylist FAQ" />
-                        </Fragment>
-                      )}
+                        <Dropdown.Divider />
+                        <Dropdown.Item
+                          as={Link}
+                          to="/users/bookings"
+                          text={`My Bookings ${pendingBookings > 0 ? ` (${pendingBookings})` : ''}`}
+                        />
+                        <Dropdown.Item
+                          as={Link}
+                          to="/users/booking/stylists"
+                          text="Favourite Stylists"
+                        />
+                        <Dropdown.Item
+                          as={Link}
+                          to="/users/payment-methods"
+                          text="Payment methods"
+                        />
 
-                      <Dropdown.Divider />
-                      <Dropdown.Item as={Link} to="/users/settings" text="Settings" />
-                      <Dropdown.Item
-                        text="Logout"
-                        onClick={() => {
-                          Meteor.logout();
-                          this.props.history.push('/');
-                        }}
-                      />
-                    </Dropdown.Menu>
-                  </Dropdown>
+                        {isStylist && (
+                          <Fragment>
+                            <Dropdown.Divider />
+                            <Dropdown.Item
+                              as={Link}
+                              to="/users/stylist/bookings"
+                              text={`Customer Bookings ${
+                                pendingCustomerBookings > 0 ? ` (${pendingCustomerBookings})` : ''
+                              }`}
+                            />
+                            <Dropdown.Item as={Link} to="/users/stylist/services" text="Services" />
+                            <Dropdown.Item as={Link} to="/users/stylist/calendar" text="Calendar" />
+                            <Dropdown.Item as={Link} to="/users/stylist/areas" text="Areas" />
+                            <Dropdown.Item
+                              as={Link}
+                              to="/users/stylist/portfolio"
+                              text="Portfolio"
+                            />
+                            <Dropdown.Item as={Link} to="/users/stylist/faq" text="Stylist FAQ" />
+                          </Fragment>
+                        )}
+
+                        <Dropdown.Divider />
+                        <Dropdown.Item as={Link} to="/users/settings" text="Settings" />
+                        <Dropdown.Item
+                          text="Logout"
+                          onClick={() => {
+                            Meteor.logout();
+                            this.props.history.push('/');
+                          }}
+                        />
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Fragment>
                 )}
             </Responsive>
 
             <Responsive maxWidth={1024} as={Menu.Menu} position="right">
-              {/* only display cart in header on mobile screen, when cart isn't empty */}
-              {cart.showCartInHeader && (
-                <Menu.Item as={Link} to="/booking" style={{ fontSize: '1rem', paddingRight: 0 }}>
-                  <Icon name="cart" />
-                  {`${formatPrice(cart.total)} (${cart.count})`}
-                </Menu.Item>
-              )}
+              <Fragment>
+                {/* only display cart in header on mobile screen, when cart isn't empty */}
+                {cart.showCartInHeader && (
+                  <Menu.Item as={Link} to="/booking" style={{ fontSize: '1rem', paddingRight: 0 }}>
+                    <Icon name="cart" />
+                    {`${formatPrice(cart.total)} (${cart.count})`}
+                  </Menu.Item>
+                )}
+              </Fragment>
             </Responsive>
           </Container>
 
@@ -220,6 +236,7 @@ Header.propTypes = {
   cart: PropTypes.object.isRequired,
   isStylist: PropTypes.bool,
   notifications: PropTypes.number.isRequired,
+  messages: PropTypes.number.isRequired,
   pendingBookings: PropTypes.number.isRequired,
   pendingCustomerBookings: PropTypes.number.isRequired,
 };
@@ -230,6 +247,7 @@ const mapStateToProps = state => ({
   cart: state.cart,
   isStylist: state.user.isStylist,
   notifications: state.user.notifications,
+  messages: state.user.messages,
   pendingBookings: state.user.pendingBookings,
   pendingCustomerBookings: state.user.pendingCustomerBookings,
 });

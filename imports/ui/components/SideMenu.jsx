@@ -10,6 +10,7 @@ const SideMenu = ({
   isStylist,
   location,
   notifications,
+  messages,
   confirmedBookings,
   pendingBookings,
   cancelledBookings,
@@ -42,6 +43,7 @@ const SideMenu = ({
         <li className={classNames({ active: location.pathname === '/users/inbox' })}>
           <Link to="/users/inbox">
             <i className="im im-icon-Email" /> Inbox
+            {messages > 0 && <span className="nav-tag messages">{messages}</span>}
           </Link>
         </li>
 
@@ -294,6 +296,7 @@ SideMenu.defaultProps = {
 SideMenu.propTypes = {
   isStylist: PropTypes.bool,
   notifications: PropTypes.number.isRequired,
+  messages: PropTypes.number.isRequired,
   confirmedBookings: PropTypes.number.isRequired,
   pendingBookings: PropTypes.number.isRequired,
   cancelledBookings: PropTypes.number.isRequired,
@@ -310,6 +313,7 @@ SideMenu.propTypes = {
 const mapStateToProps = state => ({
   isStylist: state.user.isStylist,
   notifications: state.user.notifications,
+  messages: state.user.messages,
   confirmedBookings: state.user.confirmedBookings,
   pendingBookings: state.user.pendingBookings,
   cancelledBookings: state.user.cancelledBookings,
