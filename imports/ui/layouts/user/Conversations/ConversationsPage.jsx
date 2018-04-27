@@ -21,11 +21,18 @@ const ConversationsPage = ({ conversations }) => (
               {conversations.map(conversation => (
                 <li key={conversation.owner} className="unread">
                   <Link to={`/users/conversations/${conversation.booking}`}>
-                    <div className="message-avatar">
+                    <div className="message-avatar" style={{ textAlign: 'center' }}>
                       <img
-                        src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
+                        src={scaledImageURL(
+                          conversation.recipient.photo || Meteor.settings.public.defaultAvatar,
+                          'small',
+                        )}
                         alt=""
                       />
+
+                      <h5>
+                        {`${conversation.recipient.name.first} ${conversation.recipient.name.last}`}
+                      </h5>
                     </div>
 
                     <div className="message-by">

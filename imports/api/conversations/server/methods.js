@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import log from 'winston';
+import _ from 'lodash';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Conversations from '../conversations';
@@ -20,6 +21,7 @@ Meteor.methods({
             updatedAt: 1,
             lastMessageExcerpt: 1,
             lastMessageSender: 1,
+            participants: 1,
           },
           order: {
             updatedAt: -1,
@@ -35,7 +37,13 @@ Meteor.methods({
         const lastMessageSender =
           conversation.lastMessageSender === this.userId ? 'You' : name.first;
 
-        return { ...conversation, lastMessageSender };
+        const recipientId = conversation.participants.filter(participant => participant !== this.userId)[0];
+        const recipient = Profiles.findOne(
+          { owner: recipientId },
+          { fields: { name: 1, photo: 1 } },
+        );
+
+        return { ..._.omit(conversation, 'participants'), lastMessageSender, recipient };
       });
     } catch (error) {
       log.error(error);
