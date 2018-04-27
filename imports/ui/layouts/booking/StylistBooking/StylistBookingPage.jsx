@@ -94,7 +94,7 @@ class StylistBookingPage extends Component {
                   <span className="booking-status">{this.props.booking.status}</span>
                 </h3>
 
-                <Link to={`/chats/${this.props.booking._id}`}>
+                <Link to={`/users/conversations/${this.props.booking._id}`}>
                   <Button
                     color="teal"
                     circular
