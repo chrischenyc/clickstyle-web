@@ -3,6 +3,7 @@ import '../../api/booking_activities/server/methods';
 import '../../api/bookings/server/hooks';
 import '../../api/bookings/server/methods';
 import '../../api/featured/server/methods';
+import '../../api/messages/server/methods';
 import '../../api/notifications/server/hooks';
 import '../../api/notifications/server/methods';
 import '../../api/products/server/methods';

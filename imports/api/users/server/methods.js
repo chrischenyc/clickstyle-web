@@ -1,10 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
 import { Accounts } from 'meteor/accounts-base';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import { sendPasswordChangedEmail } from '../../../modules/server/send-email';
-import Bookings from '../../bookings/bookings';
 
 Meteor.methods({
   'users.sendVerificationEmail': function usersSendVerificationEmail() {
