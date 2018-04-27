@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import log from 'winston';
+import _ from 'lodash';
 
 import rateLimit from '../../../modules/server/rate-limit';
 
@@ -32,8 +33,7 @@ Meteor.methods({
         throw new Meteor.Error('403');
       }
 
-      // TODO: trim string
-      const messageExcerpt = content;
+      const messageExcerpt = _.truncate(content, { length: 200 });
 
       // create a new Conversations if none is attached to Booking
       let conversationId = conversation;

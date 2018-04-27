@@ -38,7 +38,7 @@ const ConversationsSchema = new SimpleSchema({
   'participants.$': String, // Users._id,
   lastMessageExcerpt: {
     type: String,
-    max: 100,
+    max: 200,
   },
   lastMessageSender: String, // Users._id
 });
