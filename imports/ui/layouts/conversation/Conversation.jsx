@@ -35,7 +35,7 @@ class Conversation extends Component {
 
     this.props.showLoading();
 
-    Meteor.call('bookings.customer.find', _id, (error, booking) => {
+    Meteor.call('bookings.conversationSummary', _id, (error, booking) => {
       this.props.hideLoading();
 
       if (booking) {

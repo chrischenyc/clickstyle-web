@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 import moment from 'moment';
 import _ from 'lodash';
+import log from 'winston';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import { dateTimeShortString } from '../../../modules/format-date';
@@ -88,6 +90,39 @@ Meteor.methods({
       }));
 
     return bookings;
+  },
+  'bookings.conversationSummary': function findBookingForConversationSummary(_id) {
+    check(_id, String);
+
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    try {
+      const booking = Bookings.findOne(
+        { _id, $or: [{ customer: this.userId }, { stylist: this.userId }] },
+        {
+          fields: {
+            services: 1,
+            total: 1,
+            address: 1,
+            time: 1,
+            status: 1,
+            duration: 1,
+            createdAt: 1,
+          },
+        },
+      );
+
+      if (!booking) {
+        throw new Meteor.Error(403, 'unauthorized');
+      }
+
+      return booking;
+    } catch (exception) {
+      log.error(exception);
+      throw exception;
+    }
   },
 });
 

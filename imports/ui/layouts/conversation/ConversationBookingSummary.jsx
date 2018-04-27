@@ -15,14 +15,21 @@ const ConversationBookingSummary = props => (
     </div>
 
     <div className="inner-booking-list">
-      <h5>Booking Date:</h5>
+      <h5>Status:</h5>
+      <ul className="booking-list">
+        <li className="highlighted">{props.booking.status}</li>
+      </ul>
+    </div>
+
+    <div className="inner-booking-list">
+      <h5>Date:</h5>
       <ul className="booking-list">
         <li className="highlighted">{dateTimeString(props.booking.time)}</li>
       </ul>
     </div>
 
     <div className="inner-booking-list">
-      <h5>Booking Details:</h5>
+      <h5>Details:</h5>
       <ul className="booking-list">
         <li className="highlighted">{servicesSummary(props.booking.services)}</li>
       </ul>
@@ -43,7 +50,7 @@ const ConversationBookingSummary = props => (
     </div>
 
     <div className="inner-booking-list">
-      <h5>Customer address:</h5>
+      <h5>Address:</h5>
       <ul className="booking-list">
         <li className="highlighted">{props.booking.address}</li>
       </ul>
