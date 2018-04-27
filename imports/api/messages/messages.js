@@ -35,7 +35,6 @@ Messages.attachBehaviour('timestampable', {
 const MessagesSchema = new SimpleSchema({
   conversation: String, // Conversations._id
   sender: String,
-  recipient: String,
   read: Boolean,
   content: { type: String, max: 1000 },
 });

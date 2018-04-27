@@ -15,21 +15,17 @@ Meteor.methods({
     }
 
     check(message, Object);
-    const { booking, recipient, content } = message;
+    const { booking, content } = message;
     check(booking, String);
-    check(recipient, String);
     check(content, String);
 
     try {
-      // validate current user and recipient both belong to the booking
+      // validate current user has access to the booking
       const {
         _id, conversation, customer, stylist,
       } = Bookings.findOne({
         _id: booking,
-        $or: [
-          { customer: this.userId, stylist: recipient },
-          { stylist: this.userId, customer: recipient },
-        ],
+        $or: [{ customer: this.userId }, { stylist: this.userId }],
       });
 
       if (!_id) {
@@ -49,7 +45,6 @@ Meteor.methods({
         conversation: conversationId,
         content,
         sender: this.userId,
-        recipient,
         read: false,
       });
     } catch (error) {

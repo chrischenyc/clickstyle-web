@@ -14,12 +14,11 @@ class Conversation extends Component {
       booking: null,
       loading: false,
       error: '',
-      rating: 0,
-      review: '',
+      content: '',
     };
 
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleSubmitReview = this.handleSubmitReview.bind(this);
+    this.handleSend = this.handleSend.bind(this);
   }
 
   componentDidMount() {
@@ -30,7 +29,7 @@ class Conversation extends Component {
     const { _id } = this.props.match.params;
 
     if (_.isNil(_id)) {
-      this.props.history.push('/404');
+      this.props.history.push('/users/inbox');
       return;
     }
 
@@ -47,21 +46,18 @@ class Conversation extends Component {
     });
   }
 
-  handleOnChange(name, value) {
-    this.setState({ [name]: value });
+  handleOnChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSubmitReview() {
+  handleSend() {
     this.setState({ loading: true });
 
-    const { _id } = this.state.booking;
-
     Meteor.call(
-      'reviews.create',
+      'messages.create',
       {
-        _id,
-        rating: this.state.rating,
-        review: this.state.review,
+        booking: this.state.booking._id,
+        content: this.state.content,
       },
       (error) => {
         this.setState({ loading: false });
@@ -69,8 +65,7 @@ class Conversation extends Component {
         if (error) {
           this.setState({ error: error.error });
         } else {
-          this.setState({ error: '' });
-          this.loadBooking();
+          this.setState({ error: '', content: '' });
         }
       },
     );
@@ -81,10 +76,11 @@ class Conversation extends Component {
       return (
         <ConversationPage
           booking={this.state.booking}
+          content={this.state.content}
           loading={this.state.loading}
           error={this.state.error}
           onChange={this.handleOnChange}
-          onSubmitReview={this.handleSubmitReview}
+          onSend={this.handleSend}
         />
       );
     }
