@@ -39,7 +39,7 @@ Meteor.methods({
       // create a new Conversations if none is attached to Booking
       let conversationId = conversation;
       if (!conversationId) {
-        conversationId = Conversations.insert({ participants: [customer, stylist] });
+        conversationId = Conversations.insert({ booking, participants: [customer, stylist] });
 
         Bookings.update({ _id: booking }, { $set: { conversation: conversationId } });
       }

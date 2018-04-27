@@ -2,7 +2,16 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Container, Confirm, Button, TextArea, Rating, Header, Message } from 'semantic-ui-react';
+import {
+  Container,
+  Confirm,
+  Button,
+  TextArea,
+  Rating,
+  Header,
+  Message,
+  Icon,
+} from 'semantic-ui-react';
 import classnames from 'classnames';
 import _ from 'lodash';
 
@@ -68,9 +77,22 @@ class CustomerBookingPage extends Component {
                     {`${this.props.booking.stylist.name.first} ${
                       this.props.booking.stylist.name.last
                     }`}
-                  </Link>{' '}
+                  </Link>
                   <span className="booking-status">{this.props.booking.status}</span>
                 </h3>
+
+                <Link to={`/chats/${this.props.booking._id}`}>
+                  <Button
+                    color="teal"
+                    circular
+                    icon
+                    labelPosition="left"
+                    style={{ marginBottom: '1em' }}
+                  >
+                    <Icon name="mail outline" />
+                    Message {this.props.booking.stylist.name.first}
+                  </Button>
+                </Link>
 
                 <BookingSummary booking={this.props.booking} />
 
@@ -90,7 +112,7 @@ class CustomerBookingPage extends Component {
           {(this.props.booking.status === 'confirmed' ||
             this.props.booking.status === 'pending') && (
             <Button
-              rounded
+              circular
               negative
               size="large"
               onClick={() => {
@@ -129,6 +151,7 @@ class CustomerBookingPage extends Component {
                 />
               </div>
               <Button
+                circular
                 color="teal"
                 size="large"
                 loading={this.props.loading}

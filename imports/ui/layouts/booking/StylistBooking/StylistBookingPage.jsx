@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Container, Button, Message, Confirm } from 'semantic-ui-react';
+import { Container, Button, Message, Confirm, Icon } from 'semantic-ui-react';
 import classnames from 'classnames';
 import _ from 'lodash';
 
@@ -94,6 +94,19 @@ class StylistBookingPage extends Component {
                   <span className="booking-status">{this.props.booking.status}</span>
                 </h3>
 
+                <Link to={`/chats/${this.props.booking._id}`}>
+                  <Button
+                    color="teal"
+                    circular
+                    icon
+                    labelPosition="left"
+                    style={{ marginBottom: '1em' }}
+                  >
+                    <Icon name="mail outline" />
+                    Message {this.props.booking.firstName}
+                  </Button>
+                </Link>
+
                 <BookingSummary booking={this.props.booking} />
 
                 <BookingLogs booking={this.props.booking} />
@@ -111,7 +124,7 @@ class StylistBookingPage extends Component {
         {this.props.booking.status === 'pending' && (
           <Fragment>
             <Button
-              rounded
+              circular
               color="teal"
               size="large"
               onClick={this.props.onAcceptPendingBooking}
@@ -120,7 +133,7 @@ class StylistBookingPage extends Component {
               Accept Booking
             </Button>
             <Button
-              rounded
+              circular
               negative
               size="large"
               onClick={() => {
@@ -136,7 +149,7 @@ class StylistBookingPage extends Component {
         <Fragment>
           {this.props.booking.status === 'confirmed' && (
             <Button
-              rounded
+              circular
               negative
               size="large"
               onClick={() => {
@@ -150,7 +163,7 @@ class StylistBookingPage extends Component {
 
           {this.props.booking.canBeCompleted && (
             <Button
-              rounded
+              circular
               color="teal"
               size="large"
               onClick={() => {
