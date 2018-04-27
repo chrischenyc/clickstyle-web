@@ -32,8 +32,8 @@ import Dashboard from './layouts/user/Dashboard/Dashboard';
 import EditProfile from './layouts/user/Profile/EditProfile';
 import SettingsPage from './layouts/user/SettingsPage';
 import ChangePassword from './layouts/user/ChangePassword/ChangePassword';
-import InboxPage from './layouts/user/InboxPage';
-import Conversation from './layouts/conversation/Conversation';
+import Conversations from './layouts/user/Conversations/Conversations';
+import Conversation from './layouts/user/Conversation/Conversation';
 import PaymentMethods from './layouts/user/PaymentMethods/PaymentMethods';
 
 import FavouredStylists from './layouts/user/FavouredStylists/FavouredStylists';
@@ -80,7 +80,7 @@ export default () => (
 
     <SecureRoute path="/users/dashboard" component={withSideMenuAndHeader(Dashboard)} />
     <SecureRoute path="/users/profile" component={withSideMenuAndHeader(EditProfile)} />
-    <SecureRoute path="/users/inbox" component={withSideMenuAndHeader(InboxPage)} />
+    <SecureRoute path="/users/inbox" component={withSideMenuAndHeader(Conversations)} />
     <SecureRoute path="/users/conversations/:_id" component={withSideMenuAndHeader(Conversation)} />
     <SecureRoute path="/users/payment-methods" component={withSideMenuAndHeader(PaymentMethods)} />
     <SecureRoute path="/users/settings" component={withSideMenuAndHeader(SettingsPage)} />

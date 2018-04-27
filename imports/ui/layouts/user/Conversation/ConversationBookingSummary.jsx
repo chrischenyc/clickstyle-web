@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import formatPrice from '../../../modules/format-price';
-import { dateTimeString } from '../../../modules/format-date';
-import servicesSummary from '../../../modules/format-services';
+import formatPrice from '../../../../modules/format-price';
+import { dateTimeString } from '../../../../modules/format-date';
+import servicesSummary from '../../../../modules/format-services';
 
 const ConversationBookingSummary = props => (
   <div>

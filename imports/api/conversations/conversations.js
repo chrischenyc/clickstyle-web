@@ -34,10 +34,13 @@ Conversations.attachBehaviour('timestampable', {
 
 const ConversationsSchema = new SimpleSchema({
   booking: String, // Bookings._id
-  participants: {
-    type: Array,
+  participants: Array,
+  'participants.$': String, // Users._id,
+  lastMessageExcerpt: {
+    type: String,
+    max: 100,
   },
-  'participants.$': String, // Users._id
+  lastMessageSender: String, // Users._id
 });
 
 Conversations.attachSchema(ConversationsSchema);
