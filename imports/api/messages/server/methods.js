@@ -33,29 +33,15 @@ Meteor.methods({
         throw new Meteor.Error('403');
       }
 
-      const messageExcerpt = _.truncate(content, { length: 200 });
-
       // create a new Conversations if none is attached to Booking
       let conversationId = conversation;
       if (!conversationId) {
         conversationId = Conversations.insert({
           booking,
           participants: [customer, stylist],
-          lastMessageExcerpt: messageExcerpt,
-          lastMessageSender: this.userId,
         });
 
         Bookings.update({ _id: booking }, { $set: { conversation: conversationId } });
-      } else {
-        Conversations.update(
-          { _id: conversationId },
-          {
-            $set: {
-              lastMessageExcerpt: messageExcerpt,
-              lastMessageSender: this.userId,
-            },
-          },
-        );
       }
 
       // create Messages record

@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Conversations from '../conversations';
+import Messages from '../../messages/messages';
 import Profiles from '../../profiles/profiles';
 
 Meteor.methods({
@@ -18,9 +19,6 @@ Meteor.methods({
         {
           fields: {
             booking: 1,
-            updatedAt: 1,
-            lastMessageExcerpt: 1,
-            lastMessageSender: 1,
             participants: 1,
           },
           order: {
@@ -30,20 +28,40 @@ Meteor.methods({
       ).fetch();
 
       return conversations.map((conversation) => {
-        const { name } = Profiles.findOne({
-          owner: conversation.lastMessageSender,
-        });
-
-        const lastMessageSender =
-          conversation.lastMessageSender === this.userId ? 'You' : name.first;
-
         const recipientId = conversation.participants.filter(participant => participant !== this.userId)[0];
         const recipient = Profiles.findOne(
           { owner: recipientId },
           { fields: { name: 1, photo: 1 } },
         );
 
-        return { ..._.omit(conversation, 'participants'), lastMessageSender, recipient };
+        let lastMessage = Messages.findOne(
+          { conversation: conversation._id },
+          {
+            sort: { createdAt: -1 },
+            fields: {
+              sender: 1,
+              read: 1,
+              content: 1,
+              createdAt: 1,
+            },
+          },
+        );
+
+        const sender =
+          lastMessage.sender === this.userId
+            ? 'You'
+            : Profiles.findOne({ owner: lastMessage.sender }).name.first;
+        const read = lastMessage.sender === this.userId ? true : lastMessage.read;
+        const content = _.truncate(lastMessage.content, { length: 200 });
+
+        lastMessage = {
+          ...lastMessage,
+          sender,
+          read,
+          content,
+        };
+
+        return { ..._.omit(conversation, 'participants'), recipient, lastMessage };
       });
     } catch (error) {
       log.error(error);

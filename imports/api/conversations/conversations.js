@@ -36,11 +36,6 @@ const ConversationsSchema = new SimpleSchema({
   booking: String, // Bookings._id
   participants: Array,
   'participants.$': String, // Users._id,
-  lastMessageExcerpt: {
-    type: String,
-    max: 200,
-  },
-  lastMessageSender: String, // Users._id
 });
 
 Conversations.attachSchema(ConversationsSchema);

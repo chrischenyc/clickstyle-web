@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import moment from 'moment';
+import classNames from 'classnames';
 
 import scaledImageURL from '../../../../modules/scaled-image-url';
 
@@ -19,7 +20,7 @@ const ConversationsPage = ({ conversations }) => (
           <div className="messages-inbox">
             <ul>
               {conversations.map(conversation => (
-                <li key={conversation.owner} className="unread">
+                <li key={conversation.owner} className={classNames({ unread: !conversation.read })}>
                   <Link to={`/users/conversations/${conversation.booking}`}>
                     <div className="message-avatar" style={{ textAlign: 'center' }}>
                       <img
@@ -38,11 +39,12 @@ const ConversationsPage = ({ conversations }) => (
                     <div className="message-by">
                       <div className="message-by-headline">
                         <h5>
-                          {conversation.lastMessageSender} <i>Unread</i>
+                          {conversation.lastMessage.sender}{' '}
+                          {!conversation.lastMessage.read && <i>Unread</i>}
                         </h5>
-                        <span>{moment(conversation.updatedAt).fromNow()}</span>
+                        <span>{moment(conversation.lastMessage.createdAt).fromNow()}</span>
                       </div>
-                      <p>{conversation.lastMessageExcerpt}</p>
+                      <p>{conversation.lastMessage.content}</p>
                     </div>
                   </Link>
                 </li>
