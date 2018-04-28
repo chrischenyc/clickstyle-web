@@ -113,6 +113,7 @@ Meteor.methods({
             customer: 1,
             stylist: 1,
             conversation: 1,
+            note: 1,
           },
         },
       );

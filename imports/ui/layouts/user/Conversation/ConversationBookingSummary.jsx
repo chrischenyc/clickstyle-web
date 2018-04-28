@@ -55,6 +55,13 @@ const ConversationBookingSummary = props => (
         <li className="highlighted">{props.booking.address}</li>
       </ul>
     </div>
+
+    <div className="inner-booking-list">
+      <h5>Note:</h5>
+      <ul className="booking-list">
+        <li className="highlighted">{props.booking.note}</li>
+      </ul>
+    </div>
   </div>
 );
 

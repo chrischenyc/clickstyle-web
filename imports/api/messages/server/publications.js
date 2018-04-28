@@ -22,17 +22,17 @@ Meteor.publish('conversation.messages', function findConversationMessages(bookin
       throw new Meteor.Error('403');
     }
 
-    const { _id: conversation } = Conversations.findOne({
+    const conversation = Conversations.findOne({
       booking,
       participants: this.userId,
     });
 
     if (!conversation) {
-      throw new Meteor.Error('403');
+      throw new Meteor.Error('No conversation');
     }
 
     return Messages.find(
-      { conversation },
+      { conversation: conversation._id },
       {
         sort: {
           createdAt: 1,
