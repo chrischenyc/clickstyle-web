@@ -8,6 +8,7 @@ Time: {{time}}
 Address: {{address}}
 Services: {{services}}
 Total: {{total}}
+Note: {{note}}
 
 Confirm or decline this booking: {{bookingUrl}}
 

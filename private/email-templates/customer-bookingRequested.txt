@@ -9,6 +9,7 @@ Time: {{time}}
 Address: {{address}}
 Services: {{services}}
 Total: {{total}}
+Note: {{note}}
 
 You won't be charged until your booked service is complete.
 

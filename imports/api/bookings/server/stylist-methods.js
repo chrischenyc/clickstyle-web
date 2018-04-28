@@ -387,6 +387,7 @@ export function stylistFindBooking(_id) {
           lastName: 1,
           address: 1,
           time: 1,
+          note: 1,
           status: 1,
           duration: 1,
           createdAt: 1,

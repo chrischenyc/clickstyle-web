@@ -98,6 +98,7 @@ const defaultState = {
   email: '',
   mobile: '',
   address: '',
+  note: '',
   date: '',
   time: '',
   creditCardNameOnCard: '',

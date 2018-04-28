@@ -153,6 +153,7 @@ export const sendCustomerBookingRequestedEmail = ({
   mobile,
   address,
   time,
+  note,
   bookingId,
   bookingUrl,
 }) => {
@@ -171,6 +172,7 @@ export const sendCustomerBookingRequestedEmail = ({
       mobile,
       address,
       time,
+      note,
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
@@ -369,6 +371,7 @@ export const sendStylistBookingRequestedEmail = ({
   mobile,
   address,
   time,
+  note,
   bookingId,
   bookingUrl,
 }) => {
@@ -387,6 +390,7 @@ export const sendStylistBookingRequestedEmail = ({
       mobile,
       address,
       time,
+      note,
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,

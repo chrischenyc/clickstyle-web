@@ -54,7 +54,7 @@ const customerCancellationFee = (booking) => {
 
 function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   const {
-    firstName, lastName, email, stylist, services, mobile, address, date, time,
+    firstName, lastName, email, stylist, services, mobile, address, date, time, note,
   } = cart;
 
   const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
@@ -105,6 +105,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     stripeCardId,
     status: 'pending',
     duration,
+    note,
   });
 
   // create BookingActivities record
@@ -136,6 +137,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     email,
     mobile,
     address,
+    note,
     time: dateTimeString(bookingTime),
     bookingId,
     bookingUrl: `users/bookings/${bookingId}`,
@@ -152,6 +154,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     email,
     mobile,
     address,
+    note,
     time: dateTimeString(bookingTime),
     bookingId,
     bookingUrl: `users/stylist/bookings/${bookingId}`,
@@ -364,6 +367,7 @@ export function customerFindBooking(_id) {
           lastName: 1,
           address: 1,
           time: 1,
+          note: 1,
           status: 1,
           duration: 1,
           createdAt: 1,
@@ -464,19 +468,16 @@ export function customerListBookings(bookingStatus) {
   }
 
   try {
-    let bookings = Bookings.find(
-      selector,
-      {
-        fields: {
-          stylist: 1,
-          services: 1,
-          total: 1,
-          time: 1,
-          status: 1,
-        },
-        sort: { createdAt: -1 },
+    let bookings = Bookings.find(selector, {
+      fields: {
+        stylist: 1,
+        services: 1,
+        total: 1,
+        time: 1,
+        status: 1,
       },
-    ).fetch();
+      sort: { createdAt: -1 },
+    }).fetch();
 
     // group by status
     bookings = [

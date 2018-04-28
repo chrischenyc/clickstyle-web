@@ -125,7 +125,7 @@ class BookingCheckoutPage extends Component {
               )}
 
               <div className="row">
-                <div className="col-md-6 margin-bottom-15">
+                <div className="col-md-4 margin-bottom-15">
                   <label>First Name</label>
                   <FormInputField
                     name="firstName"
@@ -136,7 +136,7 @@ class BookingCheckoutPage extends Component {
                   />
                 </div>
 
-                <div className="col-md-6 margin-bottom-15">
+                <div className="col-md-4 margin-bottom-15">
                   <label>Last Name</label>
                   <FormInputField
                     name="lastName"
@@ -147,19 +147,7 @@ class BookingCheckoutPage extends Component {
                   />
                 </div>
 
-                <div className="col-md-6 margin-bottom-15">
-                  <label>Email</label>
-                  <FormInputField
-                    disabled={this.props.authenticated}
-                    name="email"
-                    type="text"
-                    onChange={this.props.onChange}
-                    errors={this.state.errors}
-                    value={this.props.cart.email}
-                  />
-                </div>
-
-                <div className="col-md-6 margin-bottom-15">
+                <div className="col-md-4 margin-bottom-15">
                   <label>Mobile</label>
                   <FormInputField
                     name="mobile"
@@ -169,6 +157,20 @@ class BookingCheckoutPage extends Component {
                     value={this.props.cart.mobile}
                   />
                 </div>
+
+                {!this.props.authenticated && (
+                  <div className="col-md-12 margin-bottom-15">
+                    <label>Email</label>
+                    <FormInputField
+                      disabled={this.props.authenticated}
+                      name="email"
+                      type="text"
+                      onChange={this.props.onChange}
+                      errors={this.state.errors}
+                      value={this.props.cart.email}
+                    />
+                  </div>
+                )}
 
                 <div className="col-md-12 margin-bottom-15">
                   <label>Address</label>
@@ -190,6 +192,17 @@ class BookingCheckoutPage extends Component {
                     }
                   />
                   <FormFieldErrorMessage compact message={this.state.errors.address} />
+                </div>
+
+                <div className="col-md-12 margin-bottom-15">
+                  <label>Note (optional)</label>
+                  <FormInputField
+                    name="note"
+                    type="text"
+                    onChange={this.props.onChange}
+                    errors={this.state.errors}
+                    value={this.props.cart.note}
+                  />
                 </div>
               </div>
 
