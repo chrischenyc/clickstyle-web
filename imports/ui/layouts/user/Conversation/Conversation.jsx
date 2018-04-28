@@ -3,6 +3,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 
 import { withLoading } from '../../../components/HOC';
 import ConversationPage from './ConversationPage';
@@ -79,6 +80,8 @@ class Conversation extends Component {
         <ConversationPage
           booking={this.state.booking}
           messages={this.props.messages}
+          userId={this.props.userId}
+          userPhoto={this.props.userPhoto}
           content={this.state.content}
           loading={this.state.loading}
           error={this.state.error}
@@ -93,19 +96,28 @@ class Conversation extends Component {
 
 Conversation.defaultProps = {
   messages: [],
+  userId: null,
+  userPhoto: null,
 };
 
 Conversation.propTypes = {
   showLoading: PropTypes.func.isRequired,
   hideLoading: PropTypes.func.isRequired,
   messages: PropTypes.array,
+  userId: PropTypes.string,
+  userPhoto: PropTypes.string,
 };
+
+const mapStateToProps = state => ({
+  userId: state.user.id,
+  userPhoto: state.user.profile && state.user.profile.photo,
+});
 
 export default withTracker((props) => {
   const { _id } = props.match.params;
-  const handle = Meteor.subscribe('conversation.messages', _id);
+  Meteor.subscribe('conversation.messages', _id);
 
   return {
     messages: Messages.find({}).fetch(),
   };
-})(withLoading(Conversation));
+})(connect(mapStateToProps)(withLoading(Conversation)));

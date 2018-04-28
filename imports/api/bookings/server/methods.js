@@ -110,6 +110,8 @@ Meteor.methods({
             status: 1,
             duration: 1,
             createdAt: 1,
+            customer: 1,
+            stylist: 1,
           },
         },
       );
@@ -118,7 +120,14 @@ Meteor.methods({
         throw new Meteor.Error(403, 'unauthorized');
       }
 
-      return booking;
+      const recipient = Profiles.findOne(
+        {
+          owner: booking.customer === this.userId ? booking.stylist : booking.customer,
+        },
+        { fields: { name: 1, photo: 1, owner: 1 } },
+      );
+
+      return { ..._.omit(booking, ['customer', 'stylist']), recipient };
     } catch (exception) {
       log.error(exception);
       throw exception;

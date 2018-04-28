@@ -1,9 +1,12 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import _ from 'lodash';
+import classNames from 'classnames';
 
 import PropTypes from 'prop-types';
 import { Container, Grid, Button } from 'semantic-ui-react';
 import ConversationBookingSummary from './ConversationBookingSummary';
+import scaledImageURL from '../../../../modules/scaled-image-url';
 
 const ConversationPage = props => (
   <Container>
@@ -16,40 +19,22 @@ const ConversationPage = props => (
           <div className="messages-container">
             <div className="messages-container-inner">
               <div className="message-content">
-                <div className="message-bubble">
-                  <div className="message-avatar">
-                    <img
-                      src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
-                      alt=""
-                    />
-                  </div>
-                  <div className="message-text">
-                    <p>
-                      Hello, I want to talk about your great listing! Morbi velit eros, sagittis in
-                      facilisis non, rhoncus et erat. Nam posuere tristique sem, eu ultricies tortor
-                      lacinia neque imperdiet vitae.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="message-bubble me">
-                  <div className="message-avatar">
-                    <img src="images/dashboard-avatar.jpg" alt="" />
-                  </div>
-                  <div className="message-text">
-                    <p>
-                      Nam ut hendrerit orci, ac gravida orci. Cras tristique rutrum libero at
-                      consequat. Vestibulum vehicula neque maximus sapien iaculis, nec vehicula
-                      sapien fringilla.
-                    </p>
-                  </div>
-                </div>
-
                 {props.messages.map(message => (
-                  <div key={message._id} className="message-bubble">
+                  <div
+                    key={message._id}
+                    className={classNames('message-bubble', {
+                      me: message.sender === props.userId,
+                    })}
+                  >
                     <div className="message-avatar">
                       <img
-                        src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
+                        src={scaledImageURL(
+                          (message.sender === props.userId
+                            ? props.userPhoto
+                            : props.booking.recipient.photo) ||
+                            Meteor.settings.public.defaultAvatar,
+                          'small',
+                        )}
                         alt=""
                       />
                     </div>
@@ -89,12 +74,19 @@ const ConversationPage = props => (
   </Container>
 );
 
+ConversationPage.defaultProps = {
+  userId: null,
+  userPhoto: null,
+};
+
 ConversationPage.propTypes = {
   booking: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   messages: PropTypes.array.isRequired,
+  userId: PropTypes.string,
+  userPhoto: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onSend: PropTypes.func.isRequired,
 };
