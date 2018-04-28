@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 import { withLoading } from '../../../components/HOC';
 import ConversationPage from './ConversationPage';
@@ -69,6 +70,10 @@ class Conversation extends Component {
           this.setState({ error: error.error });
         } else {
           this.setState({ error: '', content: '' });
+          if (!this.state.booking.conversation) {
+            // refresh page if the conversation didn't exist before this message was created
+            window.location.reload();
+          }
         }
       },
     );
@@ -113,11 +118,14 @@ const mapStateToProps = state => ({
   userPhoto: state.user.profile && state.user.profile.photo,
 });
 
-export default withTracker((props) => {
-  const { _id } = props.match.params;
-  Meteor.subscribe('conversation.messages', _id);
+export default compose(
+  withTracker((props) => {
+    const { _id } = props.match.params;
+    Meteor.subscribe('conversation.messages', _id);
 
-  return {
-    messages: Messages.find({}).fetch(),
-  };
-})(connect(mapStateToProps)(withLoading(Conversation)));
+    return {
+      messages: Messages.find({}).fetch(),
+    };
+  }),
+  connect(mapStateToProps),
+)(withLoading(Conversation));

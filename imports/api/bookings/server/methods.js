@@ -112,6 +112,7 @@ Meteor.methods({
             createdAt: 1,
             customer: 1,
             stylist: 1,
+            conversation: 1,
           },
         },
       );

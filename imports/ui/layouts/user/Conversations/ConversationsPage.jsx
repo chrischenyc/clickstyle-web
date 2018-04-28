@@ -20,7 +20,7 @@ const ConversationsPage = ({ conversations }) => (
           <div className="messages-inbox">
             <ul>
               {conversations.map(conversation => (
-                <li key={conversation.owner} className={classNames({ unread: !conversation.read })}>
+                <li key={conversation._id} className={classNames({ unread: !conversation.read })}>
                   <Link to={`/users/conversations/${conversation.booking}`}>
                     <div className="message-avatar" style={{ textAlign: 'center' }}>
                       <img

@@ -2,8 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import log from 'winston';
 
-import Messages from '../messages';
+import Bookings from '../../bookings/bookings';
 import Conversations from '../../conversations/conversations';
+import Messages from '../messages';
 
 Meteor.publish('conversation.messages', function findConversationMessages(booking) {
   if (!this.userId) {
@@ -13,6 +14,14 @@ Meteor.publish('conversation.messages', function findConversationMessages(bookin
   check(booking, String);
 
   try {
+    const { customer, stylist } = Bookings.findOne({
+      _id: booking,
+      $or: [{ customer: this.userId }, { stylist: this.userId }],
+    });
+    if (!customer || !stylist) {
+      throw new Meteor.Error('403');
+    }
+
     const { _id: conversation } = Conversations.findOne({
       booking,
       participants: this.userId,
