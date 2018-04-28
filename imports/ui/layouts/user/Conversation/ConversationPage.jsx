@@ -45,6 +45,20 @@ const ConversationPage = props => (
                   </div>
                 </div>
 
+                {props.messages.map(message => (
+                  <div key={message._id} className="message-bubble">
+                    <div className="message-avatar">
+                      <img
+                        src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70"
+                        alt=""
+                      />
+                    </div>
+                    <div className="message-text">
+                      <p>{message.content}</p>
+                    </div>
+                  </div>
+                ))}
+
                 <div className="clearfix" />
                 <div className="message-reply">
                   <textarea
@@ -80,6 +94,7 @@ ConversationPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  messages: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   onSend: PropTypes.func.isRequired,
 };

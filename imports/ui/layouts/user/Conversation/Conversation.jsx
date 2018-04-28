@@ -1,10 +1,12 @@
 import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { withLoading } from '../../../components/HOC';
 import ConversationPage from './ConversationPage';
+import Messages from '../../../../api/messages/messages';
 
 class Conversation extends Component {
   constructor(props) {
@@ -76,6 +78,7 @@ class Conversation extends Component {
       return (
         <ConversationPage
           booking={this.state.booking}
+          messages={this.props.messages}
           content={this.state.content}
           loading={this.state.loading}
           error={this.state.error}
@@ -88,9 +91,21 @@ class Conversation extends Component {
   }
 }
 
+Conversation.defaultProps = {
+  messages: [],
+};
+
 Conversation.propTypes = {
   showLoading: PropTypes.func.isRequired,
   hideLoading: PropTypes.func.isRequired,
+  messages: PropTypes.array,
 };
 
-export default withLoading(Conversation);
+export default withTracker((props) => {
+  const { _id } = props.match.params;
+  const handle = Meteor.subscribe('conversation.messages', _id);
+
+  return {
+    messages: Messages.find({}).fetch(),
+  };
+})(withLoading(Conversation));
