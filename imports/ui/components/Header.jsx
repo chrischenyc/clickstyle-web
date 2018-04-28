@@ -127,7 +127,7 @@ class Header extends Component {
               {authenticated &&
                 !_.isEmpty(firstName) && (
                   <Fragment>
-                    <Menu.Item as={Link} to="/users/inbox" icon="inbox">
+                    <Menu.Item as={Link} to="/users/inbox">
                       Inbox {messages > 0 && <Label color="teal">{messages}</Label>}
                     </Menu.Item>
 
@@ -224,6 +224,10 @@ Header.defaultProps = {
   fullContent: true,
   searchBar: false,
   isStylist: false,
+  notifications: 0,
+  messages: 0,
+  pendingBookings: 0,
+  pendingCustomerBookings: 0,
 };
 
 Header.propTypes = {
@@ -235,10 +239,10 @@ Header.propTypes = {
   searchBar: PropTypes.bool,
   cart: PropTypes.object.isRequired,
   isStylist: PropTypes.bool,
-  notifications: PropTypes.number.isRequired,
-  messages: PropTypes.number.isRequired,
-  pendingBookings: PropTypes.number.isRequired,
-  pendingCustomerBookings: PropTypes.number.isRequired,
+  notifications: PropTypes.number,
+  messages: PropTypes.number,
+  pendingBookings: PropTypes.number,
+  pendingCustomerBookings: PropTypes.number,
 };
 
 const mapStateToProps = state => ({

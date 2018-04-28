@@ -267,16 +267,20 @@ const SlideMenu = props => (
 
 SlideMenu.defaultProps = {
   isStylist: false,
+  notifications: 0,
+  messages: 0,
+  pendingBookings: 0,
+  pendingCustomerBookings: 0,
 };
 
 SlideMenu.propTypes = {
   open: PropTypes.bool.isRequired,
   authenticated: PropTypes.bool.isRequired,
   isStylist: PropTypes.bool,
-  notifications: PropTypes.number.isRequired,
-  messages: PropTypes.number.isRequired,
-  pendingBookings: PropTypes.number.isRequired,
-  pendingCustomerBookings: PropTypes.number.isRequired,
+  notifications: PropTypes.number,
+  messages: PropTypes.number,
+  pendingBookings: PropTypes.number,
+  pendingCustomerBookings: PropTypes.number,
   toggleSlideMenu: PropTypes.func.isRequired,
 };
 
