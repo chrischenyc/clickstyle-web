@@ -265,6 +265,7 @@ Meteor.methods({
           stripeDefaultCardId: 1,
           stripeDefaultCardLast4: 1,
           stripeDefaultCardName: 1,
+          owner: 1,
         },
       },
     );
