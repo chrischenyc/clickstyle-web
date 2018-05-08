@@ -1,0 +1,76 @@
+{
+  "public": {
+    "appName": "Stylesquad",
+    "about":
+      "Stylesquad is a marketplace to find, book and pay for home service beauty professionals for women and men. Gone are days of travelling to and from hair salons, getting stuck in traffic, at stylesquad we bring the service to you, anywhere, any time. Try Stylesquad and experience the difference.",
+    "legalName": "Stylesquad Services Pty Ltd",
+    "supportEmail": "team@Stylesquad.com.au",
+    "twitterUrl": "https://twitter.com/stylesquad_au",
+    "facebookUrl": "https://facebook.com/stylesquad.au",
+    "instagramUrl": "https://instagram.com/stylesquad_au",
+    "twitterId": "stylesquad_au",
+    "facebookId": "stylesquad.au",
+    "instagramId": "stylesquad_au",
+    "siteUrl": "www.stylesquad.com.au",
+    "homeUrl": "",
+    "faqUrl": "faq",
+    "contactUrl": "contact",
+    "searchUrl": "stylists",
+    "joinUrl": "join",
+    "privacyUrl": "privacy",
+    "termsUrl": "terms",
+    "SlingshotS3File": "S3File",
+    "SlingshotCloudinaryImage": "CloudinaryImage",
+    "CloudinaryTag": "product",
+    "defaultAvatar":
+      "https://res.cloudinary.com/stylesquard/image/upload/v1508935172/6dbb9016-1715-4426-bd0e-1f369bc8aa1e",
+    "maxPhotoSize": 4,
+    "maxPortfolioPhotos": 12,
+    "maxDoc": 6,
+    "roles": {
+      "customer": "customer",
+      "stylist": "stylist",
+      "admin": "admin"
+    },
+    "StripePublishableKey": "pk_test_QWLpMQ7AnEnzfINJam91FCQO"
+  },
+
+  "MAIL_URL":
+    "smtp://postmaster%40stylesquad.com.au:5a9abd2be320a60fb6a5d40230931008@smtp.mailgun.org:587",
+
+  "OAuth": {
+    "facebook": {
+      "appId": "333298600467779",
+      "secret": "ad029fe8c762adcf8d403908a94a3eaa",
+      "loginStyle": "popup"
+    },
+    "google": {
+      "clientId": "268764049734-cu71qqpcj6f00dn5tmits2sgofepvqfh.apps.googleusercontent.com",
+      "secret": "ELdywPMEMpR_Z5ztWVKWYtot",
+      "loginStyle": "popup"
+    }
+  },
+
+  "CloudinaryCloudName": "stylesquard",
+  "CloudinarySecret": "tKy4yJqO2J2PT0gzLH0CW3v_Pck",
+  "CloudinaryKey": "449782933825394",
+  "CloudinaryPreset": "product",
+
+  "CDN": "https://d1aentw684zoa9.cloudfront.net/",
+  "AWSAccessKeyId": "AKIAJHJ4EJHH3Q2RS4EA",
+  "AWSSecretAccessKey": "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",
+  "S3Bucket": "com.stylesquard.bucket",
+  "AWSRegion": "ap-southeast-2",
+
+  "AdminHost": "https://squad-admin.herokuapp.com",
+
+  "PapertrailHost": "logs6.papertrailapp.com",
+  "PapertrailPort": 21261,
+
+  "MailChimpAPIKey": "19fa25b4c907eda4b6330ea2aa7e8457-us17",
+  "MailChimpListId": "ec72a83613",
+
+  "SearchLimit": 24,
+
+  "StripeSecretKey": "sk_test_wBVaXLUgcUyPAEfud1HEcWjp"
+}
