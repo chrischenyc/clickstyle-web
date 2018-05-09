@@ -13,9 +13,11 @@
     "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001",
     "cloc": "cloc imports client server private --exclude-ext=json",
 
-    "predeploy-staging": "heroku config:add METEOR_SETTINGS=\"$(cat settings-staging.json)\"",
+    "predeploy-staging":
+      "heroku config:add METEOR_SETTINGS=\"$(cat settings-staging.json)\" --remote heroku-staging",
     "deploy-staging": "git push heroku-staging develop",
-    "predeploy-product": "heroku config:add METEOR_SETTINGS=\"$(cat settings-product.json)\"",
+    "predeploy-product":
+      "heroku config:add METEOR_SETTINGS=\"$(cat settings-product.json)\" --remote heroku-product",
     "deploy-product": "git push heroku-product develop"
   },
   "dependencies": {
