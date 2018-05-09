@@ -21,7 +21,7 @@
     "termsUrl": "terms",
     "SlingshotS3File": "S3File",
     "SlingshotCloudinaryImage": "CloudinaryImage",
-    "CloudinaryTag": "staging",
+    "CloudinaryTag": "product",
     "defaultAvatar":
       "https://res.cloudinary.com/stylesquard/image/upload/v1508935172/6dbb9016-1715-4426-bd0e-1f369bc8aa1e",
     "maxPhotoSize": 4,
@@ -32,7 +32,7 @@
       "stylist": "stylist",
       "admin": "admin"
     },
-    "StripePublishableKey": "pk_test_QWLpMQ7AnEnzfINJam91FCQO"
+    "StripePublishableKey": "pk_test_B0tmxNJZTEJbOIspFlbSRA1U"
   },
 
   "MAIL_URL":
@@ -72,5 +72,5 @@
 
   "SearchLimit": 24,
 
-  "StripeSecretKey": "sk_test_wBVaXLUgcUyPAEfud1HEcWjp"
+  "StripeSecretKey": "sk_test_zrwba4arVE598TuJAuE9dKM1"
 }

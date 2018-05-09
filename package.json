@@ -11,9 +11,12 @@
       "MONGO_URL=mongodb://localhost:27017/stylesquad meteor run --inspect -s settings-development.json",
     "start": "meteor run",
     "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001",
+    "cloc": "cloc imports client server private --exclude-ext=json",
+
     "predeploy-staging": "heroku config:add METEOR_SETTINGS=\"$(cat settings-staging.json)\"",
     "deploy-staging": "git push heroku-staging develop",
-    "cloc": "cloc imports client server private --exclude-ext=json"
+    "predeploy-product": "heroku config:add METEOR_SETTINGS=\"$(cat settings-product.json)\"",
+    "deploy-product": "git push heroku-product develop"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.44",
