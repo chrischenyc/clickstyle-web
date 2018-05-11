@@ -126,7 +126,7 @@ const ContactPage = props => (
         <Modal.Content>
           <p>
             We have received your message and would like to thank you for writing to us. One of our
-            squad members will get back to you shortly.
+            team members will get back to you shortly.
           </p>
           <p>Have an awesome day!</p>
         </Modal.Content>
