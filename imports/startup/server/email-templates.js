@@ -14,7 +14,7 @@ emailTemplates.siteName = appName;
 emailTemplates.from = fromAddress;
 
 emailTemplates.verifyEmail = {
-  ...emailTemplates.resetPassword,
+  ...emailTemplates.verifyEmail,
   html(user, url) {
     const urlWithoutHash = url.replace('#/', '');
     return templateToHTML(getPrivateFile('email-templates/user-verifyEmail.html'), {
