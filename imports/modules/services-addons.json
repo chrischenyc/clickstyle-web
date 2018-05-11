@@ -1,162 +1,203 @@
 [
   {
     "name": "Make-Up",
+    "duration": 30,
     "seoNames": ["make-up", "makeup"],
     "addons": [
-      { "name": "Full Face Makeup", "seoNames": ["full-face-makeup"] },
-      { "name": "Full Face Makeup with Glitter", "seoNames": ["full-face-makeup-with-glitter"] },
-      { "name": "Full Face Makeup with Lashes", "seoNames": ["full-face-makeup-with-lashes"] },
-      { "name": "Airbrush Makeup", "seoNames": ["airbrush-makeup"] },
-      { "name": "Special Effects Makeup", "seoNames": ["special-effects-makeup"] },
-      { "name": "Prom Makeup", "seoNames": ["prom-makeup"] }
+      { "duration": 15, "name": "Full Face Makeup", "seoNames": ["full-face-makeup"] },
+      {
+        "duration": 15,
+        "name": "Full Face Makeup with Glitter",
+        "seoNames": ["full-face-makeup-with-glitter"]
+      },
+      {
+        "duration": 15,
+        "name": "Full Face Makeup with Lashes",
+        "seoNames": ["full-face-makeup-with-lashes"]
+      },
+      { "duration": 15, "name": "Airbrush Makeup", "seoNames": ["airbrush-makeup"] },
+      { "duration": 15, "name": "Special Effects Makeup", "seoNames": ["special-effects-makeup"] },
+      { "duration": 15, "name": "Prom Makeup", "seoNames": ["prom-makeup"] }
     ]
   },
   {
     "name": "Hair - Women",
+    "duration": 30,
     "seoNames": ["hair-women", "women-hair"],
     "addons": [
-      { "name": "Cut & Style", "seoNames": ["cut-and-style", "cut-style"] },
-      { "name": "Updo", "seoNames": ["updo", "hair-updo"] },
-      { "name": "Shampoo & Style", "seoNames": ["shampoo-and-style"] },
-      { "name": "Braids", "seoNames": ["braids"] },
-      { "name": "Full Hair Color", "seoNames": ["full-hair-color"] },
-      { "name": "Color Retouch", "seoNames": ["color-retouch"] },
-      { "name": "Full Highlights", "seoNames": ["full-highlights"] },
-      { "name": "Partial Highlights", "seoNames": ["partial-highlights"] },
-      { "name": "Permanent Hair Treatment", "seoNames": ["permanent-hair-treatment"] },
-      { "name": "Roller Set", "seoNames": ["roller-set"] },
-      { "name": "Silk Press", "seoNames": ["silk-press"] },
-      { "name": "Blowout", "seoNames": ["blowout"] },
-      { "name": "Hair Extension", "seoNames": ["hair-extension"] },
-      { "name": "Keratin Treatment", "seoNames": ["keratin-treatment"] },
-      { "name": "Styling", "seoNames": ["styling"] },
-      { "name": "Blowout with Iron", "seoNames": ["blowout-with-iron"] },
-      { "name": "Curling", "seoNames": ["curling"] }
+      { "duration": 15, "name": "Cut & Style", "seoNames": ["cut-and-style", "cut-style"] },
+      { "duration": 15, "name": "Updo", "seoNames": ["updo", "hair-updo"] },
+      { "duration": 15, "name": "Shampoo & Style", "seoNames": ["shampoo-and-style"] },
+      { "duration": 15, "name": "Braids", "seoNames": ["braids"] },
+      { "duration": 15, "name": "Full Hair Color", "seoNames": ["full-hair-color"] },
+      { "duration": 15, "name": "Color Retouch", "seoNames": ["color-retouch"] },
+      { "duration": 15, "name": "Full Highlights", "seoNames": ["full-highlights"] },
+      { "duration": 15, "name": "Partial Highlights", "seoNames": ["partial-highlights"] },
+      {
+        "duration": 15,
+        "name": "Permanent Hair Treatment",
+        "seoNames": ["permanent-hair-treatment"]
+      },
+      { "duration": 15, "name": "Roller Set", "seoNames": ["roller-set"] },
+      { "duration": 15, "name": "Silk Press", "seoNames": ["silk-press"] },
+      { "duration": 15, "name": "Blowout", "seoNames": ["blowout"] },
+      { "duration": 15, "name": "Hair Extension", "seoNames": ["hair-extension"] },
+      { "duration": 15, "name": "Keratin Treatment", "seoNames": ["keratin-treatment"] },
+      { "duration": 15, "name": "Styling", "seoNames": ["styling"] },
+      { "duration": 15, "name": "Blowout with Iron", "seoNames": ["blowout-with-iron"] },
+      { "duration": 15, "name": "Curling", "seoNames": ["curling"] }
     ]
   },
   {
     "name": "Hair - Men",
+    "duration": 30,
     "seoNames": ["hair-men"],
     "addons": [
-      { "name": "Beard Trim", "seoNames": ["beard-trim"] },
-      { "name": "Haircut", "seoNames": ["haircut"] },
-      { "name": "Hot Towel Massage", "seoNames": ["hot-towel-massage"] },
-      { "name": "Bald Head", "seoNames": ["bald-head"] },
-      { "name": "Cut & Side Design", "seoNames": ["cut-and-side-design", "cut-side-design"] },
-      { "name": "Hair Coloring", "seoNames": ["hair-coloring"] },
-      { "name": "Braids", "seoNames": ["braids"] }
+      { "duration": 15, "name": "Beard Trim", "seoNames": ["beard-trim"] },
+      { "duration": 15, "name": "Haircut", "seoNames": ["haircut"] },
+      { "duration": 15, "name": "Hot Towel Massage", "seoNames": ["hot-towel-massage"] },
+      { "duration": 15, "name": "Bald Head", "seoNames": ["bald-head"] },
+      {
+        "duration": 15,
+        "name": "Cut & Side Design",
+        "seoNames": ["cut-and-side-design", "cut-side-design"]
+      },
+      { "duration": 15, "name": "Hair Coloring", "seoNames": ["hair-coloring"] },
+      { "duration": 15, "name": "Braids", "seoNames": ["braids"] }
     ]
   },
   {
     "name": "Hair - Children",
+    "duration": 30,
     "seoNames": ["hair-children"],
     "addons": [
-      { "name": "Hair Cut", "seoNames": ["hair-cut"] },
-      { "name": "Cut & Side Design", "seoNames": ["cut-and-side-design", "cut-side-design"] },
-      { "name": "Braids", "seoNames": ["braids"] }
+      { "duration": 15, "name": "Hair Cut", "seoNames": ["hair-cut"] },
+      {
+        "duration": 15,
+        "name": "Cut & Side Design",
+        "seoNames": ["cut-and-side-design", "cut-side-design"]
+      },
+      { "duration": 15, "name": "Braids", "seoNames": ["braids"] }
     ]
   },
   {
     "name": "Wedding",
+    "duration": 60,
     "seoNames": ["wedding"],
     "addons": [
-      { "name": "Bridal Makeup", "seoNames": ["bridal-makeup"] },
-      { "name": "Bridal Wedding Package", "seoNames": ["bridal-wedding-package"] },
-      { "name": "Bridal Makeup & Hair Styling", "seoNames": ["bridal-makeup-and-hair-styling"] },
-      { "name": "Bridal Hair Styling", "seoNames": ["bridal-hair-styling"] },
-      { "name": "Bridesmaid Hair Styling", "seoNames": ["bridesmaid-hair-styling"] },
-      { "name": "Bridesmaid Makeup", "seoNames": ["bridesmaid-makeup"] },
-      { "name": "Bridal Trials", "seoNames": ["bridal-trials"] }
+      { "duration": 15, "name": "Bridal Makeup", "seoNames": ["bridal-makeup"] },
+      { "duration": 15, "name": "Bridal Wedding Package", "seoNames": ["bridal-wedding-package"] },
+      {
+        "duration": 15,
+        "name": "Bridal Makeup & Hair Styling",
+        "seoNames": ["bridal-makeup-and-hair-styling"]
+      },
+      { "duration": 15, "name": "Bridal Hair Styling", "seoNames": ["bridal-hair-styling"] },
+      {
+        "duration": 15,
+        "name": "Bridesmaid Hair Styling",
+        "seoNames": ["bridesmaid-hair-styling"]
+      },
+      { "duration": 15, "name": "Bridesmaid Makeup", "seoNames": ["bridesmaid-makeup"] },
+      { "duration": 15, "name": "Bridal Trials", "seoNames": ["bridal-trials"] }
     ]
   },
   {
     "name": "Nails",
+    "duration": 30,
     "seoNames": ["nails"],
     "addons": [
-      { "name": "Full Set Acrylic", "seoNames": ["full-set-acrylic"] },
-      { "name": "Refill Acrylic Nails", "seoNames": ["refill-acrylic-nails"] },
-      { "name": "Gel Manicure", "seoNames": ["gel-manicure"] },
-      { "name": "Pedicure", "seoNames": ["pedicure"] },
-      { "name": "Nail Art", "seoNames": ["nail-art"] },
-      { "name": "Spa Pedicure", "seoNames": ["spa-pedicure"] }
+      { "duration": 15, "name": "Full Set Acrylic", "seoNames": ["full-set-acrylic"] },
+      { "duration": 15, "name": "Refill Acrylic Nails", "seoNames": ["refill-acrylic-nails"] },
+      { "duration": 15, "name": "Gel Manicure", "seoNames": ["gel-manicure"] },
+      { "duration": 15, "name": "Pedicure", "seoNames": ["pedicure"] },
+      { "duration": 15, "name": "Nail Art", "seoNames": ["nail-art"] },
+      { "duration": 15, "name": "Spa Pedicure", "seoNames": ["spa-pedicure"] }
     ]
   },
   {
     "name": "Eyebrow",
+    "duration": 30,
     "seoNames": ["eyebrow"],
     "addons": [
-      { "name": "Threading", "seoNames": ["threading"] },
-      { "name": "Tinting", "seoNames": ["tinting"] },
-      { "name": "Men’s Eyebrow Threading", "seoNames": ["men-eyebrow-threading"] },
-      { "name": "Eyebrow Shaping", "seoNames": ["eyebrow-shaping"] },
-      { "name": "Waxing", "seoNames": ["waxing"] }
+      { "duration": 15, "name": "Threading", "seoNames": ["threading"] },
+      { "duration": 15, "name": "Tinting", "seoNames": ["tinting"] },
+      { "duration": 15, "name": "Men’s Eyebrow Threading", "seoNames": ["men-eyebrow-threading"] },
+      { "duration": 15, "name": "Eyebrow Shaping", "seoNames": ["eyebrow-shaping"] },
+      { "duration": 15, "name": "Waxing", "seoNames": ["waxing"] }
     ]
   },
   {
     "name": "Eyelash",
+    "duration": 30,
     "seoNames": ["eyelash"],
     "addons": [
-      { "name": "Lashes", "seoNames": ["lashes"] },
-      { "name": "Bottom Lashes", "seoNames": ["bottom-lashes"] },
-      { "name": "Mink Lashes", "seoNames": ["mink-lashes"] },
-      { "name": "Eyelash Extension", "seoNames": ["eyelash-extension"] }
+      { "duration": 15, "name": "Lashes", "seoNames": ["lashes"] },
+      { "duration": 15, "name": "Bottom Lashes", "seoNames": ["bottom-lashes"] },
+      { "duration": 15, "name": "Mink Lashes", "seoNames": ["mink-lashes"] },
+      { "duration": 15, "name": "Eyelash Extension", "seoNames": ["eyelash-extension"] }
     ]
   },
   {
     "name": "Massage & Spa - Women",
+    "duration": 30,
     "seoNames": ["massage-and-spa-women"],
     "addons": [
-      { "name": "30min Massage", "seoNames": ["30min-massage"] },
-      { "name": "60min Massage", "seoNames": ["60min-massage"] },
-      { "name": "90min Massage", "seoNames": ["90min-massage"] },
-      { "name": "Foot Massage", "seoNames": ["foot-massage"] },
-      { "name": "Hot Stone Massage", "seoNames": ["hot-stone-massage"] },
-      { "name": "Aromatherapy Massage", "seoNames": ["aromatherapy-massage"] },
-      { "name": "Remedial Massage", "seoNames": ["remedial-massage"] },
-      { "name": "Prenatal Massage", "seoNames": ["prenatal-massage"] }
+      { "duration": 15, "name": "30min Massage", "seoNames": ["30min-massage"] },
+      { "duration": 15, "name": "60min Massage", "seoNames": ["60min-massage"] },
+      { "duration": 15, "name": "90min Massage", "seoNames": ["90min-massage"] },
+      { "duration": 15, "name": "Foot Massage", "seoNames": ["foot-massage"] },
+      { "duration": 15, "name": "Hot Stone Massage", "seoNames": ["hot-stone-massage"] },
+      { "duration": 15, "name": "Aromatherapy Massage", "seoNames": ["aromatherapy-massage"] },
+      { "duration": 15, "name": "Remedial Massage", "seoNames": ["remedial-massage"] },
+      { "duration": 15, "name": "Prenatal Massage", "seoNames": ["prenatal-massage"] }
     ]
   },
   {
     "name": "Massage & Spa - Men",
+    "duration": 30,
     "seoNames": ["massage-and-spa-men"],
     "addons": [
-      { "name": "30min Massage", "seoNames": ["30min-massage"] },
-      { "name": "60min Massage", "seoNames": ["60min-massage"] },
-      { "name": "90min Massage", "seoNames": ["90min-massage"] },
-      { "name": "Foot Massage", "seoNames": ["foot-massage"] },
-      { "name": "Hot Stone Massage", "seoNames": ["hot-stone-massage"] },
-      { "name": "Aromatherapy Massage", "seoNames": ["aromatherapy-massage"] },
-      { "name": "Remedial Massage", "seoNames": ["remedial-massage"] }
+      { "duration": 15, "name": "30min Massage", "seoNames": ["30min-massage"] },
+      { "duration": 15, "name": "60min Massage", "seoNames": ["60min-massage"] },
+      { "duration": 15, "name": "90min Massage", "seoNames": ["90min-massage"] },
+      { "duration": 15, "name": "Foot Massage", "seoNames": ["foot-massage"] },
+      { "duration": 15, "name": "Hot Stone Massage", "seoNames": ["hot-stone-massage"] },
+      { "duration": 15, "name": "Aromatherapy Massage", "seoNames": ["aromatherapy-massage"] },
+      { "duration": 15, "name": "Remedial Massage", "seoNames": ["remedial-massage"] }
     ]
   },
   {
     "name": "Tanning",
+    "duration": 60,
     "seoNames": ["tanning"],
     "addons": [
-      { "name": "Full Body Airbrush Tan", "seoNames": ["full-body-airbrush-tan"] },
-      { "name": "Half Body Airbrush Tan", "seoNames": ["half-body-airbrush-tan"] }
+      { "duration": 15, "name": "Full Body Airbrush Tan", "seoNames": ["full-body-airbrush-tan"] },
+      { "duration": 15, "name": "Half Body Airbrush Tan", "seoNames": ["half-body-airbrush-tan"] }
     ]
   },
   {
     "name": "Waxing",
+    "duration": 60,
     "seoNames": ["waxing"],
     "addons": [
-      { "name": "Brazilian", "seoNames": ["brazilian"] },
-      { "name": "Bikini Line", "seoNames": ["bikini-line"] },
-      { "name": "Full Arm Wax", "seoNames": ["full-arm-wax"] },
-      { "name": "Full Leg Wax", "seoNames": ["full-leg-wax"] },
-      { "name": "Full Face Wax", "seoNames": ["full-face-wax"] },
-      { "name": "Half Arm Wax", "seoNames": ["half-arm-wax"] },
-      { "name": "Half Leg Wax", "seoNames": ["half-leg-wax"] },
-      { "name": "Underarm Wax", "seoNames": ["underarm-wax"] }
+      { "duration": 15, "name": "Brazilian", "seoNames": ["brazilian"] },
+      { "duration": 15, "name": "Bikini Line", "seoNames": ["bikini-line"] },
+      { "duration": 15, "name": "Full Arm Wax", "seoNames": ["full-arm-wax"] },
+      { "duration": 15, "name": "Full Leg Wax", "seoNames": ["full-leg-wax"] },
+      { "duration": 15, "name": "Full Face Wax", "seoNames": ["full-face-wax"] },
+      { "duration": 15, "name": "Half Arm Wax", "seoNames": ["half-arm-wax"] },
+      { "duration": 15, "name": "Half Leg Wax", "seoNames": ["half-leg-wax"] },
+      { "duration": 15, "name": "Underarm Wax", "seoNames": ["underarm-wax"] }
     ]
   },
   {
     "name": "Skincare treatment",
+    "duration": 60,
     "seoNames": ["skincare-treatment"],
     "addons": [
-      { "name": "Facial", "seoNames": ["facial"] },
-      { "name": "Acne Facial", "seoNames": ["acne-facial"] }
+      { "duration": 15, "name": "Facial", "seoNames": ["facial"] },
+      { "duration": 15, "name": "Acne Facial", "seoNames": ["acne-facial"] }
     ]
   }
 ]
