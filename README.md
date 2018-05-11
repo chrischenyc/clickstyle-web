@@ -1,4 +1,4 @@
-# quickstyle.com.au meteor + react app
+# clickstyle.com.au meteor + react app
 
 ## Run on local machine
 
