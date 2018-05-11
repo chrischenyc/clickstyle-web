@@ -62,7 +62,7 @@
   "S3Bucket": "com.stylesquard.bucket",
   "AWSRegion": "ap-southeast-2",
 
-  "AdminHost": "https://squad-admin.herokuapp.com",
+  "AdminHost": "https://clickstyle-admin.herokuapp.com",
 
   "PapertrailHost": "logs6.papertrailapp.com",
   "PapertrailPort": 21261,
