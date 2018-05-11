@@ -29,20 +29,20 @@ class VerifyEmailPage extends React.Component {
   renderMessage() {
     if (this.state.loading) {
       return (
-        <Message size="huge" warning>
+        <Message size="huge" warning style={{ marginTop: '6em', marginBottom: '6em' }}>
           Just one second, we are verifying your email..
         </Message>
       );
     } else if (this.state.error) {
       return (
-        <Message size="huge" error>
+        <Message size="huge" error style={{ marginTop: '6em', marginBottom: '6em' }}>
           {this.state.error}
         </Message>
       );
     }
 
     return (
-      <Message size="huge" success>
+      <Message size="huge" success style={{ marginTop: '6em', marginBottom: '6em' }}>
         All set, thank!
       </Message>
     );
