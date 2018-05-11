@@ -12,8 +12,8 @@ const reducer = combineReducers({
   loadingBar,
 });
 
-const persistedState = localStorage.getItem('stylesquad.cart')
-  ? { cart: JSON.parse(localStorage.getItem('stylesquad.cart')) }
+const persistedState = localStorage.getItem('quickstyle.cart')
+  ? { cart: JSON.parse(localStorage.getItem('quickstyle.cart')) }
   : {};
 
 /* eslint-disable no-underscore-dangle */
@@ -25,7 +25,7 @@ const store = createStore(
 /* eslint-enable */
 
 store.subscribe(() => {
-  localStorage.setItem('stylesquad.cart', JSON.stringify(store.getState().cart));
+  localStorage.setItem('quickstyle.cart', JSON.stringify(store.getState().cart));
 });
 
 export default store;

@@ -1,6 +1,6 @@
 Hi {{firstName}},
 
-Woohooo! Thanks heaps for registering an account with Stylesquad! You are super awesome (and I’ve met many awesome people).
+Woohooo! Thanks heaps for registering an account with {{appName}}! You are super awesome (and I’ve met many awesome people).
 
 Before we get started, we'll need to verify your email. (Just to make sure you are human like us and not an alien spy from another planet) 
 

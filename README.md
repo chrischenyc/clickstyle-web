@@ -1,4 +1,4 @@
-# Stylesquad meteor + react app
+# quickstyle.com.au meteor + react app
 
 ## Run on local machine
 
