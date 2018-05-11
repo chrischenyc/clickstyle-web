@@ -29,7 +29,7 @@
     "handlebars": "^4.0.10",
     "juice": "^4.2.3",
     "lodash": "^4.17.5",
-    "mailchimp-api-v3": "^1.8.0",
+    "mailchimp-api-v3": "^1.8.1",
     "meteor-node-stubs": "^0.3.3",
     "moment": "^2.22.0",
     "prop-types": "^15.6.1",
