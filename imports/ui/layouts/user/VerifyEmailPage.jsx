@@ -20,7 +20,7 @@ class VerifyEmailPage extends React.Component {
         this.setState({ loading: false, error: null });
 
         setTimeout(() => {
-          this.props.history.push('/dashboard');
+          this.props.history.push('/users/dashboard');
         }, 1500);
       }
     });
