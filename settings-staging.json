@@ -51,10 +51,10 @@
     }
   },
 
-  "CloudinaryCloudName": "stylesquard",
-  "CloudinarySecret": "tKy4yJqO2J2PT0gzLH0CW3v_Pck",
-  "CloudinaryKey": "449782933825394",
-  "CloudinaryPreset": "product",
+  "CloudinaryCloudName": "clickstyle-com-au",
+  "CloudinarySecret": "GjbCmE566kC2I-Es0dTyOzE0Ae0",
+  "CloudinaryKey": "711511832669922",
+  "CloudinaryPreset": "staging",
 
   "CDN": "https://d1aentw684zoa9.cloudfront.net/",
   "AWSAccessKeyId": "AKIAJHJ4EJHH3Q2RS4EA",
@@ -62,7 +62,7 @@
   "S3Bucket": "com.stylesquard.bucket",
   "AWSRegion": "ap-southeast-2",
 
-  "AdminHost": "https://squad-admin.herokuapp.com",
+  "AdminHost": "https://clickstyle-staging-admin.herokuapp.com",
 
   "PapertrailHost": "logs6.papertrailapp.com",
   "PapertrailPort": 21261,
