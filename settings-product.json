@@ -41,7 +41,7 @@
   "OAuth": {
     "facebook": {
       "appId": "229210907661102",
-      "secret": "03f475bd39f7dac4c0cf9a17b8762c18",
+      "secret": "f31e304321d50b326fffeae58e1e381f",
       "loginStyle": "popup"
     },
     "google": {
