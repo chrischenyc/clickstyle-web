@@ -116,8 +116,6 @@ export const validateStylistJoin = (mobile, address, services, referenceUrl) => 
     errors.address = 'Address is required';
   } else if (services.length === 0) {
     errors.services = 'Please pick at least one service you can offer';
-  } else if (validator.isEmpty(referenceUrl)) {
-    errors.referenceUrl = 'Reference link is required';
   } else if (referenceUrl && referenceUrl.length >= 0 && !validator.isURL(referenceUrl)) {
     errors.referenceUrl = 'Reference link is invalid';
   }
