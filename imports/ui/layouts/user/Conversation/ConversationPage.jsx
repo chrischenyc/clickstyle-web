@@ -69,8 +69,8 @@ const ConversationPage = props => (
                   <p>
                     <small>
                       For your safety and protection, only communication and pay directly through{' '}
-                      {Meteor.settings.public.appName}. Visit our <Link to="/help">Help</Link> page
-                      to learn more about the benefits of booking through{' '}
+                      {Meteor.settings.public.appName}. Visit our <Link to="/faq">FAQ</Link> page to
+                      learn more about the benefits of booking through{' '}
                       {Meteor.settings.public.appName}
                     </small>
                   </p>
