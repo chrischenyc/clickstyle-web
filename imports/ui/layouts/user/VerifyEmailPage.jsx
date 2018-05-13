@@ -43,7 +43,7 @@ class VerifyEmailPage extends React.Component {
 
     return (
       <Message size="huge" success style={{ marginTop: '6em', marginBottom: '6em' }}>
-        All set, thank!
+        All set, thanks!
       </Message>
     );
   }

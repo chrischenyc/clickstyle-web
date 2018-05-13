@@ -18,7 +18,7 @@ const ResetPasswordPage = ({
         style={{ maxWidth: 450 }}
       >
         <Message size="huge" success>
-          All set, thank!
+          All set, thanks!
         </Message>
       </div>
     );
