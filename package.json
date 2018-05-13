@@ -10,9 +10,9 @@
   "author": "Chris Chen",
   "contributors": ["Chris Chen <chrischen79@gmail.com>"],
   "scripts": {
-    "dev": "MONGO_URL=mongodb://localhost:27017/stylesquad meteor -s settings-development.json",
+    "dev": "MONGO_URL=mongodb://localhost:27017/clickstyle meteor -s settings-development.json",
     "debug":
-      "MONGO_URL=mongodb://localhost:27017/stylesquad meteor run --inspect -s settings-development.json",
+      "MONGO_URL=mongodb://localhost:27017/clickstyle meteor run --inspect -s settings-development.json",
     "start": "meteor run",
     "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001",
     "cloc": "cloc imports client server private --exclude-ext=json",
