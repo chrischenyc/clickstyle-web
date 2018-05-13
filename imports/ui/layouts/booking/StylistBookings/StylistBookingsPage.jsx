@@ -52,14 +52,6 @@ const StylistBookingsPage = ({ bookings }) => (
           ))}
         </ul>
       )}
-
-      {bookings.length === 0 && (
-        <ul>
-          <li>
-            You haven&apos;t booked any stylist yet. <Link to="/search">Find a stylist</Link>
-          </li>
-        </ul>
-      )}
     </div>
   </Container>
 );
