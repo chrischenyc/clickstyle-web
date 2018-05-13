@@ -19,33 +19,32 @@ const DashboardPage = props => (
       <div className="col-md-12">
         <div className="margin-bottom-30">
           {props.notifications.map(notification => (
-            <Link
-              to={notification.link}
+            <div
               key={notification._id}
-              onClick={() => {
-                if (notification.dismissible) {
-                  props.onDismissNotification(notification._id);
-                }
-              }}
+              className={classNames('notification', notification.type, {
+                closeable: notification.dismissible,
+              })}
             >
-              <div
-                className={classNames('notification', notification.type, {
-                  closeable: notification.dismissible,
-                })}
+              <Link
+                to={notification.link}
+                onClick={() => {
+                  if (notification.dismissible) {
+                    props.onDismissNotification(notification._id);
+                  }
+                }}
               >
                 <p>{notification.content}</p>
-
-                {notification.dismissible && (
-                  <a
-                    className="close"
-                    href={`/notifications/${notification._id}/dismiss`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                    }}
-                  />
-                )}
-              </div>
-            </Link>
+              </Link>
+              {notification.dismissible && (
+                <a
+                  className="close"
+                  href={`/notifications/${notification._id}/dismiss`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                />
+              )}
+            </div>
           ))}
         </div>
       </div>
