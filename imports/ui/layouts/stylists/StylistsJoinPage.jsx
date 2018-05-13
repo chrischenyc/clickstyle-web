@@ -102,7 +102,7 @@ const StylistsJoinPage = props => (
           <h2 className="headline centered">
             Who can join {Meteor.settings.public.appName} as a stylist?
             <span className="margin-top-20">
-              Anyone has a qualification in the beauty and grooming industry. Unsure if you can
+              Anyone that has a qualification in the beauty and grooming industry. Unsure if you can
               join? Send in an application anyway and we&apos;ll have a look. You won&apos;t know
               unless you try, who knows you could be the next celebrity stylist?
             </span>
