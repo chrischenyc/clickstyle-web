@@ -514,18 +514,20 @@ export const sendAdminStylistApplicationEmail = (applicationId) => {
     .fetch();
 
   try {
-    adminUsers.forEach((adminUser) => {
-      sendEmail({
-        to: adminUser.emails[0],
-        from: fromAddress,
-        subject: 'New stylist join application',
-        template: 'admin-newStylistApplication',
-        templateConstants: {
-          adminUrl,
-          ...templateConstants,
-        },
+    adminUsers
+      .filter(adminUser => adminUser.emails && adminUser.emails.length > 0)
+      .forEach((adminUser) => {
+        sendEmail({
+          to: adminUser.emails[0],
+          from: fromAddress,
+          subject: 'New stylist join application',
+          template: 'admin-newStylistApplication',
+          templateConstants: {
+            adminUrl,
+            ...templateConstants,
+          },
+        });
       });
-    });
   } catch (error) {
     log.error(error);
   }
@@ -537,22 +539,24 @@ export const sendAdminContactFormEmail = (name, email, phone, subject, message) 
     .fetch();
 
   try {
-    adminUsers.forEach((adminUser) => {
-      sendEmail({
-        to: adminUser.emails[0],
-        from: fromAddress,
-        subject: 'New contact us form submit',
-        template: 'admin-contactFormSubmitted',
-        templateConstants: {
-          name,
-          email,
-          phone,
-          subject,
-          message,
-          ...templateConstants,
-        },
+    adminUsers
+      .filter(adminUser => adminUser.emails && adminUser.emails.length > 0)
+      .forEach((adminUser) => {
+        sendEmail({
+          to: adminUser.emails[0],
+          from: fromAddress,
+          subject: 'New contact us form submit',
+          template: 'admin-contactFormSubmitted',
+          templateConstants: {
+            name,
+            email,
+            phone,
+            subject,
+            message,
+            ...templateConstants,
+          },
+        });
       });
-    });
   } catch (error) {
     log.error(error);
   }
@@ -567,19 +571,21 @@ export const sendAdminConfirmedBookingCancelledByStylistEmail = (bookingId) => {
     .fetch();
 
   try {
-    adminUsers.forEach((adminUser) => {
-      sendEmail({
-        to: adminUser.emails[0],
-        from: fromAddress,
-        subject: 'A confirmed booking has been cancelled by stylist',
-        template: 'admin-confirmedBookingCancelledByStylist',
-        templateConstants: {
-          adminUrl,
-          bookingId,
-          ...templateConstants,
-        },
+    adminUsers
+      .filter(adminUser => adminUser.emails && adminUser.emails.length > 0)
+      .forEach((adminUser) => {
+        sendEmail({
+          to: adminUser.emails[0],
+          from: fromAddress,
+          subject: 'A confirmed booking has been cancelled by stylist',
+          template: 'admin-confirmedBookingCancelledByStylist',
+          templateConstants: {
+            adminUrl,
+            bookingId,
+            ...templateConstants,
+          },
+        });
       });
-    });
   } catch (error) {
     log.error(error);
   }
