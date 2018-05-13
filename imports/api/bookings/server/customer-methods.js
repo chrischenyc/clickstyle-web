@@ -244,7 +244,7 @@ export async function customerCreateBooking(cart) {
         );
       }
 
-      const bookingId = createBooking(cart, userId, stripeCustomerId, card.id);
+      const bookingId = createBooking(cart, userId, stripeCustomer.id, card.id);
 
       // method response depends on user login status
       if (this.userId) {
@@ -253,7 +253,7 @@ export async function customerCreateBooking(cart) {
       return { bookingId, userId };
     } else if (useSavedCard && stripeCustomer.default_source === stripeDefaultCardId) {
       // ========== check-out with a saved card ===========
-      const bookingId = createBooking(cart, userId, stripeCustomerId, stripeDefaultCardId);
+      const bookingId = createBooking(cart, userId, stripeCustomer.id, stripeDefaultCardId);
 
       return { bookingId };
     }
