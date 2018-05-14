@@ -28,8 +28,6 @@ const StylistAvailableAreasPage = ({
 }) => (
   <Container>
     <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(error)}>
-      <p>TODO: write something to educate stylists what this page is about</p>
-
       <Form.Field inline>
         I want to provide my services within
         <Dropdown
