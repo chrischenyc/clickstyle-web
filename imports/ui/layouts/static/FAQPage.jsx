@@ -18,10 +18,6 @@ const FAQPage = () => (
       Please contact here and we will get back to as soon as possible.
     </p>
     <p>
-      Can I add extra service on the day?
-      <br />TBD
-    </p>
-    <p>
       How do I leave a review?
       <br />You can only leave a review once the job has been complete.<br />
     </p>
