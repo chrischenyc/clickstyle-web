@@ -65,7 +65,7 @@ const StylistFAQPage = () => (
     </p>
     <p>
       How much does {Meteor.settings.public.appName} charge?
-      <br />We take 12.5% commission per transaction
+      <br />We take 13.75% commission per transaction
     </p>
     <p>
       How will my clients find me through {Meteor.settings.public.appName}?
