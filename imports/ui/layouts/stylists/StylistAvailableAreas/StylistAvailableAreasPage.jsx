@@ -74,7 +74,7 @@ const StylistAvailableAreasPage = ({
         <Checkbox
           name="canTravel"
           checked={canTravel}
-          label="I'm willing to travel to further regions to provide my services at an additional cost."
+          label="I'm willing to travel to further regions to provide my services at an additional cost to the client."
           onChange={(event, data) => {
             onChange({ target: { name: data.name, value: data.checked } });
           }}
