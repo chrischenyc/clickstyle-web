@@ -30,7 +30,10 @@ const ContactPage = props => (
         {props.suggestStylist && (
           <Fragment>
             <h3>Are we missing a stylist?</h3>
-            <p>Please let us know if we are missing a stylist</p>
+            <p>
+              We would love a stylist suggestion from you. Please fill in the quick form below and
+              we will endeavour to get the stylist on board.
+            </p>
 
             <p>
               Regards<br />
