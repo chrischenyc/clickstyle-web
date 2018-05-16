@@ -32,7 +32,8 @@
       "stylist": "stylist",
       "admin": "admin"
     },
-    "StripePublishableKey": "pk_test_QWLpMQ7AnEnzfINJam91FCQO"
+    "StripePublishableKey": "pk_test_QWLpMQ7AnEnzfINJam91FCQO",
+    "CDN": "https://d1min9tgylwryz.cloudfront.net/"
   },
 
   "MAIL_URL":

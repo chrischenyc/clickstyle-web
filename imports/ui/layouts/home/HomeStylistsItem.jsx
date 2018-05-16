@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,9 @@ const HomeStylistsItem = ({ stylist }) => (
     <div className="listing-item">
       <img
         src={
-          stylist.photo ? scaledImageURL(stylist.photo, 'medium') : '/images/placeholder-square.jpg'
+          stylist.photo
+            ? scaledImageURL(stylist.photo, 'medium')
+            : `${Meteor.settings.public.CDN}placeholder-square.jpg`
         }
         alt=""
       />

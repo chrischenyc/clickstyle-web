@@ -27,7 +27,7 @@ const SideMenu = ({
       <ul>
         <li>
           <Link to="/" id="side-logo">
-            <img src="/images/logo.png" alt="logo" />
+            <img src={`${Meteor.settings.public.CDN}logo.png`} alt="logo" />
           </Link>
         </li>
       </ul>

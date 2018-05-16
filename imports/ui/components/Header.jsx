@@ -72,7 +72,7 @@ class Header extends Component {
             {fullContent && (
               <Menu.Item id="logo">
                 <Link to="/">
-                  <img src="/images/logo.png" alt="logo" />
+                  <img src={`${Meteor.settings.public.CDN}logo.png`} alt="logo" />
                 </Link>
               </Menu.Item>
             )}

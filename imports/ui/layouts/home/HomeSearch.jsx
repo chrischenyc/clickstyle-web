@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import Typist from 'react-typist';
 import _ from 'lodash';
@@ -75,7 +76,7 @@ const animatedKeywords = [
 const HomeSearch = () => (
   <div
     className="main-search-container dark-overlay"
-    style={{ backgroundImage: "url('images/main-search-bg.jpg')" }}
+    style={{ backgroundImage: `url('${Meteor.settings.public.CDN}main-search-bg.jpg')` }}
   >
     <div className="main-search-inner">
       <div className="container">
