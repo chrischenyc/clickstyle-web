@@ -57,8 +57,8 @@ class StylistsApplicationPage extends Component {
           <h2>Relax and sit tight</h2>
 
           <p>
-            Your previous application submitted on {dateString(application.createdAt)} is under
-            review process, we will contact you shortly.
+            Your application submitted on {dateString(application.createdAt)} is under review
+            process, we will contact you shortly.
           </p>
 
           <p>
