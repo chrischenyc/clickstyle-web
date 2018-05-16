@@ -33,16 +33,18 @@ const SlideMenu = props => (
       </li>
       <Divider />
 
-      <li>
-        <Link
-          to="/join"
-          onClick={() => {
-            props.toggleSlideMenu();
-          }}
-        >
-          Become a stylist
-        </Link>
-      </li>
+      {!props.isStylist && (
+        <li>
+          <Link
+            to="/join"
+            onClick={() => {
+              props.toggleSlideMenu();
+            }}
+          >
+            Become a stylist
+          </Link>
+        </li>
+      )}
 
       <li>
         <Link

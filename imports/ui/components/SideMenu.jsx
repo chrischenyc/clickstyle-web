@@ -254,7 +254,7 @@ const SideMenu = ({
       )}
 
       <ul data-submenu-title="">
-        {isStylist && (
+        {!isStylist && (
           <li>
             <Link to="/join">
               <i className="im im-icon-Business-ManWoman" /> Become a stylist

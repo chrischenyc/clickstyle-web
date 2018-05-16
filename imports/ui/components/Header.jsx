@@ -92,9 +92,11 @@ class Header extends Component {
             <Responsive minWidth={1025} as={Menu.Menu} position="right">
               {fullContent && (
                 <Fragment>
-                  <Menu.Item as={Link} to="/join">
-                    Become a stylist
-                  </Menu.Item>
+                  {!isStylist && (
+                    <Menu.Item as={Link} to="/join">
+                      Become a stylist
+                    </Menu.Item>
+                  )}
                   <Menu.Item as={Link} to="/faq">
                     FAQ
                   </Menu.Item>
