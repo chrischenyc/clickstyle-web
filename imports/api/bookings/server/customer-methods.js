@@ -405,6 +405,8 @@ export function customerFindBooking(_id) {
           customerCancelledAt: 1,
           systemCancelledAt: 1,
           stylistCompletedAt: 1,
+          discount: 1,
+          redeemedCoupon: 1,
         },
       },
     );

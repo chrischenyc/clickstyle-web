@@ -321,13 +321,15 @@ export async function stylistCompleteConfirmedBooking(_id) {
 
     // notify customer
     const {
-      services, total, firstName, lastName, email, mobile, address, time,
+      services, total, firstName, lastName, email, mobile, address, time, discount,
     } = booking;
+
+    const charge = total - (discount || 0);
 
     sendCustomerBookingCompletedEmail({
       stylist: `${stylistName.first} ${stylistName.last}`,
       services: servicesSummary(services),
-      total,
+      total: charge,
       firstName,
       lastName,
       email,
@@ -357,9 +359,9 @@ export async function stylistCompleteConfirmedBooking(_id) {
     // charge customer
     chargeCustomer(
       booking,
-      booking.total,
+      charge,
       `booking completed: ${booking._id}`,
-      `Booking completed with total charge ${booking.total}`,
+      `Booking completed with total charge ${charge}`,
     );
   } catch (exception) {
     log.error(exception);
