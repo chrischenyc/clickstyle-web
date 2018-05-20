@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 import { calculateTotal, calculateCount } from '../../cart-calculator';
+import formatPrice from '../../format-price';
 
 /**
  * update current selected services data
@@ -39,6 +40,28 @@ const updateServices = (currentServices, service, addon = null) => {
   }
 
   return newServices;
+};
+
+const evaluateCoupon = (coupon, total) => {
+  if (!_.isEmpty(coupon.error)) {
+    return {
+      ...defaultCouponState,
+      ...coupon,
+    };
+  }
+
+  if (total < coupon.minBookingValue) {
+    return {
+      ...coupon,
+      appliedDiscount: 0,
+      error: `minimum booking value to redeem this coupon is ${formatPrice(coupon.minBookingValue)}`,
+    };
+  }
+
+  return {
+    ...coupon,
+    appliedDiscount: Math.min(total, coupon.discount),
+  };
 };
 
 // --------- actions ----------
@@ -86,9 +109,9 @@ export function setUserInfo(info) {
   };
 }
 
-export function applyCoupon(coupon) {
+export function setCoupon(coupon) {
   return {
-    type: 'CART_APPLY_COUPON',
+    type: 'CART_SET_COUPON',
     coupon,
   };
 }
@@ -100,6 +123,14 @@ export function removeCoupon() {
 }
 
 // --------- reducer ----------
+const defaultCouponState = {
+  code: '',
+  discount: 0,
+  minBookingValue: 0,
+  error: '',
+  appliedDiscount: 0,
+};
+
 const defaultState = {
   stylist: null,
   services: [],
@@ -117,8 +148,8 @@ const defaultState = {
   creditCardSaveCard: true,
   savedCardInfo: '',
   useSavedCard: false,
-  coupon: '',
-  couponDiscount: 0,
+  couponCode: '', // user input
+  coupon: defaultCouponState, // verified result
 };
 
 const reducer = (state = defaultState, action) => {
@@ -162,6 +193,7 @@ const reducer = (state = defaultState, action) => {
         services,
         total: calculateTotal(services),
         count: calculateCount(services),
+        coupon: evaluateCoupon(state.coupon, calculateTotal(services)),
       };
     }
 
@@ -175,6 +207,7 @@ const reducer = (state = defaultState, action) => {
         services,
         total: calculateTotal(services),
         count: calculateCount(services),
+        coupon: evaluateCoupon(state.coupon, calculateTotal(services)),
       };
     }
 
@@ -193,6 +226,7 @@ const reducer = (state = defaultState, action) => {
         services,
         total: calculateTotal(services),
         count: calculateCount(services),
+        coupon: evaluateCoupon(state.coupon, calculateTotal(services)),
       };
     }
 
@@ -202,18 +236,17 @@ const reducer = (state = defaultState, action) => {
       return { ...state, ...info };
     }
 
-    case 'CART_APPLY_COUPON': {
+    case 'CART_SET_COUPON': {
       const { coupon } = action;
 
-      if (state.total >= coupon.minBookingValue) {
-        return { ...state, coupon: coupon.code, couponDiscount: coupon.discount };
-      }
-
-      return state;
+      return {
+        ...state,
+        coupon: evaluateCoupon(coupon, state.total),
+      };
     }
 
     case 'CART_REMOVE_COUPON': {
-      return { ...state, coupon: '', couponDiscount: 0 };
+      return { ...state, coupon: defaultCouponState };
     }
 
     default:

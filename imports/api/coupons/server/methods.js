@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import log from 'winston';
+import _ from 'lodash';
 
 import rateLimit from '../../../modules/server/rate-limit';
 import Coupons from '../coupons';
@@ -15,8 +16,6 @@ Meteor.methods({
         {
           code: code.toUpperCase(),
           status: 'printed',
-          redeemedAt: { $exists: 0 },
-          redeemedBooking: { $exists: 0 },
         },
         {
           fields: {
@@ -24,17 +23,28 @@ Meteor.methods({
             discount: 1,
             minBookingValue: 1,
             expiry: 1,
+            redeemedAt: 1,
           },
         },
       );
 
       if (!coupon) {
         return { error: 'invalid coupon code' };
+      } else if (coupon.redeemedAt) {
+        return {
+          ..._.omit(coupon, 'redeemedAt'),
+          error: 'coupon has been redeemed',
+        };
       } else if (coupon.expiry && coupon.expiry < Date.now()) {
-        return { error: `coupon expired on ${dateString(coupon.expiry)}` };
+        return {
+          ..._.omit(coupon, 'redeemedAt'),
+          error: `coupon expired on ${dateString(coupon.expiry)}`,
+        };
       }
 
-      return { coupon };
+      return {
+        ..._.omit(coupon, 'redeemedAt'),
+      };
     } catch (exception) {
       log.error(exception);
       throw exception;

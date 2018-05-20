@@ -47,12 +47,6 @@ class BookingCheckoutPage extends Component {
     ) {
       this.props.closeModal();
     }
-
-    if (_.isEmpty(nextProps.couponError)) {
-      this.setState({ errors: _.omit(this.state.errors, 'coupon') });
-    } else {
-      this.setState({ errors: { ...this.state.errors, coupon: nextProps.couponError } });
-    }
   }
 
   async handleSubmit() {
@@ -109,9 +103,15 @@ class BookingCheckoutPage extends Component {
               <BookingCheckoutPageSummarySection cart={this.props.cart} />
             </Responsive>
 
-            <Form error={!_.isEmpty(this.state.errors) || !_.isEmpty(this.props.error)}>
-            {/* -- PERSONAL INFO -- */}
-            <div>
+            <Form
+              error={
+                !_.isEmpty(this.state.errors) ||
+                !_.isEmpty(this.props.error) ||
+                !_.isEmpty(this.props.cart.coupon.error)
+              }
+            >
+              {/* -- PERSONAL INFO -- */}
+              <div>
                 <h3 className="margin-bottom-20">Personal Details</h3>
 
                 {!this.props.authenticated && (
@@ -329,18 +329,18 @@ class BookingCheckoutPage extends Component {
                     <FormInputField
                       disabled={this.props.verifyingCoupon}
                       loading={this.props.verifyingCoupon}
-                      name="coupon"
+                      name="couponCode"
                       type="text"
                       placeholder="coupon"
                       onChange={this.props.onChange}
-                      errors={this.state.errors}
-                      value={this.props.cart.coupon}
+                      errors={{ couponCode: this.props.cart.coupon.error }}
+                      value={this.props.cart.couponCode}
                       onBlur={this.props.onVerifyCoupon}
                     />
 
-                    {this.props.cart.couponDiscount > 0 && (
+                    {this.props.cart.coupon.appliedDiscount > 0 && (
                       <p>
-                        {`${formatPrice(this.props.cart.couponDiscount)} discount applied`}
+                        {`${formatPrice(this.props.cart.coupon.appliedDiscount)} discount applied`}
                       </p>
                     )}
                   </div>
@@ -381,7 +381,7 @@ class BookingCheckoutPage extends Component {
                   Go back
                 </Button>
               </div>
-              {/* -- END OF CONFIRM -- */}
+              {/* -- END OF CONFIRM -- */}              
             </Form>
           </div>
 
@@ -410,7 +410,6 @@ BookingCheckoutPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   verifyingCoupon: PropTypes.bool.isRequired,
-  couponError: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

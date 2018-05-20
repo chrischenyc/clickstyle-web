@@ -42,15 +42,18 @@ const CartSummary = props => (
       </li>
     ))}
 
-    {props.cart.couponDiscount > 0 && (
+    {props.cart.coupon.appliedDiscount > 0 && (
       <li>
-        Discount<span>{formatPrice(-props.cart.couponDiscount)}</span>
+        Coupon<span>{formatPrice(-props.cart.coupon.appliedDiscount)}</span>
       </li>
     )}
 
     {props.cart.total > 0 && (
       <li className="total-cost">
-        Total<span>{formatPrice(Math.max(props.cart.total - props.cart.couponDiscount, 0))}</span>
+        Total
+        <span>
+          {formatPrice(Math.max(props.cart.total - props.cart.coupon.appliedDiscount, 0))}
+        </span>
       </li>
     )}
   </ul>
