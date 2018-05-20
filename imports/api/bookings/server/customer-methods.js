@@ -126,7 +126,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     duration,
     note,
     discount: coupon.appliedDiscount && coupon.appliedDiscount > 0 && coupon.appliedDiscount,
-    redeemedCoupon: coupon.appliedDiscount && coupon.appliedDiscount > 0 && coupon._id,
+    redeemedCoupon: coupon.appliedDiscount && coupon.appliedDiscount > 0 && coupon.code,
   });
 
   if (coupon.appliedDiscount && coupon.appliedDiscount > 0) {
