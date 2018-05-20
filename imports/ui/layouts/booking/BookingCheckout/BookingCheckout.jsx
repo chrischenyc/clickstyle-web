@@ -6,7 +6,12 @@ import _ from 'lodash';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import scriptLoader from 'react-async-script-loader';
 
-import { setUserInfo, resetCart } from '../../../../modules/client/redux/cart';
+import {
+  setUserInfo,
+  resetCart,
+  applyCoupon,
+  removeCoupon,
+} from '../../../../modules/client/redux/cart';
 import BookingCheckoutPage from './BookingCheckoutPage';
 import { validateBooking } from '../../../../modules/validate';
 import Loading from '../../../components/Loading';
@@ -19,10 +24,13 @@ class BookingCheckout extends Component {
     this.handleValidate = this.handleValidate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.handleVerifyCoupon = this.handleVerifyCoupon.bind(this);
 
     this.state = {
       loading: false,
       error: '',
+      verifyingCoupon: false,
+      couponError: '',
     };
 
     // load user info into cart if logged in
@@ -90,12 +98,37 @@ class BookingCheckout extends Component {
     return errors;
   }
 
+  handleVerifyCoupon() {
+    if (_.isEmpty(this.props.cart.coupon)) {
+      this.props.removeCoupon();
+      this.setState({ couponError: '' });
+      return;
+    }
+
+    Meteor.call('coupons.verify', this.props.cart.coupon, (error, result) => {
+      this.props.removeCoupon();
+
+      if (error) {
+        this.setState({ couponError: error.reason });
+      } else if (!_.isEmpty(result.error)) {
+        this.setState({ couponError: result.error });
+      } else if (!result.coupon) {
+        this.setState({ couponError: 'invalid coupon code' });
+      } else if (result.coupon.minBookingValue > this.props.cart.total) {
+        this.setState({ couponError: `minimum booking value ${result.coupon.minBookingValue}` });
+      } else {
+        this.setState({ couponError: '' });
+        this.props.applyCoupon(result.coupon);
+      }
+    });
+  }
+
   handleSubmit(stripePayload) {
     this.setState({ loading: true });
 
     Meteor.call(
       'bookings.customer.create',
-      { ..._.omit(this.props.cart, ['showCartInHeader', 'count']), stripePayload },
+      { ..._.omit(this.props.cart, ['count', 'discount']), stripePayload },
       (error, result) => {
         if (error) {
           this.setState({ loading: false, error: error.reason });
@@ -133,6 +166,9 @@ class BookingCheckout extends Component {
             history={this.props.history}
             loading={this.state.loading}
             error={this.state.error}
+            verifyingCoupon={this.state.verifyingCoupon}
+            couponError={this.state.couponError}
+            onVerifyCoupon={this.handleVerifyCoupon}
           />
         </Elements>
       </StripeProvider>
@@ -152,6 +188,8 @@ BookingCheckout.propTypes = {
   profile: PropTypes.object,
   setUserInfo: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,
+  applyCoupon: PropTypes.func.isRequired,
+  removeCoupon: PropTypes.func.isRequired,
   isScriptLoaded: PropTypes.bool.isRequired,
   isScriptLoadSucceed: PropTypes.bool.isRequired,
 };
@@ -162,4 +200,9 @@ const mapStateToProps = state => ({
   profile: state.user.profile,
 });
 
-export default connect(mapStateToProps, { setUserInfo, resetCart })(scriptLoader('https://js.stripe.com/v3/')(BookingCheckout));
+export default connect(mapStateToProps, {
+  setUserInfo,
+  resetCart,
+  applyCoupon,
+  removeCoupon,
+})(scriptLoader('https://js.stripe.com/v3/')(BookingCheckout));

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button, Responsive, Checkbox, Form } from 'semantic-ui-react';
+import React, { Component, Fragment } from 'react';
+import { Button, Responsive, Checkbox, Form, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
@@ -20,6 +20,7 @@ import { FormInputField, FormFieldErrorMessage } from '../../../components/FormI
 import { withMediaQuery } from '../../../components/HOC';
 import { openModal, closeModal } from '../../../../modules/client/redux/ui';
 import BookingDateTimePicker from '../../../components/BookingDateTimePicker';
+import formatPrice from '../../../../modules/format-price';
 
 class BookingCheckoutPage extends Component {
   constructor(props) {
@@ -45,6 +46,12 @@ class BookingCheckoutPage extends Component {
       (!_.isEmpty(nextProps.cart.date) && !_.isEmpty(nextProps.cart.time))
     ) {
       this.props.closeModal();
+    }
+
+    if (_.isEmpty(nextProps.couponError)) {
+      this.setState({ errors: _.omit(this.state.errors, 'coupon') });
+    } else {
+      this.setState({ errors: { ...this.state.errors, coupon: nextProps.couponError } });
     }
   }
 
@@ -103,211 +110,246 @@ class BookingCheckoutPage extends Component {
             </Responsive>
 
             <Form error={!_.isEmpty(this.state.errors) || !_.isEmpty(this.props.error)}>
-              <h3 className="margin-top-0 margin-bottom-30">Personal Details</h3>
-
-              {!this.props.authenticated && (
-                <div className="margin-top-10 margin-bottom-20">
-                  Already a user?&nbsp;
-                  <Responsive
-                    minWidth={1025}
-                    as={ModalLink}
-                    to="/login"
-                    component={<Login modal />}
-                    title="Log in to continue"
-                  >
-                    Log In
-                  </Responsive>
-                  <Responsive maxWidth={1024} as={Link} to="/login">
-                    Log In
-                  </Responsive>
-                  &nbsp;to continue
-                </div>
-              )}
-
-              <div className="row">
-                <div className="col-md-4 margin-bottom-15">
-                  <label>First Name</label>
-                  <FormInputField
-                    name="firstName"
-                    type="text"
-                    onChange={this.props.onChange}
-                    errors={this.state.errors}
-                    value={this.props.cart.firstName}
-                  />
-                </div>
-
-                <div className="col-md-4 margin-bottom-15">
-                  <label>Last Name</label>
-                  <FormInputField
-                    name="lastName"
-                    type="text"
-                    onChange={this.props.onChange}
-                    errors={this.state.errors}
-                    value={this.props.cart.lastName}
-                  />
-                </div>
-
-                <div className="col-md-4 margin-bottom-15">
-                  <label>Mobile</label>
-                  <FormInputField
-                    name="mobile"
-                    type="text"
-                    onChange={this.props.onChange}
-                    errors={this.state.errors}
-                    value={this.props.cart.mobile}
-                  />
-                </div>
+            {/* -- PERSONAL INFO -- */}
+            <div>
+                <h3 className="margin-bottom-20">Personal Details</h3>
 
                 {!this.props.authenticated && (
-                  <div className="col-md-12 margin-bottom-15">
-                    <label>Email</label>
-                    <FormInputField
-                      disabled={this.props.authenticated}
-                      name="email"
-                      type="text"
-                      onChange={this.props.onChange}
-                      errors={this.state.errors}
-                      value={this.props.cart.email}
-                    />
+                  <div className="margin-top-10 margin-bottom-20">
+                    Already a user?&nbsp;
+                    <Responsive
+                      minWidth={1025}
+                      as={ModalLink}
+                      to="/login"
+                      component={<Login modal />}
+                      title="Log in to continue"
+                    >
+                      Log In
+                    </Responsive>
+                    <Responsive maxWidth={1024} as={Link} to="/login">
+                      Log In
+                    </Responsive>
+                    &nbsp;to continue
                   </div>
                 )}
 
-                <div className="col-md-12 margin-bottom-15">
-                  <label>Address</label>
-                  <SemanticGeoSuggest
-                    placeholder="type to search your address"
-                    country="au"
-                    name="address"
-                    initialValue={this.props.cart.address}
-                    onChange={(value) => {
-                      // convert to generic onChange param
-                      this.props.onChange({ target: { name: 'address', value } });
-                    }}
-                    onSuggestSelect={(suggest) => {
-                      // force onChange as well
-                      this.props.onChange({ target: { name: 'address', value: suggest.label } });
-                    }}
-                    error={
-                      !_.isNil(this.state.errors.address) && !_.isEmpty(this.state.errors.address)
-                    }
-                  />
-                  <FormFieldErrorMessage compact message={this.state.errors.address} />
-                </div>
+                <div className="row">
+                  <div className="col-md-4 margin-bottom-15">
+                    <label>First Name</label>
+                    <FormInputField
+                      name="firstName"
+                      type="text"
+                      onChange={this.props.onChange}
+                      errors={this.state.errors}
+                      value={this.props.cart.firstName}
+                    />
+                  </div>
 
-                <div className="col-md-12 margin-bottom-15">
-                  <label>Note (optional)</label>
-                  <FormInputField
-                    name="note"
-                    type="text"
-                    onChange={this.props.onChange}
-                    errors={this.state.errors}
-                    value={this.props.cart.note}
-                  />
+                  <div className="col-md-4 margin-bottom-15">
+                    <label>Last Name</label>
+                    <FormInputField
+                      name="lastName"
+                      type="text"
+                      onChange={this.props.onChange}
+                      errors={this.state.errors}
+                      value={this.props.cart.lastName}
+                    />
+                  </div>
+
+                  <div className="col-md-4 margin-bottom-15">
+                    <label>Mobile</label>
+                    <FormInputField
+                      name="mobile"
+                      type="text"
+                      onChange={this.props.onChange}
+                      errors={this.state.errors}
+                      value={this.props.cart.mobile}
+                    />
+                  </div>
+
+                  {!this.props.authenticated && (
+                    <div className="col-md-12 margin-bottom-15">
+                      <label>Email</label>
+                      <FormInputField
+                        disabled={this.props.authenticated}
+                        name="email"
+                        type="text"
+                        onChange={this.props.onChange}
+                        errors={this.state.errors}
+                        value={this.props.cart.email}
+                      />
+                    </div>
+                  )}
+
+                  <div className="col-md-12 margin-bottom-15">
+                    <label>Address</label>
+                    <SemanticGeoSuggest
+                      placeholder="type to search your address"
+                      country="au"
+                      name="address"
+                      initialValue={this.props.cart.address}
+                      onChange={(value) => {
+                        // convert to generic onChange param
+                        this.props.onChange({ target: { name: 'address', value } });
+                      }}
+                      onSuggestSelect={(suggest) => {
+                        // force onChange as well
+                        this.props.onChange({ target: { name: 'address', value: suggest.label } });
+                      }}
+                      error={
+                        !_.isNil(this.state.errors.address) && !_.isEmpty(this.state.errors.address)
+                      }
+                    />
+                    <FormFieldErrorMessage compact message={this.state.errors.address} />
+                  </div>
+
+                  <div className="col-md-12 margin-bottom-15">
+                    <label>Note (optional)</label>
+                    <FormInputField
+                      name="note"
+                      type="text"
+                      onChange={this.props.onChange}
+                      errors={this.state.errors}
+                      value={this.props.cart.note}
+                    />
+                  </div>
                 </div>
               </div>
+              {/* -- END OF PERSONAL INFO */}
 
-              <h3 className="margin-top-55 margin-bottom-30">Payment Method</h3>
+              {/* -- PAYMENT METHODS -- */}
+              <div className="margin-top-50">
+                <h3 className="margin-bottom-20">Payment Method</h3>
 
-              <div className="payment">
-                {/* saved credit card */}
-                {this.props.cart.savedCardInfo && (
+                <div className="payment">
+                  {/* saved credit card */}
+                  {this.props.cart.savedCardInfo && (
+                    <div
+                      className={classNames('payment-tab', {
+                        'payment-tab-active': this.props.cart.useSavedCard,
+                      })}
+                    >
+                      <div className="payment-tab-trigger">
+                        <input
+                          checked={this.props.cart.useSavedCard}
+                          id="savedCard"
+                          name="cardType"
+                          type="radio"
+                          value="savedCard"
+                          onChange={this.props.onChange}
+                        />
+                        <label htmlFor="savedCard">Saved Card</label>
+                      </div>
+
+                      <div className="payment-tab-content">
+                        <p>{this.props.cart.savedCardInfo}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* new credit card */}
                   <div
                     className={classNames('payment-tab', {
-                      'payment-tab-active': this.props.cart.useSavedCard,
+                      'payment-tab-active': !this.props.cart.useSavedCard,
                     })}
                   >
                     <div className="payment-tab-trigger">
                       <input
-                        checked={this.props.cart.useSavedCard}
-                        id="savedCard"
-                        name="cardType"
+                        checked={!this.props.cart.useSavedCard}
                         type="radio"
-                        value="savedCard"
+                        name="cardType"
+                        id="newCard"
+                        value="newCard"
                         onChange={this.props.onChange}
                       />
-                      <label htmlFor="savedCard">Saved Card</label>
+                      <label htmlFor="newCard">Credit / Debit Card</label>
                     </div>
 
                     <div className="payment-tab-content">
-                      <p>{this.props.cart.savedCardInfo}</p>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="card-label">
+                            <label>Name on Card</label>
+                            <FormInputField
+                              name="creditCardNameOnCard"
+                              type="text"
+                              onChange={this.props.onChange}
+                              errors={this.state.errors}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="col-md-6">
+                          <div className="card-label">
+                            <label>Card number</label>
+                            <CardNumberElement placeholder="" />
+                          </div>
+                        </div>
+
+                        <div className="col-md-4">
+                          <div className="card-label">
+                            <label>Expiration</label>
+                            <CardExpiryElement />
+                          </div>
+                        </div>
+
+                        <div className="col-md-4">
+                          <div className="card-label">
+                            <label>CVC</label>
+                            <CardCVCElement placeholder="" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        <Checkbox
+                          style={{ padding: '0 20px' }}
+                          defaultChecked
+                          name="creditCardSaveCard"
+                          onChange={(event, data) => {
+                            this.props.onChange({
+                              target: { name: 'creditCardSaveCard', value: data.checked },
+                            });
+                          }}
+                          label={<label>save this card</label>}
+                        />
+                      </div>
+
+                      <FormFieldErrorMessage compact={false} message={this.state.errors.stripe} />
                     </div>
-                  </div>
-                )}
-
-                {/* new credit card */}
-                <div
-                  className={classNames('payment-tab', {
-                    'payment-tab-active': !this.props.cart.useSavedCard,
-                  })}
-                >
-                  <div className="payment-tab-trigger">
-                    <input
-                      checked={!this.props.cart.useSavedCard}
-                      type="radio"
-                      name="cardType"
-                      id="newCard"
-                      value="newCard"
-                      onChange={this.props.onChange}
-                    />
-                    <label htmlFor="newCard">Credit / Debit Card</label>
-                  </div>
-
-                  <div className="payment-tab-content">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div className="card-label">
-                          <label>Name on Card</label>
-                          <FormInputField
-                            name="creditCardNameOnCard"
-                            type="text"
-                            onChange={this.props.onChange}
-                            errors={this.state.errors}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-md-6">
-                        <div className="card-label">
-                          <label>Card number</label>
-                          <CardNumberElement placeholder="" />
-                        </div>
-                      </div>
-
-                      <div className="col-md-4">
-                        <div className="card-label">
-                          <label>Expiration</label>
-                          <CardExpiryElement />
-                        </div>
-                      </div>
-
-                      <div className="col-md-4">
-                        <div className="card-label">
-                          <label>CVC</label>
-                          <CardCVCElement placeholder="" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <Checkbox
-                        style={{ padding: '0 20px' }}
-                        defaultChecked
-                        name="creditCardSaveCard"
-                        onChange={(event, data) => {
-                          this.props.onChange({
-                            target: { name: 'creditCardSaveCard', value: data.checked },
-                          });
-                        }}
-                        label={<label>save this card</label>}
-                      />
-                    </div>
-
-                    <FormFieldErrorMessage compact={false} message={this.state.errors.stripe} />
                   </div>
                 </div>
               </div>
+              {/* -- END OF PAYMENT METHODS -- */}
 
-              <div className="margin-top-20">
+              {/* -- COUPON -- */}
+              <div className="margin-top-50">
+                <div className="row">
+                  <div className="col-md-4">
+                    <FormInputField
+                      disabled={this.props.verifyingCoupon}
+                      loading={this.props.verifyingCoupon}
+                      name="coupon"
+                      type="text"
+                      placeholder="coupon"
+                      onChange={this.props.onChange}
+                      errors={this.state.errors}
+                      value={this.props.cart.coupon}
+                      onBlur={this.props.onVerifyCoupon}
+                    />
+
+                    {this.props.cart.couponDiscount > 0 && (
+                      <p>
+                        {`${formatPrice(this.props.cart.couponDiscount)} discount applied`}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+              {/* -- END OF COUPON -- */}
+
+              {/* -- CONFIRM -- */}
+              <div className="margin-top-50">
                 <p>* You will only be charged after booked service is completed.</p>
 
                 <FormFieldErrorMessage
@@ -339,6 +381,7 @@ class BookingCheckoutPage extends Component {
                   Go back
                 </Button>
               </div>
+              {/* -- END OF CONFIRM -- */}
             </Form>
           </div>
 
@@ -356,6 +399,7 @@ BookingCheckoutPage.propTypes = {
   onValidate: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
+  onVerifyCoupon: PropTypes.func.isRequired,
   cart: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
   stripe: PropTypes.object.isRequired,
@@ -365,6 +409,8 @@ BookingCheckoutPage.propTypes = {
   closeModal: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+  verifyingCoupon: PropTypes.bool.isRequired,
+  couponError: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

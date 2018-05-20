@@ -86,9 +86,21 @@ export function setUserInfo(info) {
   };
 }
 
+export function applyCoupon(coupon) {
+  return {
+    type: 'CART_APPLY_COUPON',
+    coupon,
+  };
+}
+
+export function removeCoupon() {
+  return {
+    type: 'CART_REMOVE_COUPON',
+  };
+}
+
 // --------- reducer ----------
 const defaultState = {
-  showCartInHeader: false,
   stylist: null,
   services: [],
   total: 0,
@@ -105,6 +117,8 @@ const defaultState = {
   creditCardSaveCard: true,
   savedCardInfo: '',
   useSavedCard: false,
+  coupon: '',
+  couponDiscount: 0,
 };
 
 const reducer = (state = defaultState, action) => {
@@ -139,7 +153,6 @@ const reducer = (state = defaultState, action) => {
           services,
           total: calculateTotal(services),
           count: calculateCount(services),
-          showCartInHeader: calculateTotal(services) > 0,
         };
       }
 
@@ -149,7 +162,6 @@ const reducer = (state = defaultState, action) => {
         services,
         total: calculateTotal(services),
         count: calculateCount(services),
-        showCartInHeader: calculateTotal(services) > 0,
       };
     }
 
@@ -163,7 +175,6 @@ const reducer = (state = defaultState, action) => {
         services,
         total: calculateTotal(services),
         count: calculateCount(services),
-        showCartInHeader: calculateTotal(services) > 0,
       };
     }
 
@@ -182,7 +193,6 @@ const reducer = (state = defaultState, action) => {
         services,
         total: calculateTotal(services),
         count: calculateCount(services),
-        showCartInHeader: calculateTotal(services) > 0,
       };
     }
 
@@ -190,6 +200,20 @@ const reducer = (state = defaultState, action) => {
       const { info } = action;
 
       return { ...state, ...info };
+    }
+
+    case 'CART_APPLY_COUPON': {
+      const { coupon } = action;
+
+      if (state.total >= coupon.minBookingValue) {
+        return { ...state, coupon: coupon.code, couponDiscount: coupon.discount };
+      }
+
+      return state;
+    }
+
+    case 'CART_REMOVE_COUPON': {
+      return { ...state, coupon: '', couponDiscount: 0 };
     }
 
     default:

@@ -8,6 +8,10 @@ import { calculateTotalDuration } from '../../modules/cart-calculator';
 
 const CartSummary = props => (
   <ul>
+    <li style={{ marginBottom: '1em' }}>
+      Est. duration<span>{`${calculateTotalDuration(props.cart.services)} mins`}</span>
+    </li>
+
     {props.cart.services.map(service => (
       <li key={service._id}>
         <i
@@ -38,13 +42,15 @@ const CartSummary = props => (
       </li>
     ))}
 
-    <li>
-      Est. duration<span>{`${calculateTotalDuration(props.cart.services)} mins`}</span>
-    </li>
+    {props.cart.couponDiscount > 0 && (
+      <li>
+        Discount<span>{formatPrice(-props.cart.couponDiscount)}</span>
+      </li>
+    )}
 
     {props.cart.total > 0 && (
       <li className="total-cost">
-        Total<span>{formatPrice(props.cart.total)}</span>
+        Total<span>{formatPrice(Math.max(props.cart.total - props.cart.couponDiscount, 0))}</span>
       </li>
     )}
   </ul>
