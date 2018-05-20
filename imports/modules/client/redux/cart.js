@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import { calculateTotal, calculateCount } from '../../cart-calculator';
-import formatPrice from '../../format-price';
+import { evaluateCoupon } from '../../../modules/coupon';
 
 /**
  * update current selected services data
@@ -40,28 +40,6 @@ const updateServices = (currentServices, service, addon = null) => {
   }
 
   return newServices;
-};
-
-const evaluateCoupon = (coupon, total) => {
-  if (!_.isEmpty(coupon.error)) {
-    return {
-      ...defaultCouponState,
-      ...coupon,
-    };
-  }
-
-  if (total < coupon.minBookingValue) {
-    return {
-      ...coupon,
-      appliedDiscount: 0,
-      error: `minimum booking value to redeem this coupon is ${formatPrice(coupon.minBookingValue)}`,
-    };
-  }
-
-  return {
-    ...coupon,
-    appliedDiscount: Math.min(total, coupon.discount),
-  };
 };
 
 // --------- actions ----------

@@ -3,6 +3,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { check, Match } from 'meteor/check';
 import log from 'winston';
 import moment from 'moment';
+import _ from 'lodash';
 
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
@@ -10,6 +11,7 @@ import BookingActivities from '../../booking_activities/booking_activities';
 import Stylists from '../../stylists/stylists';
 import Payments from '../../payments/payments';
 import Reviews from '../../reviews/reviews';
+import Coupons from '../../coupons/coupons';
 import {
   sendCustomerBookingRequestedEmail,
   sendStylistBookingRequestedEmail,
@@ -20,6 +22,7 @@ import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
 import formatOccupiedTimeSlot from '../../../modules/server/format-occupied-time-slot';
 import { calculateTotal, calculateTotalDuration } from '../../../modules/cart-calculator';
+import { validateCoupon, evaluateCoupon } from '../../../modules/coupon';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
@@ -54,7 +57,17 @@ const customerCancellationFee = (booking) => {
 
 function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   const {
-    firstName, lastName, email, stylist, services, mobile, address, date, time, note,
+    firstName,
+    lastName,
+    email,
+    stylist,
+    services,
+    mobile,
+    address,
+    date,
+    time,
+    note,
+    couponCode,
   } = cart;
 
   const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
@@ -89,6 +102,12 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     throw new Meteor.Error(message);
   }
 
+  let coupon = {};
+  if (!_.isEmpty(couponCode)) {
+    coupon = validateCoupon(couponCode);
+    coupon = evaluateCoupon(coupon, total);
+  }
+
   // create Bookings record
   const bookingId = Bookings.insert({
     stylist: stylist.owner,
@@ -106,7 +125,16 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     status: 'pending',
     duration,
     note,
+    discount: coupon.appliedDiscount && coupon.appliedDiscount > 0 && coupon.appliedDiscount,
+    redeemedCoupon: coupon.appliedDiscount && coupon.appliedDiscount > 0 && coupon._id,
   });
+
+  if (coupon.appliedDiscount && coupon.appliedDiscount > 0) {
+    Coupons.update(
+      { _id: coupon._id },
+      { $set: { status: 'redeemed', redeemedAt: Date.now(), redeemedBooking: bookingId } },
+    );
+  }
 
   // create BookingActivities record
   BookingActivities.insert({
@@ -131,7 +159,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   sendCustomerBookingRequestedEmail({
     stylist: `${stylist.name.first} ${stylist.name.last}`,
     services: servicesSummary(services),
-    total,
+    total: coupon.appliedDiscount ? total - coupon.appliedDiscount : total,
     firstName,
     lastName,
     email,
