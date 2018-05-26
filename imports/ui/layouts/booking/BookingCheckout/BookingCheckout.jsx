@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import scriptLoader from 'react-async-script-loader';
+import moment from 'moment';
 
 import {
   setUserInfo,
@@ -121,7 +122,11 @@ class BookingCheckout extends Component {
 
     Meteor.call(
       'bookings.customer.create',
-      { ..._.omit(this.props.cart, ['count']), stripePayload },
+      {
+        ..._.omit(this.props.cart, ['total', 'count', 'coupon', 'savedCardInfo', 'date', 'time']),
+        stripePayload,
+        time: moment(this.props.cart.date + this.props.cart.time, 'YYMMDDHH:mm').toDate(),
+      },
       (error, result) => {
         if (error) {
           this.setState({ loading: false, error: error.reason });

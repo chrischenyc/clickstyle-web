@@ -57,14 +57,13 @@ const customerCancellationFee = (booking) => {
 
 function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   const {
+    stylist,
+    services,
     firstName,
     lastName,
     email,
-    stylist,
-    services,
     mobile,
     address,
-    date,
     time,
     note,
     couponCode,
@@ -73,7 +72,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
   const total = calculateTotal(services);
   const duration = calculateTotalDuration(services);
-  const bookingTime = moment(date + time, 'YYMMDDHH:mm');
+  const bookingTime = moment(time);
 
   // if bookingTime is earlier than 2 hours from now, throw Error
   if (bookingTime.isBefore(moment().add(2, 'hours'))) {
