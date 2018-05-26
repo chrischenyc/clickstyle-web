@@ -328,14 +328,12 @@ class BookingCheckoutPage extends Component {
                   <div className="col-md-4">
                     <FormInputField
                       disabled={this.props.verifyingCoupon}
-                      loading={this.props.verifyingCoupon}
                       name="couponCode"
                       type="text"
                       placeholder="coupon"
                       onChange={this.props.onChange}
                       errors={{ couponCode: this.props.cart.coupon.error }}
                       value={this.props.cart.couponCode}
-                      onBlur={this.props.onVerifyCoupon}
                     />
 
                     {this.props.cart.coupon.appliedDiscount > 0 && (
@@ -343,6 +341,18 @@ class BookingCheckoutPage extends Component {
                         {`${formatPrice(this.props.cart.coupon.appliedDiscount)} discount applied`}
                       </p>
                     )}
+
+                    <Button
+                      size="small"
+                      circular
+                      color="teal"
+                      basic
+                      disabled={_.isEmpty(this.props.cart.couponCode)}
+                      onClick={this.props.onVerifyCoupon}
+                      loading={this.props.verifyingCoupon}
+                    >
+                      apply
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -381,7 +391,7 @@ class BookingCheckoutPage extends Component {
                   Go back
                 </Button>
               </div>
-              {/* -- END OF CONFIRM -- */}              
+              {/* -- END OF CONFIRM -- */}
             </Form>
           </div>
 

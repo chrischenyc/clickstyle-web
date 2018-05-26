@@ -211,7 +211,14 @@ const reducer = (state = defaultState, action) => {
     case 'CART_SET_USER_INFO': {
       const { info } = action;
 
-      return { ...state, ...info };
+      const newState = { ...state, ...info };
+
+      // clear previous coupon error if code changed
+      if (info.couponCode !== state.couponCode) {
+        newState.coupon.error = '';
+      }
+
+      return newState;
     }
 
     case 'CART_SET_COUPON': {
