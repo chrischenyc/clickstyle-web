@@ -72,34 +72,6 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
   const total = calculateTotal(services);
   const duration = calculateTotalDuration(services);
-  const bookingTime = moment(time);
-
-  // if bookingTime is earlier than 2 hours from now, throw Error
-  if (bookingTime.isBefore(moment().add(2, 'hours'))) {
-    throw new Meteor.Error('Booking time should be at least 2 hours from now.');
-  }
-
-  // stylist calendar availability validation
-  const bookingEndDateTime = bookingTime.clone().add(duration, 'minutes');
-  const bookingStartTimeslot = parseInt(bookingTime.format('YYMMDDHHmm'), 10);
-  const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
-  const { occupiedTimeSlots } = Stylists.findOne({ owner: stylist.owner });
-  const conflictedSlots = occupiedTimeSlots.filter(occupiedSlot =>
-    (occupiedSlot.from >= bookingStartTimeslot && occupiedSlot.from < bookingEndTimeslot) ||
-      (occupiedSlot.to > bookingStartTimeslot && occupiedSlot.to <= bookingEndTimeslot) ||
-      (occupiedSlot.from <= bookingStartTimeslot && occupiedSlot.to >= bookingEndTimeslot));
-
-  if (conflictedSlots.length > 0) {
-    let message = "cannot make this booking due to time conflicts on stylist's calendar: ";
-    conflictedSlots.forEach((timeslot, index) => {
-      message += `• ${formatOccupiedTimeSlot(timeslot)}`;
-      if (index < conflictedSlots.length - 1) {
-        message += ' ';
-      }
-    });
-
-    throw new Meteor.Error(message);
-  }
 
   let coupon = {};
   if (!_.isEmpty(couponCode)) {
@@ -118,7 +90,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     email,
     mobile,
     address,
-    time: bookingTime.toDate(),
+    time,
     stripeCustomerId,
     stripeCardId,
     status: 'pending',
@@ -165,7 +137,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     mobile,
     address,
     note,
-    time: dateTimeString(bookingTime),
+    time: dateTimeString(time),
     bookingId,
     bookingUrl: `users/bookings/${bookingId}`,
   });
@@ -182,7 +154,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     mobile,
     address,
     note,
-    time: dateTimeString(bookingTime),
+    time: dateTimeString(time),
     bookingId,
     bookingUrl: `users/stylist/bookings/${bookingId}`,
   });
@@ -195,6 +167,7 @@ export async function customerCreateBooking(cart) {
 
   try {
     const {
+      stylist,
       firstName,
       lastName,
       email,
@@ -202,10 +175,39 @@ export async function customerCreateBooking(cart) {
       creditCardSaveCard,
       stripePayload,
       useSavedCard,
+      time,
+      duration,
     } = cart;
 
-    let { userId } = this;
+    const bookingTime = moment(time);
+    // if bookingTime is earlier than 2 hours from now, throw Error
+    if (bookingTime.isBefore(moment().add(2, 'hours'))) {
+      throw new Meteor.Error('Booking time should be at least 2 hours from now.');
+    }
 
+    // stylist calendar availability validation
+    const bookingEndDateTime = bookingTime.clone().add(duration, 'minutes');
+    const bookingStartTimeslot = parseInt(bookingTime.format('YYMMDDHHmm'), 10);
+    const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
+    const { occupiedTimeSlots } = Stylists.findOne({ owner: stylist.owner });
+    const conflictedSlots = occupiedTimeSlots.filter(occupiedSlot =>
+      (occupiedSlot.from >= bookingStartTimeslot && occupiedSlot.from < bookingEndTimeslot) ||
+        (occupiedSlot.to > bookingStartTimeslot && occupiedSlot.to <= bookingEndTimeslot) ||
+        (occupiedSlot.from <= bookingStartTimeslot && occupiedSlot.to >= bookingEndTimeslot));
+
+    if (conflictedSlots.length > 0) {
+      let message = "cannot make this booking due to time conflicts on stylist's calendar: ";
+      conflictedSlots.forEach((timeslot, index) => {
+        message += `• ${formatOccupiedTimeSlot(timeslot)}`;
+        if (index < conflictedSlots.length - 1) {
+          message += ' ';
+        }
+      });
+
+      throw new Meteor.Error(message);
+    }
+
+    let { userId } = this;
     // pre-processing for guest user checkout
     if (!userId) {
       // verify email is not taken
