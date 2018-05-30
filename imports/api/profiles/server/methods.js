@@ -270,6 +270,21 @@ Meteor.methods({
       },
     );
   },
+
+  'profiles.update.timezone': function profilesUpdateTimezone(timezone) {
+    if (!this.userId) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(timezone, String);
+
+    try {
+      Profiles.update({ owner: this.userId }, { $set: { timezone } });
+    } catch (exception) {
+      log.error(exception);
+      throw exception;
+    }
+  },
 });
 
 rateLimit({
@@ -281,6 +296,7 @@ rateLimit({
     'profiles.cards',
     'profiles.card.remove',
     'profiles.self',
+    'profiles.update.timezone',
   ],
   limit: 5,
   timeRange: 1000,

@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 import { closeModal, setNextRoute } from '../../../../modules/client/redux/ui';
 import { userSignedIn } from '../../../../modules/client/redux/user';
@@ -90,6 +91,10 @@ class SignUp extends Component {
   }
 
   handleLoggedIn() {
+    // update user timezone in profile
+    const timezone = moment.tz.guess() || 'Australia/Melbourne';
+    Meteor.call('profiles.update.timezone', timezone);
+
     // force update redux store, as Meteor auto-run in App.jsx tends to lag
     this.props.userSignedIn(Meteor.user());
 

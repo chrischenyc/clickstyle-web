@@ -85,6 +85,7 @@ export default function searchStylists(data) {
     }
 
     // ----------- SELECTOR FOR OPEN HOURS -----------------
+    // FIXME: need timezone
     const isDateValid = parseUrlQueryDate(date).isValid();
     const isTimeValid = isTimeQueryValid(time);
 

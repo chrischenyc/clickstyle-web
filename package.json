@@ -8,19 +8,18 @@
   },
   "private": true,
   "author": "Chris Chen",
-  "contributors": ["Chris Chen <chrischen79@gmail.com>"],
+  "contributors": [
+    "Chris Chen <chrischen79@gmail.com>"
+  ],
   "scripts": {
     "dev": "MONGO_URL=mongodb://localhost:27017/clickstyle meteor -s settings-development.json",
-    "debug":
-      "MONGO_URL=mongodb://localhost:27017/clickstyle meteor run --inspect -s settings-development.json",
+    "debug": "MONGO_URL=mongodb://localhost:27017/clickstyle meteor run --inspect -s settings-development.json",
     "start": "meteor run",
     "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001",
     "cloc": "cloc imports client server private --exclude-ext=json",
-    "predeploy-staging":
-      "heroku config:add METEOR_SETTINGS=\"$(cat settings-staging.json)\" --remote heroku-staging",
+    "predeploy-staging": "heroku config:add METEOR_SETTINGS=\"$(cat settings-staging.json)\" --remote heroku-staging",
     "deploy-staging": "git push heroku-staging develop:master",
-    "predeploy-product":
-      "heroku config:add METEOR_SETTINGS=\"$(cat settings-product.json)\" --remote heroku-product",
+    "predeploy-product": "heroku config:add METEOR_SETTINGS=\"$(cat settings-product.json)\" --remote heroku-product",
     "deploy-product": "git push heroku-product develop:master"
   },
   "dependencies": {
@@ -37,6 +36,7 @@
     "mailchimp-api-v3": "^1.8.1",
     "meteor-node-stubs": "^0.3.3",
     "moment": "^2.22.0",
+    "moment-timezone": "^0.5.17",
     "prop-types": "^15.6.1",
     "query-string": "^6.0.0",
     "react": "^16.3.1",

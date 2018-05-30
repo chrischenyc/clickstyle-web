@@ -185,6 +185,7 @@ export async function customerCreateBooking(cart) {
       throw new Meteor.Error('Booking time should be at least 2 hours from now.');
     }
 
+    // FIXME: invalid booking time gets slipped away
     // stylist calendar availability validation
     const bookingEndDateTime = bookingTime.clone().add(duration, 'minutes');
     const bookingStartTimeslot = parseInt(bookingTime.format('YYMMDDHHmm'), 10);
@@ -195,15 +196,11 @@ export async function customerCreateBooking(cart) {
         (occupiedSlot.to > bookingStartTimeslot && occupiedSlot.to <= bookingEndTimeslot) ||
         (occupiedSlot.from <= bookingStartTimeslot && occupiedSlot.to >= bookingEndTimeslot));
 
+    // TODO: better error message
     if (conflictedSlots.length > 0) {
       let message = "cannot make this booking due to time conflicts on stylist's calendar: ";
-      conflictedSlots.forEach((timeslot, index) => {
-        message += `• ${formatOccupiedTimeSlot(timeslot)}`;
-        if (index < conflictedSlots.length - 1) {
-          message += ' ';
-        }
-      });
-
+      message += formatOccupiedTimeSlot(conflictedSlots[0]);
+      
       throw new Meteor.Error(message);
     }
 

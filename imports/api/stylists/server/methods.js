@@ -88,6 +88,8 @@ Meteor.methods({
 
     try {
       Stylists.update({ owner: this.userId }, { $set: { openHours } });
+
+      // FIXME: time slots need to be based on UTC
       updateStylistOccupiedTimeSlots(this.userId, 90);
 
       // remove notification which reminds stylist to setup services
