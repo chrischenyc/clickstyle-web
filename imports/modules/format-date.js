@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-// TODO: http://momentjs.com/guides/#/warnings/js-date/
+// FIXME: http://momentjs.com/guides/#/warnings/js-date/
 export const dateString = date => moment(date).format('DD MMM YYYY');
 export const dateTimeString = date => moment(date).format('DD MMM YYYY (ddd) HH:mm');
 export const yearString = date => moment(date).format('YYYY');
