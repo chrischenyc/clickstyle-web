@@ -9,6 +9,7 @@ import LoadingBar from 'react-redux-loading-bar';
 import _ from 'lodash';
 
 import { closeModal, toggleSlideMenu } from '../../modules/client/redux/ui';
+import { resetCart } from '../../modules/client/redux/cart';
 import ModalLink from './ModalLink';
 import Login from '../layouts/user/Login/Login';
 import SignUp from '../layouts/user/SignUp/SignUp';
@@ -189,6 +190,7 @@ class Header extends Component {
                           onClick={() => {
                             Meteor.logout();
                             this.props.history.push('/');
+                            this.props.resetCart();
                           }}
                         />
                       </Dropdown.Menu>
@@ -235,6 +237,7 @@ Header.defaultProps = {
 Header.propTypes = {
   closeModal: PropTypes.func.isRequired,
   toggleSlideMenu: PropTypes.func.isRequired,
+  resetCart: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
   firstName: PropTypes.string,
   fullContent: PropTypes.bool, // if false, header links only contain user menu
@@ -260,5 +263,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { closeModal, toggleSlideMenu },
+  { closeModal, toggleSlideMenu, resetCart },
 )(withRouter(Header));

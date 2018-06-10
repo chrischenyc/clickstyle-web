@@ -126,7 +126,7 @@ const defaultState = {
   creditCardSaveCard: true,
   savedCardInfo: '',
   useSavedCard: false,
-  couponCode: '', // user input
+  couponCode: '', // user input, not verified
   coupon: defaultCouponState, // verified result
 };
 
