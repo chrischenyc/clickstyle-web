@@ -8,7 +8,7 @@ export function toggleSlideMenu(open = null) {
   };
 }
 
-export function openModal(modalComponent, modalTitle, modalDismissible) {
+export function openModal(modalComponent, modalTitle, modalDismissible = true) {
   return {
     type: 'UI_MODAL_OPEN',
     modalComponent,
