@@ -12,46 +12,4 @@ import './slingshot-directives';
 import './cloudinary';
 import './fixtures';
 
-import Profiles from '../../api/profiles/profiles';
-import UserStats from '../../api/user_stats/user_stats';
-
 WebApp.addHtmlAttributeHook(() => ({ lang: 'en' }));
-
-const userStats = UserStats.find().fetch();
-userStats.forEach((stats) => {
-  const {
-    owner,
-    notifications,
-    messages,
-    confirmedBookings,
-    pendingBookings,
-    cancelledBookings,
-    declinedBookings,
-    completedBookings,
-    confirmedCustomerBookings,
-    pendingCustomerBookings,
-    cancelledCustomerBookings,
-    declinedCustomerBookings,
-    completedCustomerBookings,
-  } = stats;
-
-  Profiles.update(
-    { owner },
-    {
-      $set: {
-        notifications,
-        messages,
-        confirmedBookings,
-        pendingBookings,
-        cancelledBookings,
-        declinedBookings,
-        completedBookings,
-        confirmedCustomerBookings,
-        pendingCustomerBookings,
-        cancelledCustomerBookings,
-        declinedCustomerBookings,
-        completedCustomerBookings,
-      },
-    },
-  );
-});
