@@ -324,18 +324,18 @@ SideMenu.propTypes = {
 
 const mapStateToProps = state => ({
   isStylist: state.user.isStylist,
-  notifications: state.user.notifications,
-  messages: state.user.messages,
-  confirmedBookings: state.user.confirmedBookings,
-  pendingBookings: state.user.pendingBookings,
-  cancelledBookings: state.user.cancelledBookings,
-  declinedBookings: state.user.declinedBookings,
-  completedBookings: state.user.completedBookings,
-  confirmedCustomerBookings: state.user.confirmedCustomerBookings,
-  pendingCustomerBookings: state.user.pendingCustomerBookings,
-  cancelledCustomerBookings: state.user.cancelledCustomerBookings,
-  declinedCustomerBookings: state.user.declinedCustomerBookings,
-  completedCustomerBookings: state.user.completedCustomerBookings,
+  notifications: state.user.profile.notifications,
+  messages: state.user.profile.messages,
+  confirmedBookings: state.user.profile.confirmedBookings,
+  pendingBookings: state.user.profile.pendingBookings,
+  cancelledBookings: state.user.profile.cancelledBookings,
+  declinedBookings: state.user.profile.declinedBookings,
+  completedBookings: state.user.profile.completedBookings,
+  confirmedCustomerBookings: state.user.profile.confirmedCustomerBookings,
+  pendingCustomerBookings: state.user.profile.pendingCustomerBookings,
+  cancelledCustomerBookings: state.user.profile.cancelledCustomerBookings,
+  declinedCustomerBookings: state.user.profile.declinedCustomerBookings,
+  completedCustomerBookings: state.user.profile.completedCustomerBookings,
 });
 
 export default connect(mapStateToProps)(withRouter(SideMenu));

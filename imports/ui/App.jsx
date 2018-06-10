@@ -6,15 +6,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Responsive } from 'semantic-ui-react';
 
-import {
-  userSignedIn,
-  userSignedOut,
-  userProfileFetched,
-  userStatsFetched,
-} from '../modules/client/redux/user';
+import { userSignedIn, userSignedOut, userProfileFetched } from '../modules/client/redux/user';
 import { resetCart } from '../modules/client/redux/cart';
 import Profiles from '../api/profiles/profiles';
-import UserStats from '../api/user_stats/user_stats';
 
 import Routes from './Routes';
 import SlideMenu from './components/SlideMenu';
@@ -38,17 +32,12 @@ class App extends Component {
         if (user) {
           this.props.userSignedIn(user);
 
-          Meteor.subscribe('profiles.self');
-          const profile = Profiles.findOne({});
-          if (profile) {
-            this.props.userProfileFetched(profile);
-          }
-
-          // FIXME: merge UserStats with Profiles
-          const handle = Meteor.subscribe('userStats');
+          const handle = Meteor.subscribe('profiles.self');
           if (handle.ready()) {
-            const stats = UserStats.findOne({ owner: user._id });
-            this.props.userStatsFetched(stats);
+            const profile = Profiles.findOne({});
+            if (profile) {
+              this.props.userProfileFetched(profile);
+            }
           }
         } else {
           this.props.userSignedOut();
@@ -81,7 +70,6 @@ App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
   userProfileFetched: PropTypes.func.isRequired,
-  userStatsFetched: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool.isRequired,
 };
@@ -96,7 +84,6 @@ export default connect(
     userSignedIn,
     userSignedOut,
     userProfileFetched,
-    userStatsFetched,
     resetCart,
   },
 )(App);

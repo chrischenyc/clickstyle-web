@@ -252,10 +252,13 @@ const mapStateToProps = state => ({
   firstName: state.user.profile && state.user.profile.name && state.user.profile.name.first,
   cart: state.cart,
   isStylist: state.user.isStylist,
-  notifications: state.user.notifications,
-  messages: state.user.messages,
-  pendingBookings: state.user.pendingBookings,
-  pendingCustomerBookings: state.user.pendingCustomerBookings,
+  notifications: state.user.profile.notifications,
+  messages: state.user.profile.messages,
+  pendingBookings: state.user.profile.pendingBookings,
+  pendingCustomerBookings: state.user.profile.pendingCustomerBookings,
 });
 
-export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(withRouter(Header));
+export default connect(
+  mapStateToProps,
+  { closeModal, toggleSlideMenu },
+)(withRouter(Header));
