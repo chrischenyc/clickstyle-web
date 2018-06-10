@@ -18,7 +18,7 @@ Meteor.methods({
 
     check(data, Object);
     const {
-      mobile, address, services, qualificationUrl, referenceUrl,
+      mobile, address, services, qualificationUrl, referenceUrl, experienceYears,
     } = data;
 
     try {
@@ -29,6 +29,7 @@ Meteor.methods({
         check(qualificationUrl, String);
       }
       check(referenceUrl, String);
+      check(experienceYears, String);
 
       const profile = Profiles.findOne({ owner: this.userId });
 
@@ -41,6 +42,7 @@ Meteor.methods({
         services,
         qualificationUrl,
         referenceUrl,
+        experienceYears,
         approved: false,
       });
 

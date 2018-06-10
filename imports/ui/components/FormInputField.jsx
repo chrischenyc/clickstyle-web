@@ -74,8 +74,8 @@ export const NumberField = ({ onChange, ...rest }) => (
     min="1"
     onChange={onChange}
     onBlur={(event) => {
-      const price = parseInt(event.target.value);
-      if (price <= 0) {
+      const value = parseInt(event.target.value);
+      if (value <= 0) {
         onChange({ target: { name: event.target.name, value: '' } });
       }
     }}
