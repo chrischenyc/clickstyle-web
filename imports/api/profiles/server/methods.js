@@ -245,31 +245,6 @@ Meteor.methods({
     }
   },
 
-  'profiles.self': function profilesOwnerBasic() {
-    if (!this.userId) {
-      return null;
-    }
-
-    return Profiles.findOne(
-      { owner: this.userId },
-      {
-        fields: {
-          owner: 1,
-          email: 1,
-          name: 1,
-          mobile: 1,
-          address: 1,
-          photo: 1,
-          about: 1,
-          products: 1,
-          stripeDefaultCardId: 1,
-          stripeDefaultCardLast4: 1,
-          stripeDefaultCardName: 1,
-        },
-      },
-    );
-  },
-
   'profiles.update.timezone': function profilesUpdateTimezone(timezone) {
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
@@ -294,7 +269,6 @@ rateLimit({
     'profiles.find',
     'profiles.cards',
     'profiles.card.remove',
-    'profiles.self',
     'profiles.update.timezone',
   ],
   limit: 5,

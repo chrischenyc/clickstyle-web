@@ -11,6 +11,7 @@ import '../../api/notifications/server/hooks';
 import '../../api/notifications/server/methods';
 import '../../api/products/server/methods';
 import '../../api/profiles/server/methods';
+import '../../api/profiles/server/publications';
 import '../../api/reviews/server/methods';
 import '../../api/services/server/methods';
 import '../../api/stylist_applications/server/methods';

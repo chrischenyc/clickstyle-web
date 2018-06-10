@@ -13,6 +13,7 @@ import {
   userStatsFetched,
 } from '../modules/client/redux/user';
 import { resetCart } from '../modules/client/redux/cart';
+import Profiles from '../api/profiles/profiles';
 import UserStats from '../api/user_stats/user_stats';
 
 import Routes from './Routes';
@@ -37,12 +38,13 @@ class App extends Component {
         if (user) {
           this.props.userSignedIn(user);
 
-          Meteor.call('profiles.self', (error, profile) => {
-            if (profile) {
-              this.props.userProfileFetched(profile);
-            }
-          });
+          Meteor.subscribe('profiles.self');
+          const profile = Profiles.findOne({});
+          if (profile) {
+            this.props.userProfileFetched(profile);
+          }
 
+          // FIXME: merge UserStats with Profiles
           const handle = Meteor.subscribe('userStats');
           if (handle.ready()) {
             const stats = UserStats.findOne({ owner: user._id });
@@ -88,10 +90,13 @@ const mapStateToProps = state => ({
   modalOpen: state.ui.modalOpen,
 });
 
-export default connect(mapStateToProps, {
-  userSignedIn,
-  userSignedOut,
-  userProfileFetched,
-  userStatsFetched,
-  resetCart,
-})(App);
+export default connect(
+  mapStateToProps,
+  {
+    userSignedIn,
+    userSignedOut,
+    userProfileFetched,
+    userStatsFetched,
+    resetCart,
+  },
+)(App);
