@@ -82,7 +82,7 @@ class BookingCheckoutPage extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row margin-top-50 margin-bottom-50">
+        <div className="margin-top-50 margin-bottom-50">
           <div
             className={classNames({
               'col-lg-8 col-md-8 padding-right-30': this.props.screenWidth > 1024,
