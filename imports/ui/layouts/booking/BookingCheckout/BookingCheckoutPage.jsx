@@ -354,7 +354,7 @@ class BookingCheckoutPage extends Component {
               {/* -- END OF COUPON -- */}
 
               {/* -- CONFIRM -- */}
-              <div className="margin-top-50">
+              <div className="margin-top-50 margin-bottom-20">
                 <p>* You will only be charged after booked service is completed.</p>
 
                 <FormFieldErrorMessage
