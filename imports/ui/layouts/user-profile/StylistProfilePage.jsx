@@ -86,7 +86,7 @@ class StylistProfilePage extends Component {
         </div>
 
         <div className="container">
-          <div className="row margin-top-50 margin-bottom-50">
+          <div className="margin-top-50 margin-bottom-50">
             {/* -- Content -- */}
             <div
               className={classNames({
