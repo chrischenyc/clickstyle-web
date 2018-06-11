@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import { Button, Responsive, Checkbox, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
@@ -202,7 +203,9 @@ class BookingCheckoutPage extends Component {
 
               {/* -- PAYMENT METHODS -- */}
               <div className="margin-top-50">
-                <h3 className="margin-bottom-20">Payment Method</h3>
+                <h3 className="margin-bottom-20">
+                  Payment Method
+                </h3>
 
                 <div className="payment">
                   {/* saved credit card */}
@@ -301,6 +304,15 @@ class BookingCheckoutPage extends Component {
                       <FormFieldErrorMessage compact={false} message={this.props.errors.stripe} />
                     </div>
                   </div>
+                </div>
+
+                <div className="margin-top-10 text-right">
+                  <a href="http://stripe.com/" target="_blank" rel="nonopener nonreferrer">
+                    <img
+                      src={`${Meteor.settings.public.CDN}powered_by_stripe.png`}
+                      alt="strip logo"
+                    />
+                  </a>
                 </div>
               </div>
               {/* -- END OF PAYMENT METHODS -- */}
