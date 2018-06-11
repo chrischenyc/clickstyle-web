@@ -213,11 +213,6 @@ const reducer = (state = defaultState, action) => {
 
       const newState = { ...state, ...info };
 
-      // clear previous coupon error if code changed
-      if (info.couponCode !== state.couponCode) {
-        newState.coupon.error = '';
-      }
-
       return newState;
     }
 

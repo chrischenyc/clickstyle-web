@@ -17,6 +17,30 @@ import BookingCheckoutPage from './BookingCheckoutPage';
 import { validateBooking } from '../../../../modules/validate';
 import Loading from '../../../components/Loading';
 
+/**
+ * profile: Redux reducer user.profile
+ * updateFunc: Redux reducer user.setUserInfo function
+ */
+const updateCartWithUserInfo = (profile, updateFunc) => {
+  const savedCardInfo =
+    (profile &&
+      profile.stripeDefaultCardId &&
+      profile.stripeDefaultCardLast4 &&
+      profile.stripeDefaultCardName &&
+      `${profile.stripeDefaultCardName} xxxx xxxx xxxx ${profile.stripeDefaultCardLast4}`) ||
+    '';
+
+  updateFunc({
+    firstName: (profile && profile.name && profile.name.first) || '',
+    lastName: (profile && profile.name && profile.name.last) || '',
+    email: (profile && profile.email) || '',
+    mobile: (profile && profile.mobile) || '',
+    address: (profile && profile.address && profile.address.raw) || '',
+    savedCardInfo,
+    useSavedCard: !_.isEmpty(savedCardInfo),
+  });
+};
+
 class BookingCheckout extends Component {
   constructor(props) {
     super(props);
@@ -26,34 +50,18 @@ class BookingCheckout extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.handleVerifyCoupon = this.handleVerifyCoupon.bind(this);
+    this.handleStripeError = this.handleStripeError.bind(this);
+    this.handleStripeLoading = this.handleStripeLoading.bind(this);
 
     this.state = {
       loading: false,
-      error: '',
+      errors: {},
       verifyingCoupon: false,
     };
 
-    // load user info into cart if logged in
+    // load user info into cart if user is logged in
     if (props.authenticated && _.isEmpty(props.cart.email)) {
-      const savedCardInfo =
-        (props.profile &&
-          props.profile.stripeDefaultCardId &&
-          props.profile.stripeDefaultCardLast4 &&
-          props.profile.stripeDefaultCardName &&
-          `${props.profile.stripeDefaultCardName} xxxx xxxx xxxx ${
-            props.profile.stripeDefaultCardLast4
-          }`) ||
-        '';
-
-      props.setUserInfo({
-        firstName: (props.profile && props.profile.name && props.profile.name.first) || '',
-        lastName: (props.profile && props.profile.name && props.profile.name.last) || '',
-        email: (props.profile && props.profile.email) || '',
-        mobile: (props.profile && props.profile.mobile) || '',
-        address: (props.profile && props.profile.address && props.profile.address.raw) || '',
-        savedCardInfo,
-        useSavedCard: !_.isEmpty(savedCardInfo),
-      });
+      updateCartWithUserInfo(props.profile, props.setUserInfo);
     }
   }
 
@@ -62,29 +70,9 @@ class BookingCheckout extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // refresh user info in cart if user login status changed
     if (!_.isEqual(this.props.profile, nextProps.profile)) {
-      const savedCardInfo =
-        (nextProps.profile &&
-          nextProps.profile.stripeDefaultCardId &&
-          nextProps.profile.stripeDefaultCardLast4 &&
-          nextProps.profile.stripeDefaultCardName &&
-          `${nextProps.profile.stripeDefaultCardName} xxxx xxxx xxxx ${
-            nextProps.profile.stripeDefaultCardLast4
-          }`) ||
-        '';
-
-      this.props.setUserInfo({
-        firstName:
-          (nextProps.profile && nextProps.profile.name && nextProps.profile.name.first) || '',
-        lastName:
-          (nextProps.profile && nextProps.profile.name && nextProps.profile.name.last) || '',
-        email: (nextProps.profile && nextProps.profile.email) || '',
-        mobile: (nextProps.profile && nextProps.profile.mobile) || '',
-        address:
-          (nextProps.profile && nextProps.profile.address && nextProps.profile.address.raw) || '',
-        savedCardInfo,
-        useSavedCard: !_.isEmpty(savedCardInfo),
-      });
+      updateCartWithUserInfo(nextProps.profile, this.props.setUserInfo);
     }
   }
 
@@ -93,18 +81,25 @@ class BookingCheckout extends Component {
       this.props.setUserInfo({ useSavedCard: event.target.value === 'savedCard' });
     } else {
       this.props.setUserInfo({ [event.target.name]: event.target.value });
+
+      // remove previous error once user starts editing the field
+      this.setState({ errors: _.omit(this.state.errors, event.target.name) });
     }
   }
 
   handleValidate() {
     const errors = validateBooking(this.props.cart);
 
-    return errors;
+    this.setState({ errors });
+
+    return _.isEmpty(errors);
   }
 
   handleVerifyCoupon() {
     if (_.isEmpty(this.props.cart.couponCode)) {
       this.props.removeCoupon();
+      this.setState({ errors: _.omit(this.state.errors, 'couponCode') });
+
       return;
     }
 
@@ -113,8 +108,24 @@ class BookingCheckout extends Component {
         this.props.removeCoupon();
       } else {
         this.props.setCoupon(coupon);
+
+        if (_.isEmpty(coupon.error)) {
+          this.setState({ errors: _.omit(this.state.errors, 'couponCode') });
+        } else {
+          this.setState({
+            errors: { ...this.state.errors, couponCode: coupon.error },
+          });
+        }
       }
     });
+  }
+
+  handleStripeError(error) {
+    this.setState({ errors: { ...this.state.errors, stripe: error } });
+  }
+
+  handleStripeLoading(loading) {
+    this.setState({ loading });
   }
 
   handleSubmit(stripePayload) {
@@ -129,7 +140,7 @@ class BookingCheckout extends Component {
       },
       (error, result) => {
         if (error) {
-          this.setState({ loading: false, error: error.reason });
+          this.setState({ loading: false, errors: { submit: error.reason } });
         } else if (result) {
           const { bookingId, userId } = result;
           this.setState({ loading: false });
@@ -163,9 +174,11 @@ class BookingCheckout extends Component {
             authenticated={this.props.authenticated}
             history={this.props.history}
             loading={this.state.loading}
-            error={this.state.error}
+            errors={this.state.errors}
             verifyingCoupon={this.state.verifyingCoupon}
             onVerifyCoupon={this.handleVerifyCoupon}
+            onStripeError={this.handleStripeError}
+            onStripeLoading={this.handleStripeLoading}
           />
         </Elements>
       </StripeProvider>
@@ -197,9 +210,12 @@ const mapStateToProps = state => ({
   profile: state.user.profile,
 });
 
-export default connect(mapStateToProps, {
-  setUserInfo,
-  resetCart,
-  setCoupon,
-  removeCoupon,
-})(scriptLoader('https://js.stripe.com/v3/')(BookingCheckout));
+export default connect(
+  mapStateToProps,
+  {
+    setUserInfo,
+    resetCart,
+    setCoupon,
+    removeCoupon,
+  },
+)(scriptLoader('https://js.stripe.com/v3/')(BookingCheckout));

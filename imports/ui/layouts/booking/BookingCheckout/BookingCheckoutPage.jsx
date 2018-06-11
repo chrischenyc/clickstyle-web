@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { Button, Responsive, Checkbox, Form, Icon } from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Button, Responsive, Checkbox, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
@@ -27,8 +27,6 @@ class BookingCheckoutPage extends Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.state = { errors: {}, loading: false };
   }
 
   componentDidMount() {
@@ -50,38 +48,29 @@ class BookingCheckoutPage extends Component {
   }
 
   async handleSubmit() {
-    // validate form
-    const errors = this.props.onValidate();
-    this.setState({ errors });
-
-    if (_.isEmpty(errors)) {
+    if (this.props.onValidate()) {
       if (!this.props.cart.useSavedCard) {
-        this.setState({ loading: true });
+        this.props.onStripeLoading(true);
+
         // get Stripe token for new card then submit
         if (this.props.stripe) {
           try {
             const payload = await this.props.stripe.createToken();
 
-            this.setState({ loading: false });
+            this.props.onStripeLoading(false);
 
             if (_.isNil(payload.error)) {
               // 3. inform container component to handle payment
               this.props.onSubmit(payload);
             } else {
-              this.setState({
-                errors: { ...this.state.errors, stripe: payload.error.message },
-              });
+              this.props.onStripeError(payload.error.message);
             }
           } catch (error) {
-            this.setState({
-              loading: false,
-              errors: { ...this.state.errors, stripe: error.message },
-            });
+            this.props.onStripeError(error.message);
+            this.props.onStripeLoading(false);
           }
         } else {
-          this.setState({
-            errors: { ...this.state.errors, stripe: "Stripe.js hasn't loaded yet." },
-          });
+          this.props.onStripeError("Stripe isn't ready, please refresh the page and try again");
         }
       } else {
         this.props.onSubmit();
@@ -103,13 +92,7 @@ class BookingCheckoutPage extends Component {
               <BookingCheckoutPageSummarySection cart={this.props.cart} />
             </Responsive>
 
-            <Form
-              error={
-                !_.isEmpty(this.state.errors) ||
-                !_.isEmpty(this.props.error) ||
-                !_.isEmpty(this.props.cart.coupon.error)
-              }
-            >
+            <Form error={!_.isEmpty(this.props.errors)}>
               {/* -- PERSONAL INFO -- */}
               <div>
                 <h3 className="margin-bottom-20">Personal Details</h3>
@@ -140,7 +123,7 @@ class BookingCheckoutPage extends Component {
                       name="firstName"
                       type="text"
                       onChange={this.props.onChange}
-                      errors={this.state.errors}
+                      errors={this.props.errors}
                       value={this.props.cart.firstName}
                     />
                   </div>
@@ -151,7 +134,7 @@ class BookingCheckoutPage extends Component {
                       name="lastName"
                       type="text"
                       onChange={this.props.onChange}
-                      errors={this.state.errors}
+                      errors={this.props.errors}
                       value={this.props.cart.lastName}
                     />
                   </div>
@@ -162,7 +145,7 @@ class BookingCheckoutPage extends Component {
                       name="mobile"
                       type="text"
                       onChange={this.props.onChange}
-                      errors={this.state.errors}
+                      errors={this.props.errors}
                       value={this.props.cart.mobile}
                     />
                   </div>
@@ -175,7 +158,7 @@ class BookingCheckoutPage extends Component {
                         name="email"
                         type="text"
                         onChange={this.props.onChange}
-                        errors={this.state.errors}
+                        errors={this.props.errors}
                         value={this.props.cart.email}
                       />
                     </div>
@@ -197,10 +180,10 @@ class BookingCheckoutPage extends Component {
                         this.props.onChange({ target: { name: 'address', value: suggest.label } });
                       }}
                       error={
-                        !_.isNil(this.state.errors.address) && !_.isEmpty(this.state.errors.address)
+                        !_.isNil(this.props.errors.address) && !_.isEmpty(this.props.errors.address)
                       }
                     />
-                    <FormFieldErrorMessage compact message={this.state.errors.address} />
+                    <FormFieldErrorMessage compact message={this.props.errors.address} />
                   </div>
 
                   <div className="col-md-12 margin-bottom-15">
@@ -209,7 +192,7 @@ class BookingCheckoutPage extends Component {
                       name="note"
                       type="text"
                       onChange={this.props.onChange}
-                      errors={this.state.errors}
+                      errors={this.props.errors}
                       value={this.props.cart.note}
                     />
                   </div>
@@ -274,7 +257,7 @@ class BookingCheckoutPage extends Component {
                               name="creditCardNameOnCard"
                               type="text"
                               onChange={this.props.onChange}
-                              errors={this.state.errors}
+                              errors={this.props.errors}
                             />
                           </div>
                         </div>
@@ -315,7 +298,7 @@ class BookingCheckoutPage extends Component {
                         />
                       </div>
 
-                      <FormFieldErrorMessage compact={false} message={this.state.errors.stripe} />
+                      <FormFieldErrorMessage compact={false} message={this.props.errors.stripe} />
                     </div>
                   </div>
                 </div>
@@ -332,7 +315,7 @@ class BookingCheckoutPage extends Component {
                       type="text"
                       placeholder="coupon"
                       onChange={this.props.onChange}
-                      errors={{ couponCode: this.props.cart.coupon.error }}
+                      errors={this.props.errors}
                       value={this.props.cart.couponCode}
                     />
 
@@ -365,11 +348,11 @@ class BookingCheckoutPage extends Component {
                 <FormFieldErrorMessage
                   className="margin-bottom-10"
                   compact={false}
-                  message={this.props.error}
+                  message={this.props.errors.submit}
                 />
 
                 <Button
-                  loading={this.state.loading || this.props.loading}
+                  loading={this.props.loading}
                   type="button"
                   color="teal"
                   circular
@@ -386,7 +369,7 @@ class BookingCheckoutPage extends Component {
                   size="large"
                   basic
                   onClick={this.props.onBack}
-                  disabled={this.state.loading || this.props.loading}
+                  disabled={this.props.loading}
                 >
                   Go back
                 </Button>
@@ -406,6 +389,8 @@ class BookingCheckoutPage extends Component {
 
 BookingCheckoutPage.propTypes = {
   onChange: PropTypes.func.isRequired,
+  onStripeLoading: PropTypes.func.isRequired,
+  onStripeError: PropTypes.func.isRequired,
   onValidate: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
@@ -418,7 +403,7 @@ BookingCheckoutPage.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
+  errors: PropTypes.object.isRequired,
   verifyingCoupon: PropTypes.bool.isRequired,
 };
 
@@ -426,4 +411,7 @@ const mapStateToProps = state => ({
   modalOpen: state.ui.modalOpen,
 });
 
-export default connect(mapStateToProps, { openModal, closeModal })(injectStripe(withMediaQuery(BookingCheckoutPage)));
+export default connect(
+  mapStateToProps,
+  { openModal, closeModal },
+)(injectStripe(withMediaQuery(BookingCheckoutPage)));
