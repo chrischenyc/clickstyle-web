@@ -19,7 +19,6 @@ import StylistPortfolioSection from './StylistPortfolioSection';
 import StylistBookingSection from './StylistBookingSection';
 import StylistHoursSection from './StylistHoursSection';
 import StylistShareSection from './StylistShareSection';
-import BookingDateTimePicker from '../../components/BookingDateTimePicker';
 
 class StylistProfilePage extends Component {
   componentWillReceiveProps(nextProps) {
@@ -122,21 +121,7 @@ class StylistProfilePage extends Component {
                       <StylistServiceSection
                         key={service._id}
                         service={service}
-                        onServiceSelected={(selectedService, selectedAddon) => {
-                          if (
-                            this.props.screenWidth <= 1024 &&
-                            (_.isEmpty(this.props.cart.date) || _.isEmpty(this.props.cart.time))
-                          ) {
-                            // on mobile screen, pop up date/time picker modal if date or time hasn't been set
-                            this.props.openModal(
-                              <BookingDateTimePicker />,
-                              'Pick booking time',
-                              false,
-                            );
-                          }
-
-                          this.props.onServiceSelected(selectedService, selectedAddon);
-                        }}
+                        onServiceSelected={this.props.onServiceSelected}
                       />
                     ))}
                 </div>
@@ -217,4 +202,7 @@ const mapStateToProps = state => ({
   modalOpen: state.ui.modalOpen,
 });
 
-export default connect(mapStateToProps, { openModal, closeModal })(withMediaQuery(StylistProfilePage));
+export default connect(
+  mapStateToProps,
+  { openModal, closeModal },
+)(withMediaQuery(StylistProfilePage));
