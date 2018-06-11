@@ -41,6 +41,7 @@ const DashboardPage = props => (
                   href={`/notifications/${notification._id}/dismiss`}
                   onClick={(e) => {
                     e.preventDefault();
+                    props.onDismissNotification(notification._id);
                   }}
                 />
               )}
