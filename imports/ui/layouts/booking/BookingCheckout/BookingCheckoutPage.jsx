@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { Button, Responsive, Checkbox, Form } from 'semantic-ui-react';
+import { Button, Responsive, Checkbox, Form, Modal } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
@@ -11,7 +11,6 @@ import {
   injectStripe,
 } from 'react-stripe-elements';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
 
 import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
 import ModalLink from '../../../components/ModalLink';
@@ -19,7 +18,6 @@ import Login from '../../user/Login/Login';
 import BookingCheckoutPageSummarySection from './BookingCheckoutPageSummarySection';
 import { FormInputField, FormFieldErrorMessage } from '../../../components/FormInputField';
 import { withMediaQuery } from '../../../components/HOC';
-import { openModal, closeModal } from '../../../../modules/client/redux/ui';
 import BookingDateTimePicker from '../../../components/BookingDateTimePicker';
 import formatPrice from '../../../../modules/format-price';
 
@@ -27,25 +25,17 @@ class BookingCheckoutPage extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      showDateTimePicker: _.isEmpty(props.cart.date) || _.isEmpty(props.cart.time),
+    };
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    if (_.isEmpty(this.props.cart.date) || _.isEmpty(this.props.cart.time)) {
-      // on mobile screen, pop up date/time picker modal if date or time hasn't been set
-      this.props.openModal(<BookingDateTimePicker />, 'Pick booking time', false);
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
-    // a way to detect user has picked booking date and time
-    if (
-      this.props.modalOpen &&
-      (_.isEmpty(this.props.cart.date) || _.isEmpty(this.props.cart.time)) &&
-      (!_.isEmpty(nextProps.cart.date) && !_.isEmpty(nextProps.cart.time))
-    ) {
-      this.props.closeModal();
-    }
+    this.setState({
+      showDateTimePicker: _.isEmpty(nextProps.cart.date) || _.isEmpty(nextProps.cart.time),
+    });
   }
 
   async handleSubmit() {
@@ -82,6 +72,16 @@ class BookingCheckoutPage extends Component {
   render() {
     return (
       <div className="container">
+        {this.state.showDateTimePicker && (
+          <Modal size="small" open closeOnDimmerClick={false} closeIcon={false}>
+            <Modal.Header>Please pick booking time</Modal.Header>
+
+            <Modal.Content>
+              <BookingDateTimePicker />
+            </Modal.Content>
+          </Modal>
+        )}
+
         <div className="margin-top-50 margin-bottom-50">
           <div
             className={classNames({
@@ -203,9 +203,7 @@ class BookingCheckoutPage extends Component {
 
               {/* -- PAYMENT METHODS -- */}
               <div className="margin-top-50">
-                <h3 className="margin-bottom-20">
-                  Payment Method
-                </h3>
+                <h3 className="margin-bottom-20">Payment Method</h3>
 
                 <div className="payment">
                   {/* saved credit card */}
@@ -411,19 +409,9 @@ BookingCheckoutPage.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   stripe: PropTypes.object.isRequired,
   screenWidth: PropTypes.number.isRequired,
-  modalOpen: PropTypes.bool.isRequired,
-  openModal: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   verifyingCoupon: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-  modalOpen: state.ui.modalOpen,
-});
-
-export default connect(
-  mapStateToProps,
-  { openModal, closeModal },
-)(injectStripe(withMediaQuery(BookingCheckoutPage)));
+export default injectStripe(withMediaQuery(BookingCheckoutPage));
