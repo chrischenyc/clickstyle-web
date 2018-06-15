@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
-import { setNextRoute } from '../../../../modules/client/redux/ui';
 import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserSignUp } from '../../../../modules/validate';
 import SignUpPage from './SignUpPage';
@@ -98,10 +97,9 @@ class SignUp extends Component {
     // force update redux store, as Meteor auto-run in App.jsx tends to lag
     this.props.userSignedIn(Meteor.user());
 
-    // redirect to url stored in redux
+    // FIXME: redirect to url stored in redux
     if (!_.isNil(this.props.nextRoute) && !_.isEmpty(this.props.nextRoute)) {
       this.props.history.push(this.props.nextRoute);
-      this.props.setNextRoute(null);
     }
   }
 
@@ -120,21 +118,11 @@ class SignUp extends Component {
   }
 }
 
-SignUp.defaultProps = {
-  nextRoute: null,
-};
-
 SignUp.propTypes = {
-  setNextRoute: PropTypes.func.isRequired,
   userSignedIn: PropTypes.func.isRequired,
-  nextRoute: PropTypes.string,
 };
-
-const mapStateToProps = state => ({
-  nextRoute: state.ui.nextRoute,
-});
 
 export default connect(
-  mapStateToProps,
-  { setNextRoute, userSignedIn },
+  null,
+  { userSignedIn },
 )(SignUp);

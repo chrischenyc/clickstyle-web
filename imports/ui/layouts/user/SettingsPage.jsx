@@ -10,9 +10,6 @@ const SettingsPage = () => (
       <li>
         <Link to="/users/change-password">Change Password</Link>
       </li>
-      <li>
-        <Link to="/users/reset-password">Reset Password</Link>
-      </li>
     </ul>
   </Container>
 );

@@ -3,26 +3,33 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-// HOC
-// As the name implies, routes created using the <AuthRoute /> component are only
-// intended to be accessed by logged-in users. To handle the authentication of a user,
-// the component takes in two special props 'loggingIn' and 'authenticated' which are
-// passed to the component via <App /> component.
+// HOC to prevent guest user from accessing logged-in-only routes
 
-const SecureRoute = ({ authenticated, component, ...rest }) => {
+const SecureRoute = ({
+  authenticated, location, component, ...rest
+}) => {
   if (authenticated) {
     return <Route component={component} {...rest} />;
   }
 
-  return <Redirect to="/" />;
+  return (
+    <Redirect
+      to={{
+        pathname: '/login',
+        state: { from: location },
+      }}
+    />
+  );
 };
 
 SecureRoute.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   component: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
 });
+
 export default connect(mapStateToProps)(SecureRoute);

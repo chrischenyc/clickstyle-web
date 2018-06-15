@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
@@ -11,17 +11,6 @@ const ResetPasswordPage = ({
 }) => {
   if (redirect) {
     return <Redirect to="/" />;
-  } else if (success) {
-    return (
-      <div
-        className="container centered-content margin-top-70 margin-bottom-70"
-        style={{ maxWidth: 450 }}
-      >
-        <Message size="huge" success>
-          All set, thanks!
-        </Message>
-      </div>
-    );
   }
 
   return (
@@ -29,39 +18,49 @@ const ResetPasswordPage = ({
       className="container centered-content margin-top-70 margin-bottom-70"
       style={{ maxWidth: 450 }}
     >
-      <h2>Set new password</h2>
+      {success && (
+        <Message size="huge" success>
+          All set, thanks!
+        </Message>
+      )}
 
-      <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
-        <FormInputField
-          fluid
-          icon="lock"
-          iconPosition="left"
-          placeholder="New password"
-          type="password"
-          name="password"
-          size="huge"
-          onChange={onChange}
-          errors={errors}
-        />
+      {!success && (
+        <Fragment>
+          <h2>Set new password</h2>
 
-        <FormInputField
-          fluid
-          icon="lock"
-          iconPosition="left"
-          placeholder="Confirm password"
-          type="password"
-          name="confirm"
-          size="huge"
-          onChange={onChange}
-          errors={errors}
-        />
+          <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(errors)}>
+            <FormInputField
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="New password"
+              type="password"
+              name="password"
+              size="huge"
+              onChange={onChange}
+              errors={errors}
+            />
 
-        {!_.isEmpty(errors.message) && <Message error>{errors.message}</Message>}
+            <FormInputField
+              fluid
+              icon="lock"
+              iconPosition="left"
+              placeholder="Confirm password"
+              type="password"
+              name="confirm"
+              size="huge"
+              onChange={onChange}
+              errors={errors}
+            />
 
-        <Button circular color="teal" size="huge" type="submit">
-          Save and continue
-        </Button>
-      </Form>
+            {!_.isEmpty(errors.message) && <Message error>{errors.message}</Message>}
+
+            <Button circular color="teal" size="huge" type="submit">
+              Save and continue
+            </Button>
+          </Form>
+        </Fragment>
+      )}
     </div>
   );
 };

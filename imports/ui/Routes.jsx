@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import PublicRoute from './components/PublicRoute';
 import SecureRoute from './components/SecureRoute';
 import {
   withHeaderAndFooter,
@@ -71,8 +70,8 @@ export default () => (
       component={withHeaderAndFooter(BookingRequested)}
     />
 
-    <PublicRoute path="/login" component={withHeaderAndFooter(Login)} />
-    <PublicRoute path="/signup" component={withHeaderAndFooter(SignUp)} />
+    <Route path="/login" component={withHeaderAndFooter(Login)} />
+    <Route path="/signup" component={withHeaderAndFooter(SignUp)} />
 
     <Route path="/verify-email/:token" component={withHeaderAndFooter(VerifyEmailPage)} />
     <Route path="/forgot-password" component={withHeaderAndFooter(ForgotPassword)} />
@@ -86,7 +85,6 @@ export default () => (
     <SecureRoute path="/users/payment-methods" component={withSideMenuAndHeader(PaymentMethods)} />
     <SecureRoute path="/users/settings" component={withSideMenuAndHeader(SettingsPage)} />
     <SecureRoute path="/users/change-password" component={withSideMenuAndHeader(ChangePassword)} />
-    <SecureRoute path="/users/reset-password" component={withSideMenuAndHeader(ForgotPassword)} />
     <SecureRoute
       path="/users/booking/stylists"
       component={withSideMenuAndHeader(FavouredStylists)}

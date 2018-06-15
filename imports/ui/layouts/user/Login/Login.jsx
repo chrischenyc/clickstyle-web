@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
+import { Redirect } from 'react-router-dom';
 
-import { setNextRoute } from '../../../../modules/client/redux/ui';
 import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserLogin } from '../../../../modules/validate';
 import LoginPage from './LoginPage';
@@ -21,6 +21,7 @@ class Login extends Component {
       password: '',
       errors: {},
       loading: false,
+      redirectToReferrer: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -72,14 +73,16 @@ class Login extends Component {
     // force update redux store, as Meteor auto-run in App.jsx tends to lag
     this.props.userSignedIn(Meteor.user());
 
-    // redirect if a nextRoute is stored in redux
-    if (!_.isNil(this.props.nextRoute) && !_.isEmpty(this.props.nextRoute)) {
-      this.props.history.push(this.props.nextRoute);
-      this.props.setNextRoute(null);
-    }
+    this.setState({ redirectToReferrer: true });
   }
 
   render() {
+    const { redirectToReferrer } = this.state;
+    if (redirectToReferrer === true) {
+      const { from } = this.props.location.state || { from: { pathname: '/' } };
+      return <Redirect to={from} />;
+    }
+
     return (
       <LoginPage
         onSubmit={this.handleSubmit}
@@ -92,21 +95,11 @@ class Login extends Component {
   }
 }
 
-Login.defaultProps = {
-  nextRoute: null,
-};
-
 Login.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
-  setNextRoute: PropTypes.func.isRequired,
-  nextRoute: PropTypes.string,
 };
 
-const mapStateToProps = state => ({
-  nextRoute: state.ui.nextRoute,
-});
-
 export default connect(
-  mapStateToProps,
-  { setNextRoute, userSignedIn },
+  null,
+  { userSignedIn },
 )(Login);
