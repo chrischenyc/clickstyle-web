@@ -7,7 +7,7 @@ const ForgotPasswordPage = ({
   onSubmit, onChange, loading, errors, success,
 }) => (
   <div
-    className="container centered-content padding-top-80 padding-bottom-80"
+    className="container centered-content margin-top-80 margin-bottom-80"
     style={{ maxWidth: 450 }}
   >
     {success && (

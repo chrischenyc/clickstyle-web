@@ -18,7 +18,7 @@ const SignUpPage = ({
   errors,
   onSocialSignedIn,
 }) => (
-  <Container className="margin-top-20">
+  <Container className="margin-top-40 margin-bottom-60">
     <Grid textAlign="center">
       <Grid.Row style={{ maxWidth: 450 }}>
         <Grid.Column>

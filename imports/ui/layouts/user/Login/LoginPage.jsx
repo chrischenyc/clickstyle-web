@@ -11,7 +11,7 @@ import SocialLoginButtons from '../../../components/SocialLoginButtons';
 const LoginPage = ({
   onSubmit, onChange, loading, errors, onSocialSignedIn,
 }) => (
-  <Container className="margin-top-20">
+  <Container className="margin-top-80 margin-bottom-80">
     <Grid textAlign="center">
       <Grid.Row style={{ maxWidth: 450 }}>
         <Grid.Column>
