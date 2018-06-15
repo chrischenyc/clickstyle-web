@@ -1,10 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
-import SecureLink from '../../components/SecureLink';
-
-const StylistsJoinPage = props => (
+const StylistsJoinPage = () => (
   <div className="container">
     <div className="margin-top-80">
       <div className="row">
@@ -14,15 +13,7 @@ const StylistsJoinPage = props => (
               Become a stylist and start your business on {Meteor.settings.public.appName}
             </h2>
 
-            <Button
-              basic
-              circular
-              color="teal"
-              size="huge"
-              as={SecureLink}
-              history={props.history}
-              to="/users/stylist/application"
-            >
+            <Button circular color="teal" size="huge" as={Link} to="/users/stylist/application">
               Get Started
             </Button>
           </div>
@@ -170,15 +161,7 @@ const StylistsJoinPage = props => (
           <div className="centered-content margin-top-60 margin-bottom-60">
             <h2 className="headline">Start your journey here</h2>
 
-            <Button
-              basic
-              circular
-              color="teal"
-              size="huge"
-              as={SecureLink}
-              history={props.history}
-              to="/users/stylist/application"
-            >
+            <Button circular color="teal" size="huge" as={Link} to="/users/stylist/application">
               Get Started
             </Button>
           </div>
