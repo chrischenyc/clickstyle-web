@@ -10,7 +10,7 @@ import { userSignedIn, userSignedOut, userProfileFetched } from '../modules/clie
 import Profiles from '../api/profiles/profiles';
 
 import Routes from './Routes';
-import SlideMenu from './components/SlideMenu';
+import SlideMenu from './components/SlideMenu/SlideMenu';
 
 // scroll to page top when route changes
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-292711226

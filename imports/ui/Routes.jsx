@@ -73,6 +73,7 @@ export default () => (
 
     <PublicRoute path="/login" component={withHeaderAndFooter(Login)} />
     <PublicRoute path="/signup" component={withHeaderAndFooter(SignUp)} />
+
     <Route path="/verify-email/:token" component={withHeaderAndFooter(VerifyEmailPage)} />
     <Route path="/forgot-password" component={withHeaderAndFooter(ForgotPassword)} />
     <Route path="/reset-password/:token" component={withHeaderAndFooter(ResetPassword)} />
