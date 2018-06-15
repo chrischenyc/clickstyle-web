@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import moment from 'moment-timezone';
+import { Redirect } from 'react-router-dom';
 
 import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserSignUp } from '../../../../modules/validate';
@@ -24,6 +25,7 @@ class SignUp extends Component {
       errors: {},
       loading: false,
       disabled: false,
+      redirectToReferrer: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -97,13 +99,17 @@ class SignUp extends Component {
     // force update redux store, as Meteor auto-run in App.jsx tends to lag
     this.props.userSignedIn(Meteor.user());
 
-    // FIXME: redirect to url stored in redux
-    if (!_.isNil(this.props.nextRoute) && !_.isEmpty(this.props.nextRoute)) {
-      this.props.history.push(this.props.nextRoute);
-    }
+    this.setState({ redirectToReferrer: true });
   }
 
   render() {
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+
+    const { redirectToReferrer } = this.state;
+    if (redirectToReferrer === true) {
+      return <Redirect to={from} />;
+    }
+
     return (
       <SignUpPage
         onSubmit={this.handleSubmit}
@@ -113,6 +119,7 @@ class SignUp extends Component {
         loading={this.state.loading}
         errors={this.state.errors}
         disabled={this.state.disabled}
+        from={from}
       />
     );
   }

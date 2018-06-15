@@ -13,6 +13,7 @@ Accounts.onCreateUser((options, user) => {
   if (normalizedProfile) {
     Profiles.insert({
       ...normalizedProfile,
+      notifications: 0,
       messages: 0,
       confirmedBookings: 0,
       pendingBookings: 0,

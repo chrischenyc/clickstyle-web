@@ -17,6 +17,7 @@ const SignUpPage = ({
   loading,
   errors,
   onSocialSignedIn,
+  from,
 }) => (
   <Container className="margin-top-40 margin-bottom-60">
     <Grid textAlign="center">
@@ -82,7 +83,14 @@ const SignUpPage = ({
 
           <p className="margin-top-20">
             Already have an account?&nbsp;
-            <Link to="/login">Log in</Link>
+            <Link
+              to={{
+                pathname: '/login',
+                state: { from },
+              }}
+            >
+              Log in
+            </Link>
             &nbsp;here
           </p>
 
@@ -104,6 +112,10 @@ const SignUpPage = ({
   </Container>
 );
 
+SignUpPage.defaultProps = {
+  from: null,
+};
+
 SignUpPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -112,6 +124,7 @@ SignUpPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   onSocialSignedIn: PropTypes.func.isRequired,
+  from: PropTypes.object,
 };
 
 export default SignUpPage;

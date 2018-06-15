@@ -77,9 +77,10 @@ class Login extends Component {
   }
 
   render() {
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+
     const { redirectToReferrer } = this.state;
     if (redirectToReferrer === true) {
-      const { from } = this.props.location.state || { from: { pathname: '/' } };
       return <Redirect to={from} />;
     }
 
@@ -90,6 +91,7 @@ class Login extends Component {
         onSocialSignedIn={this.handleLoggedIn}
         loading={this.state.loading}
         errors={this.state.errors}
+        from={from}
       />
     );
   }

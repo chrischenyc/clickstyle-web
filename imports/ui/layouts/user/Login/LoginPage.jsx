@@ -9,7 +9,7 @@ import SocialLoginButtons from '../../../components/SocialLoginButtons';
 
 // web version of the login form, stateless component
 const LoginPage = ({
-  onSubmit, onChange, loading, errors, onSocialSignedIn,
+  onSubmit, onChange, loading, errors, onSocialSignedIn, from,
 }) => (
   <Container className="margin-top-80 margin-bottom-80">
     <Grid textAlign="center">
@@ -57,7 +57,14 @@ const LoginPage = ({
 
           <p className="margin-top-20 margin-bottom-20">
             Don&apos;t have an account?&nbsp;
-            <Link to="/signup">Sign up</Link>
+            <Link
+              to={{
+                pathname: '/signup',
+                state: { from },
+              }}
+            >
+              Sign up
+            </Link>
             &nbsp;here
           </p>
         </Grid.Column>
@@ -66,12 +73,17 @@ const LoginPage = ({
   </Container>
 );
 
+LoginPage.defaultProps = {
+  from: null,
+};
+
 LoginPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   onSocialSignedIn: PropTypes.func.isRequired,
+  from: PropTypes.object,
 };
 
 export default LoginPage;
