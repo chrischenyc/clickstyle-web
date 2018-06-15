@@ -46,6 +46,7 @@
     "react-collapse": "^4.0.3",
     "react-day-picker": "^7.1.9",
     "react-dom": "^16.4.1",
+    "react-helmet": "^5.2.0",
     "react-images": "^0.5.17",
     "react-loading": "^2.0.2",
     "react-motion": "^0.5.2",
@@ -63,7 +64,7 @@
     "stripe": "^6.1.1",
     "uuid": "^3.2.1",
     "validator": "^10.3.0",
-    "winston": "^3.0.0"
+    "winston": "^2.4.3"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
