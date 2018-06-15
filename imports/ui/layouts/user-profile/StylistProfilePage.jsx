@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { Responsive, Rating } from 'semantic-ui-react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 import userNameWithGreeting from '../../../modules/client/user-name-with-greeting';
 import scaledImageURL from '../../../modules/scaled-image-url';
@@ -26,8 +27,18 @@ const StylistProfilePage = (props) => {
 
   const { profile, stylist } = props.user;
 
+  let title = `${Meteor.settings.public.appName} - `;
+  title += `${profile.name.first} ${profile.name.last}: `;
+  title += stylist.services.map(service => service.name).join(', ');
+  if (profile.address && profile.address.suburb) {
+    title += `, ${profile.address.suburb} ${profile.address.state} ${profile.address.postcode}`;
+  }
+
   return (
     <Fragment>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
       <div className="profile-header">
         {stylist.portfolioPhotos &&
           stylist.portfolioPhotos.length > 0 && (
