@@ -5,10 +5,8 @@ import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Divider, Checkbox, Container, Message } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import ModalLink from '../../../components/ModalLink';
 import { FormInputField } from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
-import Login from '../Login/Login';
 
 // web version of the sign up form, stateless component
 const SignUpPage = ({
@@ -18,9 +16,7 @@ const SignUpPage = ({
   disabled,
   loading,
   errors,
-  modal,
   onSocialSignedIn,
-  onDismissModal,
 }) => (
   <Container className="margin-top-20">
     <Grid textAlign="center">
@@ -86,13 +82,7 @@ const SignUpPage = ({
 
           <p className="margin-top-20">
             Already have an account?&nbsp;
-            {modal ? (
-              <ModalLink to="/login" component={<Login modal />} title="Log in to continue">
-                Log in
-              </ModalLink>
-            ) : (
-              <Link to="/login">Log in</Link>
-            )}
+            <Link to="/login">Log in</Link>
             &nbsp;here
           </p>
 
@@ -103,26 +93,8 @@ const SignUpPage = ({
             label={
               <label htmlFor="agreement">
                 I confirm I am over 18 and I agree to {Meteor.settings.public.appName}&apos;s&nbsp;
-                <Link
-                  to="/terms"
-                  onClick={() => {
-                    if (modal && onDismissModal) {
-                      onDismissModal();
-                    }
-                  }}
-                >
-                  Terms of Use
-                </Link>&nbsp;and&nbsp;
-                <Link
-                  to="/privacy"
-                  onClick={() => {
-                    if (modal && onDismissModal) {
-                      onDismissModal();
-                    }
-                  }}
-                >
-                  Privacy Policy
-                </Link>.
+                <Link to="/terms">Terms of Use</Link>&nbsp;and&nbsp;
+                <Link to="/privacy">Privacy Policy</Link>.
               </label>
             }
           />
@@ -132,10 +104,6 @@ const SignUpPage = ({
   </Container>
 );
 
-SignUpPage.defaultProps = {
-  onDismissModal: null,
-};
-
 SignUpPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -143,9 +111,7 @@ SignUpPage.propTypes = {
   disabled: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
-  modal: PropTypes.bool.isRequired,
   onSocialSignedIn: PropTypes.func.isRequired,
-  onDismissModal: PropTypes.func,
 };
 
 export default SignUpPage;

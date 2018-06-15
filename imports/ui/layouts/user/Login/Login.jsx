@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
 
-import { closeModal, setNextRoute } from '../../../../modules/client/redux/ui';
+import { setNextRoute } from '../../../../modules/client/redux/ui';
 import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserLogin } from '../../../../modules/validate';
 import LoginPage from './LoginPage';
@@ -72,17 +72,10 @@ class Login extends Component {
     // force update redux store, as Meteor auto-run in App.jsx tends to lag
     this.props.userSignedIn(Meteor.user());
 
-    if (this.props.modal) {
-      this.props.closeModal();
-    }
-
     // redirect if a nextRoute is stored in redux
     if (!_.isNil(this.props.nextRoute) && !_.isEmpty(this.props.nextRoute)) {
       this.props.history.push(this.props.nextRoute);
       this.props.setNextRoute(null);
-    } else if (!this.props.modal) {
-      // otherwise, go back if not modal
-      this.props.history.goBack();
     }
   }
 
@@ -94,21 +87,17 @@ class Login extends Component {
         onSocialSignedIn={this.handleLoggedIn}
         loading={this.state.loading}
         errors={this.state.errors}
-        modal={this.props.modal}
       />
     );
   }
 }
 
 Login.defaultProps = {
-  modal: false,
   nextRoute: null,
 };
 
 Login.propTypes = {
-  modal: PropTypes.bool,
   userSignedIn: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
   setNextRoute: PropTypes.func.isRequired,
   nextRoute: PropTypes.string,
 };
@@ -117,4 +106,7 @@ const mapStateToProps = state => ({
   nextRoute: state.ui.nextRoute,
 });
 
-export default connect(mapStateToProps, { closeModal, setNextRoute, userSignedIn })(Login);
+export default connect(
+  mapStateToProps,
+  { setNextRoute, userSignedIn },
+)(Login);

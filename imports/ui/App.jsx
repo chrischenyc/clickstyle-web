@@ -11,7 +11,6 @@ import Profiles from '../api/profiles/profiles';
 
 import Routes from './Routes';
 import SlideMenu from './components/SlideMenu';
-import ModalContainer from './components/ModalContainer';
 
 // scroll to page top when route changes
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-292711226
@@ -55,8 +54,6 @@ class App extends Component {
             <ScrollToTop />
 
             <Routes />
-
-            {this.props.modalOpen && <ModalContainer />}
           </main>
         </div>
       </Router>
@@ -68,15 +65,10 @@ App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
   userProfileFetched: PropTypes.func.isRequired,
-  modalOpen: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-  modalOpen: state.ui.modalOpen,
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   {
     userSignedIn,
     userSignedOut,

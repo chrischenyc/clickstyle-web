@@ -4,15 +4,12 @@ import { Link } from 'react-router-dom';
 import { Form, Grid, Divider, Button, Container, Message } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import ModalLink from '../../../components/ModalLink';
 import { FormInputField } from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
-import SignUp from '../SignUp/SignUp';
-import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 // web version of the login form, stateless component
 const LoginPage = ({
-  onSubmit, onChange, loading, errors, modal, onSocialSignedIn,
+  onSubmit, onChange, loading, errors, onSocialSignedIn,
 }) => (
   <Container className="margin-top-20">
     <Grid textAlign="center">
@@ -54,25 +51,13 @@ const LoginPage = ({
             {!_.isEmpty(errors.message) && <Message error>{errors.message}</Message>}
           </Form>
 
-          {modal ? (
-            <ModalLink to="/forgot-password" component={<ForgotPassword modal />}>
-              <p className="margin-top-20 margin-bottom-20">Forgot password?</p>
-            </ModalLink>
-          ) : (
-            <Link to="/forgot-password">
-              <p className="margin-top-20 margin-bottom-20">Forgot password?</p>
-            </Link>
-          )}
+          <Link to="/forgot-password">
+            <p className="margin-top-20 margin-bottom-20">Forgot password?</p>
+          </Link>
 
           <p className="margin-top-20 margin-bottom-20">
             Don&apos;t have an account?&nbsp;
-            {modal ? (
-              <ModalLink to="/signup" component={<SignUp modal />} title="Join us">
-                Sign up
-              </ModalLink>
-            ) : (
-              <Link to="/signup">Sign up</Link>
-            )}
+            <Link to="/signup">Sign up</Link>
             &nbsp;here
           </p>
         </Grid.Column>
@@ -86,7 +71,6 @@ LoginPage.propTypes = {
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
-  modal: PropTypes.bool.isRequired,
   onSocialSignedIn: PropTypes.func.isRequired,
 };
 

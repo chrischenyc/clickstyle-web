@@ -13,8 +13,6 @@ import {
 import classNames from 'classnames';
 
 import SemanticGeoSuggest from '../../../components/SemanticGeoSuggest/SemanticGeoSuggest';
-import ModalLink from '../../../components/ModalLink';
-import Login from '../../user/Login/Login';
 import BookingCheckoutPageSummarySection from './BookingCheckoutPageSummarySection';
 import { FormInputField, FormFieldErrorMessage } from '../../../components/FormInputField';
 import { withMediaQuery } from '../../../components/HOC';
@@ -101,18 +99,8 @@ class BookingCheckoutPage extends Component {
                 {!this.props.authenticated && (
                   <div className="margin-top-10 margin-bottom-20">
                     Already a user?&nbsp;
-                    <Responsive
-                      minWidth={1025}
-                      as={ModalLink}
-                      to="/login"
-                      component={<Login modal />}
-                      title="Log in to continue"
-                    >
-                      Log In
-                    </Responsive>
-                    <Responsive maxWidth={1024} as={Link} to="/login">
-                      Log In
-                    </Responsive>
+                    {/* FIXME: tell /login page to re-direct back to here */}
+                    <Link to="/login">Log In</Link>
                     &nbsp;to continue
                   </div>
                 )}

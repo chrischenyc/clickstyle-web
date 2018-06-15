@@ -8,11 +8,8 @@ import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
 import _ from 'lodash';
 
-import { closeModal, toggleSlideMenu } from '../../modules/client/redux/ui';
+import { toggleSlideMenu } from '../../modules/client/redux/ui';
 import { resetCart } from '../../modules/client/redux/cart';
-import ModalLink from './ModalLink';
-import Login from '../layouts/user/Login/Login';
-import SignUp from '../layouts/user/SignUp/SignUp';
 import SearchBar from './SearchBar/SearchBar';
 import formatPrice from '../../modules/format-price';
 
@@ -106,22 +103,10 @@ class Header extends Component {
 
               {!authenticated && (
                 <Fragment>
-                  <Menu.Item
-                    as={ModalLink}
-                    className="sign-in"
-                    to="/signup"
-                    component={<SignUp modal />}
-                    title="Join us"
-                  >
+                  <Menu.Item as={Link} className="sign-in" to="/signup">
                     Sign Up
                   </Menu.Item>
-                  <Menu.Item
-                    as={ModalLink}
-                    className="sign-in"
-                    to="/login"
-                    component={<Login modal />}
-                    title="Log in to continue"
-                  >
+                  <Menu.Item as={Link} className="sign-in" to="/login">
                     Log In
                   </Menu.Item>
                 </Fragment>
@@ -235,7 +220,6 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-  closeModal: PropTypes.func.isRequired,
   toggleSlideMenu: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
@@ -263,5 +247,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { closeModal, toggleSlideMenu, resetCart },
+  { toggleSlideMenu, resetCart },
 )(withRouter(Header));
