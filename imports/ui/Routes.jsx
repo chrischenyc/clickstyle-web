@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import SecureRoute from './components/SecureRoute';
+import AuthenticatedRoute from './components/AuthenticatedRoute';
+import AuthenticatedStylistRoute from './components/AuthenticatedStylistRoute';
 import {
   withHeaderAndFooter,
   withSearchHeaderAndFooter,
@@ -78,49 +79,68 @@ export default () => (
     <Route path="/reset-password/:token" component={withHeaderAndFooter(ResetPassword)} />
     <Route path="/enroll-account/:token" component={withHeaderAndFooter(ResetPassword)} />
 
-    <SecureRoute path="/users/dashboard" component={withSideMenuAndHeader(Dashboard)} />
-    <SecureRoute path="/users/profile" component={withSideMenuAndHeader(EditProfile)} />
-    <SecureRoute path="/users/inbox" component={withSideMenuAndHeader(Conversations)} />
-    <SecureRoute path="/users/conversations/:_id" component={withSideMenuAndHeader(Conversation)} />
-    <SecureRoute path="/users/payment-methods" component={withSideMenuAndHeader(PaymentMethods)} />
-    <SecureRoute path="/users/settings" component={withSideMenuAndHeader(SettingsPage)} />
-    <SecureRoute path="/users/change-password" component={withSideMenuAndHeader(ChangePassword)} />
-    <SecureRoute
+    <AuthenticatedRoute path="/users/dashboard" component={withSideMenuAndHeader(Dashboard)} />
+    <AuthenticatedRoute path="/users/profile" component={withSideMenuAndHeader(EditProfile)} />
+    <AuthenticatedRoute path="/users/inbox" component={withSideMenuAndHeader(Conversations)} />
+    <AuthenticatedRoute
+      path="/users/conversations/:_id"
+      component={withSideMenuAndHeader(Conversation)}
+    />
+    <AuthenticatedRoute
+      path="/users/payment-methods"
+      component={withSideMenuAndHeader(PaymentMethods)}
+    />
+    <AuthenticatedRoute path="/users/settings" component={withSideMenuAndHeader(SettingsPage)} />
+    <AuthenticatedRoute
+      path="/users/change-password"
+      component={withSideMenuAndHeader(ChangePassword)}
+    />
+    <AuthenticatedRoute
       path="/users/booking/stylists"
       component={withSideMenuAndHeader(FavouredStylists)}
     />
-    <SecureRoute exact path="/users/bookings" component={withSideMenuAndHeader(CustomerBookings)} />
-    <SecureRoute path="/users/bookings/:_id" component={withSideMenuAndHeader(CustomerBooking)} />
-    <SecureRoute
+    <AuthenticatedRoute
+      exact
+      path="/users/bookings"
+      component={withSideMenuAndHeader(CustomerBookings)}
+    />
+    <AuthenticatedRoute
+      path="/users/bookings/:_id"
+      component={withSideMenuAndHeader(CustomerBooking)}
+    />
+    <AuthenticatedRoute
       path="/users/stylist/application"
       component={withHeaderAndFooter(StylistsApplication)}
     />
-    <SecureRoute
+    <AuthenticatedStylistRoute
       path="/users/stylist/services"
       component={withSideMenuAndHeader(StylistServices)}
     />
-    <SecureRoute
+    <AuthenticatedStylistRoute
       path="/users/stylist/calendar"
       component={withSideMenuAndHeader(StylistAvailability)}
     />
-    <SecureRoute
+    <AuthenticatedStylistRoute
       path="/users/stylist/areas"
       component={withSideMenuAndHeader(StylistAvailableAreas)}
     />
-    <SecureRoute
+    <AuthenticatedStylistRoute
       path="/users/stylist/portfolio"
       component={withSideMenuAndHeader(StylistPortfolio)}
     />
-    <SecureRoute
+    <AuthenticatedStylistRoute
       exact
       path="/users/stylist/bookings"
       component={withSideMenuAndHeader(StylistBookings)}
     />
-    <SecureRoute
+    <AuthenticatedStylistRoute
       path="/users/stylist/bookings/:_id"
       component={withSideMenuAndHeader(StylistBooking)}
     />
-    <SecureRoute path="/users/stylist/faq" component={withSideMenuAndHeader(StylistFAQPage)} />
+    <AuthenticatedStylistRoute
+      path="/users/stylist/faq"
+      component={withSideMenuAndHeader(StylistFAQPage)}
+    />
 
     <Route component={withHeaderAndFooter(NotFoundPage)} />
   </Switch>

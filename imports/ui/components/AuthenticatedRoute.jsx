@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // HOC to prevent guest user from accessing logged-in-only routes
 
-const SecureRoute = ({
+const AuthenticatedRoute = ({
   authenticated, location, component, ...rest
 }) => {
   if (authenticated) {
@@ -22,7 +22,7 @@ const SecureRoute = ({
   );
 };
 
-SecureRoute.propTypes = {
+AuthenticatedRoute.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   component: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
@@ -32,4 +32,4 @@ const mapStateToProps = state => ({
   authenticated: state.user.authenticated,
 });
 
-export default connect(mapStateToProps)(SecureRoute);
+export default connect(mapStateToProps)(AuthenticatedRoute);
