@@ -207,9 +207,6 @@ class SearchBar extends Component {
             input={
               <input
                 type="text"
-                onFocus={(e) => {
-                  this.handleServiceChange(e.target);
-                }}
                 onKeyPress={(event) => {
                   if (event.key === 'Enter') {
                     event.preventDefault();
