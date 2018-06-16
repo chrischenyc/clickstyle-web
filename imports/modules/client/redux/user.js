@@ -57,7 +57,7 @@ const reducer = (state = defaultState, action) => {
     case 'USER_SIGNED_OUT': {
       localStorage.setItem('clickstyle.isStylist', false);
 
-      return defaultState;
+      return { ...defaultState, authenticated: false };
     }
 
     case 'USER_PROFILE_FETCHED': {
