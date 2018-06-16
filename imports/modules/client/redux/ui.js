@@ -46,7 +46,6 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         sideMenuMyBookingsExpanded: _.isNil(open) ? !state.sideMenuMyBookingsExpanded : open,
-        sideMenuCustomerBookingsExpanded: false,
       };
     }
 
@@ -55,7 +54,6 @@ const reducer = (state = defaultState, action) => {
 
       return {
         ...state,
-        sideMenuMyBookingsExpanded: false,
         sideMenuCustomerBookingsExpanded: _.isNil(open)
           ? !state.sideMenuCustomerBookingsExpanded
           : open,
