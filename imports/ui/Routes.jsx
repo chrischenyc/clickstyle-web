@@ -42,6 +42,7 @@ import StylistsApplication from './layouts/stylists/StylistsApplication';
 import StylistServices from './layouts/stylists/StylistServices/StylistServices';
 import StylistAvailability from './layouts/stylists/StylistAvailability/StylistAvailability';
 import StylistAvailableAreas from './layouts/stylists/StylistAvailableAreas/StylistAvailableAreas';
+import StylistPayment from './layouts/stylists/StylistPayment/StylistPayment';
 import StylistPortfolio from './layouts/stylists/StylistPortfolio/StylistPortfolio';
 
 import TermsPage from './layouts/static/TermsPage';
@@ -123,6 +124,10 @@ export default () => (
     <AuthenticatedStylistRoute
       path="/users/stylist/areas"
       component={withSideMenuAndHeader(StylistAvailableAreas)}
+    />
+    <AuthenticatedStylistRoute
+      path="/users/stylist/payment"
+      component={withSideMenuAndHeader(StylistPayment)}
     />
     <AuthenticatedStylistRoute
       path="/users/stylist/portfolio"

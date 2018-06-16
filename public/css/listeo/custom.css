@@ -293,6 +293,10 @@ textarea:focus {
   background-color: #61b2db;
 }
 
+.dashboard-nav ul li a i {
+  font-size: 1.5rem;
+}
+
 #logo img {
   max-height: 42px;
   width: auto;

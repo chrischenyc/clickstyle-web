@@ -287,6 +287,14 @@ class SideMenu extends Component {
               </li>
 
               <li
+                className={classNames({ active: location.pathname === '/users/stylist/payment' })}
+              >
+                <Link to="/users/stylist/payment">
+                  <i className="im im-icon-Money-2" /> Payment
+                </Link>
+              </li>
+
+              <li
                 className={classNames({ active: location.pathname === '/users/stylist/portfolio' })}
               >
                 <Link to="/users/stylist/portfolio">

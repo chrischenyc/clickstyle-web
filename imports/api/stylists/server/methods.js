@@ -180,6 +180,39 @@ Meteor.methods({
     }
   },
 
+  'stylists.bank-info': function stylistsBankInfo() {
+    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    return Stylists.findOne({ owner: this.userId }).bankInfo;
+  },
+
+  'stylists.bank-info.update': function updateStylistsBankInfo(bankInfo) {
+    if (!Roles.userIsInRole(Meteor.userId(), [Meteor.settings.public.roles.stylist])) {
+      throw new Meteor.Error(403, 'unauthorized');
+    }
+
+    check(bankInfo, Object);
+    const { accountName, bsb, accountNumber } = bankInfo;
+    check(accountName, String);
+    check(bsb, String);
+    check(accountNumber, String);
+
+    try {
+      Stylists.update({ owner: this.userId }, { $set: { bankInfo } });
+
+      // remove notification which reminds stylist to setup services
+      Meteor.call('notifications.remove', {
+        recipient: this.userId,
+        link: '/users/stylist/payment',
+      });
+    } catch (exception) {
+      log.error(exception);
+      throw exception;
+    }
+  },
+
   'stylists.favourite': function favouriteStylist(data) {
     if (!this.userId) {
       throw new Meteor.Error(403, 'unauthorized');
@@ -317,6 +350,8 @@ rateLimit({
     'stylists.openHours.update',
     'stylists.areas',
     'stylists.areas.update',
+    'stylists.bank-info',
+    'stylists.bank-info.update',
     'stylists.favourite',
     'stylists.favoured',
     'stylists.portfolioPhotos',

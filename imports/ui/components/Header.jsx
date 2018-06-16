@@ -169,6 +169,7 @@ class Header extends Component {
                             <Dropdown.Item as={Link} to="/users/stylist/services" text="Services" />
                             <Dropdown.Item as={Link} to="/users/stylist/calendar" text="Calendar" />
                             <Dropdown.Item as={Link} to="/users/stylist/areas" text="Areas" />
+                            <Dropdown.Item as={Link} to="/users/stylist/payment" text="Payment" />
                             <Dropdown.Item
                               as={Link}
                               to="/users/stylist/portfolio"

@@ -138,6 +138,15 @@ const TimeSlotSchema = new SimpleSchema({
   },
 });
 
+const BankInfoSchema = new SimpleSchema({
+  bsb: String,
+  accountNumber: String,
+  accountName: {
+    type: String,
+    optional: true,
+  },
+});
+
 const StylistsSchema = new SimpleSchema({
   owner: {
     type: String,
@@ -186,6 +195,11 @@ const StylistsSchema = new SimpleSchema({
 
   portfolioPhotos: Array,
   'portfolioPhotos.$': PortfolioPhotoSchema,
+
+  bankInfo: {
+    type: BankInfoSchema,
+    optional: true,
+  },
 
   // ------------------------------
   // denormalised data from Profiles
