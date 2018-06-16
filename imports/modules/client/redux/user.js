@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
-import _ from 'lodash';
 
 // --------- actions ----------
 export function userSignedIn(meteorUser) {
@@ -26,6 +25,7 @@ export function userProfileFetched(profile) {
 // --------- reducer ----------
 const defaultState = {
   authenticated: localStorage.getItem('Meteor.userId') !== null,
+  isStylist: localStorage.getItem('clickstyle.isStylist') || false,
   profile: {},
 };
 
@@ -33,6 +33,10 @@ const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'USER_SIGNED_IN': {
       const { meteorUser } = action;
+
+      const isStylist =
+        meteorUser && Roles.userIsInRole(meteorUser._id, Meteor.settings.public.roles.stylist);
+      localStorage.setItem('clickstyle.isStylist', isStylist);
 
       return {
         ...state,
@@ -43,12 +47,13 @@ const reducer = (state = defaultState, action) => {
           meteorUser.emails &&
           meteorUser.emails.length > 0 &&
           meteorUser.emails[0].verified,
-        isStylist:
-          meteorUser && Roles.userIsInRole(meteorUser._id, Meteor.settings.public.roles.stylist),
+        isStylist,
       };
     }
 
     case 'USER_SIGNED_OUT': {
+      localStorage.setItem('clickstyle.isStylist', false);
+
       return {
         authenticated: false,
         profile: {},
