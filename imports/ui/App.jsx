@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Responsive } from 'semantic-ui-react';
+import { Helmet } from 'react-helmet';
 
 import { userSignedIn, userSignedOut, userProfileFetched } from '../modules/client/redux/user';
 import Profiles from '../api/profiles/profiles';
@@ -48,6 +49,9 @@ class App extends Component {
     return (
       <Router>
         <div id="outer-container">
+          <Helmet>
+            <title>ClickStyle - professional beauty service anywhere you want</title>
+          </Helmet>
           <Responsive maxWidth={1024} as={SlideMenu} />
 
           <main id="page-wrap">
