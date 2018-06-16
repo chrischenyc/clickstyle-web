@@ -20,7 +20,7 @@ const StylistsJoinPage = () => (
         </div>
 
         <div className="col-lg-6 col-sm-12">
-          <img src={`${Meteor.settings.public.CDN}placeholder-bg.jpg`} alt="" />
+          <img src={`${Meteor.settings.public.CDN}join_stylist_page_top.jpg`} alt="" />
         </div>
       </div>
     </div>
@@ -155,7 +155,7 @@ const StylistsJoinPage = () => (
     <div className="margin-top-80 margin-bottom-80">
       <div className="row">
         <div className="col-lg-6 col-sm-12">
-          <img src={`${Meteor.settings.public.CDN}placeholder-bg.jpg`} alt="" />
+          <img src={`${Meteor.settings.public.CDN}join_stylist_page_bottom.jpg`} alt="" />
         </div>
         <div className="col-lg-6 col-sm-12">
           <div className="centered-content margin-top-60 margin-bottom-60">
