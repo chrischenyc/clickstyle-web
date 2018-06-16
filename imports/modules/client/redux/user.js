@@ -25,7 +25,10 @@ export function userProfileFetched(profile) {
 // --------- reducer ----------
 const defaultState = {
   authenticated: localStorage.getItem('Meteor.userId') !== null,
-  isStylist: localStorage.getItem('clickstyle.isStylist') || false,
+  isStylist:
+    localStorage.getItem('clickstyle.isStylist') !== null
+      ? JSON.parse(localStorage.getItem('clickstyle.isStylist'))
+      : false,
   profile: {},
 };
 
@@ -54,10 +57,7 @@ const reducer = (state = defaultState, action) => {
     case 'USER_SIGNED_OUT': {
       localStorage.setItem('clickstyle.isStylist', false);
 
-      return {
-        authenticated: false,
-        profile: {},
-      };
+      return defaultState;
     }
 
     case 'USER_PROFILE_FETCHED': {
