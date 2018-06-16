@@ -8,7 +8,11 @@ import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
 import _ from 'lodash';
 
-import { toggleSlideMenu } from '../../modules/client/redux/ui';
+import {
+  toggleSlideMenu,
+  toggleSideMenuCustomerBookings,
+  toggleSideMenuMyBookings,
+} from '../../modules/client/redux/ui';
 import { resetCart } from '../../modules/client/redux/cart';
 import SearchBar from './SearchBar/SearchBar';
 import formatPrice from '../../modules/format-price';
@@ -134,6 +138,9 @@ class Header extends Component {
                           as={Link}
                           to="/users/bookings"
                           text={`My Bookings ${pendingBookings > 0 ? ` (${pendingBookings})` : ''}`}
+                          onClick={() => {
+                            this.props.toggleSideMenuMyBookings();
+                          }}
                         />
                         <Dropdown.Item
                           as={Link}
@@ -155,6 +162,9 @@ class Header extends Component {
                               text={`Customer Bookings ${
                                 pendingCustomerBookings > 0 ? ` (${pendingCustomerBookings})` : ''
                               }`}
+                              onClick={() => {
+                                this.props.toggleSideMenuCustomerBookings();
+                              }}
                             />
                             <Dropdown.Item as={Link} to="/users/stylist/services" text="Services" />
                             <Dropdown.Item as={Link} to="/users/stylist/calendar" text="Calendar" />
@@ -221,6 +231,8 @@ Header.defaultProps = {
 
 Header.propTypes = {
   toggleSlideMenu: PropTypes.func.isRequired,
+  toggleSideMenuCustomerBookings: PropTypes.func.isRequired,
+  toggleSideMenuMyBookings: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
   firstName: PropTypes.string,
@@ -247,5 +259,10 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { toggleSlideMenu, resetCart },
+  {
+    toggleSlideMenu,
+    toggleSideMenuCustomerBookings,
+    toggleSideMenuMyBookings,
+    resetCart,
+  },
 )(withRouter(Header));
