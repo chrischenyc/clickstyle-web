@@ -27,7 +27,7 @@
   <!-- end of favicon -->
 
 
-  <!-- Start of Async Drift Code -->
+  <!-- Start of Drift Widget init code -->
   <script>
     "use strict";
 
@@ -54,7 +54,57 @@
     drift.SNIPPET_VERSION = '0.3.1';
     drift.load('k3wr48rhhyi5');
   </script>
-  <!-- End of Async Drift Code -->
+  <!-- End of Drift Widget init code -->
+
+  <!-- don't show Drift on mobile devices -->
+  <script>
+    drift.on('ready', function (api, payload) {
+      api.widget.hide()
+      if (window.innerWidth > 1024) {
+        api.widget.show()
+      }
+    })
+  </script>
+  <!-- End of don't show Drift Widget on mobile devices -->
+
+  <!-- open Drift Widget from any button -->
+  <script>
+      (function () {
+        var DRIFT_CHAT_SELECTOR = '.drift-open-chat'
+        function ready(fn) {
+          if (document.readyState != 'loading') {
+            fn();
+          } else if (document.addEventListener) {
+            document.addEventListener('DOMContentLoaded', fn);
+          } else {
+            document.attachEvent('onreadystatechange', function () {
+              if (document.readyState != 'loading')
+                fn();
+            });
+          }
+        }
+
+        function forEachElement(selector, fn) {
+          var elements = document.querySelectorAll(selector);
+          for (var i = 0; i < elements.length; i++)
+            fn(elements[i], i);
+        }
+        function openSidebar(driftApi, event) {
+          event.preventDefault();
+          driftApi.sidebar.open();
+          return false;
+        }
+        ready(function () {
+          drift.on('ready', function (api) {
+            var handleClick = openSidebar.bind(this, api)
+            forEachElement(DRIFT_CHAT_SELECTOR, function (el) {
+              el.addEventListener('click', handleClick);
+            });
+          });
+        });
+      })();
+  </script>
+  <!-- End of Drift Widget from any button -->
 
 </head>
 

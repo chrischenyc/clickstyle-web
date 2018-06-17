@@ -57,6 +57,18 @@ const SlideMenu = props => (
         </Link>
       </li>
 
+      <li>
+        <Link
+          to="#"
+          onClick={() => {
+            props.toggleSlideMenu();
+          }}
+          className="drift-open-chat"
+        >
+          Chat with us
+        </Link>
+      </li>
+
       {!props.authenticated && (
         <Fragment>
           <li>
