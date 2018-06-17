@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { check, Match } from 'meteor/check';
 import log from 'winston';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import _ from 'lodash';
 
 import Profiles from '../../profiles/profiles';
@@ -185,16 +185,19 @@ export async function customerCreateBooking(cart) {
       throw new Meteor.Error('Booking time should be at least 2 hours from now.');
     }
 
-    // FIXME: invalid booking time gets slipped away
     // stylist calendar availability validation
-    const bookingEndDateTime = bookingTime.clone().add(duration, 'minutes');
-    const bookingStartTimeslot = parseInt(bookingTime.format('YYMMDDHHmm'), 10);
-    const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
+    const { timezone: stylistTimeZone } = Profiles.findOne({ owner: stylist });
+    const bookingStartDateTime = moment.tz(time, stylistTimeZone);
+    const bookingEndDateTime = moment.tz(time, stylistTimeZone).add(duration, 'minutes');
+
+    const bookingStartTimeSlot = parseInt(bookingStartDateTime.format('YYMMDDHHmm'), 10);
+    const bookingEndTimeSlot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
+
     const { occupiedTimeSlots } = Stylists.findOne({ owner: stylist.owner });
     const conflictedSlots = occupiedTimeSlots.filter(occupiedSlot =>
-      (occupiedSlot.from >= bookingStartTimeslot && occupiedSlot.from < bookingEndTimeslot) ||
-        (occupiedSlot.to > bookingStartTimeslot && occupiedSlot.to <= bookingEndTimeslot) ||
-        (occupiedSlot.from <= bookingStartTimeslot && occupiedSlot.to >= bookingEndTimeslot));
+      (occupiedSlot.from >= bookingStartTimeSlot && occupiedSlot.from < bookingEndTimeSlot) ||
+        (occupiedSlot.to > bookingStartTimeSlot && occupiedSlot.to <= bookingEndTimeSlot) ||
+        (occupiedSlot.from <= bookingStartTimeSlot && occupiedSlot.to >= bookingEndTimeSlot));
 
     // TODO: better error message
     if (conflictedSlots.length > 0) {
@@ -331,7 +334,7 @@ export async function customerCancelBooking(_id) {
         );
       }
 
-      // unblock occupied timeslots
+      // unblock occupied timeSlots
       Stylists.update(
         { owner: booking.stylist },
         { $pull: { occupiedTimeSlots: { bookingId: _id } } },

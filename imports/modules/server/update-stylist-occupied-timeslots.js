@@ -8,6 +8,7 @@ const updateStylistOccupiedTimeSlots = (owner, days) => {
   const { occupiedTimeSlots, openHours } = stylist;
 
   // clean up existing recurring occupied time slots
+  // stylists.occupiedTimeSlots.state: booked | closed | scheduled
   let newOccupiedTimeSlots = _.isEmpty(occupiedTimeSlots)
     ? []
     : occupiedTimeSlots.filter(t => !(t.state === 'closed'));

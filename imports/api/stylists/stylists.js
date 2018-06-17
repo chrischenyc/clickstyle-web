@@ -44,8 +44,8 @@ const OpenHour = new SimpleSchema({
   open: {
     type: Boolean,
   },
-  openAt: String,
-  closeAt: String,
+  openAt: String, // in UTC+0
+  closeAt: String, // in UTC+0
 });
 
 const SuburbSchema = new SimpleSchema({
@@ -131,7 +131,7 @@ const PortfolioPhotoSchema = new SimpleSchema({
 const TimeSlotSchema = new SimpleSchema({
   from: SimpleSchema.Integer,
   to: SimpleSchema.Integer,
-  state: String, // booked | recurring | scheduled
+  state: String, // booked | closed | scheduled
   bookingId: {
     type: String,
     optional: true,
