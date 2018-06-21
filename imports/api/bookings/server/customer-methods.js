@@ -185,8 +185,8 @@ export async function customerCreateBooking(cart) {
       throw new Meteor.Error('Booking time should be at least 2 hours from now.');
     }
 
-    // stylist calendar availability validation
-    const { timezone: stylistTimeZone } = Profiles.findOne({ owner: stylist });
+    // stylist calendar availability validation in stylist's timezone
+    const { timezone: stylistTimeZone } = Profiles.findOne({ owner: stylist.owner });
     const bookingStartDateTime = moment.tz(time, stylistTimeZone);
     const bookingEndDateTime = moment.tz(time, stylistTimeZone).add(duration, 'minutes');
 
