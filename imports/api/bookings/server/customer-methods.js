@@ -17,7 +17,6 @@ import {
   sendStylistBookingRequestedEmail,
   sendStylistBookingCancelledByCustomerEmail,
 } from '../../../modules/server/send-email';
-import { dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
 import formatOccupiedTimeSlot from '../../../modules/server/format-occupied-time-slot';
@@ -137,7 +136,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     mobile,
     address,
     note,
-    time: dateTimeString(time),
+    time,
     bookingId,
     bookingUrl: `users/bookings/${bookingId}`,
   });
@@ -154,7 +153,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     mobile,
     address,
     note,
-    time: dateTimeString(time),
+    time,
     bookingId,
     bookingUrl: `users/stylist/bookings/${bookingId}`,
   });
@@ -356,7 +355,7 @@ export async function customerCancelBooking(_id) {
         email,
         mobile,
         address,
-        time: dateTimeString(time),
+        time,
         bookingId: _id,
         bookingUrl: `users/stylist/bookings/${_id}`,
       });

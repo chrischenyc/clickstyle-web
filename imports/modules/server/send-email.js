@@ -6,7 +6,7 @@ import getPrivateFile from './get-private-file';
 import templateToText from './handlebars-email-to-text';
 import templateToHTML from './handlebars-email-to-html';
 import Profiles from '../../api/profiles/profiles';
-import { dateString } from '../format-date';
+import { dateString, dateTimeString } from '../server/format-date';
 
 // core function to send email
 const sendEmail = ({
@@ -156,11 +156,12 @@ export const sendCustomerBookingRequestedEmail = ({
   note,
   bookingId,
   bookingUrl,
+  timezone,
 }) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `You sent ${stylist} a request for booking on ${dateString(time)}`,
+    subject: `You sent ${stylist} a request for booking on ${dateString(time, timezone)}`,
     template: 'customer-bookingRequested',
     templateConstants: {
       stylist,
@@ -171,7 +172,7 @@ export const sendCustomerBookingRequestedEmail = ({
       email,
       mobile,
       address,
-      time,
+      time: dateTimeString(time, timezone),
       note,
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
@@ -194,11 +195,12 @@ export const sendCustomerBookingConfirmedEmail = ({
   time,
   bookingId,
   bookingUrl,
+  timezone,
 }) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `${stylist} confirmed your request for a booking on ${dateString(time)}`,
+    subject: `${stylist} confirmed your request for a booking on ${dateString(time, timezone)}`,
     template: 'customer-bookingConfirmedByStylist',
     templateConstants: {
       stylist,
@@ -209,7 +211,7 @@ export const sendCustomerBookingConfirmedEmail = ({
       email,
       mobile,
       address,
-      time,
+      time: dateTimeString(time, timezone),
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
@@ -231,11 +233,12 @@ export const sendCustomerBookingDeclinedEmail = ({
   time,
   bookingId,
   bookingUrl,
+  timezone,
 }) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `${stylist} declined your request for a booking on ${dateString(time)}`,
+    subject: `${stylist} declined your request for a booking on ${dateString(time, timezone)}`,
     template: 'customer-bookingDeclinedByStylist',
     templateConstants: {
       stylist,
@@ -246,7 +249,7 @@ export const sendCustomerBookingDeclinedEmail = ({
       email,
       mobile,
       address,
-      time,
+      time: dateTimeString(time, timezone),
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
@@ -268,11 +271,12 @@ export const sendCustomerBookingCancelledByStylistEmail = ({
   time,
   bookingId,
   bookingUrl,
+  timezone,
 }) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `${stylist} cancelled a booking on ${dateString(time)}`,
+    subject: `${stylist} cancelled a booking on ${dateString(time, timezone)}`,
     template: 'customer-bookingCancelledByStylist',
     templateConstants: {
       stylist,
@@ -283,7 +287,7 @@ export const sendCustomerBookingCancelledByStylistEmail = ({
       email,
       mobile,
       address,
-      time,
+      time: dateTimeString(time, timezone),
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
@@ -305,11 +309,12 @@ export const sendCustomerBookingCompletedEmail = ({
   time,
   bookingId,
   bookingUrl,
+  timezone,
 }) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `${stylist} completed a booking on ${dateString(time)}`,
+    subject: `${stylist} completed a booking on ${dateString(time, timezone)}`,
     template: 'customer-bookingCompleted',
     templateConstants: {
       stylist,
@@ -320,7 +325,7 @@ export const sendCustomerBookingCompletedEmail = ({
       email,
       mobile,
       address,
-      time,
+      time: dateTimeString(time, timezone),
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
@@ -339,11 +344,12 @@ export const sendCustomerPaymentEmail = ({
   time,
   bookingId,
   bookingUrl,
+  timezone,
 }) => {
   sendEmail({
     to: email,
     from: fromAddress,
-    subject: `Billing receipt for a booking on ${dateString(time)}`,
+    subject: `Billing receipt for a booking on ${dateString(time, timezone)}`,
     template: 'customer-bookingPayment',
     templateConstants: {
       paymentId,
@@ -374,11 +380,12 @@ export const sendStylistBookingRequestedEmail = ({
   note,
   bookingId,
   bookingUrl,
+  timezone,
 }) => {
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `${firstName} requested a booking on ${dateString(time)}`,
+    subject: `${firstName} requested a booking on ${dateString(time, timezone)}`,
     template: 'stylist-bookingRequested',
     templateConstants: {
       stylistFirstName,
@@ -389,7 +396,7 @@ export const sendStylistBookingRequestedEmail = ({
       email,
       mobile,
       address,
-      time,
+      time: dateTimeString(time, timezone),
       note,
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
@@ -413,11 +420,12 @@ export const sendStylistBookingCancelledByCustomerEmail = ({
   time,
   bookingId,
   bookingUrl,
+  timezone,
 }) => {
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `${firstName} cancelled a booking on ${dateString(time)}`,
+    subject: `${firstName} cancelled a booking on ${dateString(time, timezone)}`,
     template: 'stylist-bookingCancelledByCustomer',
     templateConstants: {
       stylistFirstName,
@@ -428,7 +436,7 @@ export const sendStylistBookingCancelledByCustomerEmail = ({
       email,
       mobile,
       address,
-      time,
+      time: dateTimeString(time, timezone),
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
@@ -451,11 +459,12 @@ export const sendStylistBookingCompletedEmail = ({
   time,
   bookingId,
   bookingUrl,
+  timezone,
 }) => {
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `Yay, you completed a booking on ${dateString(time)}`,
+    subject: `Yay, you completed a booking on ${dateString(time, timezone)}`,
     template: 'stylist-bookingCompleted',
     templateConstants: {
       stylistFirstName,
@@ -466,7 +475,7 @@ export const sendStylistBookingCompletedEmail = ({
       email,
       mobile,
       address,
-      time,
+      time: dateTimeString(time, timezone),
       bookingId,
       bookingUrl: Meteor.absoluteUrl(bookingUrl),
       ...templateConstants,
@@ -485,11 +494,12 @@ export const sendStylistBookingReviewedEmail = ({
   time,
   rating,
   review,
+  timezone,
 }) => {
   sendEmail({
     to: stylistEmail,
     from: fromAddress,
-    subject: `${firstName} reviewed a booking on ${dateString(time)}`,
+    subject: `${firstName} reviewed a booking on ${dateString(time, timezone)}`,
     template: 'stylist-bookingReviewed',
     templateConstants: {
       stylistFirstName,
