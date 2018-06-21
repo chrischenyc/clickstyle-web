@@ -68,7 +68,11 @@ Meteor.methods({
       Bookings.update({ _id }, { $set: { customerReviewedAt: Date.now() } });
 
       // email notify stylist about new review
-      const { name: stylistName, email: stylistEmail } = Profiles.findOne({
+      const {
+        name: stylistName,
+        email: stylistEmail,
+        timezone: stylistTimezone,
+      } = Profiles.findOne({
         owner: stylist,
       });
 
@@ -81,6 +85,7 @@ Meteor.methods({
         bookingUrl: `users/stylist/bookings/${_id}`,
         rating,
         review,
+        timezone: stylistTimezone,
       });
     } catch (exception) {
       log.error(exception);

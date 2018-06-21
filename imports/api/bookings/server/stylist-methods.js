@@ -124,8 +124,19 @@ export function stylistConfirmPendingBooking(_id) {
     );
 
     const {
-      services, total, firstName, lastName, email, mobile, address, time,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      customer,
     } = booking;
+
+    const { timezone } = Profiles.findOne({ owner: customer });
+
     sendCustomerBookingConfirmedEmail({
       stylist: `${stylistName.first} ${stylistName.last}`,
       services: servicesSummary(services),
@@ -138,6 +149,7 @@ export function stylistConfirmPendingBooking(_id) {
       time,
       bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
+      timezone,
     });
   } catch (exception) {
     log.error(exception);
@@ -188,8 +200,19 @@ export function stylistDeclinePendingBooking(_id) {
 
     // notify customer
     const {
-      services, total, firstName, lastName, email, mobile, address, time,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      customer,
     } = booking;
+
+    const { timezone } = Profiles.findOne({ owner: customer });
+
     sendCustomerBookingDeclinedEmail({
       stylist: `${stylistName.first} ${stylistName.last}`,
       services: servicesSummary(services),
@@ -202,6 +225,7 @@ export function stylistDeclinePendingBooking(_id) {
       time,
       bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
+      timezone,
     });
   } catch (exception) {
     log.error(exception);
@@ -258,8 +282,18 @@ export function stylistCancelConfirmedBooking(_id) {
 
     // notify customer
     const {
-      services, total, firstName, lastName, email, mobile, address, time,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      customer,
     } = booking;
+
+    const { timezone } = Profiles.findOne({ owner: customer });
 
     sendCustomerBookingCancelledByStylistEmail({
       stylist: `${stylistName.first} ${stylistName.last}`,
@@ -273,6 +307,7 @@ export function stylistCancelConfirmedBooking(_id) {
       time,
       bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
+      timezone,
     });
 
     // notify admin
@@ -313,7 +348,9 @@ export async function stylistCompleteConfirmedBooking(_id) {
     });
 
     // send notification to customer
-    const { name: stylistName, email: stylistEmail } = Stylists.findOne({ owner: this.userId });
+    const { name: stylistName, email: stylistEmail, timezone: stylistTimezone } = Stylists.findOne({
+      owner: this.userId,
+    });
 
     Meteor.call('notifications.create', {
       recipient: booking.customer,
@@ -335,9 +372,12 @@ export async function stylistCompleteConfirmedBooking(_id) {
       address,
       time,
       discount,
+      customer,
     } = booking;
 
     const charge = total - (discount || 0);
+
+    const { timezone } = Profiles.findOne({ owner: customer });
 
     sendCustomerBookingCompletedEmail({
       stylist: `${stylistName.first} ${stylistName.last}`,
@@ -351,6 +391,7 @@ export async function stylistCompleteConfirmedBooking(_id) {
       time,
       bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
+      timezone,
     });
 
     // notify stylist
@@ -367,6 +408,7 @@ export async function stylistCompleteConfirmedBooking(_id) {
       time,
       bookingId: _id,
       bookingUrl: `users/stylist/bookings/${_id}`,
+      timezone: stylistTimezone,
     });
 
     // charge customer

@@ -68,7 +68,9 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     couponCode,
   } = cart;
 
-  const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
+  const { email: stylistEmail, timezone: stylistTimezone } = Profiles.findOne({
+    owner: stylist.owner,
+  });
   const total = calculateTotal(services);
   const duration = calculateTotalDuration(services);
 
@@ -126,6 +128,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   });
 
   // inform customer
+  const { timezone } = Profiles.findOne({ owner: userId });
   sendCustomerBookingRequestedEmail({
     stylist: `${stylist.name.first} ${stylist.name.last}`,
     services: servicesSummary(services),
@@ -139,6 +142,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     time,
     bookingId,
     bookingUrl: `users/bookings/${bookingId}`,
+    timezone,
   });
 
   // inform stylist
@@ -156,6 +160,7 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     time,
     bookingId,
     bookingUrl: `users/stylist/bookings/${bookingId}`,
+    timezone: stylistTimezone,
   });
 
   return bookingId;
@@ -202,7 +207,7 @@ export async function customerCreateBooking(cart) {
     if (conflictedSlots.length > 0) {
       let message = "cannot make this booking due to time conflicts on stylist's calendar: ";
       message += formatOccupiedTimeSlot(conflictedSlots[0]);
-      
+
       throw new Meteor.Error(message);
     }
 
@@ -358,6 +363,7 @@ export async function customerCancelBooking(_id) {
         time,
         bookingId: _id,
         bookingUrl: `users/stylist/bookings/${_id}`,
+        timezone: stylist.timezone,
       });
 
       Meteor.call('notifications.create', {
