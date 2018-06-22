@@ -179,6 +179,7 @@ class BookingCheckout extends Component {
             onVerifyCoupon={this.handleVerifyCoupon}
             onStripeError={this.handleStripeError}
             onStripeLoading={this.handleStripeLoading}
+            location={this.props.location}
           />
         </Elements>
       </StripeProvider>

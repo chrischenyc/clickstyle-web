@@ -12,4 +12,13 @@ import './slingshot-directives';
 import './cloudinary';
 import './fixtures';
 
+import Profiles from '../../api/profiles/profiles';
+
 WebApp.addHtmlAttributeHook(() => ({ lang: 'en' }));
+
+// TODO: remove after deploy
+Profiles.update(
+  { timezone: { $exists: false } },
+  { $set: { timezone: 'Australia/Melbourne' } },
+  { multi: true },
+);

@@ -99,8 +99,14 @@ class BookingCheckoutPage extends Component {
                 {!this.props.authenticated && (
                   <div className="margin-top-10 margin-bottom-20">
                     Already a user?&nbsp;
-                    {/* FIXME: tell /login page to re-direct back to here */}
-                    <Link to="/login">Log In</Link>
+                    <Link
+                      to={{
+                        pathname: '/login',
+                        state: { from: this.props.location },
+                      }}
+                    >
+                      Log In
+                    </Link>
                     &nbsp;to continue
                   </div>
                 )}
@@ -400,6 +406,7 @@ BookingCheckoutPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   verifyingCoupon: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 export default injectStripe(withMediaQuery(BookingCheckoutPage));
