@@ -17,9 +17,9 @@
     "start": "meteor run",
     "test": "meteor test --driver-package=practicalmeteor:mocha --port 3001",
     "cloc": "cloc imports client server private --exclude-ext=json",
-    "predeploy-staging": "gulp && heroku config:add METEOR_SETTINGS=\"$(cat settings-staging.json)\" --remote heroku-staging",
+    "predeploy-staging": "heroku config:add METEOR_SETTINGS=\"$(cat settings-staging.json)\" --remote heroku-staging",
     "deploy-staging": "git push heroku-staging develop:master",
-    "predeploy-product": "gulp && heroku config:add METEOR_SETTINGS=\"$(cat settings-product.json)\" --remote heroku-product",
+    "predeploy-product": "heroku config:add METEOR_SETTINGS=\"$(cat settings-product.json)\" --remote heroku-product",
     "deploy-product": "git push heroku-product develop:master"
   },
   "dependencies": {
@@ -72,10 +72,10 @@
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
-    "gulp": "^3.9.1",
-    "gulp-clean-css": "^3.9.4",
-    "gulp-concat": "^2.6.1",
-    "gulp-git": "^2.7.0",
-    "gulp-s3-upload": "^1.7.0"
+    "^3.9.1",
+    "an-css": "^3.9.4",
+    "cat": "^2.6.1",
+    "": "^2.7.0",
+    "upload": "^1.7.0"
   }
 }
