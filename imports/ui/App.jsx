@@ -29,13 +29,17 @@ class App extends Component {
 
       if (user !== undefined) {
         if (user) {
-          this.props.userSignedIn(user);
+          if (user.roles) {
+            // the initial Meteor user object may not contain .roles
 
-          const handle = Meteor.subscribe('profiles.self');
-          if (handle.ready()) {
-            const profile = Profiles.findOne({});
-            if (profile) {
-              this.props.userProfileFetched(profile);
+            this.props.userSignedIn(user);
+
+            const handle = Meteor.subscribe('profiles.self');
+            if (handle.ready()) {
+              const profile = Profiles.findOne({});
+              if (profile) {
+                this.props.userProfileFetched(profile);
+              }
             }
           }
         } else {
