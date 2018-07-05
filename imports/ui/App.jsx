@@ -5,19 +5,13 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Responsive } from 'semantic-ui-react';
+import { Helmet } from 'react-helmet';
 
-import {
-  userSignedIn,
-  userSignedOut,
-  userProfileFetched,
-  userStatsFetched,
-} from '../modules/client/redux/user';
-import { resetCart } from '../modules/client/redux/cart';
-import UserStats from '../api/user_stats/user_stats';
+import { userSignedIn, userSignedOut, userProfileFetched } from '../modules/client/redux/user';
+import Profiles from '../api/profiles/profiles';
 
 import Routes from './Routes';
-import SlideMenu from './components/SlideMenu';
-import ModalContainer from './components/ModalContainer';
+import SlideMenu from './components/SlideMenu/SlideMenu';
 
 // scroll to page top when route changes
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-292711226
@@ -35,22 +29,21 @@ class App extends Component {
 
       if (user !== undefined) {
         if (user) {
-          this.props.userSignedIn(user);
+          if (user.roles) {
+            // the initial Meteor user object may not contain .roles
 
-          Meteor.call('profiles.self', (error, profile) => {
-            if (profile) {
-              this.props.userProfileFetched(profile);
+            this.props.userSignedIn(user);
+
+            const handle = Meteor.subscribe('profiles.self');
+            if (handle.ready()) {
+              const profile = Profiles.findOne({});
+              if (profile) {
+                this.props.userProfileFetched(profile);
+              }
             }
-          });
-
-          const handle = Meteor.subscribe('userStats');
-          if (handle.ready()) {
-            const stats = UserStats.findOne({ owner: user._id });
-            this.props.userStatsFetched(stats);
           }
         } else {
           this.props.userSignedOut();
-          this.props.resetCart();
         }
       }
     });
@@ -60,14 +53,15 @@ class App extends Component {
     return (
       <Router>
         <div id="outer-container">
+          <Helmet>
+            <title>ClickStyle - professional beauty service anywhere you want</title>
+          </Helmet>
           <Responsive maxWidth={1024} as={SlideMenu} />
 
           <main id="page-wrap">
             <ScrollToTop />
 
             <Routes />
-
-            {this.props.modalOpen && <ModalContainer />}
           </main>
         </div>
       </Router>
@@ -79,19 +73,13 @@ App.propTypes = {
   userSignedIn: PropTypes.func.isRequired,
   userSignedOut: PropTypes.func.isRequired,
   userProfileFetched: PropTypes.func.isRequired,
-  userStatsFetched: PropTypes.func.isRequired,
-  resetCart: PropTypes.func.isRequired,
-  modalOpen: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
-  modalOpen: state.ui.modalOpen,
-});
-
-export default connect(mapStateToProps, {
-  userSignedIn,
-  userSignedOut,
-  userProfileFetched,
-  userStatsFetched,
-  resetCart,
-})(App);
+export default connect(
+  null,
+  {
+    userSignedIn,
+    userSignedOut,
+    userProfileFetched,
+  },
+)(App);

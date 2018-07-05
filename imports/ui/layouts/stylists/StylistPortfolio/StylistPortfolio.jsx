@@ -123,7 +123,7 @@ class StylistPortfolio extends Component {
       // avoid select same file
       if (this.state.photos.filter(photo => compareFiles(photo.file, file)).length === 0) {
         newPhotos.push({
-          url: '/images/photo-placeholder.png',
+          url: `${Meteor.settings.public.CDN}photo-placeholder.png`,
           displayOrder: this.state.photos.length + index,
           local: true,
           file,

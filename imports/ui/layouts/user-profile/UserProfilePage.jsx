@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { Container } from 'semantic-ui-react';
 
 import scaledImageURL from '../../../modules/scaled-image-url';
 import Loading from '../../components/Loading';
@@ -41,31 +42,29 @@ const UserProfilePage = ({ profile }) => {
       </div>
 
       <div className="container margin-top-60 margin-bottom-60">
-        <div className="row">
-          <div className="col-12">
-            {!_.isEmpty(profile.about) && (
+        <div className="col-12">
+          {!_.isEmpty(profile.about) && (
+            <div className="boxed-widget margin-bottom-10">
+              <h3>About me</h3>
+              <ul className="listing-details-sidebar">{profile.about}</ul>
+              <div className="clearfix" />
+            </div>
+          )}
+
+          {profile.products &&
+            profile.products.length > 0 && (
               <div className="boxed-widget margin-bottom-10">
-                <h3>About me</h3>
-                <ul className="listing-details-sidebar">{profile.about}</ul>
+                <h3>Products used</h3>
+                <ul className="listing-details-sidebar">
+                  {profile.products.map(product => (
+                    <li key={product.productId} style={{ display: 'inline', float: 'left' }}>
+                      {product.name}
+                    </li>
+                  ))}
+                </ul>
                 <div className="clearfix" />
               </div>
             )}
-
-            {profile.products &&
-              profile.products.length > 0 && (
-                <div className="boxed-widget margin-bottom-10">
-                  <h3>Products used</h3>
-                  <ul className="listing-details-sidebar">
-                    {profile.products.map(product => (
-                      <li key={product.productId} style={{ display: 'inline', float: 'left' }}>
-                        {product.name}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="clearfix" />
-                </div>
-              )}
-          </div>
         </div>
       </div>
     </Fragment>

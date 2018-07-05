@@ -125,6 +125,9 @@ class Search extends Component {
         stylists={this.state.stylists}
         hasMore={this.state.hasMore}
         foundNothing={this.state.foundNothing}
+        service={this.state.service}
+        suburb={this.state.suburb}
+        postcode={this.state.postcode}
       />
     );
   }

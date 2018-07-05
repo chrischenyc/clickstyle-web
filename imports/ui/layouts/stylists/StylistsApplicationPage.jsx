@@ -30,6 +30,7 @@ class StylistsApplicationPage extends Component {
       services,
       qualificationFile,
       referenceUrl,
+      experienceYears,
       application,
     } = this.props;
 
@@ -57,8 +58,8 @@ class StylistsApplicationPage extends Component {
           <h2>Relax and sit tight</h2>
 
           <p>
-            Your previous application submitted on {dateString(application.createdAt)} is under
-            review process, we will contact you shortly.
+            Your application submitted on {dateString(application.createdAt)} is under review
+            process, we will contact you shortly.
           </p>
 
           <p>
@@ -198,6 +199,18 @@ class StylistsApplicationPage extends Component {
           </Form.Field>
 
           <FormInputField
+            type="number"
+            min="0"
+            fluid
+            placeholder="0"
+            label={<h3>Years of experience</h3>}
+            name="experienceYears"
+            onChange={onChange}
+            errors={errors}
+            value={experienceYears}
+          />
+
+          <FormInputField
             fluid
             placeholder="Please provide a link to view your work e.g Facebook, Instagram or your website."
             label={<h3>Reference</h3>}
@@ -255,6 +268,7 @@ StylistsApplicationPage.propTypes = {
   services: PropTypes.array.isRequired,
   qualificationFile: PropTypes.object,
   referenceUrl: PropTypes.string.isRequired,
+  experienceYears: PropTypes.string.isRequired,
   application: PropTypes.object,
 };
 

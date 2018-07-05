@@ -1,0 +1,115 @@
+<head>
+  <title>ClickStyle - professional beauty service anywhere you want</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1" />
+  <meta name="description" content="professional beauty service any where you want">
+
+  <!-- listeo stylesheet -->
+  <link rel="stylesheet" type="text/css" href="/css/listeo/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/listeo/color.css" id="colors">
+  <link rel="stylesheet" type="text/css" href="/css/listeo/custom.css">
+  <!-- semantic stylesheet -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"></link>
+  <link rel="stylesheet" type="text/css" href="/css/semantic/custom.css"></link>
+  <!-- slick carousel -->
+  <link rel="stylesheet" type="text/css" href="/css/slick/slick.css" />
+  <link rel="stylesheet" type="text/css" href="/css/slick/slick-theme.css" />
+  <link rel="stylesheet" type="text/css" href="/css/slick/custom.css" />
+  <!-- own styles -->
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+  <!-- start of favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#00aca4">
+  <meta name="msapplication-TileColor" content="#2b5797">
+  <meta name="theme-color" content="#ffffff">
+  <!-- end of favicon -->
+
+
+  <!-- Start of Drift Widget init code -->
+  <script>
+    "use strict";
+
+    !function () {
+      var t = window.driftt = window.drift = window.driftt || [];
+      if (!t.init) {
+        if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+        t.invoked = !0, t.methods = ["identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on"],
+          t.factory = function (e) {
+            return function () {
+              var n = Array.prototype.slice.call(arguments);
+              return n.unshift(e), t.push(n), t;
+            };
+          }, t.methods.forEach(function (e) {
+            t[e] = t.factory(e);
+          }), t.load = function (t) {
+            var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+            o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+            var i = document.getElementsByTagName("script")[0];
+            i.parentNode.insertBefore(o, i);
+          };
+      }
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    drift.load('k3wr48rhhyi5');
+  </script>
+  <!-- End of Drift Widget init code -->
+
+  <!-- don't show Drift on mobile devices -->
+  <script>
+    drift.on('ready', function (api, payload) {
+      api.widget.hide()
+      if (window.innerWidth > 1024) {
+        api.widget.show()
+      }
+    })
+  </script>
+  <!-- End of don't show Drift Widget on mobile devices -->
+
+  <!-- open Drift Widget from any button -->
+  <script>
+      (function () {
+        var DRIFT_CHAT_SELECTOR = '.drift-open-chat'
+        function ready(fn) {
+          if (document.readyState != 'loading') {
+            fn();
+          } else if (document.addEventListener) {
+            document.addEventListener('DOMContentLoaded', fn);
+          } else {
+            document.attachEvent('onreadystatechange', function () {
+              if (document.readyState != 'loading')
+                fn();
+            });
+          }
+        }
+
+        function forEachElement(selector, fn) {
+          var elements = document.querySelectorAll(selector);
+          for (var i = 0; i < elements.length; i++)
+            fn(elements[i], i);
+        }
+        function openSidebar(driftApi, event) {
+          event.preventDefault();
+          driftApi.sidebar.open();
+          return false;
+        }
+        ready(function () {
+          drift.on('ready', function (api) {
+            var handleClick = openSidebar.bind(this, api)
+            forEachElement(DRIFT_CHAT_SELECTOR, function (el) {
+              el.addEventListener('click', handleClick);
+            });
+          });
+        });
+      })();
+  </script>
+  <!-- End of Drift Widget from any button -->
+
+</head>
+
+<body>
+  <div id="react-root"></div>
+</body>

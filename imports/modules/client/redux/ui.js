@@ -8,36 +8,25 @@ export function toggleSlideMenu(open = null) {
   };
 }
 
-export function openModal(modalComponent, modalTitle, modalDismissible) {
+export function toggleSideMenuMyBookings(open = null) {
   return {
-    type: 'UI_MODAL_OPEN',
-    modalComponent,
-    modalTitle,
-    modalDismissible,
+    type: 'UI_TOGGLE_SIDE_MENU_MY_BOOKINGS',
+    open,
   };
 }
 
-export function closeModal() {
+export function toggleSideMenuCustomerBookings(open = null) {
   return {
-    type: 'UI_MODAL_CLOSE',
-  };
-}
-
-export function setNextRoute(nextRoute) {
-  return {
-    type: 'UI_NEXT_ROUTE',
-    nextRoute,
+    type: 'UI_TOGGLE_SIDE_MENU_CUSTOMER_BOOKINGS',
+    open,
   };
 }
 
 // --------- reducer ----------
 const defaultState = {
   slideMenuOpen: false,
-  modalOpen: false,
-  modalComponent: null,
-  modalTitle: null,
-  modalDismissible: true,
-  nextRoute: null,
+  sideMenuMyBookingsExpanded: false,
+  sideMenuCustomerBookingsExpanded: false,
 };
 
 const reducer = (state = defaultState, action) => {
@@ -51,34 +40,23 @@ const reducer = (state = defaultState, action) => {
       };
     }
 
-    case 'UI_MODAL_OPEN': {
-      const { modalComponent, modalTitle, modalDismissible } = action;
+    case 'UI_TOGGLE_SIDE_MENU_MY_BOOKINGS': {
+      const { open } = action;
 
       return {
         ...state,
-        modalOpen: true,
-        modalComponent,
-        modalTitle,
-        modalDismissible,
+        sideMenuMyBookingsExpanded: _.isNil(open) ? !state.sideMenuMyBookingsExpanded : open,
       };
     }
 
-    case 'UI_MODAL_CLOSE': {
-      return {
-        ...state,
-        modalOpen: false,
-        modalComponent: null,
-        modalTitle: null,
-        modalDismissible: true,
-      };
-    }
-
-    case 'UI_NEXT_ROUTE': {
-      const { nextRoute } = action;
+    case 'UI_TOGGLE_SIDE_MENU_CUSTOMER_BOOKINGS': {
+      const { open } = action;
 
       return {
         ...state,
-        nextRoute,
+        sideMenuCustomerBookingsExpanded: _.isNil(open)
+          ? !state.sideMenuCustomerBookingsExpanded
+          : open,
       };
     }
 

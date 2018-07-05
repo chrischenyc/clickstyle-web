@@ -1,6 +1,5 @@
 import { Accounts } from 'meteor/accounts-base';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { validateEmail } from '../../../../modules/validate';
@@ -17,7 +16,6 @@ class ForgotPassword extends Component {
       errors: {},
       loading: false,
       success: false,
-      redirect: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,7 +31,6 @@ class ForgotPassword extends Component {
       errors: {},
       loading: false,
       success: false,
-      redirect: false,
     });
     event.preventDefault();
 
@@ -58,12 +55,6 @@ class ForgotPassword extends Component {
             errors: {},
             success: true,
           });
-
-          if (!this.props.modal) {
-            setTimeout(() => {
-              this.setState({ redirect: true });
-            }, 1500);
-          }
         }
       });
     }
@@ -77,21 +68,9 @@ class ForgotPassword extends Component {
         loading={this.state.loading}
         errors={this.state.errors}
         success={this.state.success}
-        redirect={this.state.redirect}
-        embedded={this.props.embedded}
       />
     );
   }
 }
-
-ForgotPassword.defaultProps = {
-  modal: false,
-  embedded: false,
-};
-
-ForgotPassword.propTypes = {
-  modal: PropTypes.bool,
-  embedded: PropTypes.bool,
-};
 
 export default ForgotPassword;

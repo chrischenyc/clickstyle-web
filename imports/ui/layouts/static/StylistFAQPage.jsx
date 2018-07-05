@@ -14,16 +14,19 @@ const StylistFAQPage = () => (
       our best to solve this. We would encourage not to leave it till last minute about notifying
       us, please advise us at the earliest possible.
     </p>
+
     <p>
       How do my clients leave review?
       <br />
       Clients will be able to leave a review only after the service has been completed.
     </p>
+
     <p>
       Can anyone leave a review for me?
       <br />
       No, only clients that you accept via {Meteor.settings.public.appName} and provide service to.
     </p>
+
     <p>
       Does review and ratings really matter?
       <br />
@@ -33,6 +36,7 @@ const StylistFAQPage = () => (
       features to enhance your use of this platform and also features that will increase your
       revenue.
     </p>
+
     <p>
       How do I add or edit my service?
       <br />
@@ -40,6 +44,7 @@ const StylistFAQPage = () => (
       Then under the stylist, click on “services” Edit the services, adjust prices and description
       Click save
     </p>
+
     <p>
       How do I set my available hours?
       <br />
@@ -48,6 +53,7 @@ const StylistFAQPage = () => (
       to” hours. If you do not wish to work any particular day than you can swipe left on the blue
       slider under the “Open” column. Click save
     </p>
+
     <p>
       How do I manage photos?
       <br />
@@ -57,21 +63,25 @@ const StylistFAQPage = () => (
       your dashboard Click on “upload photo” underneath the blank image Upload photo from your
       device and click “Save”
     </p>
+
     <p>
       How and when do I get paid?
       <br />
       Currently we are doing fortnightly payments direct into your account. Please ensure your
       account details are accurate
     </p>
+
     <p>
       How much does {Meteor.settings.public.appName} charge?
-      <br />We take 12.5% commission per transaction
+      <br />We take 13.75% commission per transaction
     </p>
+
     <p>
       How will my clients find me through {Meteor.settings.public.appName}?
       <br />
       By simply typing your name in the search bar in home page and click search.
     </p>
+
     <p>
       How can I promote my {Meteor.settings.public.appName} profile to attract clients?
       <br />
@@ -107,6 +117,7 @@ const StylistFAQPage = () => (
         </li>
       </ol>
     </p>
+
     <p>
       As stylist how do I contact {Meteor.settings.public.appName} admin?
       <br />
@@ -116,7 +127,15 @@ const StylistFAQPage = () => (
       matter.
     </p>
 
-    <p>Last update: 19 March 2018.</p>
+    <p>
+      The brand name product I use is not showing in the list of “Products I use” tab, how do I add
+      the name?
+      <br />
+      In the product search field, keep typing your brand then hit enter, then hit save and the new
+      brand is created.
+    </p>
+
+    <p>Last update: 11 June 2018.</p>
   </Container>
 );
 

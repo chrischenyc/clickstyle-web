@@ -42,6 +42,24 @@ const BookingSummary = props => (
       </ul>
     </div>
 
+    {props.booking.discount && (
+      <div className="inner-booking-list">
+        <h5>Coupon discount:</h5>
+        <ul className="booking-list">
+          <li className="highlighted">{formatPrice(props.booking.discount)}</li>
+        </ul>
+      </div>
+    )}
+
+    {props.booking.redeemedCoupon && (
+      <div className="inner-booking-list">
+        <h5>Coupon redeemed:</h5>
+        <ul className="booking-list">
+          <li className="highlighted">{props.booking.redeemedCoupon}</li>
+        </ul>
+      </div>
+    )}
+
     <div className="inner-booking-list">
       <h5>Customer:</h5>
       <ul className="booking-list">

@@ -19,6 +19,7 @@ class StylistApplication extends Component {
       application: null,
       qualificationFile: null,
       referenceUrl: '',
+      experienceYears: '',
       errors: {},
       submitting: false,
     };
@@ -88,7 +89,14 @@ class StylistApplication extends Component {
     });
   }
 
-  submitApplication(mobile, address, selectedServices, qualificationUrl, referenceUrl) {
+  submitApplication(
+    mobile,
+    address,
+    selectedServices,
+    qualificationUrl,
+    referenceUrl,
+    experienceYears,
+  ) {
     this.setState({ submitting: true });
     Meteor.call(
       'stylistApplications.create',
@@ -98,6 +106,7 @@ class StylistApplication extends Component {
         services: selectedServices,
         qualificationUrl,
         referenceUrl,
+        experienceYears,
       },
       (error) => {
         if (error) {
@@ -124,7 +133,12 @@ class StylistApplication extends Component {
     event.preventDefault();
 
     const {
-      mobile, address, services, qualificationFile, referenceUrl,
+      mobile,
+      address,
+      services,
+      qualificationFile,
+      referenceUrl,
+      experienceYears,
     } = this.state;
 
     // only send selected services' id to server
@@ -156,12 +170,20 @@ class StylistApplication extends Component {
               selectedServices,
               qualificationUrl,
               referenceUrl,
+              experienceYears,
             );
           }
         });
       }
     } else {
-      this.submitApplication(mobile, address, selectedServices, null, referenceUrl);
+      this.submitApplication(
+        mobile,
+        address,
+        selectedServices,
+        null,
+        referenceUrl,
+        experienceYears,
+      );
     }
   }
 
@@ -178,6 +200,7 @@ class StylistApplication extends Component {
         services={this.state.services}
         qualificationFile={this.state.qualificationFile}
         referenceUrl={this.state.referenceUrl}
+        experienceYears={this.state.experienceYears}
         application={this.state.application}
       />
     );

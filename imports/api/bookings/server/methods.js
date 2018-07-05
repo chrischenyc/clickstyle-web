@@ -5,7 +5,7 @@ import _ from 'lodash';
 import log from 'winston';
 
 import rateLimit from '../../../modules/server/rate-limit';
-import { dateTimeShortString } from '../../../modules/format-date';
+import { dateTimeString } from '../../../modules/format-date';
 import Bookings from '../bookings';
 import Profiles from '../../profiles/profiles';
 
@@ -29,10 +29,10 @@ function bookingSummary(booking, userId) {
   if (booking.customer === userId) {
     const { name: stylistName } = Profiles.findOne({ owner: booking.stylist });
 
-    return `You have booked ${stylistName.first} on ${dateTimeShortString(booking.time)}`;
+    return `You have booked ${stylistName.first} on ${dateTimeString(booking.time)}`;
   }
 
-  return `${booking.firstName} has booked you on ${dateTimeShortString(booking.time)}`;
+  return `${booking.firstName} has booked you on ${dateTimeString(booking.time)}`;
 }
 
 function bookingLink(booking, userId) {
