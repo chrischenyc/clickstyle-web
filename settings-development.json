@@ -1,0 +1,74 @@
+{
+  "public": {
+    "appName": "ClickStyle Dev",
+    "about":
+      "ClickStyle is a marketplace to find, book and pay for home service beauty professionals for women and men. Gone are days of travelling to and from hair salons, getting stuck in traffic, at ClickStyle we bring the service to you, anywhere, any time. Try ClickStyle and experience the difference.",
+    "legalName": "ClickStyle Services Pty Ltd",
+    "supportEmail": "team@clickstyle.com.au",
+    "twitterUrl": "https://twitter.com/clickstyle01",
+    "facebookUrl": "https://facebook.com/clickstyle01",
+    "instagramUrl": "https://instagram.com/clickstyle01",
+    "twitterId": "clickstyle01",
+    "facebookId": "clickstyle01",
+    "instagramId": "clickstyle01",
+    "siteUrl": "www.clickstyle.com.au",
+    "homeUrl": "",
+    "faqUrl": "faq",
+    "contactUrl": "contact",
+    "searchUrl": "stylists",
+    "joinUrl": "join",
+    "privacyUrl": "privacy",
+    "termsUrl": "terms",
+    "SlingshotS3File": "S3File",
+    "SlingshotCloudinaryImage": "CloudinaryImage",
+    "CloudinaryTag": "development",
+    "defaultAvatar":
+      "https://res.cloudinary.com/stylesquard/image/upload/v1508935172/6dbb9016-1715-4426-bd0e-1f369bc8aa1e",
+    "maxPhotoSize": 4,
+    "maxPortfolioPhotos": 12,
+    "maxDoc": 6,
+    "roles": {
+      "customer": "customer",
+      "stylist": "stylist",
+      "admin": "admin"
+    },
+    "StripePublishableKey": "pk_test_UN57YcqK3FNo4UzKoBzyC362",
+    "CDN": "https://d1min9tgylwryz.cloudfront.net/"
+  },
+
+  "MAIL_URL":
+    "smtp://postmaster%40mg.clickstyle.com.au:bc6a7f703ad3ad2340a9cfab98856557-97923b2d-8776308e@smtp.mailgun.org:587",
+
+  "OAuth": {
+    "facebook": {
+      "appId": "1996367580583176",
+      "secret": "f920a96743fe8a00f7cbaffa4a82d5c5",
+      "loginStyle": "popup"
+    },
+    "google": {
+      "clientId": "921063530095-h6idshf5ts5rm4bjfa369udmqjru13kb.apps.googleusercontent.com",
+      "secret": "R2vM7fx5VM8pnHyhOhmH25b7",
+      "loginStyle": "popup"
+    }
+  },
+
+  "CloudinaryCloudName": "clickstyle-com-au",
+  "CloudinarySecret": "GjbCmE566kC2I-Es0dTyOzE0Ae0",
+  "CloudinaryKey": "711511832669922",
+  "CloudinaryPreset": "development",
+
+  "CDN": "https://d1f16uncz56v3u.cloudfront.net/",
+  "AWSAccessKeyId": "AKIAJGKMVZ32Q5TVMSMA",
+  "AWSSecretAccessKey": "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",
+  "S3Bucket": "clickstyle-development",
+  "AWSRegion": "ap-southeast-2",
+
+  "AdminHost": "http://localhost:4000",
+
+  "MailChimpAPIKey": "19fa25b4c907eda4b6330ea2aa7e8457-us17",
+  "MailChimpListId": "ec72a83613",
+
+  "SearchLimit": 24,
+
+  "StripeSecretKey": "sk_test_YMuxObcpq7GMn7FRiZ3FH70W"
+}
