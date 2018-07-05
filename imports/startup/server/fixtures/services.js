@@ -11,6 +11,7 @@ if (Services.find().fetch().length === 0) {
     const serviceId = Services.insert({
       name: service.name,
       displayOrder: index,
+      duration: 60,
     });
 
     service.addons.forEach((addon) => {
@@ -19,6 +20,7 @@ if (Services.find().fetch().length === 0) {
         name: addon.name,
         createdBy: 'system',
         published: true,
+        duration: 30,
       });
     });
   }
