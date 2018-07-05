@@ -116,7 +116,8 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-12">
             <div className="copyrights">
-              Made with lots of&nbsp;<img src="/images/heart.png" alt="" />&nbsp;in Melbourne
+              Made with lots of&nbsp;<img src={`${Meteor.settings.public.CDN}heart.png`} alt="" />&nbsp;in
+              Melbourne
             </div>
           </div>
         </div>

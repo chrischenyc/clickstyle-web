@@ -30,7 +30,10 @@ const ContactPage = props => (
         {props.suggestStylist && (
           <Fragment>
             <h3>Are we missing a stylist?</h3>
-            <p>Please let us know if we are missing a stylist (TODO: copy writing)</p>
+            <p>
+              We would love a stylist suggestion from you. Please fill in the quick form below and
+              we will endeavour to get the stylist on board.
+            </p>
 
             <p>
               Regards<br />
@@ -126,7 +129,7 @@ const ContactPage = props => (
         <Modal.Content>
           <p>
             We have received your message and would like to thank you for writing to us. One of our
-            squad members will get back to you shortly.
+            team members will get back to you shortly.
           </p>
           <p>Have an awesome day!</p>
         </Modal.Content>

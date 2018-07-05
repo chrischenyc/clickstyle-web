@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import moment from 'moment-timezone';
+import { Redirect } from 'react-router-dom';
 
-import { closeModal, setNextRoute } from '../../../../modules/client/redux/ui';
 import { userSignedIn } from '../../../../modules/client/redux/user';
 import { validateUserLogin } from '../../../../modules/validate';
 import LoginPage from './LoginPage';
@@ -20,6 +21,7 @@ class Login extends Component {
       password: '',
       errors: {},
       loading: false,
+      redirectToReferrer: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -64,24 +66,24 @@ class Login extends Component {
   }
 
   handleLoggedIn() {
+    // update user timezone in profile
+    const timezone = moment.tz.guess() || 'Australia/Melbourne';
+    Meteor.call('profiles.update.timezone', timezone);
+
     // force update redux store, as Meteor auto-run in App.jsx tends to lag
     this.props.userSignedIn(Meteor.user());
 
-    if (this.props.modal) {
-      this.props.closeModal();
-    }
-
-    // redirect if a nextRoute is stored in redux
-    if (!_.isNil(this.props.nextRoute) && !_.isEmpty(this.props.nextRoute)) {
-      this.props.history.push(this.props.nextRoute);
-      this.props.setNextRoute(null);
-    } else if (!this.props.modal) {
-      // otherwise, go back if not modal
-      this.props.history.goBack();
-    }
+    this.setState({ redirectToReferrer: true });
   }
 
   render() {
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+
+    const { redirectToReferrer } = this.state;
+    if (redirectToReferrer === true) {
+      return <Redirect to={from} />;
+    }
+
     return (
       <LoginPage
         onSubmit={this.handleSubmit}
@@ -89,27 +91,17 @@ class Login extends Component {
         onSocialSignedIn={this.handleLoggedIn}
         loading={this.state.loading}
         errors={this.state.errors}
-        modal={this.props.modal}
+        from={from}
       />
     );
   }
 }
 
-Login.defaultProps = {
-  modal: false,
-  nextRoute: null,
-};
-
 Login.propTypes = {
-  modal: PropTypes.bool,
   userSignedIn: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  setNextRoute: PropTypes.func.isRequired,
-  nextRoute: PropTypes.string,
 };
 
-const mapStateToProps = state => ({
-  nextRoute: state.ui.nextRoute,
-});
-
-export default connect(mapStateToProps, { closeModal, setNextRoute, userSignedIn })(Login);
+export default connect(
+  null,
+  { userSignedIn },
+)(Login);

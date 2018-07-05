@@ -8,10 +8,12 @@ import Sticky from 'react-stickynode';
 import LoadingBar from 'react-redux-loading-bar';
 import _ from 'lodash';
 
-import { closeModal, toggleSlideMenu } from '../../modules/client/redux/ui';
-import ModalLink from './ModalLink';
-import Login from '../layouts/user/Login/Login';
-import SignUp from '../layouts/user/SignUp/SignUp';
+import {
+  toggleSlideMenu,
+  toggleSideMenuCustomerBookings,
+  toggleSideMenuMyBookings,
+} from '../../modules/client/redux/ui';
+import { resetCart } from '../../modules/client/redux/cart';
 import SearchBar from './SearchBar/SearchBar';
 import formatPrice from '../../modules/format-price';
 
@@ -72,7 +74,7 @@ class Header extends Component {
             {fullContent && (
               <Menu.Item id="logo">
                 <Link to="/">
-                  <img src="/images/logo.png" alt="logo" />
+                  <img src={`${Meteor.settings.public.CDN}logo.png`} alt="logo" />
                 </Link>
               </Menu.Item>
             )}
@@ -92,9 +94,11 @@ class Header extends Component {
             <Responsive minWidth={1025} as={Menu.Menu} position="right">
               {fullContent && (
                 <Fragment>
-                  <Menu.Item as={Link} to="/join">
-                    Become a stylist
-                  </Menu.Item>
+                  {!isStylist && (
+                    <Menu.Item as={Link} to="/join">
+                      Become a stylist
+                    </Menu.Item>
+                  )}
                   <Menu.Item as={Link} to="/faq">
                     FAQ
                   </Menu.Item>
@@ -103,22 +107,10 @@ class Header extends Component {
 
               {!authenticated && (
                 <Fragment>
-                  <Menu.Item
-                    as={ModalLink}
-                    className="sign-in"
-                    to="/signup"
-                    component={<SignUp modal />}
-                    title="Join us"
-                  >
+                  <Menu.Item as={Link} className="sign-in" to="/signup">
                     Sign Up
                   </Menu.Item>
-                  <Menu.Item
-                    as={ModalLink}
-                    className="sign-in"
-                    to="/login"
-                    component={<Login modal />}
-                    title="Log in to continue"
-                  >
+                  <Menu.Item as={Link} className="sign-in" to="/login">
                     Log In
                   </Menu.Item>
                 </Fragment>
@@ -146,6 +138,9 @@ class Header extends Component {
                           as={Link}
                           to="/users/bookings"
                           text={`My Bookings ${pendingBookings > 0 ? ` (${pendingBookings})` : ''}`}
+                          onClick={() => {
+                            this.props.toggleSideMenuMyBookings();
+                          }}
                         />
                         <Dropdown.Item
                           as={Link}
@@ -167,10 +162,14 @@ class Header extends Component {
                               text={`Customer Bookings ${
                                 pendingCustomerBookings > 0 ? ` (${pendingCustomerBookings})` : ''
                               }`}
+                              onClick={() => {
+                                this.props.toggleSideMenuCustomerBookings();
+                              }}
                             />
                             <Dropdown.Item as={Link} to="/users/stylist/services" text="Services" />
                             <Dropdown.Item as={Link} to="/users/stylist/calendar" text="Calendar" />
                             <Dropdown.Item as={Link} to="/users/stylist/areas" text="Areas" />
+                            <Dropdown.Item as={Link} to="/users/stylist/payment" text="Payment" />
                             <Dropdown.Item
                               as={Link}
                               to="/users/stylist/portfolio"
@@ -187,6 +186,7 @@ class Header extends Component {
                           onClick={() => {
                             Meteor.logout();
                             this.props.history.push('/');
+                            this.props.resetCart();
                           }}
                         />
                       </Dropdown.Menu>
@@ -198,7 +198,7 @@ class Header extends Component {
             <Responsive maxWidth={1024} as={Menu.Menu} position="right">
               <Fragment>
                 {/* only display cart in header on mobile screen, when cart isn't empty */}
-                {cart.showCartInHeader && (
+                {cart.count > 0 && (
                   <Menu.Item as={Link} to="/booking" style={{ fontSize: '1rem', paddingRight: 0 }}>
                     <Icon name="cart" />
                     {`${formatPrice(cart.total)} (${cart.count})`}
@@ -231,8 +231,10 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-  closeModal: PropTypes.func.isRequired,
   toggleSlideMenu: PropTypes.func.isRequired,
+  toggleSideMenuCustomerBookings: PropTypes.func.isRequired,
+  toggleSideMenuMyBookings: PropTypes.func.isRequired,
+  resetCart: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
   firstName: PropTypes.string,
   fullContent: PropTypes.bool, // if false, header links only contain user menu
@@ -250,10 +252,18 @@ const mapStateToProps = state => ({
   firstName: state.user.profile && state.user.profile.name && state.user.profile.name.first,
   cart: state.cart,
   isStylist: state.user.isStylist,
-  notifications: state.user.notifications,
-  messages: state.user.messages,
-  pendingBookings: state.user.pendingBookings,
-  pendingCustomerBookings: state.user.pendingCustomerBookings,
+  notifications: state.user.profile.notifications,
+  messages: state.user.profile.messages,
+  pendingBookings: state.user.profile.pendingBookings,
+  pendingCustomerBookings: state.user.profile.pendingCustomerBookings,
 });
 
-export default connect(mapStateToProps, { closeModal, toggleSlideMenu })(withRouter(Header));
+export default connect(
+  mapStateToProps,
+  {
+    toggleSlideMenu,
+    toggleSideMenuCustomerBookings,
+    toggleSideMenuMyBookings,
+    resetCart,
+  },
+)(withRouter(Header));

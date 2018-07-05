@@ -4,17 +4,14 @@ import { Link } from 'react-router-dom';
 import { Form, Grid, Divider, Button, Container, Message } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import ModalLink from '../../../components/ModalLink';
 import { FormInputField } from '../../../components/FormInputField';
 import SocialLoginButtons from '../../../components/SocialLoginButtons';
-import SignUp from '../SignUp/SignUp';
-import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 // web version of the login form, stateless component
 const LoginPage = ({
-  onSubmit, onChange, loading, errors, modal, onSocialSignedIn,
+  onSubmit, onChange, loading, errors, onSocialSignedIn, from,
 }) => (
-  <Container className="margin-top-20">
+  <Container className="margin-top-80 margin-bottom-80">
     <Grid textAlign="center">
       <Grid.Row style={{ maxWidth: 450 }}>
         <Grid.Column>
@@ -54,25 +51,20 @@ const LoginPage = ({
             {!_.isEmpty(errors.message) && <Message error>{errors.message}</Message>}
           </Form>
 
-          {modal ? (
-            <ModalLink to="/forgot-password" component={<ForgotPassword modal />}>
-              <p className="margin-top-20 margin-bottom-20">Forgot password?</p>
-            </ModalLink>
-          ) : (
-            <Link to="/forgot-password">
-              <p className="margin-top-20 margin-bottom-20">Forgot password?</p>
-            </Link>
-          )}
+          <Link to="/forgot-password">
+            <p className="margin-top-20 margin-bottom-20">Forgot password?</p>
+          </Link>
 
           <p className="margin-top-20 margin-bottom-20">
             Don&apos;t have an account?&nbsp;
-            {modal ? (
-              <ModalLink to="/signup" component={<SignUp modal />} title="Join us">
-                Sign up
-              </ModalLink>
-            ) : (
-              <Link to="/signup">Sign up</Link>
-            )}
+            <Link
+              to={{
+                pathname: '/signup',
+                state: { from },
+              }}
+            >
+              Sign up
+            </Link>
             &nbsp;here
           </p>
         </Grid.Column>
@@ -81,13 +73,17 @@ const LoginPage = ({
   </Container>
 );
 
+LoginPage.defaultProps = {
+  from: null,
+};
+
 LoginPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
-  modal: PropTypes.bool.isRequired,
   onSocialSignedIn: PropTypes.func.isRequired,
+  from: PropTypes.object,
 };
 
 export default LoginPage;

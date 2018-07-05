@@ -4,6 +4,7 @@ import log from 'winston';
 import Payments from '../../api/payments/payments';
 import { sendCustomerPaymentEmail } from './send-email';
 import formatPrice from '../format-price';
+import Profiles from '../../api/profiles/profiles';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
@@ -41,6 +42,8 @@ export default async function chargeCustomer(booking, amount, stripeDescription,
       description,
     });
 
+    const { timezone } = Profiles.findOne({ owner: booking.customer });
+
     sendCustomerPaymentEmail({
       paymentId,
       total: formatPrice(charge.amount / 100),
@@ -50,6 +53,7 @@ export default async function chargeCustomer(booking, amount, stripeDescription,
       time: booking.time,
       bookingId: booking._id,
       bookingUrl: `users/bookings/${booking._id}`,
+      timezone,
     });
   } catch (error) {
     log.error(`Charge customer error: ${error}`);

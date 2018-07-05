@@ -292,3 +292,13 @@ textarea:focus {
 .dashboard-nav ul li span.nav-tag.lightblue {
   background-color: #61b2db;
 }
+
+.dashboard-nav ul li a i {
+  font-size: 1.5rem;
+}
+
+#logo img {
+  max-height: 42px;
+  width: auto;
+  transform: translate3d(0, 0, 0);
+}

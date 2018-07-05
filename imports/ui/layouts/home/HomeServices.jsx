@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Slick from 'react-slick';
@@ -59,7 +60,7 @@ const HomeServices = ({ services }) => {
                     src={
                       service.photo
                         ? scaledImageURL(service.photo, 'medium')
-                        : '/images/placeholder-square.jpg'
+                        : `${Meteor.settings.public.CDN}placeholder-square.jpg`
                     }
                     alt={service.name}
                   />

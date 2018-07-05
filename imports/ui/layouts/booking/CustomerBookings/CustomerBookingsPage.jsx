@@ -56,7 +56,7 @@ const CustomerBookingsPage = ({ bookings }) => (
       {bookings.length === 0 && (
         <ul>
           <li>
-            You haven&apos;t booked any stylist yet. <Link to="/search">Find a stylist</Link>
+            You haven&apos;t booked any stylist yet. <Link to="/search">Book a stylist today!</Link>
           </li>
         </ul>
       )}

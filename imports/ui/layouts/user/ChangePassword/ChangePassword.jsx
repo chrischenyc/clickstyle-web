@@ -19,7 +19,6 @@ class ChangePassword extends Component {
       errors: {},
       loading: false,
       success: false,
-      redirect: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,7 +34,6 @@ class ChangePassword extends Component {
       errors: {},
       loading: false,
       success: false,
-      redirect: false,
     });
     event.preventDefault();
 
@@ -66,10 +64,6 @@ class ChangePassword extends Component {
           });
 
           Meteor.call('users.sendPasswordChangedEmail');
-
-          setTimeout(() => {
-            this.setState({ redirect: true });
-          }, 1500);
         }
       });
     }
@@ -83,7 +77,6 @@ class ChangePassword extends Component {
         loading={this.state.loading}
         errors={this.state.errors}
         success={this.state.success}
-        redirect={this.state.redirect}
       />
     );
   }

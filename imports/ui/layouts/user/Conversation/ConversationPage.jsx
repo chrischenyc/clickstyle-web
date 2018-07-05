@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import { Container, Grid, Button } from 'semantic-ui-react';
@@ -45,6 +46,7 @@ const ConversationPage = props => (
                 ))}
 
                 <div className="clearfix" />
+
                 <div className="message-reply">
                   <textarea
                     cols="40"
@@ -64,6 +66,14 @@ const ConversationPage = props => (
                   >
                     Send Message
                   </Button>
+                  <p>
+                    <small>
+                      For your safety and protection, only communication and pay directly through{' '}
+                      {Meteor.settings.public.appName}. Visit our <Link to="/faq">FAQ</Link> page to
+                      learn more about the benefits of booking through{' '}
+                      {Meteor.settings.public.appName}
+                    </small>
+                  </p>
                 </div>
               </div>
             </div>

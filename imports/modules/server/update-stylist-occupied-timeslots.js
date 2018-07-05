@@ -3,11 +3,15 @@ import _ from 'lodash';
 
 import Stylists from '../../api/stylists/stylists';
 
+// stylists.occupiedTimeSlots.from: 1801010000 ~ 1801012359 (int)
+// stylists.occupiedTimeSlots.to: 1801010000 ~ 1801012359 (int)
+// stylists.occupiedTimeSlots.state: 'booked' | 'closed' | 'scheduled' (string)
 const updateStylistOccupiedTimeSlots = (owner, days) => {
   const stylist = Stylists.findOne({ owner });
   const { occupiedTimeSlots, openHours } = stylist;
 
   // clean up existing recurring occupied time slots
+
   let newOccupiedTimeSlots = _.isEmpty(occupiedTimeSlots)
     ? []
     : occupiedTimeSlots.filter(t => !(t.state === 'closed'));
@@ -22,41 +26,56 @@ const updateStylistOccupiedTimeSlots = (owner, days) => {
     }
     const openHour = openHours.filter(o => o.day === weekDay)[0];
 
-    const dateString = day.format('YYMMDD');
+    const dateInNumber = parseInt(day.format('YYMMDD'), 10) * 10000;
 
     if (!openHour.open) {
-      // if closed, fill the day with a single occupied timeslot
+      // if closed, fill the day with a single occupied time slot, YYMMDD0000 - YYMMDD2359
       timeSlotsOfDay.push({
-        from: parseInt(`${dateString}0000`, 10),
-        to: parseInt(`${dateString}2359`, 10),
+        from: dateInNumber,
+        to: dateInNumber + 2359,
         state: 'closed',
       });
     } else {
-      // else, fill the day with occupied timeslots before/after open/close time
+      // else, fill the day with occupied time slots before/after open/close time
+      const openHourInNumber = parseInt(openHour.openAt.split(':')[0], 10);
+      const openMinuteInNumber = parseInt(openHour.openAt.split(':')[1], 10);
+      const closeHourInNumber = parseInt(openHour.closeAt.split(':')[0], 10);
+      const closeMinuteInNumber = parseInt(openHour.closeAt.split(':')[1], 10);
 
-      const openAtHour = parseInt(openHour.openAt.split(':')[0], 10);
-      const openAtMinute = parseInt(openHour.openAt.split(':')[1], 10);
-      const closeAtHour = parseInt(openHour.closeAt.split(':')[0], 10);
-      const closeAtMinute = parseInt(openHour.closeAt.split(':')[1], 10);
-
-      if (!(openAtHour === 0 && openAtMinute === 0)) {
-        timeSlotsOfDay.push({
-          from: parseInt(`${dateString}0000`, 10),
-          to: parseInt(dateString + openHour.openAt.replace(':', ''), 10),
-          state: 'closed',
-        });
+      if (!(openHourInNumber === 0 && openMinuteInNumber === 0)) {
+        if (openMinuteInNumber > 0) {
+          timeSlotsOfDay.push({
+            from: dateInNumber,
+            to: dateInNumber + openHourInNumber * 100 + openMinuteInNumber - 1,
+            state: 'closed',
+          });
+        } else {
+          timeSlotsOfDay.push({
+            from: dateInNumber,
+            to: dateInNumber + (openHourInNumber - 1) * 100 + 59,
+            state: 'closed',
+          });
+        }
       }
 
-      if (!(closeAtHour === 23 && closeAtMinute === 59)) {
-        timeSlotsOfDay.push({
-          from: parseInt(dateString + openHour.closeAt.replace(':', ''), 10),
-          to: parseInt(`${dateString}2359`, 10),
-          state: 'closed',
-        });
+      if (!(closeHourInNumber === 23 && closeMinuteInNumber === 59)) {
+        if (closeMinuteInNumber < 59) {
+          timeSlotsOfDay.push({
+            from: dateInNumber + closeHourInNumber * 100 + closeMinuteInNumber + 1,
+            to: dateInNumber + 2359,
+            state: 'closed',
+          });
+        } else {
+          timeSlotsOfDay.push({
+            from: dateInNumber + (closeHourInNumber + 1) * 100,
+            to: dateInNumber + 2359,
+            state: 'closed',
+          });
+        }
       }
     }
 
-    // merge day's timeslots back to master array
+    // merge day's time slots back to master array
     newOccupiedTimeSlots = [...newOccupiedTimeSlots, ...timeSlotsOfDay];
   }
 

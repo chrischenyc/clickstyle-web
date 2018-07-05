@@ -28,8 +28,6 @@ const StylistAvailableAreasPage = ({
 }) => (
   <Container>
     <Form onSubmit={onSubmit} loading={loading} error={!_.isEmpty(error)}>
-      <p>TODO: write something to educate stylists what this page is about</p>
-
       <Form.Field inline>
         I want to provide my services within
         <Dropdown
@@ -76,7 +74,7 @@ const StylistAvailableAreasPage = ({
         <Checkbox
           name="canTravel"
           checked={canTravel}
-          label="I'm willing to travel to further regions to provide my services at an additional cost."
+          label="I'm willing to travel to further regions to provide my services at an additional cost to the client."
           onChange={(event, data) => {
             onChange({ target: { name: data.name, value: data.checked } });
           }}

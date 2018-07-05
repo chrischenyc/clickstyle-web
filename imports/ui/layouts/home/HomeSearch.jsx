@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import Typist from 'react-typist';
 import _ from 'lodash';
@@ -6,7 +7,6 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 
 const animatedKeywords = [
   'Airbrush Makeup',
-  'Special Effects Makeup',
   'Prom Makeup',
   'Full Face Makeup',
   'Cut & Style',
@@ -17,7 +17,6 @@ const animatedKeywords = [
   'Color Retouch',
   'Full Highlights',
   'Partial Highlights',
-  'Permanent Hair Treatment',
   'Roller Set',
   'Silk Press',
   'Blowout',
@@ -30,16 +29,12 @@ const animatedKeywords = [
   "Men's Haircut",
   'Hot Towel Massage',
   'Cut & Side design',
-  'Children Hair Cut',
+  'Children Haircut',
   'Bridal Makeup',
-  'Bridal Wedding Package',
-  'Bridal Makeup & Hair Styling',
   'Bridal Hair Styling',
-  'Bridesmaid Hair Styling',
   'Bridesmaid Makeup',
   'Bridal Trials',
   'Full Set Acrylic',
-  'Refill Acrylic Nails',
   'Gel Manicure',
   'Pedicure',
   'Nail Art',
@@ -55,11 +50,9 @@ const animatedKeywords = [
   'Massage',
   'Foot Massage',
   'Hot Stone Massage',
-  'Aromatherapy Massage',
   'Remedial Massage',
   'Prenatal Massage',
-  'Full Body Airbrush Tan',
-  'Half Body Airbrush Tan',
+  'Airbrush Tan',
   'Brazilian',
   'Bikini Line',
   'Full Arm Wax',
@@ -75,7 +68,7 @@ const animatedKeywords = [
 const HomeSearch = () => (
   <div
     className="main-search-container dark-overlay"
-    style={{ backgroundImage: "url('images/main-search-bg.jpg')" }}
+    style={{ backgroundImage: `url('${Meteor.settings.public.CDN}main-search-bg.jpg')` }}
   >
     <div className="main-search-inner">
       <div className="container">

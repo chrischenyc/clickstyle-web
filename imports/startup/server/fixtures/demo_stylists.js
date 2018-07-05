@@ -20,7 +20,7 @@ names.forEach((name) => {
     Accounts.createUser({
       email: `${name.first.replace(' ', '_').toLowerCase()}.${name.last
         .replace(' ', '_')
-        .toLowerCase()}@test-squad.com`,
+        .toLowerCase()}@clickstyle.com.au`,
       password: 'tester123',
       profile: {
         name,

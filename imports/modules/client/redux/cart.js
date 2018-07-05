@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 import { calculateTotal, calculateCount } from '../../cart-calculator';
+import { evaluateCoupon } from '../../../modules/coupon';
 
 /**
  * update current selected services data
@@ -86,9 +87,29 @@ export function setUserInfo(info) {
   };
 }
 
+export function setCoupon(coupon) {
+  return {
+    type: 'CART_SET_COUPON',
+    coupon,
+  };
+}
+
+export function removeCoupon() {
+  return {
+    type: 'CART_REMOVE_COUPON',
+  };
+}
+
 // --------- reducer ----------
+const defaultCouponState = {
+  code: '',
+  discount: 0,
+  minBookingValue: 0,
+  error: '',
+  appliedDiscount: 0,
+};
+
 const defaultState = {
-  showCartInHeader: false,
   stylist: null,
   services: [],
   total: 0,
@@ -105,6 +126,8 @@ const defaultState = {
   creditCardSaveCard: true,
   savedCardInfo: '',
   useSavedCard: false,
+  couponCode: '', // user input, not verified
+  coupon: defaultCouponState, // verified result
 };
 
 const reducer = (state = defaultState, action) => {
@@ -139,7 +162,6 @@ const reducer = (state = defaultState, action) => {
           services,
           total: calculateTotal(services),
           count: calculateCount(services),
-          showCartInHeader: calculateTotal(services) > 0,
         };
       }
 
@@ -149,7 +171,7 @@ const reducer = (state = defaultState, action) => {
         services,
         total: calculateTotal(services),
         count: calculateCount(services),
-        showCartInHeader: calculateTotal(services) > 0,
+        coupon: evaluateCoupon(state.coupon, calculateTotal(services)),
       };
     }
 
@@ -163,7 +185,7 @@ const reducer = (state = defaultState, action) => {
         services,
         total: calculateTotal(services),
         count: calculateCount(services),
-        showCartInHeader: calculateTotal(services) > 0,
+        coupon: evaluateCoupon(state.coupon, calculateTotal(services)),
       };
     }
 
@@ -182,14 +204,29 @@ const reducer = (state = defaultState, action) => {
         services,
         total: calculateTotal(services),
         count: calculateCount(services),
-        showCartInHeader: calculateTotal(services) > 0,
+        coupon: evaluateCoupon(state.coupon, calculateTotal(services)),
       };
     }
 
     case 'CART_SET_USER_INFO': {
       const { info } = action;
 
-      return { ...state, ...info };
+      const newState = { ...state, ...info };
+
+      return newState;
+    }
+
+    case 'CART_SET_COUPON': {
+      const { coupon } = action;
+
+      return {
+        ...state,
+        coupon: evaluateCoupon(coupon, state.total),
+      };
+    }
+
+    case 'CART_REMOVE_COUPON': {
+      return { ...state, coupon: defaultCouponState };
     }
 
     default:

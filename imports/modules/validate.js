@@ -116,8 +116,6 @@ export const validateStylistJoin = (mobile, address, services, referenceUrl) => 
     errors.address = 'Address is required';
   } else if (services.length === 0) {
     errors.services = 'Please pick at least one service you can offer';
-  } else if (validator.isEmpty(referenceUrl)) {
-    errors.referenceUrl = 'Reference link is required';
   } else if (referenceUrl && referenceUrl.length >= 0 && !validator.isURL(referenceUrl)) {
     errors.referenceUrl = 'Reference link is invalid';
   }
@@ -191,15 +189,15 @@ export const validateStylistOpenHours = (openHours) => {
 
 export const validateBooking = (cart) => {
   const {
-    email,
     firstName,
     lastName,
     mobile,
+    email,
     address,
     date,
     time,
-    creditCardNameOnCard,
     useSavedCard,
+    creditCardNameOnCard,
   } = cart;
 
   const errors = {};
@@ -208,14 +206,14 @@ export const validateBooking = (cart) => {
     errors.firstName = 'first name is required';
   } else if (validator.isEmpty(lastName)) {
     errors.lastName = 'last name is required';
-  } else if (validator.isEmpty(email)) {
-    errors.email = 'email is required';
-  } else if (!validator.isEmail(email)) {
-    errors.email = 'invalid email';
   } else if (validator.isEmpty(mobile)) {
     errors.mobile = 'Mobile number is required';
   } else if (!validator.isMobilePhone(mobile, 'en-AU')) {
     errors.mobile = 'Invalid mobile number';
+  } else if (validator.isEmpty(email)) {
+    errors.email = 'email is required';
+  } else if (!validator.isEmail(email)) {
+    errors.email = 'invalid email';
   } else if (validator.isEmpty(address)) {
     errors.address = 'Address is required';
   } else if (!useSavedCard && validator.isEmpty(creditCardNameOnCard)) {

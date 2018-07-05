@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Slingshot } from 'meteor/edgee:slingshot';
 import uuid from 'uuid/v1';
+import moment from 'moment';
 
-import { timestampString } from '../../modules/format-date';
+const timestampString = date => moment(date).format('YYYYMMDDHHmmss');
 
 // https://github.com/jimmiebtlr/meteor-slingshot-cloudinary
 Slingshot.createDirective(Meteor.settings.public.SlingshotCloudinaryImage, Slingshot.Cloudinary, {

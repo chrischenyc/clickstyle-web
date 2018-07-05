@@ -1,10 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
-import SecureLink from '../../components/SecureLink';
-
-const StylistsJoinPage = props => (
+const StylistsJoinPage = () => (
   <div className="container">
     <div className="margin-top-80">
       <div className="row">
@@ -14,22 +13,14 @@ const StylistsJoinPage = props => (
               Become a stylist and start your business on {Meteor.settings.public.appName}
             </h2>
 
-            <Button
-              basic
-              circular
-              color="teal"
-              size="huge"
-              as={SecureLink}
-              history={props.history}
-              to="/users/stylist/application"
-            >
+            <Button circular color="teal" size="huge" as={Link} to="/users/stylist/application">
               Get Started
             </Button>
           </div>
         </div>
 
         <div className="col-lg-6 col-sm-12">
-          <img src="images/placeholder-bg.jpg" alt="" />
+          <img src={`${Meteor.settings.public.CDN}join_stylist_page_top.jpg`} alt="" />
         </div>
       </div>
     </div>
@@ -102,7 +93,7 @@ const StylistsJoinPage = props => (
           <h2 className="headline centered">
             Who can join {Meteor.settings.public.appName} as a stylist?
             <span className="margin-top-20">
-              Anyone has a qualification in the beauty and grooming industry. Unsure if you can
+              Anyone that has a qualification in the beauty and grooming industry. Unsure if you can
               join? Send in an application anyway and we&apos;ll have a look. You won&apos;t know
               unless you try, who knows you could be the next celebrity stylist?
             </span>
@@ -164,21 +155,13 @@ const StylistsJoinPage = props => (
     <div className="margin-top-80 margin-bottom-80">
       <div className="row">
         <div className="col-lg-6 col-sm-12">
-          <img src="images/placeholder-bg.jpg" alt="" />
+          <img src={`${Meteor.settings.public.CDN}join_stylist_page_bottom.jpg`} alt="" />
         </div>
         <div className="col-lg-6 col-sm-12">
           <div className="centered-content margin-top-60 margin-bottom-60">
             <h2 className="headline">Start your journey here</h2>
 
-            <Button
-              basic
-              circular
-              color="teal"
-              size="huge"
-              as={SecureLink}
-              history={props.history}
-              to="/users/stylist/application"
-            >
+            <Button circular color="teal" size="huge" as={Link} to="/users/stylist/application">
               Get Started
             </Button>
           </div>

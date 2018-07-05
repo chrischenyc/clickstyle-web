@@ -1,26 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Message } from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
 import { FormInputField } from '../../../components/FormInputField';
 
 const ChangePasswordPage = ({
-  onSubmit, onChange, loading, errors, success, redirect,
-}) => {
-  if (redirect) {
-    return <Redirect to="/" />;
-  } else if (success) {
-    return (
+  onSubmit, onChange, loading, errors, success,
+}) => (
+  <div className="container centered-content">
+    {success && (
       <Message success size="huge">
         Success! Password has been changed, thanks!
       </Message>
-    );
-  }
+    )}
 
-  return (
-    <div className="container centered-content">
+    {!success && (
       <div className="col-md-offset-3 col-md-6">
         <h2>Change Your Password</h2>
 
@@ -68,9 +63,9 @@ const ChangePasswordPage = ({
           </Button>
         </Form>
       </div>
-    </div>
-  );
-};
+    )}
+  </div>
+);
 
 ChangePasswordPage.propTypes = {
   onSubmit: PropTypes.func.isRequired,
@@ -78,7 +73,6 @@ ChangePasswordPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
   success: PropTypes.bool.isRequired,
-  redirect: PropTypes.bool.isRequired,
 };
 
 export default ChangePasswordPage;

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { check, Match } from 'meteor/check';
 import log from 'winston';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 import {
   sendCustomerBookingConfirmedEmail,
@@ -19,7 +19,6 @@ import Bookings from '../bookings';
 import BookingActivities from '../../booking_activities/booking_activities';
 import Payments from '../../payments/payments';
 import Reviews from '../../reviews/reviews';
-import { dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
 import formatOccupiedTimeSlot from '../../../modules/server/format-occupied-time-slot';
@@ -49,25 +48,31 @@ export function stylistConfirmPendingBooking(_id) {
     }
 
     // if bookingTime was in the past, throw Error
-    const bookingStartDateTime = moment(booking.time);
-    if (bookingStartDateTime.isBefore(moment())) {
+    const bookingTime = moment(booking.time);
+    if (bookingTime.isBefore(moment())) {
       throw new Meteor.Error('the booking time was in the past, cannot proceed');
     }
 
-    // stylist calendar availability validation
-    const bookingEndDateTime = bookingStartDateTime.clone().add(booking.duration - 1, 'minutes');
-    const bookingStartTimeslot = parseInt(bookingStartDateTime.format('YYMMDDHHmm'), 10);
-    const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
+    // stylist calendar availability validation in stylist's timezone
+    const { timezone: stylistTimeZone } = Profiles.findOne({ owner: this.userId });
+    const bookingStartDateTime = moment.tz(booking.time, stylistTimeZone);
+    const bookingEndDateTime = moment
+      .tz(booking.time, stylistTimeZone)
+      .add(booking.duration, 'minutes');
+
+    const bookingStartTimeSlot = parseInt(bookingStartDateTime.format('YYMMDDHHmm'), 10);
+    const bookingEndTimeSlot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
+
     const { occupiedTimeSlots } = Stylists.findOne({ owner: this.userId });
     const conflictedSlots = occupiedTimeSlots.filter(occupiedSlot =>
-      (occupiedSlot.from >= bookingStartTimeslot && occupiedSlot.from < bookingEndTimeslot) ||
-        (occupiedSlot.to > bookingStartTimeslot && occupiedSlot.to <= bookingEndTimeslot) ||
-        (occupiedSlot.from <= bookingStartTimeslot && occupiedSlot.to >= bookingEndTimeslot));
+      (occupiedSlot.from >= bookingStartTimeSlot && occupiedSlot.from < bookingEndTimeSlot) ||
+        (occupiedSlot.to > bookingStartTimeSlot && occupiedSlot.to <= bookingEndTimeSlot) ||
+        (occupiedSlot.from <= bookingStartTimeSlot && occupiedSlot.to >= bookingEndTimeSlot));
 
     if (conflictedSlots.length > 0) {
       let message = 'cannot confirm this booking due to time conflicts on your calendar: ';
-      conflictedSlots.forEach((timeslot, index) => {
-        message += `• ${formatOccupiedTimeSlot(timeslot)}`;
+      conflictedSlots.forEach((timeSlot, index) => {
+        message += `• ${formatOccupiedTimeSlot(timeSlot)}`;
         if (index < conflictedSlots.length - 1) {
           message += ' ';
         }
@@ -103,14 +108,14 @@ export function stylistConfirmPendingBooking(_id) {
       link: `/users/bookings/${_id}`,
     });
 
-    // block stylist timeslot
+    // block stylist time slot
     Stylists.update(
       { owner: this.userId },
       {
         $push: {
           occupiedTimeSlots: {
-            from: bookingStartTimeslot,
-            to: bookingEndTimeslot,
+            from: bookingStartTimeSlot,
+            to: bookingEndTimeSlot,
             state: 'booked',
             bookingId: _id,
           },
@@ -119,8 +124,19 @@ export function stylistConfirmPendingBooking(_id) {
     );
 
     const {
-      services, total, firstName, lastName, email, mobile, address, time,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      customer,
     } = booking;
+
+    const { timezone } = Profiles.findOne({ owner: customer });
+
     sendCustomerBookingConfirmedEmail({
       stylist: `${stylistName.first} ${stylistName.last}`,
       services: servicesSummary(services),
@@ -130,9 +146,10 @@ export function stylistConfirmPendingBooking(_id) {
       email,
       mobile,
       address,
-      time: dateTimeString(time),
+      time,
       bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
+      timezone,
     });
   } catch (exception) {
     log.error(exception);
@@ -183,8 +200,19 @@ export function stylistDeclinePendingBooking(_id) {
 
     // notify customer
     const {
-      services, total, firstName, lastName, email, mobile, address, time,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      customer,
     } = booking;
+
+    const { timezone } = Profiles.findOne({ owner: customer });
+
     sendCustomerBookingDeclinedEmail({
       stylist: `${stylistName.first} ${stylistName.last}`,
       services: servicesSummary(services),
@@ -194,9 +222,10 @@ export function stylistDeclinePendingBooking(_id) {
       email,
       mobile,
       address,
-      time: dateTimeString(time),
+      time,
       bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
+      timezone,
     });
   } catch (exception) {
     log.error(exception);
@@ -253,8 +282,18 @@ export function stylistCancelConfirmedBooking(_id) {
 
     // notify customer
     const {
-      services, total, firstName, lastName, email, mobile, address, time,
+      services,
+      total,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
+      customer,
     } = booking;
+
+    const { timezone } = Profiles.findOne({ owner: customer });
 
     sendCustomerBookingCancelledByStylistEmail({
       stylist: `${stylistName.first} ${stylistName.last}`,
@@ -265,9 +304,10 @@ export function stylistCancelConfirmedBooking(_id) {
       email,
       mobile,
       address,
-      time: dateTimeString(time),
+      time,
       bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
+      timezone,
     });
 
     // notify admin
@@ -308,7 +348,9 @@ export async function stylistCompleteConfirmedBooking(_id) {
     });
 
     // send notification to customer
-    const { name: stylistName, email: stylistEmail } = Stylists.findOne({ owner: this.userId });
+    const { name: stylistName, email: stylistEmail, timezone: stylistTimezone } = Stylists.findOne({
+      owner: this.userId,
+    });
 
     Meteor.call('notifications.create', {
       recipient: booking.customer,
@@ -321,21 +363,35 @@ export async function stylistCompleteConfirmedBooking(_id) {
 
     // notify customer
     const {
-      services, total, firstName, lastName, email, mobile, address, time,
-    } = booking;
-
-    sendCustomerBookingCompletedEmail({
-      stylist: `${stylistName.first} ${stylistName.last}`,
-      services: servicesSummary(services),
+      services,
       total,
       firstName,
       lastName,
       email,
       mobile,
       address,
-      time: dateTimeString(time),
+      time,
+      discount,
+      customer,
+    } = booking;
+
+    const charge = total - (discount || 0);
+
+    const { timezone } = Profiles.findOne({ owner: customer });
+
+    sendCustomerBookingCompletedEmail({
+      stylist: `${stylistName.first} ${stylistName.last}`,
+      services: servicesSummary(services),
+      total: charge,
+      firstName,
+      lastName,
+      email,
+      mobile,
+      address,
+      time,
       bookingId: _id,
       bookingUrl: `users/bookings/${_id}`,
+      timezone,
     });
 
     // notify stylist
@@ -349,17 +405,18 @@ export async function stylistCompleteConfirmedBooking(_id) {
       email,
       mobile,
       address,
-      time: dateTimeString(time),
+      time,
       bookingId: _id,
       bookingUrl: `users/stylist/bookings/${_id}`,
+      timezone: stylistTimezone,
     });
 
     // charge customer
     chargeCustomer(
       booking,
-      booking.total,
+      charge,
       `booking completed: ${booking._id}`,
-      `Booking completed with total charge ${booking.total}`,
+      `Booking completed with total charge ${charge}`,
     );
   } catch (exception) {
     log.error(exception);

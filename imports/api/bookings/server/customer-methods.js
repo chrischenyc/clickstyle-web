@@ -2,7 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { check, Match } from 'meteor/check';
 import log from 'winston';
-import moment from 'moment';
+import moment from 'moment-timezone';
+import _ from 'lodash';
 
 import Profiles from '../../profiles/profiles';
 import Bookings from '../bookings';
@@ -10,16 +11,17 @@ import BookingActivities from '../../booking_activities/booking_activities';
 import Stylists from '../../stylists/stylists';
 import Payments from '../../payments/payments';
 import Reviews from '../../reviews/reviews';
+import Coupons from '../../coupons/coupons';
 import {
   sendCustomerBookingRequestedEmail,
   sendStylistBookingRequestedEmail,
   sendStylistBookingCancelledByCustomerEmail,
 } from '../../../modules/server/send-email';
-import { dateTimeString } from '../../../modules/format-date';
 import servicesSummary from '../../../modules/format-services';
 import chargeCustomer from '../../../modules/server/charge-customer';
 import formatOccupiedTimeSlot from '../../../modules/server/format-occupied-time-slot';
 import { calculateTotal, calculateTotalDuration } from '../../../modules/cart-calculator';
+import { validateCoupon, evaluateCoupon } from '../../../modules/coupon';
 
 const stripe = require('stripe')(Meteor.settings.StripeSecretKey);
 
@@ -54,39 +56,28 @@ const customerCancellationFee = (booking) => {
 
 function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   const {
-    firstName, lastName, email, stylist, services, mobile, address, date, time, note,
+    stylist,
+    services,
+    firstName,
+    lastName,
+    email,
+    mobile,
+    address,
+    time,
+    note,
+    couponCode,
   } = cart;
 
-  const { email: stylistEmail } = Profiles.findOne({ owner: stylist.owner });
+  const { email: stylistEmail, timezone: stylistTimezone } = Profiles.findOne({
+    owner: stylist.owner,
+  });
   const total = calculateTotal(services);
   const duration = calculateTotalDuration(services);
-  const bookingTime = moment(date + time, 'YYMMDDHH:mm');
 
-  // if bookingTime is earlier than 2 hours from now, throw Error
-  if (bookingTime.isBefore(moment().add(2, 'hours'))) {
-    throw new Meteor.Error('Booking time should be at least 2 hours from now.');
-  }
-
-  // stylist calendar availability validation
-  const bookingEndDateTime = bookingTime.clone().add(duration, 'minutes');
-  const bookingStartTimeslot = parseInt(bookingTime.format('YYMMDDHHmm'), 10);
-  const bookingEndTimeslot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
-  const { occupiedTimeSlots } = Stylists.findOne({ owner: stylist.owner });
-  const conflictedSlots = occupiedTimeSlots.filter(occupiedSlot =>
-    (occupiedSlot.from >= bookingStartTimeslot && occupiedSlot.from < bookingEndTimeslot) ||
-      (occupiedSlot.to > bookingStartTimeslot && occupiedSlot.to <= bookingEndTimeslot) ||
-      (occupiedSlot.from <= bookingStartTimeslot && occupiedSlot.to >= bookingEndTimeslot));
-
-  if (conflictedSlots.length > 0) {
-    let message = "cannot make this booking due to time conflicts on stylist's calendar: ";
-    conflictedSlots.forEach((timeslot, index) => {
-      message += `• ${formatOccupiedTimeSlot(timeslot)}`;
-      if (index < conflictedSlots.length - 1) {
-        message += ' ';
-      }
-    });
-
-    throw new Meteor.Error(message);
+  let coupon = {};
+  if (!_.isEmpty(couponCode)) {
+    coupon = validateCoupon(couponCode);
+    coupon = evaluateCoupon(coupon, total);
   }
 
   // create Bookings record
@@ -100,13 +91,22 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     email,
     mobile,
     address,
-    time: bookingTime.toDate(),
+    time,
     stripeCustomerId,
     stripeCardId,
     status: 'pending',
     duration,
     note,
+    discount: coupon.appliedDiscount && coupon.appliedDiscount > 0 && coupon.appliedDiscount,
+    redeemedCoupon: coupon.appliedDiscount && coupon.appliedDiscount > 0 && coupon.code,
   });
+
+  if (coupon.appliedDiscount && coupon.appliedDiscount > 0) {
+    Coupons.update(
+      { _id: coupon._id },
+      { $set: { status: 'redeemed', redeemedAt: Date.now(), redeemedBooking: bookingId } },
+    );
+  }
 
   // create BookingActivities record
   BookingActivities.insert({
@@ -128,19 +128,21 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
   });
 
   // inform customer
+  const { timezone } = Profiles.findOne({ owner: userId });
   sendCustomerBookingRequestedEmail({
     stylist: `${stylist.name.first} ${stylist.name.last}`,
     services: servicesSummary(services),
-    total,
+    total: coupon.appliedDiscount ? total - coupon.appliedDiscount : total,
     firstName,
     lastName,
     email,
     mobile,
     address,
     note,
-    time: dateTimeString(bookingTime),
+    time,
     bookingId,
     bookingUrl: `users/bookings/${bookingId}`,
+    timezone,
   });
 
   // inform stylist
@@ -155,9 +157,10 @@ function createBooking(cart, userId, stripeCustomerId, stripeCardId) {
     mobile,
     address,
     note,
-    time: dateTimeString(bookingTime),
+    time,
     bookingId,
     bookingUrl: `users/stylist/bookings/${bookingId}`,
+    timezone: stylistTimezone,
   });
 
   return bookingId;
@@ -168,6 +171,7 @@ export async function customerCreateBooking(cart) {
 
   try {
     const {
+      stylist,
       firstName,
       lastName,
       email,
@@ -175,10 +179,39 @@ export async function customerCreateBooking(cart) {
       creditCardSaveCard,
       stripePayload,
       useSavedCard,
+      time,
+      duration,
     } = cart;
 
-    let { userId } = this;
+    const bookingTime = moment(time);
+    // if bookingTime is earlier than 2 hours from now, throw Error
+    if (bookingTime.isBefore(moment().add(2, 'hours'))) {
+      throw new Meteor.Error('Booking time should be at least 2 hours from now.');
+    }
 
+    // stylist calendar availability validation in stylist's timezone
+    const { timezone: stylistTimeZone } = Profiles.findOne({ owner: stylist.owner });
+    const bookingStartDateTime = moment.tz(time, stylistTimeZone);
+    const bookingEndDateTime = moment.tz(time, stylistTimeZone).add(duration, 'minutes');
+
+    const bookingStartTimeSlot = parseInt(bookingStartDateTime.format('YYMMDDHHmm'), 10);
+    const bookingEndTimeSlot = parseInt(bookingEndDateTime.format('YYMMDDHHmm'), 10);
+
+    const { occupiedTimeSlots } = Stylists.findOne({ owner: stylist.owner });
+    const conflictedSlots = occupiedTimeSlots.filter(occupiedSlot =>
+      (occupiedSlot.from >= bookingStartTimeSlot && occupiedSlot.from < bookingEndTimeSlot) ||
+        (occupiedSlot.to > bookingStartTimeSlot && occupiedSlot.to <= bookingEndTimeSlot) ||
+        (occupiedSlot.from <= bookingStartTimeSlot && occupiedSlot.to >= bookingEndTimeSlot));
+
+    // TODO: better error message
+    if (conflictedSlots.length > 0) {
+      let message = "cannot make this booking due to time conflicts on stylist's calendar: ";
+      message += formatOccupiedTimeSlot(conflictedSlots[0]);
+
+      throw new Meteor.Error(message);
+    }
+
+    let { userId } = this;
     // pre-processing for guest user checkout
     if (!userId) {
       // verify email is not taken
@@ -244,7 +277,7 @@ export async function customerCreateBooking(cart) {
         );
       }
 
-      const bookingId = createBooking(cart, userId, stripeCustomerId, card.id);
+      const bookingId = createBooking(cart, userId, stripeCustomer.id, card.id);
 
       // method response depends on user login status
       if (this.userId) {
@@ -253,7 +286,7 @@ export async function customerCreateBooking(cart) {
       return { bookingId, userId };
     } else if (useSavedCard && stripeCustomer.default_source === stripeDefaultCardId) {
       // ========== check-out with a saved card ===========
-      const bookingId = createBooking(cart, userId, stripeCustomerId, stripeDefaultCardId);
+      const bookingId = createBooking(cart, userId, stripeCustomer.id, stripeDefaultCardId);
 
       return { bookingId };
     }
@@ -305,7 +338,7 @@ export async function customerCancelBooking(_id) {
         );
       }
 
-      // unblock occupied timeslots
+      // unblock occupied timeSlots
       Stylists.update(
         { owner: booking.stylist },
         { $pull: { occupiedTimeSlots: { bookingId: _id } } },
@@ -327,9 +360,10 @@ export async function customerCancelBooking(_id) {
         email,
         mobile,
         address,
-        time: dateTimeString(time),
+        time,
         bookingId: _id,
         bookingUrl: `users/stylist/bookings/${_id}`,
+        timezone: stylist.timezone,
       });
 
       Meteor.call('notifications.create', {
@@ -377,6 +411,8 @@ export function customerFindBooking(_id) {
           customerCancelledAt: 1,
           systemCancelledAt: 1,
           stylistCompletedAt: 1,
+          discount: 1,
+          redeemedCoupon: 1,
         },
       },
     );
